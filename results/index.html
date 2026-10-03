@@ -265,7 +265,7 @@ function mRow(m){
     const pk=m.score.pk?`<small>PK ${m.score.pk.home}-${m.score.pk.away}</small>`:m.score.extraTime?'<small>延長</small>':'';
     sc=`<span class="sc">${m.score.home} - ${m.score.away}${pk}</span>`;
   }else{
-    const st={postponed:'延期',cancelled:'中止',unrecorded:'結果未登録'}[m.status]||'vs';
+    const st={suspended:'中断',postponed:'延期',cancelled:'中止',unrecorded:'結果未登録'}[m.status]||'vs';
     sc=`<span class="sc pend">${st}</span>`;
   }
   const w=id=>m.winner===id?' win':'';
