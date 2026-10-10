@@ -41,7 +41,7 @@
   const mine = t => t && typeof t === 'object' && t.univ === CFG.univ;
   const isDone = m => m.status === 'finished' && m.score && m.score.home != null && m.score.home !== '' && m.score.away != null && m.score.away !== '';
 
-  const S = { comps: [], data: {}, roster: {}, teams: [], profile: null, matches: [], players: [], staff: [], news: [], stats: [], gallery: [], sponsors: [] };
+  const S = { comps: [], data: {}, roster: {}, teams: [], profile: null, matches: [], players: [], staff: [], news: [], stats: [], gallery: [], sponsors: [], ext: [] };
 
   /* ───────── 読み込み ───────── */
   async function getJSON(f) { const r = await fetch(CFG.data + f, { cache: 'no-store' }); if (!r.ok) throw Error('HTTP ' + r.status); return r.json(); }
@@ -68,6 +68,7 @@
         if (!S.staff.length && (t.staff || []).length) S.staff = t.staff;
         if (!S.gallery.length && (t.gallery || []).length) S.gallery = t.gallery;
         if (!S.sponsors.length && (t.sponsors || []).length) S.sponsors = t.sponsors;
+        if (!S.ext.length && (t.ext || []).length) S.ext = t.ext;
         for (const n of t.news || []) { const k = n.id || (n.date + '|' + n.title); if (!newsSeen.has(k)) { newsSeen.add(k); S.news.push(n); } }
         for (const p of t.players || []) {
           if (!pmap.has(p.id)) pmap.set(p.id, { ...p, teams: [] });
@@ -86,6 +87,16 @@
         if (!home && !away) continue;
         S.matches.push({ comp: x.comp, label: x.label, team: x.team, m, home, opp: home ? m.away : m.home });
       }
+    }
+    // 連盟以外の試合（社会人リーグ・天皇杯予選など。管理画面の「試合（連盟以外）」）
+    for (const e of S.ext) {
+      const me = { id: 'EXT', univ: CFG.univ, short: e.team || CFG.univ }, op = { id: 'EXTOPP', short: e.opp }, home = e.ha !== 'アウェイ';
+      const done = e.my !== '' && e.my != null && e.op !== '' && e.op != null;
+      const pk = pkPair(e.pk), pkHA = pk ? (home ? pk : [pk[1], pk[0]]) : null;
+      const m = { date: e.date, kickoff: e.kickoff, venue: e.venue, round: e.team ? e.team : '', status: done ? 'finished' : 'scheduled',
+        score: done ? { home: home ? e.my : e.op, away: home ? e.op : e.my, pk: pkHA ? { home: pkHA[0], away: pkHA[1] } : '' } : null,
+        home: home ? me : op, away: home ? op : me, note: e.note, url: e.url };
+      S.matches.push({ ext: true, comp: { id: 'EXT', name: e.comp }, label: e.comp || 'その他の試合', team: me, m, home, opp: op });
     }
     S.matches.sort((a, b) => String(a.m.date || '9999').localeCompare(String(b.m.date || '9999')) || String(a.m.kickoff || '').localeCompare(String(b.m.kickoff || '')));
     for (const x of S.teams) {
@@ -111,13 +122,15 @@
   const RES = { W: '勝', D: '分', L: '敗' };
   const myScore = x => x.home ? x.m.score.home : x.m.score.away, opScore = x => x.home ? x.m.score.away : x.m.score.home;
   function pkText(x) { const pk = pkPair(x.m.score.pk); return pk ? 'PK ' + (x.home ? pk[0] + '-' + pk[1] : pk[1] + '-' + pk[0]) : ''; }
-  const matchUrl = x => CFG.site + 'results.html?comp=' + encodeURIComponent(x.comp.id) + (x.m.matchId ? '&match=' + encodeURIComponent(x.m.matchId) : '');
+  const mkey = x => x.ext ? 'EXT' : x.team.id + '|' + x.comp.id;
+  const matchUrl = x => x.ext ? safeUrl(x.m.url) : CFG.site + 'results.html?comp=' + encodeURIComponent(x.comp.id) + (x.m.matchId ? '&match=' + encodeURIComponent(x.m.matchId) : '');
   function matchRow(x) {
     const m = x.m, r = result(x), done = isDone(m), pk = done ? pkText(x) : '';
-    return '<a class="mr" href="' + esc(matchUrl(x)) + '">' +
+    const u = matchUrl(x), tag = u ? 'a' : 'div';
+    return '<' + tag + ' class="mr' + (x.ext ? ' ext' : '') + '"' + (u ? ' href="' + esc(u) + '"' + (x.ext ? ' target="_blank" rel="noopener"' : '') : '') + '>' +
       '<div class="d"><b>' + esc(md(m.date)) + '</b>' + esc(wd(m.date) ? '（' + wd(m.date) + '）' : '') + '</div>' +
       '<div class="o"><b>vs ' + esc(tname(x.opp)) + '</b><small>' + esc(x.label) + (m.round ? '　' + esc(m.round) : '') + (m.venue ? '　' + esc(m.venue) : '') + '</small></div>' +
-      '<div class="s">' + (done ? esc(myScore(x)) + ' - ' + esc(opScore(x)) + (pk ? '<small style="font-size:11px;color:var(--sub);font-family:Noto Sans JP,sans-serif">' + esc(pk) + '</small>' : '') + '<span class="res ' + r + '">' + RES[r] + '</span>' : '<span class="ko">' + esc(m.kickoff ? m.kickoff + ' KO' : '予定') + '</span>') + '</div></a>';
+      '<div class="s">' + (done ? esc(myScore(x)) + ' - ' + esc(opScore(x)) + (pk ? '<small style="font-size:11px;color:var(--sub);font-family:Noto Sans JP,sans-serif">' + esc(pk) + '</small>' : '') + '<span class="res ' + r + '">' + RES[r] + '</span>' : '<span class="ko">' + esc(m.kickoff ? m.kickoff + ' KO' : '予定') + '</span>') + '</div>' + (x.ext && m.note ? '<div class="nt">' + esc(m.note) + '</div>' : '') + '</' + tag + '>';
   }
   const ini = () => [...CFG.univ.replace(/(大学|大)$/, '')].slice(0, 2).join('');
   function emb(t, mineSide) {
@@ -144,7 +157,8 @@
     const st = standings();
     const lastBox = last ? (() => {
       const me = last.home ? last.m.home : last.m.away, r = result(last), pk = pkText(last);
-      return '<a class="card lastm" href="' + esc(matchUrl(last)) + '" style="display:block"><div class="meta"><span class="lab">LAST MATCH</span><span>' + esc(fullDate(last.m.date)) + '　' + esc(last.label) + (last.m.round ? '　' + esc(last.m.round) : '') + '</span></div>' +
+      const lu = matchUrl(last);
+      return '<a class="card lastm"' + (lu ? ' href="' + esc(lu) + '"' + (last.ext ? ' target="_blank" rel="noopener"' : '') : '') + ' style="display:block"><div class="meta"><span class="lab">LAST MATCH</span><span>' + esc(fullDate(last.m.date)) + '　' + esc(last.label) + (last.m.round ? '　' + esc(last.m.round) : '') + '</span></div>' +
         '<div class="board"><div class="tm">' + emb(me, true) + '<b>' + esc(tname(me)) + '</b></div><div class="mid"><div class="en">' + esc(myScore(last)) + ' - ' + esc(opScore(last)) + '</div><small>' + esc(pk || 'FULL TIME') + '</small></div><div class="tm">' + emb(last.opp) + '<b>' + esc(tname(last.opp)) + '</b></div></div>' +
         '<div class="rs"><span class="res ' + r + '" style="width:auto;padding:0 14px">' + RES[r] + '</span></div></a>';
     })() : emptyBox('まだ試合の結果はありません');
@@ -159,6 +173,10 @@
     html += band('', 'ABOUT CLUB', 'クラブ紹介', aboutBlock(true), '<a href="#club">くわしく ›</a>');
     // GALLERY
     if (S.gallery.length) html += band('alt', 'GALLERY', 'ギャラリー', galleryGrid(S.gallery.slice(0, 7), true), '<a href="#gallery">すべて見る ›</a>');
+    // MOVIE・INSTAGRAM
+    const vs = videos(), ig = igPosts();
+    if (vs.length) html += band('dark', 'MOVIE', '動画', vidGrid(vs.slice(0, 2)), vs.length > 2 ? '<a href="#gallery">すべて見る ›</a>' : '');
+    if (ig.length) html += band('', 'INSTAGRAM', 'インスタグラム', igGrid(ig.slice(0, 3)), igMore());
     // OFFICIAL PARTNERS
     if (S.sponsors.length) html += band('', 'OFFICIAL PARTNERS', 'スポンサー', sponsorList());
     return html;
@@ -211,9 +229,11 @@
   let MT = 'ALL', MS = 'up';
   function viewMatches() {
     const today = jstToday();
-    const chipsT = S.teams.length > 1 ? '<div class="chips" data-k="mt">' + [['ALL', 'すべての大会'], ...S.teams.map(x => [x.team.id + '|' + x.comp.id, x.label])].map(([k, l]) => '<button aria-pressed="' + (k === MT) + '" data-v="' + esc(k) + '">' + esc(l) + '</button>').join('') + '</div>' : '';
+    const opts = [...S.teams.map(x => [x.team.id + '|' + x.comp.id, x.label]), ...(S.ext.length ? [['EXT', 'その他の試合（連盟以外）']] : [])];
+    if (MT !== 'ALL' && !opts.some(o => o[0] === MT)) MT = 'ALL';
+    const chipsT = opts.length > 1 ? '<div class="chips" data-k="mt">' + [['ALL', 'すべての大会'], ...opts].map(([k, l]) => '<button aria-pressed="' + (k === MT) + '" data-v="' + esc(k) + '">' + esc(l) + '</button>').join('') + '</div>' : '';
     const chipsS = '<div class="chips" data-k="ms">' + [['up', 'NEXT MATCH（これから）'], ['done', 'RESULT（結果）']].map(([k, l]) => '<button aria-pressed="' + (k === MS) + '" data-v="' + k + '">' + l + '</button>').join('') + '</div>';
-    const pick = x => MT === 'ALL' || x.team.id + '|' + x.comp.id === MT;
+    const pick = x => MT === 'ALL' || mkey(x) === MT;
     let list = S.matches.filter(pick);
     list = MS === 'up' ? list.filter(x => !isDone(x.m) && (x.m.date || '9999') >= today) : list.filter(x => isDone(x.m)).reverse();
     const sum = { W: 0, D: 0, L: 0 }; S.matches.filter(x => pick(x) && isDone(x.m)).forEach(x => sum[result(x)]++);
@@ -223,7 +243,7 @@
     return pageTop('MATCH', '試合情報') + '<section class="band"><div class="wrap">' + chipsT + chipsS +
       '<p style="margin:0 0 12px;font-size:14px;color:var(--sub)">今季の成績：<b style="color:var(--ink)">' + sum.W + '勝 ' + sum.D + '分 ' + sum.L + '敗</b></p>' +
       (list.length ? '<div class="card">' + list.map(matchRow).join('') + '</div>' : emptyBox(MS === 'up' ? 'これからの試合は登録されていません' : 'まだ結果はありません')) +
-      '<p style="font-size:12px;color:var(--sub);margin:10px 2px 0">試合を押すと、公式記録（得点経過・出場選手・交代・警告）が開きます。</p></div></section>' +
+      '<p style="font-size:12px;color:var(--sub);margin:10px 2px 0">連盟の大会の試合を押すと、公式記録（得点経過・出場選手・交代・警告）が開きます。' + (S.ext.length ? '社会人リーグ・天皇杯予選などの試合は、チームが入力した結果です。' : '') + '</p></div></section>' +
       (tables ? band('alt', 'STANDINGS', '順位表', tables) : '');
   }
 
@@ -345,8 +365,44 @@
     }).join('') + '</div>';
   }
   function viewGallery() {
-    return pageTop('GALLERY', 'ギャラリー') + '<section class="band"><div class="wrap">' + (S.gallery.length ? galleryGrid(S.gallery) : emptyBox('写真はまだありません（管理画面の「ギャラリー」に入れると表示されます）')) +
-      (safeUrl(S.profile?.sns?.youtube) ? '<p style="margin-top:20px"><a class="btn" href="' + esc(safeUrl(S.profile.sns.youtube)) + '" target="_blank" rel="noopener">▶ YouTube で動画を見る</a></p>' : '') + '</div></section>';
+    const vs = videos(), ig = igPosts();
+    return pageTop('GALLERY', 'ギャラリー') + '<section class="band"><div class="wrap">' + (S.gallery.length ? galleryGrid(S.gallery) : emptyBox('写真はまだありません（管理画面の「ギャラリー」に入れると表示されます）')) + '</div></section>' +
+      (vs.length ? band('dark', 'MOVIE', '動画', vidGrid(vs)) : '') +
+      (ig.length ? band('', 'INSTAGRAM', 'インスタグラム', igGrid(ig), igMore()) : '') +
+      (!vs.length && safeUrl(S.profile?.sns?.youtube) ? '<section class="band"><div class="wrap"><a class="btn" href="' + esc(safeUrl(S.profile.sns.youtube)) + '" target="_blank" rel="noopener">▶ YouTube で動画を見る</a></div></section>' : '');
+  }
+  /* Instagramの投稿・動画（管理画面の「チーム紹介」→ 独自ホームページ。1行に1つのURL） */
+  const lines = t => String(t || '').split(/\n/).map(l => l.trim()).filter(Boolean);
+  const igUrl = u => { const m = String(u).match(/^https?:\/\/(?:www\.)?instagram\.com\/(?:[\w.]+\/)?(p|reel|tv)\/([\w-]+)/i); return m ? 'https://www.instagram.com/' + m[1].toLowerCase() + '/' + m[2] + '/' : ''; };
+  function igPosts() { return lines(S.profile?.igPosts).map(l => igUrl(l.split(/\s+/)[0])).filter(Boolean).slice(0, 9); }
+  function videos() {
+    return lines(S.profile?.videos).map(l => {
+      const [u, ...t] = l.split(/\s+/), title = t.join(' ');
+      const yt = u.match(/(?:youtube\.com\/(?:watch\?(?:.*&)?v=|embed\/|shorts\/|live\/)|youtu\.be\/)([\w-]{11})/i);
+      if (yt) return { kind: 'yt', id: yt[1], title, url: u };
+      if (igUrl(u)) return { kind: 'ig', url: igUrl(u), title };
+      const tt = u.match(/tiktok\.com\/@[\w.-]+\/video\/(\d+)/i);
+      if (tt) return { kind: 'tt', id: tt[1], title, url: u };
+      return safeUrl(u) ? { kind: 'link', url: u, title } : null;
+    }).filter(Boolean).slice(0, 12);
+  }
+  const igBox = u => '<div class="igw"><blockquote class="instagram-media" data-instgrm-permalink="' + esc(u) + '?utm_source=ig_embed" data-instgrm-version="14"><a href="' + esc(u) + '" target="_blank" rel="noopener">Instagramで見る ↗</a></blockquote></div>';
+  function videoBox(v) {
+    const cap = v.title ? '<p class="vt">' + esc(v.title) + '</p>' : '';
+    if (v.kind === 'yt') return '<div class="vid"><div class="fr"><iframe src="https://www.youtube-nocookie.com/embed/' + esc(v.id) + '" title="' + esc(v.title || 'YouTube 動画') + '" loading="lazy" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>' + cap + '</div>';
+    if (v.kind === 'tt') return '<div class="vid"><div class="fr tt"><iframe src="https://www.tiktok.com/embed/v2/' + esc(v.id) + '" title="' + esc(v.title || 'TikTok 動画') + '" loading="lazy" allow="encrypted-media" allowfullscreen></iframe></div>' + cap + '</div>';
+    if (v.kind === 'ig') return '<div class="vid">' + igBox(v.url) + cap + '</div>';
+    return '<div class="vid"><a class="card pad" style="display:block" href="' + esc(v.url) + '" target="_blank" rel="noopener">▶ ' + esc(v.title || '動画を見る') + ' ↗</a></div>';
+  }
+  const igGrid = list => '<div class="igg">' + list.map(igBox).join('') + '</div>';
+  const vidGrid = list => '<div class="vg">' + list.map(videoBox).join('') + '</div>';
+  function igMore() { const u = safeUrl(S.profile?.sns?.instagram); return u ? '<a href="' + esc(u) + '" target="_blank" rel="noopener">Instagram ›</a>' : ''; }
+  /* 埋め込みのスクリプト（Instagram）は、投稿があるときだけ読み込む */
+  function embeds() {
+    if (!document.querySelector('.instagram-media')) return;
+    if (window.instgrm) { window.instgrm.Embeds.process(); return; }
+    if (document.getElementById('igjs')) return;
+    const sc = document.createElement('script'); sc.id = 'igjs'; sc.async = true; sc.src = 'https://www.instagram.com/embed.js'; document.body.appendChild(sc);
   }
   function lightbox(i) {
     const list = S.gallery.filter(g => img(g.photo, 100)); let k = Math.max(0, list.indexOf(S.gallery[i]));
@@ -387,6 +443,7 @@
     $('main').innerHTML = VIEWS[view](arg);
     document.title = ({ home: '', news: 'ニュース | ', matches: '試合情報 | ', players: '選手・スタッフ | ', stats: '個人成績 | ', club: 'クラブ紹介 | ', gallery: 'ギャラリー | ', contact: 'お問い合わせ | ' }[view]) + siteName();
     reveal();
+    embeds();
   }
   /* スクロールで、ふわっと表示（動きを減らす設定のときは、すぐ表示） */
   let IO = null;
@@ -436,13 +493,13 @@
     const eu = img(p.emblem, 200), em = $('emb');
     if (eu) { em.classList.add('img'); em.innerHTML = '<img src="' + esc(eu) + '" alt="' + esc(CFG.univ) + '">'; em.querySelector('img').onerror = () => { em.classList.remove('img'); em.textContent = ini(); }; }
     else em.textContent = ini();
-    const hu = img(CFG.hero || p.teamPhoto, 1800);
+    const heroSrc = CFG.hero || p.clubHero || p.teamPhoto, hu = img(heroSrc, 1800);
     const lead = CFG.lead || String(p.intro || '').split(/[。\n]/)[0];
     const big = CFG.en ? CFG.en.replace(/\s*(FOOTBALL|SOCCER)\s+CLUB\s*$/i, '').trim() || CFG.en : 'FOOTBALL CLUB';
     $('hero').innerHTML = '<div class="ph">' + (hu ? '<img src="' + esc(hu) + '" alt="" fetchpriority="high" onerror="this.remove()">' : '') + '</div>' +
       '<div class="wrap in"><div><div class="eb">' + esc(CFG.en ? 'FOOTBALL CLUB' : 'OFFICIAL SITE') + '</div><div class="en big">' + esc(big) + '</div><h1>' + esc(siteName()) + '</h1>' +
       (lead ? '<p>' + esc(lead + (/[。！!]$/.test(lead) ? '' : '。')) + '</p>' : '') + '<div class="cta"><a class="btn" href="#matches">試合日程を見る</a><a class="btn ghost" href="#players">選手を見る</a></div></div>' +
-      '<div class="side">' + (hu ? '<img src="' + esc(img(CFG.hero || p.teamPhoto, 1200)) + '" alt="" onerror="this.remove()">' : '') + '</div></div>' + (CFG.heroCaption ? '<span class="cap">' + esc(CFG.heroCaption) + '</span>' : '');
+      '<div class="side">' + (hu ? '<img src="' + esc(img(heroSrc, 1200)) + '" alt="" onerror="this.remove()">' : '') + '</div></div>' + (CFG.heroCaption ? '<span class="cap">' + esc(CFG.heroCaption) + '</span>' : '');
     $('ftName').textContent = siteName();
     const sns = [['Instagram', p.sns?.instagram], ['X', p.sns?.x], ['Facebook', p.sns?.facebook], ['YouTube', p.sns?.youtube], ['TikTok', p.sns?.tiktok]].filter(r => safeUrl(r[1]));
     const fs = document.getElementById('ftSns'); if (fs) fs.innerHTML = sns.map(r => '<a href="' + esc(safeUrl(r[1])) + '" target="_blank" rel="noopener">' + r[0] + '</a>').join('');
