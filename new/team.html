@@ -206,6 +206,8 @@ dl.facts dd{margin:0;font-weight:700;overflow-wrap:anywhere}
 .links{display:flex;flex-wrap:wrap;gap:8px;padding:14px 18px;border-top:1px solid var(--line)}
 .links a{font-size:12px;font-weight:700;border:1px solid var(--line);padding:6px 12px;border-radius:30px}
 .links a:hover{border-color:var(--blue);color:var(--blue)}
+.links a.clubsite{background:#E60012;border-color:#E60012;color:#fff}
+.links a.clubsite:hover{background:#c4000f;color:#fff}
 .pending{border:1.5px dashed #c3d0dc;background:#fff;border-radius:14px;padding:24px;text-align:center;color:var(--muted);font-size:12.5px;line-height:1.9}
 .pending b{display:block;color:var(--ink);font-size:14px}
 
@@ -631,19 +633,28 @@ function renderRecord(row,ms){
 }
 const SNS={instagram:'Instagram',x:'X',twitter:'X',facebook:'Facebook',youtube:'YouTube',tiktok:'TikTok',note:'note'};
 function safeUrl(u){return /^https?:\/\//i.test(String(u||''))?u:''}
+/* チームの独自ホームページ（clubs.json に出ている大学だけ。ホームページ管理画面の「独自ホームページ」で公開） */
+let CLUBS=null;
+function clubFor(t){
+  if(CLUBS===null){CLUBS=[];if(!DEMO)fetch('../results/data/clubs.json',{cache:'no-store'}).then(r=>r.ok?r.json():null).then(j=>{CLUBS=(j&&j.clubs)||[];if(CLUBS.length&&S.team)renderAbout()}).catch(()=>{});return null}
+  const u=typeof t==='object'?String(t.univ||'').trim():'';
+  return u?CLUBS.find(c=>c.univ===u)||null:null;
+}
 function renderAbout(){
   const p=profileOf(S.team);
+  const club=clubFor(S.team);
   const staff=squad().staff.map(s=>[s.role||'スタッフ',s.name]);
   const facts=[...staff,...(p?[[staff.some(s=>/監督/.test(s[0]))?'':'監督',p.coach],['主将',p.captain],['創部',p.founded],['部員数',p.members],['練習場',p.ground]]:[])].filter(([k,v])=>has(k)&&has(v));
   const links=p?[[ '公式サイト',p.website],...Object.entries(p.sns||{}).map(([k,v])=>[SNS[k]||k,v])].filter(([,u])=>safeUrl(u)):[];
   $('profUpdated').textContent=p&&has(p.updated)?'更新 '+p.updated:'';
-  if(!has(p?.intro)&&!facts.length&&!links.length){
+  const clubLink=club?'<a class="clubsite" href="../clubs/?u='+encodeURIComponent(club.slug)+'">'+esc(club.name)+' のホームページ →</a>':'';
+  if(!has(p?.intro)&&!facts.length&&!links.length&&!clubLink){
     $('aboutBox').innerHTML='<div class="pending"><b>クラブ紹介は準備中です</b>チーム紹介・監督・練習場などは、各大学からの登録をもとに掲載します。</div>';return;
   }
   $('aboutBox').innerHTML='<div class="about">'+
     '<div class="card">'+(has(p?.intro)?'<div class="intro">'+esc(p.intro)+'</div>':'<p class="empty">チーム紹介文は準備中です。</p>')+'</div>'+
     '<div class="card">'+(facts.length?'<dl class="facts">'+facts.map(([k,v])=>'<div><dt>'+esc(k)+'</dt><dd>'+esc(v)+'</dd></div>').join('')+'</dl>':'')+
-      (links.length?'<div class="links">'+links.map(([k,u])=>'<a href="'+esc(safeUrl(u))+'" target="_blank" rel="noopener">'+esc(k)+' ↗</a>').join('')+'</div>':'')+'</div></div>';
+      (links.length||clubLink?'<div class="links">'+clubLink+links.map(([k,u])=>'<a href="'+esc(safeUrl(u))+'" target="_blank" rel="noopener">'+esc(k)+' ↗</a>').join('')+'</div>':'')+'</div></div>';
 }
 const POS=[['GK','ゴールキーパー'],['DF','ディフェンダー'],['MF','ミッドフィルダー'],['FW','フォワード']];
 const norm=v=>String(v||'').replace(/[\s　]/g,'');
