@@ -638,7 +638,7 @@ let CLUBS=null;
 function clubFor(t){
   if(CLUBS===null){CLUBS=[];if(!DEMO)fetch('../results/data/clubs.json',{cache:'no-store'}).then(r=>r.ok?r.json():null).then(j=>{CLUBS=(j&&j.clubs)||[];if(CLUBS.length&&S.team)renderAbout()}).catch(()=>{});return null}
   const u=typeof t==='object'?String(t.univ||'').trim():'';
-  return u?CLUBS.find(c=>c.univ===u)||null:null;
+  return u?CLUBS.find(c=>c.published&&c.slug&&c.univ===u)||null:null; // 公開前（プレビューだけ）の大学はボタンを出さない
 }
 function renderAbout(){
   const p=profileOf(S.team);
