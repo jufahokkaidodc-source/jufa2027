@@ -74,6 +74,9 @@
       '<p><a href="../new/">北海道学生サッカー連盟のホームページへ</a></p></div>';
     return;
   }
+  // デザイン（dark・light・color）。?tpl= で、ほかのデザインを試しに見られる（見た目だけ）
+  var tq = (qs.get('tpl') || '').trim(), tpl = /^(dark|light|color)$/.test(tq) ? tq : (/^(dark|light|color)$/.test(c.tpl || '') ? c.tpl : 'dark');
+  document.body.setAttribute('data-tpl', tpl);
   window.CLUB = { univ: c.univ, name: c.name, en: c.en, lead: c.lead, color: '', hero: '', heroCaption: '', data: '../results/data/', results: '../results/', site: '../new/' };
   document.title = (preview ? '【プレビュー】' : '') + c.name;
   if (preview) {

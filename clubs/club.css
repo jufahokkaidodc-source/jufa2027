@@ -194,3 +194,53 @@ a.spn-a:hover{outline:2px solid var(--c)}
   .art{padding:18px 16px}
   .btn{width:100%;justify-content:center}
 }
+
+/* ===== テンプレート（ホームページ管理画面の「デザイン」で選ぶ）=====
+ *  dark  … スタジアム（黒・今まで）
+ *  light … クリーン（白・明るい・写真とカード）
+ *  color … チームカラー（ヘッダーとトップがチームカラー・大きな文字）
+ */
+body[data-tpl=light],body[data-tpl=color]{--bg:#f4f6f8;--card:#fff;--card2:#f1f3f5;--line:#e3e6ea;--ink:#1d2329;--muted:#6b737b;--c-text:color-mix(in srgb,var(--c) 80%,#000)}
+body[data-tpl=light] .sk,body[data-tpl=color] .sk{background:linear-gradient(90deg,#e8ebee 25%,#f3f5f7 50%,#e8ebee 75%);background-size:200% 100%}
+body[data-tpl=light] .card,body[data-tpl=light] .p,body[data-tpl=light] .stand a,
+body[data-tpl=color] .card,body[data-tpl=color] .p,body[data-tpl=color] .stand a{box-shadow:0 1px 2px #0000000d,0 4px 14px #0000000a}
+body[data-tpl=light] .next,body[data-tpl=color] .next{background:#fff;color:var(--ink);box-shadow:0 4px 18px #0000000f}
+body[data-tpl=light] .next:before,body[data-tpl=color] .next:before{background:radial-gradient(500px 220px at 80% 0%,color-mix(in srgb,var(--c) 18%,transparent),transparent 70%)}
+body[data-tpl=light] .next .meta,body[data-tpl=light] .next .when,body[data-tpl=light] .stand em,
+body[data-tpl=color] .next .meta,body[data-tpl=color] .next .when,body[data-tpl=color] .stand em{color:var(--muted)}
+body[data-tpl=light] a.mr:hover,body[data-tpl=light] .nl a:hover,body[data-tpl=color] a.mr:hover,body[data-tpl=color] .nl a:hover{background:#f6f8fa}
+body[data-tpl=light] .res.L,body[data-tpl=color] .res.L{background:#d5d9de;color:#4a5158}
+body[data-tpl=light] .p .b q,body[data-tpl=color] .p .b q{color:#4a5158}
+body[data-tpl=light] .p .f .no,body[data-tpl=color] .p .f .no{color:#ffffff70}
+body[data-tpl=light] .ft,body[data-tpl=color] .ft{background:#1d2329;border-top:0}
+/* クリーン：トップは写真を明るく、文字は左下に白い札 */
+body[data-tpl=light] .hero{background:linear-gradient(135deg,color-mix(in srgb,var(--c) 70%,#fff),color-mix(in srgb,var(--c) 30%,#fff))}
+body[data-tpl=light] .hero .ph:after{background:linear-gradient(0deg,#0007 0%,#0000 60%)}
+body[data-tpl=light] .hero .ring{display:none}
+body[data-tpl=light] .hero .in{min-height:300px}
+body[data-tpl=light] .hero h1{text-shadow:0 2px 14px #0005}
+body[data-tpl=light] .sh{border-bottom:1px solid var(--line)}
+body[data-tpl=light] .sh h2{position:relative;padding-left:12px}
+body[data-tpl=light] .sh h2:before{content:"";position:absolute;left:0;top:4px;bottom:4px;width:4px;border-radius:2px;background:var(--c)}
+body[data-tpl=light] .nav a[aria-current=page]{background:var(--c);color:#fff}
+/* チームカラー：ヘッダー・トップ・見出しをチームカラーに */
+body[data-tpl=color] .hd{background:var(--c);color:#fff;box-shadow:none}
+body[data-tpl=color] .brand small{color:#ffffffc0}
+body[data-tpl=color] .emb{background:#fff;color:var(--c)}
+body[data-tpl=color] .emb.img{background:#fff;border-radius:50%;padding:4px}
+body[data-tpl=color] .nav a{color:#fff}
+body[data-tpl=color] .nav a:hover{background:#ffffff26}
+body[data-tpl=color] .nav a[aria-current=page]{background:#fff;color:var(--c)}
+body[data-tpl=color] .menu{background:transparent;border-color:#ffffff80;color:#fff}
+body[data-tpl=color] .hero{background:var(--c)}
+body[data-tpl=color] .hero .ph:after{background:linear-gradient(0deg,color-mix(in srgb,var(--c) 92%,#000) 0%,color-mix(in srgb,var(--c) 40%,transparent) 55%,transparent 100%)}
+body[data-tpl=color] .hero .in{min-height:380px;align-items:center;text-align:center;justify-content:center;padding:64px 0}
+body[data-tpl=color] .hero h1{font-size:clamp(32px,6vw,60px);letter-spacing:.02em}
+body[data-tpl=color] .hero p{margin-left:auto;margin-right:auto}
+body[data-tpl=color] .hero .ring{right:auto;left:-90px;top:auto;bottom:-120px;border-color:#ffffff1f}
+body[data-tpl=color] .sh{border-bottom:0;background:var(--c);color:#fff;border-radius:10px;padding:10px 14px;align-items:center}
+body[data-tpl=color] .sh h2 small,body[data-tpl=color] .sh a{color:#ffffffd0}
+@media (max-width:680px){
+  body[data-tpl=color] .nav{background:var(--c)}
+  body[data-tpl=color] .hero .in{min-height:300px}
+}
