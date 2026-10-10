@@ -261,15 +261,14 @@
   }
   function openPlayer(id) {
     const p = S.players.find(x => String(x.id) === String(id)); if (!p) return;
-    const st = aggStats('ALL').find(x => x.id === p.id) || {}, ph = img(p.photo, 900);
+    const ph = img(p.photo, 900);
     const box = document.createElement('div'); box.className = 'pm'; box.setAttribute('role', 'dialog'); box.setAttribute('aria-modal', 'true'); box.setAttribute('aria-label', p.name);
     box.innerHTML = '<div class="box"><button class="x" type="button" aria-label="閉じる">×</button><div class="ph2">' + (ph ? '<img src="' + esc(ph) + '" alt="" onerror="this.remove()">' : '') + (has(p.no) ? '<span class="no">' + esc(p.no) + '</span>' : '') + '</div>' +
       '<div class="in"><span class="tag">' + esc(p.pos || 'PLAYER') + '</span><h3>' + esc(p.name) + '</h3>' + (p.kana ? '<small style="color:var(--sub)">' + esc(p.kana) + '</small>' : '') +
       '<dl>' + [['背番号', p.no], ['ポジション', p.pos], ['学年', p.grade ? p.grade + '年' : ''], ['出身校', p.school], ['所属', (p.teams || []).map(t => t.label).join('・')]].filter(r => has(r[1])).map(r => '<dt>' + r[0] + '</dt><dd>' + esc(r[1]) + '</dd>').join('') + '</dl>' +
       (has(p.comment) ? '<p style="margin:0;font-size:14px;line-height:1.8">「' + esc(p.comment) + '」</p>' : '') +
-      '<div class="stats">' + [['出場', st.apps || 0], ['得点', st.goals || 0], ['アシスト', st.assists || 0], ['出場時間', st.min ? st.min + '′' : '−']].map(r => '<div><b>' + r[1] + '</b><small>' + r[0] + '</small></div>').join('') + '</div>' +
       compStats(p.id) +
-      '<p style="font-size:11.5px;color:var(--sub);margin:12px 0 0">成績は今季の公式記録から自動で集計しています。</p></div></div>';
+      '<p style="font-size:11.5px;color:var(--sub);margin:12px 0 0">成績は公式記録から大会ごとに自動で集計しています。</p></div></div>';
     const close = () => { box.remove(); document.removeEventListener('keydown', esc1); if (location.hash.startsWith('#players/')) history.replaceState(null, '', '#players'); };
     const esc1 = e => { if (e.key === 'Escape') close(); };
     box.addEventListener('click', e => { if (e.target === box || e.target.closest('.x')) close(); });
@@ -283,7 +282,7 @@
       const q = s.players.find(x => String(x.id) === String(id));
       if (q && (Number(q.apps) || Number(q.goals) || Number(q.assists) || Number(q.yc) || Number(q.rc))) rows.push({ label: s.label, ...q });
     }
-    if (!rows.length) return '';
+    if (!rows.length) return '<div class="cst"><h4>大会ごとの成績</h4><p class="cst-n" style="font-size:13px">まだ公式戦の記録はありません。</p></div>';
     const n = v => Number(v) || 0, d = v => n(v) ? esc(n(v)) : '<span style="opacity:.4">–</span>';
     return '<div class="cst"><h4>大会ごとの成績</h4><div class="cst-w"><table><thead><tr><th class="l">大会</th><th>出場</th><th>得点</th><th>アシスト</th><th>時間</th><th>警告</th><th>退場</th></tr></thead><tbody>' +
       rows.map(r => '<tr><td class="l">' + esc(r.label) + '</td><td>' + d(r.apps) + (n(r.starts) ? '<small>(' + n(r.starts) + ')</small>' : '') + '</td><td class="g">' + d(r.goals) + '</td><td>' + d(r.assists) + '</td><td>' + (n(r.min) ? n(r.min) + '′' : d(0)) + '</td><td>' + d(r.yc) + '</td><td>' + d(r.rc) + '</td></tr>').join('') +
@@ -302,16 +301,18 @@
     }
     return [...m.values()];
   }
-  let ST = 'ALL', SK = 'goals';
+  let SK = 'goals';
+  /* 個人成績：大会ごとの表を、上から順に全部ならべる（切り替えなし・通算は出さない） */
   function statsTable() {
-    const chips = S.stats.length > 1 ? '<div class="chips" data-k="st">' + [['ALL', 'すべての大会'], ...S.stats.map(x => [x.team.id + '|' + x.comp.id, x.label])].map(([k, l]) => '<button aria-pressed="' + (k === ST) + '" data-v="' + esc(k) + '">' + esc(l) + '</button>').join('') + '</div>' : '';
-    const all = aggStats(ST);
-    const cols = [['goals', '得点'], ['assists', 'アシスト'], ['apps', '出場'], ['starts', '先発'], ['min', '出場時間'], ['yc', '警告'], ['rc', '退場']].filter(([k]) => k === 'goals' || all.some(p => p[k] > 0));
-    if (!cols.some(c => c[0] === SK)) SK = 'goals';
-    const rows = all.filter(p => p.apps || p.goals || p.assists || p.yc || p.rc).sort((a, b) => (b[SK] - a[SK]) || (b.goals - a.goals) || (b.min - a.min));
-    return chips + (rows.length ? '<div class="card tw"><table><thead><tr><th class="l">選手</th>' + cols.map(([k, l]) => '<th><button data-sort="' + k + '"' + (k === SK ? ' aria-sort="descending"' : '') + '>' + l + (k === SK ? ' ▼' : '') + '</button></th>').join('') + '</tr></thead><tbody>' +
-      rows.map(p => '<tr><td class="l">' + (has(p.no) ? '<span style="color:var(--sub);display:inline-block;min-width:26px">' + esc(p.no) + '</span>' : '') + '<b>' + esc(p.name) + '</b></td>' + cols.map(([k]) => '<td' + (k === SK ? ' style="font-weight:900"' : '') + '>' + (k === 'min' ? (p.min ? p.min + '分' : '−') : (p[k] || (k === 'yc' || k === 'rc' ? '−' : 0))) + '</td>').join('') + '</tr>').join('') + '</tbody></table></div>' : emptyBox('まだ記録はありません')) +
-      '<p style="font-size:12px;color:var(--sub);margin:10px 2px 0">公式記録から自動で集計しています。見出しを押すと並べ替えます。</p>';
+    const one = x => {
+      const all = aggStats(x.team.id + '|' + x.comp.id);
+      const cols = [['goals', '得点'], ['assists', 'アシスト'], ['apps', '出場'], ['starts', '先発'], ['min', '出場時間'], ['yc', '警告'], ['rc', '退場']].filter(([k]) => k === 'goals' || k === SK || all.some(p => p[k] > 0));
+      const rows = all.filter(p => p.apps || p.goals || p.assists || p.yc || p.rc).sort((a, b) => ((b[SK] || 0) - (a[SK] || 0)) || (b.goals - a.goals) || (b.min - a.min));
+      return '<h3 class="st-h">' + esc(x.label) + '</h3>' + (rows.length ? '<div class="card tw"><table><thead><tr><th class="l">選手</th>' + cols.map(([k, l]) => '<th><button data-sort="' + k + '"' + (k === SK ? ' aria-sort="descending"' : '') + '>' + l + (k === SK ? ' ▼' : '') + '</button></th>').join('') + '</tr></thead><tbody>' +
+        rows.map(p => '<tr><td class="l">' + (has(p.no) ? '<span style="color:var(--sub);display:inline-block;min-width:26px">' + esc(p.no) + '</span>' : '') + '<button class="st-p" type="button" data-pid="' + esc(p.id) + '">' + esc(p.name) + '</button></td>' + cols.map(([k]) => '<td' + (k === SK ? ' style="font-weight:900"' : '') + '>' + (k === 'min' ? (p.min ? p.min + '分' : '−') : (p[k] || (k === 'yc' || k === 'rc' ? '−' : 0))) + '</td>').join('') + '</tr>').join('') + '</tbody></table></div>' : emptyBox('まだ記録はありません'));
+    };
+    return (S.stats.length ? S.stats.map(one).join('') : emptyBox('まだ記録はありません')) +
+      '<p style="font-size:12px;color:var(--sub);margin:10px 2px 0">公式記録から大会ごとに自動で集計しています。見出しを押すと並べ替えます。選手の名前を押すと、その選手の大会ごとの成績を見られます。</p>';
   }
 
   /* ───────── ABOUT・GALLERY・CONTACT ───────── */
@@ -399,12 +400,12 @@
     const b = e.target.closest('.chips button');
     if (b) {
       const k = b.parentNode.dataset.k, v = b.dataset.v;
-      if (k === 'pt') PT = v; if (k === 'pp') PP = v; if (k === 'tv') TV = v; if (k === 'mt') MT = v; if (k === 'ms') MS = v; if (k === 'st') ST = v; if (k === 'nk') { NK = v; NP = 1; }
+      if (k === 'pt') PT = v; if (k === 'pp') PP = v; if (k === 'tv') TV = v; if (k === 'mt') MT = v; if (k === 'ms') MS = v; if (k === 'nk') { NK = v; NP = 1; }
       route(); return;
     }
     const s = e.target.closest('th button[data-sort]'); if (s) { SK = s.dataset.sort; route(); return; }
     const pg = e.target.closest('[data-np]'); if (pg) { NP = +pg.dataset.np; route(); window.scrollTo(0, 0); return; }
-    const pc = e.target.closest('.p[data-pid]'); if (pc) { openPlayer(pc.dataset.pid); return; }
+    const pc = e.target.closest('.p[data-pid],.st-p[data-pid]'); if (pc) { openPlayer(pc.dataset.pid); return; }
     const gi = e.target.closest('[data-gi]'); if (gi) { e.preventDefault(); lightbox(+gi.dataset.gi); }
   });
   $('main').addEventListener('submit', e => { if (e.target.id === 'nq') { e.preventDefault(); NQ = e.target.querySelector('input').value.trim(); NP = 1; route(); } });
