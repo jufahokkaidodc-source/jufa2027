@@ -1,0 +1,90 @@
+/* 新HPの配色（ヘッダー白・背景黒・強調赤・注目の試合黒）
+ * 4ページ（index・news・about・team）の <head> の最後で読み込み、各ページの色を上書きする
+ * 色を変えるときは、まずこのファイルの :root を変える
+ */
+:root{
+  --bg:#0e0e0e;      /* ページの背景 */
+  --card:#1a1a1a;    /* カード */
+  --card2:#232323;   /* カードの中の帯・ボタン */
+  --line:#2e2e2e;    /* 罫線 */
+  --ink:#f2f2f2;     /* 文字 */
+  --muted:#9aa0a6;   /* 補足の文字 */
+  --navy:#000000;    /* 注目の試合・フッターなど黒い面 */
+  --navy2:#161616;
+  --lime:#E60012;    /* 強調（赤） */
+  --blue:#ff4d57;    /* 黒地の上のリンク・小見出し（読みやすい明るめの赤） */
+  --red:#E60012;
+  --accent:#E60012;
+}
+body{background:var(--bg);color:var(--ink)}
+
+/* ヘッダー：白 */
+.header{background:#fff;color:#111;box-shadow:0 1px 0 #e5e5e5}
+.header .nav a{color:#333}
+.header .nav a:hover,.header .nav a.on{color:#111;border-bottom-color:var(--red)}
+.brandname small{color:#777}
+.logo{box-shadow:none}  /* ロゴにふち取りを付けない（2026-10） */
+.menubtn{border-color:#ccc;color:#111}
+.comptabs{background:#161616;border-top:0}
+@media(max-width:680px){
+  .nav{background:#fff;border-bottom:1px solid #e5e5e5}
+  .nav a{border-bottom-color:#eee}
+}
+
+/* 赤の上の文字は白 */
+.label,.comptabs button[aria-selected=true],.hero-foot a,.st.today,.crest .bdg,.ct .btn,.btn{color:#fff}
+.label.ghost{background:#ffffff1f;color:#ddd}
+.vs,.cd,.eyebrow{color:#ff3b47}
+.ph-dots button[aria-current=true]:before{background:var(--red)}
+.alert b{background:var(--red)}
+
+/* 面・カード */
+.ticker,.newsbox,.card,.tcard,.club,.feat article,.mcard,.article,.ov article,.player,.pagehead+.main .card{background:var(--card);border-color:var(--line)}
+.ticker{border-bottom-color:var(--line)}
+.sechead,.sh{border-bottom-color:var(--red)}
+.boxhead,.news a,.mrow,.dayhead,.list a,.docs a,.docs div,.scorer{border-color:var(--line)}
+.dayhead,.grouphead,th{background:var(--card2);color:var(--muted)}
+td,th{border-bottom-color:var(--line)}
+.mrow:hover,.news a:hover,.list a:hover,.docs a:hover,.tcard:hover{background:#222}
+.mrow .sc{background:#262626}
+.mrow .sc.done{background:#000}
+.mrow .sc.vs{border-color:var(--line);color:var(--muted)}
+.st{background:#2a2a2a;color:var(--muted)}
+.st.done{background:#000;color:#fff}
+.trow.lose,.tm.lose{color:#6f757b}
+.scorer.lead{background:linear-gradient(90deg,#3a0a0e,var(--card) 75%)}
+.p2{background:var(--card);border-color:#444}
+.club>.crest{border-color:var(--card)}
+
+/* ボタン・タブ */
+.roundnav button,.subtabs button,.chips button,.chips a,.jump a,.more,.tabbar button,.ptabs button{background:var(--card2);border-color:var(--line);color:var(--muted)}
+.subtabs button[aria-selected=true],.chips [aria-selected=true],.ptabs button[aria-selected=true]{background:var(--red);border-color:var(--red);color:#fff}
+.tabbar button[aria-selected=true]{color:var(--ink);border-bottom-color:var(--red)}
+.tabs{background:var(--card2)}
+.tabs button[aria-selected=true]{background:var(--red);color:#fff}
+
+/* お知らせ・連盟について */
+.list .thumb,.aphoto,.aphoto img{background:var(--card2)}
+.docs .ic{background:var(--card2);color:var(--muted)}
+.docs .ic.pdf{background:#3a0a0e;color:#ff6b73}
+.cat{color:#ff6b73;border-color:#5a1a1f}
+.article .body a,.ov p a{color:#ff6b73}
+
+/* チームページ */
+.lbl,.wdl,.pending{background:var(--card2);color:var(--ink)}
+tr.me td{background:#2a1416}
+.sq tr.grp td{background:var(--card2)}
+.sq tbody tr:not(.grp):hover td{background:#222}
+
+/* エンブレム：黒地の上では白い版（暗い背景用）か、白い丸い台。白いヘッダーの上（CLUBS の列）は普通のエンブレム */
+.crest.img.hasdark .el{display:none}
+.crest.img.hasdark .ed{display:block}
+.crest.img:not(.hasdark){background:#fff!important;border-radius:50%!important}
+.crest.img:not(.hasdark) img{position:absolute;inset:15%;width:70%;height:70%}
+.clubbar .crest.img.hasdark .el{display:block}
+.clubbar .crest.img.hasdark .ed{display:none}
+.clubbar .crest.img{background:transparent!important;border-radius:0!important}
+.clubbar .crest.img img{position:static;width:100%;height:100%}
+
+/* 注目の試合の光（紺 → 赤み） */
+.hero:before{background:radial-gradient(600px 300px at 80% 0%,#5a0a12,transparent 70%)}
