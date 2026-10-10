@@ -226,6 +226,17 @@ th button[aria-sort]{color:var(--c-text)}
 .pm dl{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;margin:16px 0;font-size:14px}
 .pm dt{color:var(--sub)}
 .pm dd{margin:0;font-weight:700}
+.pm .cst{margin-top:18px}
+.pm .cst h4{margin:0 0 8px;font-size:14px}
+.pm .cst-w{overflow-x:auto;border:1px solid var(--line);border-radius:10px}
+.pm .cst table{width:100%;border-collapse:collapse;font-size:13px;white-space:nowrap}
+.pm .cst th,.pm .cst td{padding:8px 8px;text-align:center;border-bottom:1px solid var(--line)}
+.pm .cst tr:last-child td{border-bottom:0}
+.pm .cst th{font-size:11px;color:var(--sub);font-weight:700}
+.pm .cst .l{text-align:left;white-space:normal;min-width:9em}
+.pm .cst td.g{font-weight:800}
+.pm .cst small{font-size:10px;color:var(--sub);margin-left:2px}
+.pm .cst-n{font-size:11px;color:var(--sub);margin:6px 0 0}
 .pm .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}
 .pm .stats div{background:color-mix(in srgb,var(--ink) 5%,transparent);border-radius:8px;padding:10px;text-align:center}
 .pm .stats b{display:block;font-family:var(--en);font-size:28px;font-weight:800;line-height:1}
