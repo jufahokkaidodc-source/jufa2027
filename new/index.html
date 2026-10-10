@@ -333,6 +333,9 @@ html{scroll-padding-top:0}
   .clubs{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
   .ph-stage{aspect-ratio:4/3}
   .ph-cap .tx{gap:2px 10px}
+  .ph-cap{flex-wrap:wrap;row-gap:0}
+  .ph-cap .tx{flex:1 1 100%}
+  .ph-dots{flex-wrap:wrap;margin:0 -6px}
   .ph-nav{display:none}
   .feat{grid-template-columns:1fr}
   .feat article{display:grid;grid-template-columns:110px 1fr}
@@ -671,12 +674,19 @@ function renderTopics(ms,scorers,compName){
 
 /* top photos：写真がないときは何も出さない。今の1枚と次の1枚だけ読み込む */
 const PH={list:[],i:0,timer:null,paused:false,key:''};
-let HERO=[];
-/* 大会ごとの写真：その大会の写真があればそれだけ、なければ「すべての大会」の写真 */
-function heroFor(id){
+let HERO=[],TEAMPH=[];
+/* 大会ごとの写真：
+   ・連盟が登録した、その大会の写真（あれば先に）
+   ・各大学がギャラリーで「トップに使う」にした写真（大学ごとに新しい3枚まで）から、その大会に出ている大学の分をランダムに
+   ・合わせて10枚まで。どちらもないときは、連盟の「すべての大会」の写真 */
+function heroFor(id,teams){
   const ok=x=>photoUrl(x.photo,1600);
   const own=HERO.filter(x=>x.comp===id&&ok(x));
-  return (own.length?own:HERO.filter(x=>!x.comp&&ok(x))).slice(0,10);
+  const byUniv=new Map();for(const t of teams||[]){const u=typeof t==='object'?String(t.univ||'').trim():'';if(u&&!byUniv.has(u))byUniv.set(u,t)}
+  const pool=TEAMPH.filter(x=>ok(x)&&byUniv.has(String(x.univ||'').trim())).map(x=>({photo:x.photo,caption:x.caption||'',univ:x.univ,url:teamUrl(id,byUniv.get(String(x.univ).trim()))}));
+  for(let i=pool.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[pool[i],pool[j]]=[pool[j],pool[i]]}
+  const list=own.concat(pool).slice(0,10);
+  return list.length?list:HERO.filter(x=>!x.comp&&ok(x)).slice(0,10);
 }
 function renderPhotos(list){
   list=(list||[]).filter(x=>photoUrl(x.photo,1600)).slice(0,10);
@@ -716,8 +726,8 @@ function showPhoto(i){
   $('phStage').querySelectorAll('.ph').forEach(f=>{const on=+f.dataset.i===i;f.classList.toggle('on',on);f.setAttribute('aria-hidden',String(!on));f.querySelectorAll('a').forEach(a=>a.tabIndex=on?0:-1)});
   $('phDots').querySelectorAll('button').forEach(b=>b.setAttribute('aria-current',String(+b.dataset.i===i)));
   const x=PH.list[i];
-  $('phTx').innerHTML=(x.caption?'<span>'+esc(x.caption)+'</span>':'')+(x.credit?'<small>撮影：'+esc(x.credit)+'</small>':'');
-  $('phCap').hidden=!x.caption&&!x.credit&&PH.list.filter(Boolean).length<2;
+  $('phTx').innerHTML=(x.caption?'<span>'+esc(x.caption)+'</span>':'')+(x.credit?'<small>撮影：'+esc(x.credit)+'</small>':'')+(x.univ?'<small>'+esc(x.univ)+'</small>':'');
+  $('phCap').hidden=!x.caption&&!x.credit&&!x.univ&&PH.list.filter(Boolean).length<2;
 }
 const reduceMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
 function stopPhotos(){clearInterval(PH.timer);PH.timer=null}
@@ -783,7 +793,7 @@ async function load(id){
     renderFeatured(feat);
     renderTopics(ms,d.scorers,d.competition?.name||'');
     renderTable(d.groups);renderScorers(d.scorers);renderClubs(collectTeams(ms),id);
-    renderPhotos(heroFor(id));
+    renderPhotos(heroFor(id,collectTeams(ms)));
   }catch(e){
     $('feature').innerHTML='<p class="empty" style="color:#c0d3e2">データを読み込めません：'+esc(e.message)+'</p>';
     for(const k of ['ticker','topics','matchList','table','scorerList','clubList'])$(k).innerHTML='<p class="empty">データを表示できません。</p>';
@@ -806,7 +816,7 @@ links.forEach(a=>{const s=document.querySelector(a.getAttribute('href'));if(s)sp
     else{$('comptabs').innerHTML='<button>大会情報を取得できません</button>';$('feature').innerHTML='<p class="empty" style="color:#c0d3e2">大会一覧を取得できません：'+esc(e.message)+'</p>';return}
   }
   $('demo').hidden=!DEMO;
-  try{const r=DEMO?{ok:1,news:[{id:'a1',date:jstToday(),cat:'連盟',title:'（サンプル）2027年度 チーム登録の受付について',important:true},{id:'a2',date:jstToday(),cat:'demo-1',title:'（サンプル）第3節 会場変更のお知らせ',important:true}],hero:demoHero()}:await fetch('../results/data/news.json',{cache:'no-store'}).then(r=>r.ok?r.json():null);NEWS=r?.news||[];HERO=r?.hero||[]}catch(_){NEWS=[]}
+  try{const r=DEMO?{ok:1,news:[{id:'a1',date:jstToday(),cat:'連盟',title:'（サンプル）2027年度 チーム登録の受付について',important:true},{id:'a2',date:jstToday(),cat:'demo-1',title:'（サンプル）第3節 会場変更のお知らせ',important:true}],hero:demoHero(),teamPhotos:demoTeamPhotos()}:await fetch('../results/data/news.json',{cache:'no-store'}).then(r=>r.ok?r.json():null);NEWS=r?.news||[];HERO=r?.hero||[];TEAMPH=r?.teamPhotos||[]}catch(_){NEWS=[]}
   renderAlert();
   await embReady;
   const cs=d.competitions||[];
@@ -835,6 +845,7 @@ function demoHero(){return [
   {photo:demoPhoto(2,'#14532d','#0e2c48'),caption:'（サンプル）リーグ1部 優勝チーム',credit:'学生 A',comp:'demo-1'},
   {photo:demoPhoto(3,'#5b2a86','#0e2c48'),caption:'（サンプル）リーグ2部 開幕戦',credit:'',comp:'demo-2'},
   {photo:demoPhoto(4,'#7a3b00','#0e2c48'),caption:'（サンプル）すべての大会で出る写真',credit:'',comp:''}]}
+function demoTeamPhotos(){return 'ABC'.split('').map((c,i)=>({photo:demoPhoto(10+i,['#7a1f1f','#1f4d7a','#2d6a2d'][i],'#0e2c48'),caption:'（サンプル）サンプル大学'+c+'の練習風景',univ:'サンプル大学'+c+' サッカー部',date:''}))}
 function demoData(file){
   const T='ABCDEFGH'.split('').map((c,i)=>({id:'t'+i,short:'サンプル大学'+c,name:'サンプル大学'+c,univ:'サンプル大学'+c+' サッカー部'}));
   if(file==='competitions.json')return{competitions:[{id:'demo-1',name:'【サンプル】リーグ 1部'},{id:'demo-2',name:'【サンプル】リーグ 2部'},{id:'demo-cup',name:'【サンプル】選手権'}]};
