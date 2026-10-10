@@ -9,7 +9,7 @@
 <link rel="icon" href="../results/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@500;700;800&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="club.css">
 
 </head>
@@ -20,26 +20,29 @@
     <button class="menu" id="menu" aria-controls="nav" aria-expanded="false" aria-label="メニュー">☰</button>
     <nav class="nav" id="nav">
       <a href="#home">HOME</a>
-      <a href="#players">PLAYERS</a>
-      <a href="#matches">MATCHES</a>
-      <a href="#stats">STATS</a>
       <a href="#news">NEWS</a>
-      <a href="#club">CLUB</a>
+      <a href="#matches">MATCH</a>
+      <a href="#players">TEAM</a>
+      <a href="#club">ABOUT</a>
+      <a href="#gallery">GALLERY</a>
+      <a href="#contact">CONTACT</a>
     </nav>
   </div>
 </header>
-<section class="hero" id="hero">
-  <div class="ph" id="heroPh"></div><span class="ring"></span>
-  <div class="wrap in"><div class="eb" id="heroEb"></div><h1 id="heroTitle"></h1><p id="heroLead"></p></div>
-  <span class="cap" id="heroCap"></span>
-</section>
-<main class="wrap" id="main"><span class="sk" style="width:60%"></span><span class="sk"></span><span class="sk"></span></main>
+<section class="hero" id="hero"></section>
+<main id="main"><span class="sk" style="width:60%"></span><span class="sk"></span><span class="sk"></span></main>
 <footer class="ft">
   <div class="wrap">
-    <div><b id="ftName"></b><p>試合・記録は北海道学生サッカー連盟の公式記録から自動で表示しています。<br><span id="updated"></span></p></div>
+    <div><b id="ftName"></b><p>試合・記録は北海道学生サッカー連盟の公式記録から自動で表示しています。<br><span id="updated"></span></p><div class="sns2" id="ftSns"></div></div>
     <nav><a href="../new/">北海道学生サッカー連盟</a><a href="../new/results.html">大会記録</a></nav>
   </div>
 </footer>
+<nav class="bnav" aria-label="スマホのメニュー">
+  <a href="#home"><i>⌂</i>HOME</a>
+  <a href="#matches"><i>⚽</i>MATCH</a>
+  <a href="#players"><i>👥</i>TEAM</a>
+  <button type="button" id="bMenu" aria-label="メニューを開く"><i>☰</i>MENU</button>
+</nav>
 <script>
 /* チームの独自ホームページ（共通）：clubs/?u=アドレス名
  *  公開している大学は results/data/clubs.json に出る（ホームページ管理画面の「チーム紹介」→「独自ホームページ」で「公開する」）
@@ -65,17 +68,20 @@
   if (!c) {
     document.getElementById('hero').hidden = true;
     document.getElementById('nav').style.display = 'none'; document.getElementById('menu').style.display = 'none';
+    document.querySelector('.bnav').style.display = 'none';
     document.getElementById('siteName').textContent = '北海道学生サッカー連盟';
     document.getElementById('siteEn').textContent = 'CLUB SITES';
     document.getElementById('ftName').textContent = '北海道学生サッカー連盟';
-    document.getElementById('main').innerHTML = '<div class="card" style="margin-top:24px"><h2 style="margin-top:0">' + (pkey ? 'プレビューを準備しています' : slug ? 'このページは準備中です' : 'チームのホームページ') + '</h2>' +
+    document.getElementById('main').innerHTML = '<div class="wrap"><div class="card" style="margin-top:24px;padding:20px"><h2 style="margin-top:0">' + (pkey ? 'プレビューを準備しています' : slug ? 'このページは準備中です' : 'チームのホームページ') + '</h2>' +
       (pkey ? '<p>はじめてのプレビューは、サイトに準備できるまで1〜2分かかります。少し待ってから開き直してください。直らないときは、管理画面からもう一度「プレビューを見る」を押してください。</p>' : slug ? '<p>このチームのホームページは、まだ公開されていません。</p>' : '') +
       (list.length ? '<p>公開しているチーム：</p><ul>' + list.map(function (x) { return '<li><a href="./?u=' + encodeURIComponent(x.slug) + '">' + esc(x.name) + '</a></li>'; }).join('') + '</ul>' : (slug ? '' : '<p>公開しているチームはまだありません。</p>')) +
-      '<p><a href="../new/">北海道学生サッカー連盟のホームページへ</a></p></div>';
+      '<p><a href="../new/">北海道学生サッカー連盟のホームページへ</a></p></div></div>';
     return;
   }
-  // デザイン（dark・light・color）。?tpl= で、ほかのデザインを試しに見られる（見た目だけ）
-  var tq = (qs.get('tpl') || '').trim(), tpl = /^(dark|light|color)$/.test(tq) ? tq : (/^(dark|light|color)$/.test(c.tpl || '') ? c.tpl : 'dark');
+  // デザイン（a＝DARK IMPACT・b＝CLEAN MODERN・c＝SPORTS EDITORIAL）。?tpl= で、ほかのデザインを試しに見られる（見た目だけ）
+  var OLD = { dark: 'a', light: 'b', color: 'c' };
+  var normTpl = function (v) { v = String(v || '').trim().toLowerCase(); v = OLD[v] || v; return /^[abc]$/.test(v) ? v : ''; };
+  var tpl = normTpl(qs.get('tpl')) || normTpl(c.tpl) || 'a';
   document.body.setAttribute('data-tpl', tpl);
   window.CLUB = { univ: c.univ, name: c.name, en: c.en, lead: c.lead, color: '', hero: '', heroCaption: '', data: '../results/data/', results: '../results/', site: '../new/' };
   document.title = (preview ? '【プレビュー】' : '') + c.name;
