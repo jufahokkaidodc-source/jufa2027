@@ -268,12 +268,26 @@
       '<dl>' + [['背番号', p.no], ['ポジション', p.pos], ['学年', p.grade ? p.grade + '年' : ''], ['出身校', p.school], ['所属', (p.teams || []).map(t => t.label).join('・')]].filter(r => has(r[1])).map(r => '<dt>' + r[0] + '</dt><dd>' + esc(r[1]) + '</dd>').join('') + '</dl>' +
       (has(p.comment) ? '<p style="margin:0;font-size:14px;line-height:1.8">「' + esc(p.comment) + '」</p>' : '') +
       '<div class="stats">' + [['出場', st.apps || 0], ['得点', st.goals || 0], ['アシスト', st.assists || 0], ['出場時間', st.min ? st.min + '′' : '−']].map(r => '<div><b>' + r[1] + '</b><small>' + r[0] + '</small></div>').join('') + '</div>' +
+      compStats(p.id) +
       '<p style="font-size:11.5px;color:var(--sub);margin:12px 0 0">成績は今季の公式記録から自動で集計しています。</p></div></div>';
     const close = () => { box.remove(); document.removeEventListener('keydown', esc1); if (location.hash.startsWith('#players/')) history.replaceState(null, '', '#players'); };
     const esc1 = e => { if (e.key === 'Escape') close(); };
     box.addEventListener('click', e => { if (e.target === box || e.target.closest('.x')) close(); });
     document.addEventListener('keydown', esc1);
     document.body.appendChild(box); box.querySelector('.x').focus();
+  }
+  /* 大会ごとの成績（選手のくわしい情報の中） */
+  function compStats(id) {
+    const rows = [];
+    for (const s of S.stats) {
+      const q = s.players.find(x => String(x.id) === String(id));
+      if (q && (Number(q.apps) || Number(q.goals) || Number(q.assists) || Number(q.yc) || Number(q.rc))) rows.push({ label: s.label, ...q });
+    }
+    if (!rows.length) return '';
+    const n = v => Number(v) || 0, d = v => n(v) ? esc(n(v)) : '<span style="opacity:.4">–</span>';
+    return '<div class="cst"><h4>大会ごとの成績</h4><div class="cst-w"><table><thead><tr><th class="l">大会</th><th>出場</th><th>得点</th><th>アシスト</th><th>時間</th><th>警告</th><th>退場</th></tr></thead><tbody>' +
+      rows.map(r => '<tr><td class="l">' + esc(r.label) + '</td><td>' + d(r.apps) + (n(r.starts) ? '<small>(' + n(r.starts) + ')</small>' : '') + '</td><td class="g">' + d(r.goals) + '</td><td>' + d(r.assists) + '</td><td>' + (n(r.min) ? n(r.min) + '′' : d(0)) + '</td><td>' + d(r.yc) + '</td><td>' + d(r.rc) + '</td></tr>').join('') +
+      '</tbody></table></div><p class="cst-n">出場の（ ）は先発の数</p></div>';
   }
   function aggStats(sel) {
     const m = new Map();
