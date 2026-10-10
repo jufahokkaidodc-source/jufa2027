@@ -1,0 +1,805 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#071b2e">
+<link rel="icon" href="../results/favicon.png" sizes="32x32">
+<link rel="apple-touch-icon" href="../results/apple-touch-icon.png">
+<meta name="robots" content="noindex,nofollow">
+<title>チーム紹介 | 北海道学生サッカー連盟</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#071b2e;--navy2:#0e2c48;--lime:#c5f26d;--ink:#141e28;--muted:#6b7a89;
+  --line:#e3e8ee;--bg:#f4f6f8;--blue:#145ec9;--team:#145ec9;
+  --win:#1f7a3f;--draw:#8a96a3;--lose:#c0392b;
+  --num:"Barlow Condensed","Noto Sans JP",sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans JP",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;cursor:pointer}
+.wrap{width:min(1200px,100% - 40px);margin:auto}
+.num{font-family:var(--num);font-variant-numeric:tabular-nums}
+.demo{background:#fff4d6;color:#7a5a00;font-size:12px;text-align:center;padding:7px 16px}
+
+/* emblem bar */
+.clubbar{background:#fff;border-bottom:1px solid var(--line)}
+.clubbar .wrap{display:flex;align-items:center;gap:6px;height:46px;overflow-x:auto;scrollbar-width:none}
+.clubbar .wrap::-webkit-scrollbar{display:none}
+.clubbar small{font-family:var(--num);font-size:11px;font-weight:700;letter-spacing:.12em;color:var(--muted);margin-right:8px;white-space:nowrap}
+.clubbar a{flex:none;border-radius:50%;transition:transform .15s;opacity:.55}
+.clubbar a:hover{transform:scale(1.12);opacity:1}
+.clubbar a.on{opacity:1;box-shadow:0 0 0 2px #fff,0 0 0 4px var(--ink)}
+
+/* header */
+.header{background:var(--navy);color:#fff;position:sticky;top:0;z-index:30}
+.head{height:62px;display:flex;align-items:center;gap:18px}
+.brand{display:flex;align-items:center;gap:11px;min-width:0}
+.logo{height:46px;border-radius:8px;background:#fff;display:flex;align-items:center;flex:none;padding:4px 7px}
+.logo img{height:100%;width:auto;display:block}
+.brandname{font-size:15px;font-weight:900;line-height:1.25}
+.brandname small{display:block;font-family:var(--num);font-size:11px;color:#9fb8cc;letter-spacing:.04em;font-weight:600}
+.nav{display:flex;margin-left:auto;height:100%}
+.nav a{display:flex;align-items:center;padding:0 13px;font-size:13px;font-weight:700;color:#d2e0eb;border-bottom:3px solid transparent;transition:.15s}
+.nav a:hover,.nav a.on{color:#fff;border-bottom-color:var(--lime)}
+.menubtn{display:none;margin-left:auto;background:transparent;border:1px solid #ffffff33;color:#fff;border-radius:8px;padding:7px 11px;font-size:12px}
+.comptabs{background:var(--navy2);border-top:1px solid #ffffff12}
+.comptabs .wrap{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;height:44px;align-items:center}
+.comptabs .wrap::-webkit-scrollbar{display:none}
+.comptabs button{flex:none;border:0;background:transparent;color:#a9c0d3;padding:7px 14px;border-radius:30px;font-size:12.5px;font-weight:700;white-space:nowrap}
+.comptabs button:hover{color:#fff}
+.comptabs button[aria-selected=true]{background:var(--lime);color:var(--navy)}
+
+/* crest */
+.crest{--c:#145ec9;width:40px;height:40px;border-radius:50%;background:var(--c);color:#fff;display:grid;place-items:center;font-weight:900;font-size:15px;flex:none;box-shadow:inset 0 0 0 2.5px #ffffff38}
+.crest{position:relative}
+.crest .bdg{position:absolute;right:-6px;bottom:-4px;min-width:16px;height:16px;padding:0 4px;border-radius:8px;background:var(--lime);color:var(--navy);font:800 10px/16px var(--num);font-style:normal;letter-spacing:0;text-align:center;white-space:nowrap;box-shadow:0 0 0 1.5px #fff}
+.crest.xs .bdg{display:none}
+.crest.sm .bdg{min-width:14px;height:14px;padding:0 3px;font-size:9px;line-height:14px}
+.crest.xl .bdg{min-width:28px;height:24px;padding:0 7px;border-radius:12px;font-size:15px;line-height:24px;right:-8px;bottom:-2px}
+
+.crest.xs{width:22px;height:22px;font-size:10px;box-shadow:inset 0 0 0 1.5px #ffffff38}
+.crest.sm{width:30px;height:30px;font-size:12px}
+.crest.xl{width:96px;height:96px;font-size:38px;box-shadow:inset 0 0 0 4px #ffffff38,0 0 0 5px #ffffff14}
+.crest.two{font-size:13px;letter-spacing:-.05em}
+.crest.xs.two{font-size:8.5px}
+.crest.sm.two{font-size:10.5px}
+.crest.xl.two{font-size:30px}
+.crest.img{background:transparent!important;box-shadow:none!important;border-radius:0}
+.crest.img img{width:100%;height:100%;object-fit:contain;display:block}
+/* 暗い背景の上のエンブレム：白い版（チーム紹介「エンブレム（暗い背景用）」）があればそれ、なければ白い丸い台にのせる */
+.crest.img .ed{display:none}
+.hero .crest.img.hasdark .el, .mcard.next .crest.img.hasdark .el, .header .crest.img.hasdark .el{display:none}
+.hero .crest.img.hasdark .ed, .mcard.next .crest.img.hasdark .ed, .header .crest.img.hasdark .ed{display:block}
+.hero .crest.img:not(.hasdark), .mcard.next .crest.img:not(.hasdark), .header .crest.img:not(.hasdark){background:#fff!important;border-radius:50%}
+.hero .crest.img:not(.hasdark) img, .mcard.next .crest.img:not(.hasdark) img, .header .crest.img:not(.hasdark) img{position:absolute;inset:15%;width:70%;height:70%}
+
+
+
+/* hero */
+.hero{background:var(--navy);color:#fff;position:relative;overflow:hidden}
+.hero:before{content:"";position:absolute;inset:0;background:radial-gradient(700px 360px at 85% 0%,color-mix(in srgb,var(--team) 70%,transparent),transparent 70%)}
+.hero:after{content:"";position:absolute;left:0;right:0;bottom:0;height:5px;background:var(--team)}
+.hero .wrap{position:relative;padding:22px 0 26px}
+.crumb{font-size:11px;color:#9fb8cc;margin-bottom:20px}
+.crumb a:hover{color:#fff;text-decoration:underline}
+.club-id{display:flex;align-items:center;gap:22px}
+.club-id h1{font-size:clamp(26px,4.2vw,44px);margin:2px 0 6px;line-height:1.25;font-weight:900;letter-spacing:-.02em}
+.club-id p{margin:0;font-size:13px;color:#bcd0df}
+.eyebrow{font-family:var(--num);font-size:13px;letter-spacing:.18em;color:var(--lime);font-weight:700}
+.hstats{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));margin-top:24px;border-top:1px solid #ffffff1f}
+.hstat{padding:14px 4px 2px}
+.hstat+.hstat{border-left:1px solid #ffffff1f;padding-left:18px}
+.hstat b{display:block;font-family:var(--num);font-size:34px;font-weight:700;line-height:1}
+.hstat b small{font-size:15px;color:#9fb8cc;margin-left:2px}
+.hstat span{font-size:11px;color:#9fb8cc}
+.form{display:flex;gap:4px;margin-top:2px}
+.form i{width:24px;height:24px;border-radius:5px;display:grid;place-items:center;font-style:normal;font-size:11px;font-weight:900;color:#fff}
+.form i.W{background:var(--win)}.form i.D{background:var(--draw)}.form i.L{background:var(--lose)}
+.form i.E{background:#ffffff14;color:#ffffff40}
+
+/* layout */
+.main{padding:28px 0 64px}
+.section{margin-top:44px}
+.section:first-child{margin-top:0}
+.sechead{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-bottom:14px;border-bottom:2px solid var(--ink);padding-bottom:10px}
+.sechead h2{margin:0;font-size:22px;font-weight:900;line-height:1.3}
+.sechead h2 small{display:block;font-family:var(--num);font-size:12px;letter-spacing:.16em;color:var(--blue);font-weight:700}
+.sechead a{font-size:12px;color:var(--blue);font-weight:700;white-space:nowrap}
+.cols{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(300px,1fr);gap:28px}
+.cols>*{min-width:0}
+.side{display:grid;gap:36px;align-content:start;min-width:0}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.empty{padding:22px;color:var(--muted);font-size:12.5px;margin:0;line-height:1.8}
+.note{font-size:11px;color:var(--muted);margin:9px 2px 0;line-height:1.7}
+#schedule,#record,#players,#about{scroll-margin-top:118px}
+
+/* next / last */
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.mcard{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 18px;display:flex;flex-direction:column;gap:12px}
+.mcard.next{background:var(--navy);color:#fff;border-color:var(--navy)}
+.mcard .top{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--muted)}
+.mcard.next .top{color:#9fb8cc}
+.lbl{font-family:var(--num);font-size:12px;font-weight:700;letter-spacing:.14em;padding:3px 9px;border-radius:4px;background:#eef2f6;color:var(--ink)}
+.mcard.next .lbl{background:var(--lime);color:var(--navy)}
+.duel{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:10px}
+.duel .t{display:flex;flex-direction:column;align-items:center;gap:7px;text-align:center;font-size:14px;font-weight:700;min-width:0}
+.duel .t span{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.duel .t.me span{font-weight:900}
+.duel .c{text-align:center;min-width:76px}
+.duel .c b{display:block;font-family:var(--num);font-size:36px;font-weight:800;line-height:1}
+.duel .c .vs{color:var(--lime)}
+.duel .c small{display:block;font-size:11px;color:var(--muted);margin-top:4px}
+.mcard.next .duel .c small{color:#b5cadb}
+.res{display:inline-block;font-size:11px;font-weight:900;color:#fff;padding:2px 8px;border-radius:4px}
+.res.W{background:var(--win)}.res.D{background:var(--draw)}.res.L{background:var(--lose)}
+.mcard .foot{font-size:11.5px;color:var(--muted);border-top:1px solid var(--line);padding-top:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mcard.next .foot{color:#bcd0df;border-color:#ffffff1c}
+.cd{font-family:var(--num);color:var(--lime);font-weight:700;font-size:14px;letter-spacing:.04em}
+
+/* schedule */
+.tabs{display:inline-flex;background:#e6edf3;border-radius:10px;padding:3px;gap:2px}
+.tabs button{border:0;background:transparent;padding:6px 14px;border-radius:7px;font-size:12px;font-weight:700;color:var(--muted)}
+.tabs button[aria-selected=true]{background:#fff;color:var(--ink);box-shadow:0 1px 3px #0b2a4520}
+.mrow{display:grid;grid-template-columns:62px 34px minmax(0,1fr) 74px 40px;align-items:center;gap:10px;padding:13px 16px;border-top:1px solid var(--line);transition:background .15s}
+.mrow:first-child{border-top:0}
+.mrow:hover{background:#f6f9fc}
+.mrow .d{font-family:var(--num);font-size:16px;font-weight:700;line-height:1.1}
+.mrow .d small{display:block;font-family:"Noto Sans JP";font-size:10px;color:var(--muted);font-weight:500;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ha{font-size:10px;font-weight:700;text-align:center;border:1px solid var(--line);border-radius:4px;padding:2px 0;color:var(--muted)}
+.ha.H{background:var(--ink);color:#fff;border-color:var(--ink)}
+.opp{display:flex;align-items:center;gap:9px;min-width:0;font-size:14px;font-weight:700}
+.opp span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.opp small{display:block;font-size:10.5px;color:var(--muted);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.opp div{min-width:0}
+.mrow .sc{text-align:center;font-family:var(--num);font-size:22px;font-weight:700;white-space:nowrap}
+.mrow .sc.vs{font-size:13px;color:var(--muted);letter-spacing:.08em;font-weight:600}
+.mrow .r{text-align:right}
+
+/* table */
+table{border-collapse:collapse;width:100%;font-size:12.5px}
+th,td{padding:10px 7px;text-align:center;white-space:nowrap;border-bottom:1px solid var(--line)}
+tr:last-child td{border-bottom:0}
+th{font-size:10.5px;color:var(--muted);font-weight:700}
+th.l,td.l{text-align:left}
+td.n{font-family:var(--num);font-size:15px;font-weight:600}
+td.pts{font-family:var(--num);font-size:18px;font-weight:800}
+tr.me td{background:#f1f8e2}
+tr.me td:first-child{box-shadow:inset 4px 0 0 var(--team)}
+.pos{font-family:var(--num);font-weight:700;font-size:15px}
+.tt{display:flex;align-items:center;gap:8px;font-weight:700}
+.tbl-foot{display:block;text-align:center;font-size:11.5px;color:var(--blue);font-weight:700;padding:11px;border-top:1px solid var(--line)}
+
+/* scorers */
+.scorer{display:grid;grid-template-columns:26px 1fr auto;align-items:center;gap:10px;padding:11px 16px;border-top:1px solid var(--line)}
+.scorer:first-child{border-top:0}
+.scorer .rk{font-family:var(--num);font-size:18px;font-weight:700;color:var(--muted);text-align:center}
+.scorer .who b{display:block;font-size:13.5px}
+.scorer .who small{font-size:10.5px;color:var(--muted)}
+.scorer .g{font-family:var(--num);font-size:24px;font-weight:800;line-height:1}
+.scorer .g small{font-family:"Noto Sans JP";font-size:10px;color:var(--muted);font-weight:500;margin-left:2px}
+
+/* record */
+.rec{display:grid;grid-template-columns:repeat(4,1fr)}
+.rec div{padding:16px 10px;text-align:center;border-left:1px solid var(--line);border-top:1px solid var(--line)}
+.rec div:nth-child(4n+1){border-left:0}
+.rec div:nth-child(-n+4){border-top:0}
+.rec b{display:block;font-family:var(--num);font-size:30px;font-weight:700;line-height:1}
+.rec span{font-size:11px;color:var(--muted)}
+.wdl{display:flex;height:8px;border-radius:8px;overflow:hidden;margin:0 16px 16px;background:#eef2f6}
+.wdl i{display:block}
+.wdl .w{background:var(--win)}.wdl .d{background:var(--draw)}.wdl .l{background:var(--lose)}
+
+/* about */
+.about{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:20px}
+.intro{padding:20px 22px;font-size:14px;line-height:2;white-space:pre-wrap}
+dl.facts{margin:0}
+dl.facts div{display:grid;grid-template-columns:86px 1fr;gap:10px;padding:12px 18px;border-top:1px solid var(--line);font-size:13px}
+dl.facts div:first-child{border-top:0}
+dl.facts dt{color:var(--muted)}
+dl.facts dd{margin:0;font-weight:700;overflow-wrap:anywhere}
+.links{display:flex;flex-wrap:wrap;gap:8px;padding:14px 18px;border-top:1px solid var(--line)}
+.links a{font-size:12px;font-weight:700;border:1px solid var(--line);padding:6px 12px;border-radius:30px}
+.links a:hover{border-color:var(--blue);color:var(--blue)}
+.pending{border:1.5px dashed #c3d0dc;background:#fff;border-radius:14px;padding:24px;text-align:center;color:var(--muted);font-size:12.5px;line-height:1.9}
+.pending b{display:block;color:var(--ink);font-size:14px}
+
+/* players */
+.posgroup+.posgroup{margin-top:22px}
+.posgroup h3{font-family:var(--num);font-size:15px;letter-spacing:.12em;margin:0 0 10px;display:flex;align-items:center;gap:8px}
+.posgroup h3 span{font-family:"Noto Sans JP";font-size:11px;color:var(--muted);letter-spacing:0;font-weight:500}
+.players{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px}
+.player{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px;display:grid;grid-template-columns:auto 1fr;gap:4px 12px;align-items:center}
+.player .no{grid-row:1/3;font-family:var(--num);font-size:34px;font-weight:800;color:var(--teamText,var(--team));line-height:1;min-width:38px;text-align:center}
+.player b{font-size:14px;line-height:1.35}
+.player small{font-size:10.5px;color:var(--muted)}
+.player .gl{grid-column:1/-1;font-size:10.5px;color:var(--blue);font-weight:700;border-top:1px solid var(--line);padding-top:7px;margin-top:6px;line-height:1.6}
+.player .gl i{display:inline-block;font-style:normal;color:var(--ink);font-size:10px;width:14px;height:18px;line-height:18px;text-align:center;border-radius:2px;margin-left:5px;vertical-align:-3px}
+.player .gl i.yc{background:#f2c200}.player .gl i.rc{background:var(--lose);color:#fff}
+
+/* news */
+.news a{display:flex;gap:14px;padding:13px 18px;border-top:1px solid var(--line);font-size:13.5px;font-weight:700;align-items:baseline}
+.news a:first-child{border-top:0}
+.news a:hover{background:#f6f9fc}
+.news time{flex:none;font-family:var(--num);font-size:14px;color:var(--muted);font-weight:600}
+
+.footer{background:var(--navy);color:#a5bccf;padding:36px 0 30px;font-size:12px}
+.footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.footer strong{color:#fff;font-size:14px}
+.footer p{margin:8px 0 0;line-height:1.8}
+.footer nav{display:flex;gap:18px;flex-wrap:wrap}
+.footer nav a:hover{color:var(--lime)}
+
+.sk{display:block;height:14px;margin:14px 18px;border-radius:6px;background:linear-gradient(90deg,#e9eef3 25%,#f5f8fa 50%,#e9eef3 75%);background-size:200% 100%;animation:sh 1.3s infinite}
+@keyframes sh{to{background-position:-200% 0}}
+/* squad table */
+.ptabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin-bottom:12px}
+.ptabs::-webkit-scrollbar{display:none}
+.ptabs button{flex:none;border:1px solid var(--line);background:#fff;padding:7px 14px;border-radius:30px;font-size:12.5px;font-weight:700;color:var(--muted);display:flex;gap:6px;align-items:center}
+.ptabs button span{font-family:var(--num);font-size:13px;color:#9aa8b5}
+.ptabs button[aria-selected=true]{background:var(--ink);border-color:var(--ink);color:#fff}
+.ptabs button[aria-selected=true] span{color:var(--lime)}
+.sq-wrap{overflow-x:auto}
+.sq{font-size:13px}
+.sq th{background:#f6f8fa;padding:9px 8px;white-space:nowrap}
+.sq th small{font-weight:500;margin-left:1px}
+.sq td{padding:9px 8px}
+.sq tbody tr:not(.grp):hover td{background:#f6f9fc}
+.sq td.no{font-family:var(--num);font-size:20px;font-weight:800;color:var(--teamText,var(--team));width:52px;text-align:center}
+.sq .pp{font-family:var(--num);font-weight:700;color:var(--muted);width:40px;font-size:13px}
+.sq td.nm{text-align:left;white-space:normal;min-width:120px}
+.sq td.nm b{font-size:14px}
+.sq td.nm small{display:block;font-size:10.5px;color:var(--muted);font-weight:500}
+.sq td.nm small.sp{display:none}
+.sq td.sch{max-width:180px;overflow:hidden;text-overflow:ellipsis;font-size:12px;color:var(--muted)}
+.sq td.pc{font-size:12px;color:var(--muted)}
+.sq td.n{font-family:var(--num);font-size:16px;font-weight:600;width:56px}
+.sq td.n small{font-size:12px;color:var(--muted);margin-left:2px}
+.sq td.g{font-weight:800;color:var(--ink)}
+.sq .z{color:#c5ced6;font-weight:400}
+.sq td.cd i{display:inline-block;font-style:normal;font-family:var(--num);font-size:11px;width:15px;height:19px;line-height:19px;border-radius:2px;margin:0 1px;color:var(--ink)}
+.sq td.cd i.yc{background:#f2c200}.sq td.cd i.rc{background:var(--lose);color:#fff}
+.sq tr.grp td{background:#fff;text-align:left;font-family:var(--num);font-weight:800;font-size:15px;letter-spacing:.1em;padding:14px 10px 6px;border-bottom:2px solid var(--ink)}
+.sq tr.grp td span{font-family:"Noto Sans JP";font-size:11px;font-weight:500;letter-spacing:0;color:var(--muted);margin-left:4px}
+.sq tr.grp:first-child td{padding-top:10px}
+@media(max-width:680px){
+  .sq .pc,.sq .pp{display:none}
+  .sq td.nm small.sp{display:block}
+  .sq td.no{width:40px;font-size:18px}
+  .sq td,.sq th{padding:8px 5px}
+  .sq td.n{width:44px;font-size:15px}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+@media(max-width:920px){
+  .cols,.about{grid-template-columns:minmax(0,1fr)}
+  .side{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px}
+  .nav a{padding:0 8px;font-size:12px}
+}
+@media(max-width:680px){
+  .wrap{width:calc(100% - 32px)}
+  .clubbar small{display:none}
+  .head{height:56px}
+  .logo{height:36px;padding:3px 5px}
+  .brand{gap:8px}
+  .brandname{font-size:13px}
+  .menubtn{font-size:0;padding:6px 11px;flex:none}
+  .menubtn:before{content:"☰";font-size:18px;line-height:1}
+  .brandname small{font-size:9.5px;letter-spacing:0;white-space:normal;line-height:1.25}
+  .brandname{font-size:13px}
+  .menubtn{display:block}
+  .nav{display:none;position:absolute;top:56px;left:0;right:0;flex-direction:column;background:var(--navy);padding:6px 16px 14px;height:auto;border-bottom:1px solid #ffffff1a}
+  .nav.open{display:flex}
+  .nav a{padding:13px 8px;border-bottom:1px solid #ffffff12}
+  .crumb{margin-bottom:14px}
+  .club-id{gap:14px}
+  .crest.xl{width:64px;height:64px;font-size:26px}
+  .crest.xl.two{font-size:20px}
+  .club-id p{font-size:11.5px}
+  .hstats{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .hstat:nth-child(4){border-left:0;padding-left:4px}
+  .hstat b{font-size:28px}
+  .main{padding-top:20px}
+  .pair{grid-template-columns:minmax(0,1fr)}
+  .sechead h2{font-size:19px}
+  .mrow{grid-template-columns:48px 28px minmax(0,1fr) 54px;gap:8px;padding:12px}
+  .mrow .r{display:none}
+  .mrow .sc{font-size:19px}
+  .opp{font-size:13px}
+  .opp .crest{display:none}
+  .side{grid-template-columns:minmax(0,1fr);gap:36px}
+  .rec b{font-size:26px}
+  .players{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .player{padding:12px;gap:2px 9px}
+  .player .no{font-size:28px;min-width:30px}
+  #schedule,#record,#players,#about{scroll-margin-top:110px}
+}
+</style>
+<link rel="stylesheet" href="./theme.css">
+</head>
+<body>
+<div class="trial" style="background:#fff4d6;color:#7a5a00;font-size:12px;text-align:center;padding:7px 16px;line-height:1.6">2027年度の試験用ページです。大会名に【ダミー】が付いた大会は、テスト用の架空のデータです。</div>
+<div class="demo" id="demo" hidden>プレビュー用のサンプルデータを表示しています（公開環境では公式データに自動で切り替わります）</div>
+
+<div class="clubbar"><div class="wrap" id="clubbar"><small>CLUBS</small></div></div>
+
+<header class="header">
+  <div class="wrap head">
+    <a href="./" class="brand"><span class="logo"><img src="./img/jufa-hokkaido.png" alt="JUFA Hokkaido" width="77" height="38"></span><span class="brandname">北海道学生サッカー連盟<small>Hokkaido University Football Association</small></span></a>
+    <button class="menubtn" id="menu" aria-controls="nav" aria-expanded="false">☰ メニュー</button>
+    <nav class="nav" id="nav">
+      <a href="./">トップ</a>
+      <a href="#schedule">日程・結果</a>
+      <a href="#record">成績</a>
+      <a href="#about">クラブ情報</a>
+      <a href="#players">選手</a>
+      <a href="./about.html">連盟について</a>
+    </nav>
+  </div>
+  <div class="comptabs"><div class="wrap" id="comptabs" role="tablist"><button aria-selected="true">読み込み中…</button></div></div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="crumb"><a href="./">ホーム</a> ／ <a href="./#clubs">参加クラブ</a> ／ <span id="crumbName">チーム</span></div>
+    <div class="club-id">
+      <span id="heroCrest"><span class="crest xl">…</span></span>
+      <div>
+        <div class="eyebrow">CLUB PROFILE</div>
+        <h1 id="teamTitle">読み込み中…</h1>
+        <p id="teamSub"></p>
+      </div>
+    </div>
+    <div class="hstats">
+      <div class="hstat"><b class="num" id="hRank">–</b><span>順位</span></div>
+      <div class="hstat"><b class="num" id="hPts">–</b><span>勝点</span></div>
+      <div class="hstat"><b class="num" id="hWdl">–</b><span>勝-分-敗</span></div>
+      <div class="hstat"><b class="num" id="hGd">–</b><span>得失点差</span></div>
+      <div class="hstat"><div class="form" id="hForm"></div><span>直近5試合</span></div>
+    </div>
+  </div>
+</section>
+
+<main class="wrap main">
+  <section class="section">
+    <div class="pair" id="pair"><div class="mcard"><span class="sk"></span></div><div class="mcard"><span class="sk"></span></div></div>
+  </section>
+
+  <div class="cols section">
+    <section id="schedule">
+      <div class="sechead">
+        <h2><small>SCHEDULE & RESULTS</small>日程・結果</h2>
+        <div class="tabs" role="tablist"><button id="tabUp" role="tab" aria-selected="true">これから</button><button id="tabRes" role="tab" aria-selected="false">結果</button></div>
+      </div>
+      <div class="card" id="matchList"><span class="sk"></span><span class="sk"></span></div>
+      <p class="note">試合をタップすると大会記録のページ（得点者・警告などの詳細）に移動します。</p>
+    </section>
+
+    <div class="side">
+      <section>
+        <div class="sechead"><h2><small>STANDINGS</small>順位</h2><a class="js-stand" href="./results.html?tab=standings">全順位 ›</a></div>
+        <div class="card" id="miniTable"><span class="sk"></span></div>
+      </section>
+      <section>
+        <div class="sechead"><h2><small>TEAM SCORERS</small>チーム内得点</h2></div>
+        <div class="card" id="scorers"><span class="sk"></span></div>
+      </section>
+    </div>
+  </div>
+
+  <section class="section" id="record">
+    <div class="sechead"><h2><small>SEASON RECORD</small>シーズン成績</h2></div>
+    <div class="card" id="recordBox"><span class="sk"></span></div>
+  </section>
+
+  <section class="section" id="about">
+    <div class="sechead"><h2><small>ABOUT</small>クラブ情報</h2><span class="note" style="margin:0" id="profUpdated"></span></div>
+    <div id="aboutBox"><span class="sk"></span></div>
+  </section>
+
+  <section class="section" id="players">
+    <div class="sechead"><h2><small>SQUAD</small>選手名鑑</h2><span class="note" style="margin:0" id="squadCount"></span></div>
+    <div id="playersBox"><span class="sk"></span></div>
+  </section>
+
+  <section class="section" id="newsSec" hidden>
+    <div class="sechead"><h2><small>CLUB NEWS</small>クラブニュース</h2></div>
+    <div class="card news" id="newsBox"></div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div><strong>北海道学生サッカー連盟</strong><p>チームページ Ver.2（試験公開）。試合・成績は公式記録から自動反映、クラブ情報・選手名鑑は各大学の登録内容を表示しています。</p><p id="updated"></p></div>
+    <nav><a href="./">新公式サイト</a><a href="./results.html">大会記録</a><a href="#" onclick="scrollTo({top:0});return false">ページ上部へ ↑</a></nav>
+  </div>
+</footer>
+
+<script>
+'use strict';
+const $=id=>document.getElementById(id);
+const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const name=t=>typeof t==='string'?t:(t?.short||t?.name||'未定');
+const fullName=t=>typeof t==='string'?t:(t?.name||t?.short||'未定');
+const tkey=t=>typeof t==='string'?t:(t?.id||t?.name||t?.short||'');
+const detail=(id,mid)=>'./results.html?comp='+encodeURIComponent(id)+(mid?'&match='+encodeURIComponent(mid):'');
+const jstToday=()=>new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Tokyo',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
+const pick=(o,ks)=>{for(const k of ks)if(o?.[k]!=null&&o[k]!=='')return o[k];return null};
+const isDone=m=>m.status==='finished'&&m.score&&m.score.home!=null&&m.score.home!==''&&m.score.away!=null&&m.score.away!=='';
+const has=v=>v!=null&&String(v).trim()!=='';
+const PARAMS=new URLSearchParams(location.search);
+let DEMO=PARAMS.has('demo');
+const teamUrl=(comp,t)=>'./team.html?comp='+encodeURIComponent(comp)+'&team='+encodeURIComponent(tkey(t))+(DEMO?'&demo':'');
+
+const PALETTE=['#145ec9','#0f7a6b','#7b3fb5','#c0392b','#1d6fa5','#b35c00','#2e7d32','#ad1457','#37474f','#5d4dbf'];
+let PROFILES=[];
+function teamColor(t){const p=profileOf(t);if(p&&/^#[0-9a-f]{3,8}$/i.test(p.color||''))return p.color;let h=0;for(const ch of tkey(t))h=(h*31+ch.charCodeAt(0))>>>0;return PALETTE[h%PALETTE.length]}
+/* 案①：同じ見た目（同じエンブレム・同じ文字）のチームが並ぶときだけ、名前の違う部分を小さな札にして付ける */
+const BADGE=new Map();
+const BADGE_WORDS={'セカンド':'2nd','サテライト':'SAT','サード':'3rd','トップ':'TOP'};
+function makeBadges(teams,keyOf,labelOf){
+  BADGE.clear();
+  const g=new Map();
+  for(const t of teams){
+    const h=crestBase(t),u=(h.match(/<img[^>]*? src="([^"]+)"/)||[])[1];
+    const look=u||'txt:'+((h.match(/>([^<]*)<\/span>$/)||[])[1]||'');
+    if(!g.has(look))g.set(look,[]);g.get(look).push(t);
+  }
+  const tok=c=>/[0-9A-Za-z\-－]/.test(c||'');
+  for(const ts of g.values()){
+    if(ts.length<2)continue;
+    const ns=ts.map(t=>[...String(labelOf(t)||'')]),min=Math.min(...ns.map(n=>n.length));
+    let p=0;while(p<min&&ns.every(n=>n[p]===ns[0][p]))p++;
+    while(p>0&&tok(ns[0][p-1])&&ns.some(n=>tok(n[p])))p--;
+    let s=0;while(s<min-p&&ns.every(n=>n[n.length-1-s]===ns[0][ns[0].length-1-s]))s++;
+    while(s>0&&ns.some(n=>tok(n[n.length-1-s]))&&tok(ns[0][ns[0].length-s]))s--;
+    let out=ns.map(n=>{let x=n.slice(p,n.length-s).join('').replace(/[-－\s]/g,'');x=BADGE_WORDS[x]||x;return [...x].slice(0,3).join('')});
+    if(out.some(x=>!x)||new Set(out).size<out.length)out=ts.map((_,i)=>String.fromCharCode(65+i));
+    ts.forEach((t,i)=>BADGE.set(keyOf(t),out[i]));
+  }
+}
+function addBadge(html,key){const b=BADGE.get(key);return b?html.replace(/<\/span>$/,'<i class="bdg">'+esc(b)+'</i></span>'):html}
+function crest(t,size){return addBadge(crestBase(t,size),tkey(t))}
+function crestInk(c){const m=/^#?([0-9a-f]{6})$/i.exec(String(c||''));if(!m)return '#fff';const n=parseInt(m[1],16),L=[n>>16&255,n>>8&255,n&255].map(v=>{v/=255;return v<=.03928?v/12.92:Math.pow((v+.055)/1.055,2.4)});return .2126*L[0]+.7152*L[1]+.0722*L[2]>.45?'#222':'#fff'}
+function crestBase(t,size){
+  const n=name(t);
+  let s=n.replace(/^(北海道|国立|私立)/,'').replace(/(大学|大)$/,'');
+  if(![...s].length)s=n.replace(/大学$/,'大');
+  const ch=[...s].slice(0,2).join('')||'?',two=[...ch].length>1;
+  const u=emblemUrl(profileOf(t))||embFor(typeof t==='object'?t.univ:'',name(t),typeof t==='object'?t.name:'');
+  const ud=emblemUrl({emblem:profileOf(t)?.emblemDark});
+  if(u)return '<span class="crest img '+(size||'')+(two?' two':'')+(ud?' hasdark':'')+'" style="--c:'+teamColor(t)+';color:'+crestInk(teamColor(t))+'" data-ch="'+esc(ch)+'"><img class="el" src="'+esc(u)+'" alt="'+esc(name(t))+'" loading="lazy" onerror="crestFail(this)">'+(ud?'<img class="ed" src="'+esc(ud)+'" alt="'+esc(name(t))+'" loading="lazy" onerror="crestFail(this)">':'')+'</span>';
+  return '<span class="crest '+(size||'')+(two?' two':'')+'" style="--c:'+teamColor(t)+';color:'+crestInk(teamColor(t))+'" aria-hidden="true">'+esc(ch)+'</span>';
+}
+
+/* エンブレム画像：チーム紹介シートの「エンブレム」列（new/emblems/ のファイル名、または画像URL） */
+function emblemUrl(p){
+  const e=String(p?.emblem||'').trim();if(!e)return '';
+  const d=e.match(/drive\.google\.com\/(?:file\/d\/|open\?id=|uc\?(?:export=\w+&)?id=)([\w-]{20,})/);
+  if(d)return 'https://drive.google.com/thumbnail?id='+d[1]+'&sz=w400';
+  if(/^https:\/\//i.test(e))return e;
+  if(/^[^\/\\?#]+\.(png|jpe?g|webp|svg|gif)$/i.test(e))return './emblems/'+encodeURIComponent(e);
+  return '';
+}
+/* 大学のエンブレム：new/emblems/index.json（{"大学名":"ファイル名"}）。チーム紹介の「エンブレム」が空のときに使う */
+let EMB={};
+const embReady=fetch('./emblems/index.json',{cache:'no-store'}).then(r=>r.ok?r.json():{}).then(j=>{EMB=j&&typeof j==='object'?j:{}}).catch(()=>{});
+function embFor(...names){for(const n of names){const f=n&&EMB[String(n).trim()];if(f&&/^[^\/\\?#]+\.(png|jpe?g|webp|svg|gif)$/i.test(f))return './emblems/'+encodeURIComponent(f)}return ''}
+function crestFail(img){const s=img.parentNode;if(img.classList.contains('ed')){s.classList.remove('hasdark');img.remove();return}s.classList.remove('img','hasdark');s.querySelectorAll('img').forEach(x=>x.remove());s.insertBefore(document.createTextNode(s.dataset.ch),s.firstChild)}
+const WD=['日','月','火','水','木','金','土'];
+function fmtDate(s,short){const m=/^(\d{4})-(\d{2})-(\d{2})/.exec(s||'');if(!m)return s||'日程未定';return (+m[2])+'/'+(+m[3])+(short?'':'（'+WD[new Date(+m[1],+m[2]-1,+m[3]).getDay()]+'）')}
+function wd(s){const m=/^(\d{4})-(\d{2})-(\d{2})/.exec(s||'');return m?WD[new Date(+m[1],+m[2]-1,+m[3]).getDay()]:''}
+function daysUntil(s){const a=/^(\d{4})-(\d{2})-(\d{2})/.exec(s||''),b=/^(\d{4})-(\d{2})-(\d{2})/.exec(jstToday());if(!a||!b)return null;return Math.round((Date.UTC(+a[1],+a[2]-1,+a[3])-Date.UTC(+b[1],+b[2]-1,+b[3]))/864e5)}
+const order=ms=>[...ms].sort((a,b)=>String(a.date||'').localeCompare(String(b.date||''))||String(a.kickoff||'').localeCompare(String(b.kickoff||'')));
+
+async function json(file){
+  if(DEMO)return demoData(file);
+  const r=await fetch('../results/data/'+file,{cache:'no-store'});
+  if(!r.ok)throw Error('HTTP '+r.status);
+  return r.json();
+}
+/* 各大学の手入力データ（new/data/teams.json）。無くても動く */
+async function loadProfiles(){
+  if(DEMO)return demoProfiles();
+  try{const r=await fetch('./data/teams.json',{cache:'no-store'});if(!r.ok)return {teams:[]};return await r.json()}catch(_){return {teams:[]}}
+}
+function profileOf(t){
+  if(!t)return null;
+  const id=tkey(t),cands=[name(t),fullName(t),typeof t==='object'?t.univ:''].filter(has);
+  const base=String(id).replace(/-[A-Z0-9]+$/,'');
+  return PROFILES.find(p=>has(p.id)&&(p.id===id||p.id===base))||PROFILES.find(p=>(p.names||[]).some(n=>cands.includes(n)))||null;
+}
+
+let S={comp:'',data:null,roster:null,team:null,up:[],res:[]};
+async function loadRoster(id){
+  if(DEMO)return demoRoster();
+  try{const r=await fetch('../results/data/'+encodeURIComponent(id)+'-roster.json',{cache:'no-store'});return r.ok?await r.json():null}catch(_){return null}
+}
+
+function collectTeams(d){
+  const map=new Map();
+  for(const m of d.matches||[])for(const t of [m.home,m.away]){const k=tkey(t);if(k&&name(t)!=='未定'&&!map.has(k))map.set(k,t)}
+  for(const g of d.groups||[])for(const r of g.table||[]){const k=tkey(r.team);if(k&&!map.has(k))map.set(k,r.team)}
+  return [...map.values()].sort((a,b)=>name(a).localeCompare(name(b),'ja'));
+}
+const isMe=t=>tkey(t)===tkey(S.team);
+function outcome(m){
+  if(!isDone(m))return null;
+  const h=+m.score.home,a=+m.score.away,mine=isMe(m.home)?h:a,opp=isMe(m.home)?a:h;
+  return mine>opp?'W':mine<opp?'L':'D';
+}
+const OUT={W:'勝',D:'分',L:'敗'};
+
+/* ---------- render ---------- */
+function renderHero(row,ms){
+  const t=S.team,p=profileOf(t);
+  document.documentElement.style.setProperty('--team',teamColor(t));
+  // 黒い背景の上の文字：暗いチームカラーは白を混ぜて読みやすくする
+  document.documentElement.style.setProperty('--teamText',crestInk(teamColor(t))==='#fff'?'color-mix(in srgb,'+teamColor(t)+' 55%,#fff)':teamColor(t));
+  document.title=fullName(t)+' | 北海道学生サッカー連盟';
+  $('crumbName').textContent=name(t);
+  $('heroCrest').innerHTML=crest(t,'xl');
+  $('teamTitle').textContent=(p&&has(p.displayName))?p.displayName:fullName(t);
+  const univ=typeof t==='object'&&has(t.univ)?t.univ:'';
+  $('teamSub').textContent=[univ!==$('teamTitle').textContent?univ:'',S.data.competition?.name||''].filter(has).join('　／　');
+  const W=pick(row,['won','win','w']),D=pick(row,['drawn','draw','d']),L=pick(row,['lost','lose','l']);
+  let gd=pick(row,['goalDiff','gd','diff']);
+  if(gd==null&&pick(row,['goalsFor','gf'])!=null)gd=(+pick(row,['goalsFor','gf']))-(+pick(row,['goalsAgainst','ga'])||0);
+  $('hRank').innerHTML=row?.rank!=null?esc(row.rank)+'<small>位</small>':'–';
+  $('hPts').textContent=row?.points??'–';
+  $('hWdl').textContent=W!=null?W+'-'+(D??0)+'-'+(L??0):'–';
+  $('hGd').textContent=gd!=null?(+gd>0?'+'+gd:gd):'–';
+  const last=ms.filter(isDone).slice(-5);
+  const cells=last.map(m=>{const o=outcome(m);return '<i class="'+o+'" title="'+esc(fmtDate(m.date)+' vs '+name(isMe(m.home)?m.away:m.home))+'">'+OUT[o]+'</i>'});
+  while(cells.length<5)cells.unshift('<i class="E">-</i>');
+  $('hForm').innerHTML=cells.join('');
+}
+function duel(m,next){
+  const done=isDone(m),d=daysUntil(m.date);
+  return '<div class="duel">'+
+    '<div class="t'+(isMe(m.home)?' me':'')+'">'+crest(m.home)+'<span>'+esc(name(m.home))+'</span></div>'+
+    '<div class="c">'+(done?'<b>'+esc(m.score.home)+'-'+esc(m.score.away)+'</b>':'<b class="vs">VS</b>')+
+      '<small>'+esc(fmtDate(m.date))+(m.kickoff?' '+esc(m.kickoff):'')+'</small>'+
+      (next&&d>0?'<div class="cd">あと '+d+' 日</div>':next&&d===0?'<div class="cd">本日開催</div>':'')+'</div>'+
+    '<div class="t'+(isMe(m.away)?' me':'')+'">'+crest(m.away)+'<span>'+esc(name(m.away))+'</span></div></div>';
+}
+function renderPair(){
+  const nx=S.up[0],ls=S.res[0];
+  const card=(m,next)=>!m?'<div class="mcard'+(next?' next':'')+'"><div class="top"><span class="lbl">'+(next?'NEXT MATCH':'LAST RESULT')+'</span></div><p class="empty" style="padding:8px 0;'+(next?'color:#bcd0df':'')+'">'+(next?'予定されている試合はありません。':'まだ試合結果はありません。')+'</p></div>':
+    '<a class="mcard'+(next?' next':'')+'" href="'+detail(S.comp,isDone(m)?m.matchId:'')+'"><div class="top"><span class="lbl">'+(next?'NEXT MATCH':'LAST RESULT')+'</span><span>'+esc(m.round||'')+(next?'':'　<span class="res '+outcome(m)+'">'+OUT[outcome(m)]+'</span>')+'</span></div>'+
+    duel(m,next)+'<div class="foot">📍 '+esc(m.venue||'会場未定')+'</div></a>';
+  $('pair').innerHTML=card(nx,true)+card(ls,false);
+}
+function renderMatches(which){
+  const list=which==='up'?S.up:S.res;
+  $('tabUp').setAttribute('aria-selected',String(which==='up'));
+  $('tabRes').setAttribute('aria-selected',String(which!=='up'));
+  if(!list.length){$('matchList').innerHTML='<p class="empty">'+(which==='up'?'予定されている試合はありません。':'まだ試合結果はありません。')+'</p>';return}
+  $('matchList').innerHTML=list.map(m=>{
+    const home=isMe(m.home),opp=home?m.away:m.home,o=outcome(m);
+    const mine=o?(home?m.score.home:m.score.away):null,their=o?(home?m.score.away:m.score.home):null;
+    return '<a class="mrow" href="'+detail(S.comp,isDone(m)?m.matchId:'')+'">'+
+      '<div class="d">'+esc(fmtDate(m.date,true))+'<small>（'+esc(wd(m.date))+'）'+esc(m.kickoff||'')+'</small></div>'+
+      '<div class="ha'+(home?' H':'')+'">'+(home?'HOME':'AWAY')+'</div>'+
+      '<div class="opp">'+crest(opp,'sm')+'<div><span>vs '+esc(name(opp))+'</span><small>'+esc([m.round,m.venue].filter(has).join('　'))+'</small></div></div>'+
+      (o?'<div class="sc">'+esc(mine)+' - '+esc(their)+'</div>':'<div class="sc vs">VS</div>')+
+      '<div class="r">'+(o?'<span class="res '+o+'">'+OUT[o]+'</span>':'')+'</div></a>';
+  }).join('');
+}
+$('tabUp').onclick=()=>renderMatches('up');
+$('tabRes').onclick=()=>renderMatches('res');
+
+function renderMiniTable(){
+  const gs=(S.data.groups||[]).filter(g=>g.table?.length);
+  const g=gs.find(g=>g.table.some(r=>isMe(r.team)));
+  if(!g){$('miniTable').innerHTML='<p class="empty">この大会は順位表がありません（トーナメント形式など）。</p>';return null}
+  const i=g.table.findIndex(r=>isMe(r.team));
+  let a=Math.max(0,i-2),b=Math.min(g.table.length,a+5);a=Math.max(0,b-5);
+  $('miniTable').innerHTML=(gs.length>1&&has(g.name)?'<div class="note" style="margin:0;padding:10px 14px;border-bottom:1px solid var(--line);font-weight:700">'+esc(g.name)+'</div>':'')+
+    '<table><thead><tr><th class="l">順位</th><th class="l">クラブ</th><th>勝点</th><th>試</th><th>得失</th></tr></thead><tbody>'+
+    g.table.slice(a,b).map(r=>{
+      let gd=pick(r,['goalDiff','gd','diff']);if(gd==null&&pick(r,['goalsFor','gf'])!=null)gd=(+pick(r,['goalsFor','gf']))-(+pick(r,['goalsAgainst','ga'])||0);
+      return '<tr class="'+(isMe(r.team)?'me':'')+'"><td class="l"><span class="pos">'+esc(r.rank)+'</span></td><td class="l"><a class="tt" href="'+esc(teamUrl(S.comp,r.team))+'">'+crest(r.team,'xs')+esc(name(r.team))+'</a></td><td class="pts">'+esc(r.points)+'</td><td class="n">'+esc(r.played)+'</td><td class="n">'+esc(gd!=null&&+gd>0?'+'+gd:gd??'')+'</td></tr>';
+    }).join('')+'</tbody></table><a class="tbl-foot" href="'+detail(S.comp)+'&tab=standings">全'+g.table.length+'チームの順位を見る ›</a>';
+  return g.table[i];
+}
+function renderScorers(){
+  const rows=(S.data.scorers||[]).filter(p=>isMe(p.team)||name(p.team)===name(S.team));
+  $('scorers').innerHTML=rows.length?rows.slice(0,6).map(p=>'<div class="scorer"><span class="rk">'+esc(p.rank??'')+'</span><span class="who"><b>'+esc(p.name)+'</b><small>大会'+esc(p.rank??'-')+'位</small></span><span class="g">'+esc(p.count)+'<small>点</small></span></div>').join('')+'<p class="note" style="margin:0;padding:8px 16px 12px">左の数字は大会全体の順位です。</p>':'<p class="empty">得点記録はまだありません。</p>';
+}
+function renderRecord(row,ms){
+  const done=ms.filter(isDone);
+  let W=+pick(row,['won','win','w']),D=+pick(row,['drawn','draw','d']),L=+pick(row,['lost','lose','l']);
+  let GF=pick(row,['goalsFor','gf']),GA=pick(row,['goalsAgainst','ga']);
+  if(!row||isNaN(W)){ // 順位表がない大会は試合結果から集計
+    W=D=L=0;GF=GA=0;
+    for(const m of done){const o=outcome(m);if(o==='W')W++;else if(o==='D')D++;else L++;const h=isMe(m.home);GF+=+(h?m.score.home:m.score.away);GA+=+(h?m.score.away:m.score.home)}
+  }
+  const P=W+D+L;
+  if(!P){$('recordBox').innerHTML='<p class="empty">まだ試合結果がありません。</p>';return}
+  const home=done.filter(m=>isMe(m.home)),away=done.filter(m=>isMe(m.away));
+  const cnt=(l,o)=>l.filter(m=>outcome(m)===o).length;
+  const cells=[['試合',P],['勝利',W],['引分',D],['敗戦',L],['得点',GF??'–'],['失点',GA??'–'],['1試合平均得点',GF!=null?(GF/P).toFixed(1):'–'],['勝率',Math.round(W/P*100)+'%']];
+  $('recordBox').innerHTML='<div class="rec">'+cells.map(([k,v])=>'<div><b>'+esc(v)+'</b><span>'+esc(k)+'</span></div>').join('')+'</div>'+
+    '<div class="wdl" title="勝 '+W+' / 分 '+D+' / 敗 '+L+'"><i class="w" style="width:'+(W/P*100)+'%"></i><i class="d" style="width:'+(D/P*100)+'%"></i><i class="l" style="width:'+(L/P*100)+'%"></i></div>'+
+    (home.length||away.length?'<p class="note" style="margin:-6px 16px 14px">ホーム '+cnt(home,'W')+'勝'+cnt(home,'D')+'分'+cnt(home,'L')+'敗　／　アウェイ '+cnt(away,'W')+'勝'+cnt(away,'D')+'分'+cnt(away,'L')+'敗</p>':'');
+}
+const SNS={instagram:'Instagram',x:'X',twitter:'X',facebook:'Facebook',youtube:'YouTube',tiktok:'TikTok',note:'note'};
+function safeUrl(u){return /^https?:\/\//i.test(String(u||''))?u:''}
+function renderAbout(){
+  const p=profileOf(S.team);
+  const staff=squad().staff.map(s=>[s.role||'スタッフ',s.name]);
+  const facts=[...staff,...(p?[[staff.some(s=>/監督/.test(s[0]))?'':'監督',p.coach],['主将',p.captain],['創部',p.founded],['部員数',p.members],['練習場',p.ground]]:[])].filter(([k,v])=>has(k)&&has(v));
+  const links=p?[[ '公式サイト',p.website],...Object.entries(p.sns||{}).map(([k,v])=>[SNS[k]||k,v])].filter(([,u])=>safeUrl(u)):[];
+  $('profUpdated').textContent=p&&has(p.updated)?'更新 '+p.updated:'';
+  if(!has(p?.intro)&&!facts.length&&!links.length){
+    $('aboutBox').innerHTML='<div class="pending"><b>クラブ紹介は準備中です</b>チーム紹介・監督・練習場などは、各大学からの登録をもとに掲載します。</div>';return;
+  }
+  $('aboutBox').innerHTML='<div class="about">'+
+    '<div class="card">'+(has(p?.intro)?'<div class="intro">'+esc(p.intro)+'</div>':'<p class="empty">チーム紹介文は準備中です。</p>')+'</div>'+
+    '<div class="card">'+(facts.length?'<dl class="facts">'+facts.map(([k,v])=>'<div><dt>'+esc(k)+'</dt><dd>'+esc(v)+'</dd></div>').join('')+'</dl>':'')+
+      (links.length?'<div class="links">'+links.map(([k,u])=>'<a href="'+esc(safeUrl(u))+'" target="_blank" rel="noopener">'+esc(k)+' ↗</a>').join('')+'</div>':'')+'</div></div>';
+}
+const POS=[['GK','ゴールキーパー'],['DF','ディフェンダー'],['MF','ミッドフィルダー'],['FW','フォワード']];
+const norm=v=>String(v||'').replace(/[\s　]/g,'');
+function squad(){
+  const p=profileOf(S.team);
+  const R=(S.roster?.teams||[]).find(t=>isMe(t.team));
+  const st=(S.data.playerStats||[]).find(t=>isMe(t.team));
+  const m=new Map();          // 名前（空白なし）→ 選手
+  const byId=new Map();
+  const get=(nm,id)=>{const x=(id&&byId.get(id))||m.get(norm(nm));if(x)return x;if(!norm(nm))return null;const y={name:nm,no:'',goals:0,assists:0,yc:0,rc:0};m.set(norm(nm),y);if(id)byId.set(id,y);return y};
+  // 1. 名鑑（選手登録・選手マスター）
+  for(const r of R?.players||[]){const x=get(r.name,r.id);Object.assign(x,{id:r.id,no:r.no,pos:r.pos,grade:r.grade,school:r.school,kana:r.kana,registered:true})}
+  // 2. 出場記録（公式記録）
+  for(const r of st?.players||[]){const x=get(r.name,r.id);if(!x)continue;Object.assign(x,{apps:r.apps,starts:r.starts,min:r.min,goals:r.goals,assists:r.assists,yc:r.yc,rc:r.rc});if(!has(x.no))x.no=r.no;if(!has(x.pos))x.pos=r.pos}
+  // 3. 出場記録がないときは得点・アシスト・警告から
+  if(!st?.players?.length){
+    for(const r of (S.data.scorers||[]).filter(r=>isMe(r.team))){const x=get(r.name,r.playerId);if(x)x.goals=r.count}
+    for(const r of (S.data.assists||[]).filter(r=>isMe(r.team))){const x=get(r.name,r.playerId);if(x)x.assists=r.count}
+    const ct=(S.data.cardTable||[]).find(t=>isMe(t.team));
+    for(const r of ct?.players||[]){const x=get(r.name,r.playerId);if(x){x.yc=r.c||0;x.rc=r.s||0;if(!has(x.no))x.no=r.no}}
+  }
+  // 4. teams.json（学年・出身校の補足）
+  for(const e of (p?.players||[]).filter(x=>has(x.name))){const x=get(e.name);for(const k of ['no','pos','grade','school'])if(!has(x[k])&&has(e[k]))x[k]=e[k]}
+  const list=[...m.values()];
+  const official=!!st?.players?.length;
+  if(official)for(const x of list)if(x.apps==null)x.apps=0;
+  return {list:list.sort((a,b)=>(+a.no||999)-(+b.no||999)),official,registered:!!R?.players?.length,matches:st?.matches,staff:R?.staff||[]};
+}
+let POSF='ALL';
+function renderPlayers(){
+  const {list,official,registered,matches}=squad();
+  $('squadCount').textContent=list.length?list.length+'名'+(official&&matches?'・'+matches+'試合の記録':''):'';
+  if(!list.length){$('playersBox').innerHTML='<div class="pending"><b>選手名鑑は準備中です</b>公式記録が確定した試合に出場した選手から、自動で掲載されます。</div>';return}
+  const posOf=x=>{const k=String(x.pos||'').toUpperCase();return POS.some(([p])=>p===k)?k:'—'};
+  const cnt=k=>list.filter(x=>k==='ALL'||posOf(x)===k).length;
+  const tabs=[['ALL','全員'],...POS.map(([k])=>[k,k]),...(cnt('—')?[['—','未登録']]:[])].filter(([k])=>cnt(k));
+  if(!tabs.some(([k])=>k===POSF))POSF='ALL';
+  const hasGrade=list.some(x=>has(x.grade)),hasSchool=list.some(x=>has(x.school));
+  const showApps=list.some(x=>x.apps!=null),showAst=list.some(x=>x.assists);
+  const dash=v=>v?esc(v):'<span class="z">–</span>';
+  const card=x=>(x.yc?'<i class="yc">'+x.yc+'</i>':'')+(x.rc?'<i class="rc">'+x.rc+'</i>':'')||'<span class="z">–</span>';
+  const row=x=>'<tr><td class="no">'+esc(x.no??'')+'</td>'+
+    '<td class="nm"><b>'+esc(x.name)+'</b>'+(has(x.kana)?'<small>'+esc(x.kana)+'</small>':'')+
+      ((hasGrade||hasSchool)?'<small class="sp">'+esc([x.grade,x.school].filter(has).join('・'))+'</small>':'')+'</td>'+
+    (hasGrade?'<td class="pc">'+esc(x.grade||'')+'</td>':'')+
+    (hasSchool?'<td class="pc l sch">'+esc(x.school||'')+'</td>':'')+
+    (showApps?'<td class="n">'+dash(x.apps)+(x.starts?'<small>('+x.starts+')</small>':'')+'</td><td class="n pc">'+dash(x.min)+'</td>':'')+
+    '<td class="n g">'+dash(x.goals)+'</td>'+(showAst?'<td class="n pc">'+dash(x.assists)+'</td>':'')+
+    '<td class="n cd">'+card(x)+'</td></tr>';
+  const head='<thead><tr><th>No.</th><th class="l">選手</th>'+(hasGrade?'<th class="pc">学年</th>':'')+(hasSchool?'<th class="pc l sch">出身校</th>':'')+
+    (showApps?'<th>出場<small>(先発)</small></th><th class="pc">時間</th>':'')+'<th>得点</th>'+(showAst?'<th class="pc">A</th>':'')+'<th>警告</th></tr></thead>';
+  const cols=5+(hasGrade?1:0)+(hasSchool?1:0)+(showApps?2:0)+(showAst?1:0);
+  const shown=POSF==='ALL'?[...POS.map(([k,l])=>[k,l]),['—','ポジション未登録']]:[[POSF,(POS.find(([k])=>k===POSF)||[,'ポジション未登録'])[1]]];
+  const body=shown.map(([k,l])=>{const ps=list.filter(x=>posOf(x)===k);if(!ps.length)return '';
+    return (POSF==='ALL'?'<tr class="grp"><td colspan="'+cols+'">'+esc(k==='—'?'':k)+' <span>'+esc(l)+'・'+ps.length+'名</span></td></tr>':'')+ps.map(row).join('')}).join('');
+  $('playersBox').innerHTML='<div class="ptabs" role="tablist">'+tabs.map(([k,l])=>'<button role="tab" data-pos="'+esc(k)+'" aria-selected="'+(k===POSF)+'">'+esc(l)+'<span>'+cnt(k)+'</span></button>').join('')+'</div>'+
+    '<div class="card sq-wrap"><table class="sq">'+head+'<tbody>'+body+'</tbody></table></div>'+
+    '<p class="note">'+(registered?'選手一覧は大会の選手登録から掲載しています。':'いまは得点・アシスト・警告の記録に名前がある選手だけを掲載しています。')+
+      (official?'出場・時間・得点・警告は公式記録が確定した試合から自動で集計しています（時間はアディショナルタイムを含みません）。':'')+'</p>';
+}
+$('playersBox').addEventListener('click',e=>{const b=e.target.closest('.ptabs button');if(b){POSF=b.dataset.pos;renderPlayers()}});
+function renderNews(){
+  const p=profileOf(S.team);
+  const list=(p?.news||[]).filter(n=>has(n.title)).sort((a,b)=>String(b.date||'').localeCompare(String(a.date||'')));
+  $('newsSec').hidden=!list.length;
+  $('newsBox').innerHTML=list.slice(0,6).map(n=>{const u=safeUrl(n.url);return (u?'<a href="'+esc(u)+'" target="_blank" rel="noopener">':'<a>')+'<time>'+esc(fmtDate(n.date,true))+'</time><span>'+esc(n.title)+'</span></a>'}).join('');
+}
+
+/* ---------- load ---------- */
+const univOf=t=>typeof t==='object'?(t.univ||t.name||''):String(t||'');
+function showTeam(teams,wanted,univ){
+  const t=teams.find(x=>tkey(x)===wanted)||(has(univ)&&teams.find(x=>univOf(x)===univ))||teams.find(x=>name(x)===wanted||fullName(x)===wanted)||teams[0];
+  if(!t){$('teamTitle').textContent='チーム情報がありません';return}
+  S.team=t;
+  const u=new URL(location.href);u.searchParams.set('comp',S.comp);u.searchParams.set('team',tkey(t));history.replaceState(null,'',u);
+  $('clubbar').innerHTML='<small>CLUBS</small>'+teams.map(x=>'<a class="'+(tkey(x)===tkey(t)?'on':'')+'" href="'+esc(teamUrl(S.comp,x))+'" title="'+esc(name(x))+'">'+crest(x,'sm')+'</a>').join('');
+  const ms=order((S.data.matches||[]).filter(m=>isMe(m.home)||isMe(m.away)));
+  const today=jstToday();
+  S.up=ms.filter(m=>!isDone(m)&&(m.date||'9999')>=today);
+  S.res=ms.filter(isDone).reverse();
+  const row=renderMiniTable();
+  renderHero(row,ms);renderPair();renderMatches(S.up.length?'up':'res');
+  renderScorers();renderRecord(row,ms);renderAbout();renderPlayers();renderNews();
+}
+async function loadComp(id,wanted,univ){
+  S.comp=id;
+  document.querySelectorAll('#comptabs button').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.id===id)));
+  document.querySelectorAll('.js-detail').forEach(a=>a.href=detail(id));
+  document.querySelectorAll('.js-stand').forEach(a=>a.href=detail(id)+'&tab=standings');
+  try{
+    const d=await json(encodeURIComponent(id)+'.json');
+    if(!d.ok)throw Error('大会データを取得できません');
+    S.data=d;
+    S.roster=await loadRoster(id);
+    // シートの「チーム紹介」を teams.json より優先して使う
+    PROFILES=PROFILES.filter(x=>!x._sheet);
+    for(const t of S.roster?.teams||[])if(t.profile)PROFILES.unshift({...t.profile,_sheet:true,id:tkey(t.team),names:[t.team.univ,t.team.name,t.team.short].filter(has)});
+    $('updated').textContent=(d.competition?.name||id)+'　最終更新 '+(d.updatedAt||'不明');
+    const teams=collectTeams(d);
+    makeBadges(teams,tkey,name);
+    // 大会を切り替えても、同じ大学がいればそのまま表示
+    showTeam(teams,wanted,univ);
+  }catch(e){
+    $('teamTitle').textContent='読み込みに失敗しました';
+    for(const k of ['pair','matchList','miniTable','scorers','recordBox'])$(k).innerHTML='<p class="empty">データを表示できません：'+esc(e.message)+'</p>';
+  }
+}
+
+$('menu').addEventListener('click',()=>{const o=$('nav').classList.toggle('open');$('menu').setAttribute('aria-expanded',String(o))});
+$('nav').addEventListener('click',e=>{if(e.target.closest('a')){$('nav').classList.remove('open');$('menu').setAttribute('aria-expanded','false')}});
+
+(async()=>{
+  let d;
+  try{d=await json('competitions.json')}
+  catch(e){
+    if(!/github\.io$/.test(location.hostname)){DEMO=true;d=await json('competitions.json')}
+    else{$('teamTitle').textContent='大会情報を取得できません';return}
+  }
+  $('demo').hidden=!DEMO;
+  PROFILES=((await loadProfiles()).teams||[]);
+  await embReady;
+  const cs=d.competitions||[];
+  if(!cs.length){$('teamTitle').textContent='大会が登録されていません';return}
+  const short=n=>String(n||'').replace(/^\d{4}年度\s*/,'').replace(/第\d+回\s*/,'').replace(/^北海道学生サッカー/,'').replace(/^北海道/,'').trim()||n;
+  $('comptabs').innerHTML=cs.map(c=>'<button role="tab" data-id="'+esc(c.id)+'" title="'+esc(c.name)+'">'+esc(short(c.name))+'</button>').join('');
+  const comp=cs.some(c=>c.id===PARAMS.get('comp'))?PARAMS.get('comp'):cs[0].id;
+  $('comptabs').addEventListener('click',e=>{
+    const b=e.target.closest('button[data-id]');if(!b||b.dataset.id===S.comp)return;
+    loadComp(b.dataset.id,S.team?tkey(S.team):null,S.team?univOf(S.team):'');
+  });
+  await loadComp(comp,PARAMS.get('team'));
+})();
+
+/* ---------- demo (preview only; never used on github.io) ---------- */
+function demoData(file){
+  const T='ABCDEFGH'.split('').map((c,i)=>({id:'t'+i,short:'サンプル大'+c,name:'サンプル大学'+c,univ:'サンプル大学'+c}));
+  if(file==='competitions.json')return{competitions:[{id:'demo-1',name:'【サンプル】リーグ 1部'},{id:'demo-cup',name:'【サンプル】選手権'}]};
+  const base=new Date(jstToday());const day=n=>{const x=new Date(base);x.setDate(x.getDate()+n);return x.toISOString().slice(0,10)};
+  const pairs=[[0,1],[2,3],[4,5],[6,7],[2,0],[1,3],[4,6],[5,7],[0,3],[1,2],[4,7],[5,6],[4,0],[1,5],[2,6],[3,7],[0,5],[1,4]];
+  const sc=[[2,1],[0,0],[3,2],[1,4],[1,1],[1,1],[0,2],[3,3],[3,0],[2,1],[1,0],[0,0]];
+  const ms=pairs.map((p,i)=>{const r=Math.floor(i/4),done=i<12;return{date:day([-22,-15,-8,6,13][r]+(i%2)),kickoff:i%2?'13:30':'11:00',round:'第'+(r+1)+'節',venue:'サンプルフィールド'+(i%2?'B':'A'),home:T[p[0]],away:T[p[1]],status:done?'finished':'scheduled',score:done?{home:sc[i][0],away:sc[i][1]}:null}});
+  const tb=T.map((t,i)=>({team:t,played:3,won:[2,1,1,1,1,0,0,0][i],drawn:[1,1,1,0,0,2,1,0][i],lost:[0,1,1,2,2,1,2,3][i],goalsFor:[6,4,5,3,4,2,2,1][i],goalsAgainst:[2,3,4,4,6,3,5,6][i],points:[7,4,4,3,3,2,1,0][i]}))
+    .map(r=>({...r,goalDiff:r.goalsFor-r.goalsAgainst})).map((r,i)=>({...r,rank:i+1}));
+  return{ok:true,competition:{name:'【サンプル】リーグ 1部'},updatedAt:jstToday()+' 18:00',matches:ms,groups:[{table:tb}],
+    playerStats:[{team:T[0],matches:3,players:[{no:'1',name:'選手 守男',pos:'GK',apps:3,starts:3,min:270,goals:0,assists:0,yc:0,rc:0},{no:'2',name:'選手 堅太',pos:'DF',apps:3,starts:3,min:270,goals:0,assists:1,yc:1,rc:0},{no:'5',name:'選手 鉄平',pos:'DF',apps:2,starts:1,min:110,goals:0,assists:0,yc:0,rc:0},{no:'7',name:'選手 三郎',pos:'MF',apps:3,starts:3,min:250,goals:2,assists:1,yc:0,rc:0},{no:'14',name:'選手 速人',pos:'MF',apps:2,starts:0,min:40,goals:0,assists:0,yc:0,rc:0},{no:'10',name:'選手 一郎',pos:'FW',apps:3,starts:3,min:262,goals:3,assists:0,yc:1,rc:0}]}],
+    scorers:[['選手 一郎',0,3],['選手 二郎',2,3],['選手 三郎',0,2],['選手 四郎',5,2],['選手 五郎',1,1]].map((s,i)=>({rank:[1,1,3,3,5][i],name:s[0],team:T[s[1]],count:s[2]}))};
+}
+function demoRoster(){
+  return {teams:[{team:{id:'t0'},players:[['1','選手 守男','GK','4年','サンプル高校'],['21','選手 控太','GK','1年',''],['2','選手 堅太','DF','3年','サンプル高校'],['3','選手 新人','DF','1年','サンプル高校'],['5','選手 鉄平','DF','2年',''],['7','選手 三郎','MF','4年','サンプル高校'],['14','選手 速人','MF','2年',''],['10','選手 一郎','FW','4年','サンプル高校']].map(a=>({id:'p'+a[0],no:a[0],name:a[1],pos:a[2],grade:a[3],school:a[4]})),
+    staff:[{role:'部長',name:'サンプル 部長'},{role:'監督',name:'サンプル 監督'},{role:'コーチ',name:'サンプル コーチ'}]}]};
+}
+function demoProfiles(){
+  return{teams:[{id:'t0',names:['サンプル大A'],updated:jstToday(),intro:'（サンプル）ここにチーム紹介文が入ります。\nチームの目標や雰囲気、応援してほしいことなどを各大学が自由に書けます。',coach:'サンプル 監督',captain:'選手 一郎',founded:'1970年',members:'45名',ground:'サンプルグラウンド',website:'https://example.com',sns:{instagram:'https://example.com',x:'https://example.com'},
+    players:[{no:1,name:'選手 守男',pos:'GK',grade:'4年',school:'サンプル高校'},{no:2,name:'選手 堅太',pos:'DF',grade:'3年',school:'サンプル高校'},{no:4,name:'選手 壁也',pos:'DF',grade:'2年'},{no:7,name:'選手 三郎',pos:'MF',grade:'4年',school:'サンプル高校'},{no:8,name:'選手 中太',pos:'MF',grade:'3年'},{no:10,name:'選手 一郎',pos:'FW',grade:'4年',school:'サンプル高校'},{no:11,name:'選手 翼',pos:'FW',grade:'1年'}],
+    news:[{date:jstToday(),title:'（サンプル）新入部員の募集について',url:''},{date:'2026-09-01',title:'（サンプル）夏季合宿を実施しました',url:''}]}]};
+}
+</script>
+</body>
+</html>
