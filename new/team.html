@@ -85,7 +85,13 @@ button{font:inherit;color:inherit;cursor:pointer}
 .hero{background:var(--navy);color:#fff;position:relative;overflow:hidden}
 .hero:before{content:"";position:absolute;inset:0;background:radial-gradient(700px 360px at 85% 0%,color-mix(in srgb,var(--team) 70%,transparent),transparent 70%)}
 .hero:after{content:"";position:absolute;left:0;right:0;bottom:0;height:5px;background:var(--team)}
-.hero .wrap{position:relative;padding:22px 0 26px}
+.hero .wrap{position:relative;z-index:2;padding:22px 0 26px}
+/* チーム写真（ホームページ管理画面の「チーム紹介」→「チーム写真」）：見出しの後ろに暗くして敷く */
+.hero .hph{position:absolute;inset:0;z-index:0}
+.hero .hph img{width:100%;height:100%;object-fit:cover;object-position:center 35%}
+.hero .hph:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(11,17,32,.94) 0%,rgba(11,17,32,.78) 45%,rgba(11,17,32,.45) 100%)}
+.hero:before{z-index:1}.hero:after{z-index:2}
+@media(max-width:680px){.hero .hph:after{background:linear-gradient(180deg,rgba(11,17,32,.55) 0%,rgba(11,17,32,.88) 60%,rgba(11,17,32,.95) 100%)}}
 .crumb{font-size:11px;color:#9fb8cc;margin-bottom:20px}
 .crumb a:hover{color:#fff;text-decoration:underline}
 .club-id{display:flex;align-items:center;gap:22px}
@@ -346,7 +352,8 @@ dl.facts dd{margin:0;font-weight:700;overflow-wrap:anywhere}
   <div class="comptabs"><div class="wrap" id="comptabs" role="tablist"><button aria-selected="true">読み込み中…</button></div></div>
 </header>
 
-<section class="hero">
+<section class="hero" id="hero">
+  <div class="hph" id="heroPh" aria-hidden="true"></div>
   <div class="wrap">
     <div class="crumb"><a href="./">ホーム</a> ／ <a href="./#clubs">参加クラブ</a> ／ <span id="crumbName">チーム</span></div>
     <div class="club-id">
@@ -488,6 +495,13 @@ function emblemUrl(p){
   if(/^[^\/\\?#]+\.(png|jpe?g|webp|svg|gif)$/i.test(e))return './emblems/'+encodeURIComponent(e);
   return '';
 }
+/* チーム写真：ドライブの共有リンクは縮小版にする */
+function teamPhotoUrl(p,w){
+  const e=String(p?.teamPhoto||'').trim();if(!e)return '';
+  const d=e.match(/drive\.google\.com\/(?:file\/d\/|open\?id=|uc\?(?:export=\w+&)?id=)([\w-]{20,})/);
+  if(d)return 'https://drive.google.com/thumbnail?id='+d[1]+'&sz=w'+w;
+  return /^https:\/\//i.test(e)?e:'';
+}
 /* 大学のエンブレム：new/emblems/index.json（{"大学名":"ファイル名"}）。チーム紹介の「エンブレム」が空のときに使う */
 let EMB={};
 const embReady=fetch('./emblems/index.json',{cache:'no-store'}).then(r=>r.ok?r.json():{}).then(j=>{EMB=j&&typeof j==='object'?j:{}}).catch(()=>{});
@@ -546,6 +560,8 @@ function renderHero(row,ms){
   document.title=fullName(t)+' | 北海道学生サッカー連盟';
   $('crumbName').textContent=name(t);
   $('heroCrest').innerHTML=crest(t,'xl');
+  const hp=teamPhotoUrl(p,1600);
+  $('heroPh').innerHTML=hp?'<img src="'+esc(hp)+'" alt="" decoding="async" onerror="this.remove()">':'';
   $('teamTitle').textContent=(p&&has(p.displayName))?p.displayName:fullName(t);
   const univ=typeof t==='object'&&has(t.univ)?t.univ:'';
   $('teamSub').textContent=[univ!==$('teamTitle').textContent?univ:'',S.data.competition?.name||''].filter(has).join('　／　');

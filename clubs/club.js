@@ -236,12 +236,16 @@
     const pick = x => MT === 'ALL' || mkey(x) === MT;
     let list = S.matches.filter(pick);
     list = MS === 'up' ? list.filter(x => !isDone(x.m) && (x.m.date || '9999') >= today) : list.filter(x => isDone(x.m)).reverse();
-    const sum = { W: 0, D: 0, L: 0 }; S.matches.filter(x => pick(x) && isDone(x.m)).forEach(x => sum[result(x)]++);
+    // 今季の成績：リーグ戦だけ（大会ごと。トーナメント・連盟以外の試合は数えない）
+    const recs = S.teams.filter(x => x.comp.format === 'リーグ' && (MT === 'ALL' || x.team.id + '|' + x.comp.id === MT)).map(x => {
+      const sum = { W: 0, D: 0, L: 0 }; S.matches.filter(y => !y.ext && y.team.id === x.team.id && y.comp.id === x.comp.id && isDone(y.m)).forEach(y => sum[result(y)]++);
+      return { label: x.label, sum };
+    }).filter(r => r.sum.W + r.sum.D + r.sum.L);
     const tables = standings().filter(s => MT === 'ALL' || s.x.team.id + '|' + s.x.comp.id === MT).map(({ x, g }) =>
       '<h3 style="margin:24px 0 10px;font-size:15px">' + esc(x.label) + (g.name ? '　' + esc(g.name) : '') + '</h3><div class="card tw"><table><thead><tr><th>順位</th><th class="l">チーム</th><th>試合</th><th>勝点</th><th>勝</th><th>分</th><th>敗</th><th>得失点</th></tr></thead><tbody>' +
       (g.table || []).map(r => '<tr' + (r.team?.id === x.team.id ? ' class="me"' : '') + '><td>' + esc(r.rank) + '</td><td class="l">' + esc(tname(r.team)) + '</td><td>' + esc(r.played ?? '') + '</td><td><b>' + esc(r.points) + '</b></td><td>' + esc(r.won) + '</td><td>' + esc(r.drawn) + '</td><td>' + esc(r.lost) + '</td><td>' + esc(r.gd ?? '') + '</td></tr>').join('') + '</tbody></table></div>').join('');
     return pageTop('MATCH', '試合情報') + '<section class="band"><div class="wrap">' + chipsT + chipsS +
-      '<p style="margin:0 0 12px;font-size:14px;color:var(--sub)">今季の成績：<b style="color:var(--ink)">' + sum.W + '勝 ' + sum.D + '分 ' + sum.L + '敗</b></p>' +
+      (recs.length ? '<p style="margin:0 0 12px;font-size:14px;color:var(--sub)">今季の成績（リーグ戦）：' + recs.map(r => esc(r.label) + ' <b style="color:var(--ink)">' + r.sum.W + '勝 ' + r.sum.D + '分 ' + r.sum.L + '敗</b>').join('　') + '</p>' : '') +
       (list.length ? '<div class="card">' + list.map(matchRow).join('') + '</div>' : emptyBox(MS === 'up' ? 'これからの試合は登録されていません' : 'まだ結果はありません')) +
       '<p style="font-size:12px;color:var(--sub);margin:10px 2px 0">連盟の大会の試合を押すと、公式記録（得点経過・出場選手・交代・警告）が開きます。' + (S.ext.length ? '社会人リーグ・天皇杯予選などの試合は、チームが入力した結果です。' : '') + '</p></div></section>' +
       (tables ? band('alt', 'STANDINGS', '順位表', tables) : '');
