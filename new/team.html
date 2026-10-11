@@ -91,6 +91,8 @@ button{font:inherit;color:inherit;cursor:pointer}
 .hero .hph img{width:100%;height:100%;object-fit:cover;object-position:center 35%}
 .hero .hph:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(11,17,32,.94) 0%,rgba(11,17,32,.78) 45%,rgba(11,17,32,.45) 100%)}
 .hero:before{z-index:1}.hero:after{z-index:2}
+/* 上部の光はチームカラー（theme.css の赤い光より優先） */
+#hero.hero:before{background:radial-gradient(760px 380px at 85% 0%,color-mix(in srgb,var(--team) 75%,transparent),transparent 72%)}
 @media(max-width:680px){.hero .hph:after{background:linear-gradient(180deg,rgba(11,17,32,.55) 0%,rgba(11,17,32,.88) 60%,rgba(11,17,32,.95) 100%)}}
 .crumb{font-size:11px;color:#9fb8cc;margin-bottom:20px}
 .crumb a:hover{color:#fff;text-decoration:underline}
@@ -228,7 +230,7 @@ dl.facts dd{margin:0;font-weight:700;overflow-wrap:anywhere}
 .player small{font-size:10.5px;color:var(--muted)}
 .player .gl{grid-column:1/-1;font-size:10.5px;color:var(--blue);font-weight:700;border-top:1px solid var(--line);padding-top:7px;margin-top:6px;line-height:1.6}
 .player .gl i{display:inline-block;font-style:normal;color:var(--ink);font-size:10px;width:14px;height:18px;line-height:18px;text-align:center;border-radius:2px;margin-left:5px;vertical-align:-3px}
-.player .gl i.yc{background:#f2c200}.player .gl i.rc{background:var(--lose);color:#fff}
+.player .gl i.yc{background:#f2c200;color:#222;font-weight:800}.player .gl i.rc{background:var(--lose);color:#fff}
 
 /* news */
 .news a{display:flex;gap:14px;padding:13px 18px;border-top:1px solid var(--line);font-size:13.5px;font-weight:700;align-items:baseline}
@@ -271,7 +273,7 @@ dl.facts dd{margin:0;font-weight:700;overflow-wrap:anywhere}
 .sq td.g{font-weight:800;color:var(--ink)}
 .sq .z{color:#c5ced6;font-weight:400}
 .sq td.cd i{display:inline-block;font-style:normal;font-family:var(--num);font-size:11px;width:15px;height:19px;line-height:19px;border-radius:2px;margin:0 1px;color:var(--ink)}
-.sq td.cd i.yc{background:#f2c200}.sq td.cd i.rc{background:var(--lose);color:#fff}
+.sq td.cd i.yc{background:#f2c200;color:#222;font-weight:800}.sq td.cd i.rc{background:var(--lose);color:#fff}
 .sq tr.grp td{background:#fff;text-align:left;font-family:var(--num);font-weight:800;font-size:15px;letter-spacing:.1em;padding:14px 10px 6px;border-bottom:2px solid var(--ink)}
 .sq tr.grp td span{font-family:"Noto Sans JP";font-size:11px;font-weight:500;letter-spacing:0;color:var(--muted);margin-left:4px}
 .sq tr.grp:first-child td{padding-top:10px}
