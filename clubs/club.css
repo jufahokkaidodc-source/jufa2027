@@ -353,3 +353,7 @@ div.mr{cursor:default}
 .igw blockquote{padding:18px;text-align:center;font-size:14px}
 @media(max-width:400px){.vg,.igg{grid-template-columns:minmax(0,1fr)}}
 .vid:has(.fr.tt) .vt{text-align:center}
+.vid .fr.ig{aspect-ratio:auto;height:640px;max-width:400px;margin:0 auto;background:#fff}
+.vid:has(.fr.ig) .vt,.vid .vl{text-align:center}
+.vid .vl{margin:6px 0 0;font-size:13px}.vid .vl a{text-decoration:underline}
+@media(max-width:400px){.vid .fr.ig{height:580px}}

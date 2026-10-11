@@ -396,7 +396,9 @@
     const cap = v.title ? '<p class="vt">' + esc(v.title) + '</p>' : '';
     if (v.kind === 'yt') return '<div class="vid"><div class="fr"><iframe src="https://www.youtube-nocookie.com/embed/' + esc(v.id) + '" title="' + esc(v.title || 'YouTube 動画') + '" loading="lazy" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>' + cap + '</div>';
     if (v.kind === 'tt') return '<div class="vid"><div class="fr tt"><iframe src="https://www.tiktok.com/embed/v2/' + esc(v.id) + '" title="' + esc(v.title || 'TikTok 動画') + '" loading="lazy" allow="encrypted-media" allowfullscreen></iframe></div>' + cap + '</div>';
-    if (v.kind === 'ig') return '<div class="vid">' + igBox(v.url) + cap + '</div>';
+    // Instagram のリール・動画：Instagram の埋め込みページをそのまま枠に入れる（embed.js を通さない）
+    if (v.kind === 'ig') return '<div class="vid"><div class="fr ig"><iframe src="' + esc(v.url) + 'embed/" title="' + esc(v.title || 'Instagram の動画') + '" loading="lazy" allow="encrypted-media; picture-in-picture; web-share" allowfullscreen scrolling="no"></iframe></div>' + cap +
+      '<p class="vl"><a href="' + esc(v.url) + '" target="_blank" rel="noopener">Instagramで見る ↗</a></p></div>';
     return '<div class="vid"><a class="card pad" style="display:block" href="' + esc(v.url) + '" target="_blank" rel="noopener">▶ ' + esc(v.title || '動画を見る') + ' ↗</a></div>';
   }
   const igGrid = list => '<div class="igg">' + list.map(igBox).join('') + '</div>';
