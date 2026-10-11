@@ -341,9 +341,10 @@
     const rows = [['創部', p.founded], ['部員数', p.members], ['主将', p.captain], ['監督', p.coach], ['活動場所', p.ground]].filter(r => has(r[1]));
     const sns = [['公式サイト', p.website], ['Instagram', p.sns?.instagram], ['X', p.sns?.x], ['Facebook', p.sns?.facebook], ['YouTube', p.sns?.youtube], ['TikTok', p.sns?.tiktok]].filter(r => safeUrl(r[1]));
     if (!has(p.intro) && !rows.length && !sns.length) return emptyBox('クラブ紹介は準備中です（管理画面の「チーム紹介」に入れると表示されます）');
-    const ph = img(p.teamPhoto, 1000);
+    // チーム写真 → トップ画像 → ギャラリーの1枚目。どれもなければ写真の枠を出さない
+    const ph = img(p.teamPhoto, 1000) || img(p.clubHero, 1000) || img((S.gallery[0] || {}).photo, 1000);
     const intro = short && has(p.intro) ? String(p.intro).slice(0, 220) + (String(p.intro).length > 220 ? '…' : '') : p.intro;
-    return '<div class="about"><div class="im">' + (ph ? '<img src="' + esc(ph) + '" alt="" loading="lazy" onerror="this.remove()">' : '') + '</div><div>' + (has(intro) ? '<p class="intro">' + esc(intro) + '</p>' : '') +
+    return '<div class="about' + (ph ? '' : ' noim') + '">' + (ph ? '<div class="im"><img src="' + esc(ph) + '" alt="" loading="lazy" onerror="this.parentNode.remove()"></div>' : '') + '<div>' + (has(intro) ? '<p class="intro">' + esc(intro) + '</p>' : '') +
       (rows.length ? '<dl class="prof">' + rows.map(r => '<dt>' + r[0] + '</dt><dd>' + esc(r[1]) + '</dd>').join('') + '</dl>' : '') +
       (sns.length ? '<div class="sns">' + sns.map(r => '<a href="' + esc(safeUrl(r[1])) + '" target="_blank" rel="noopener">' + r[0] + ' ↗</a>').join('') + '</div>' : '') + '</div></div>';
   }

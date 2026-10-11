@@ -247,6 +247,7 @@ th button[aria-sort]{color:var(--c-text)}
 .about{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px;align-items:center}
 .about .im{border-radius:var(--r);overflow:hidden;aspect-ratio:4/3;background:linear-gradient(135deg,color-mix(in srgb,var(--c) 55%,var(--bg2)),var(--bg2))}
 .about .im img{width:100%;height:100%;object-fit:cover}
+.about.noim,.about:not(:has(.im)){grid-template-columns:minmax(0,1fr)}
 .intro{white-space:pre-wrap;font-size:15px;line-height:2;margin:0}
 .prof{display:grid;grid-template-columns:auto 1fr;gap:8px 18px;margin:18px 0 0;font-size:14px}
 .prof dt{color:var(--sub)}
