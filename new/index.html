@@ -593,8 +593,8 @@ function renderTicker(){
   $('prevR').disabled=S.ri<=0;$('nextR').disabled=S.ri>=S.rounds.length-1;
   $('tickerTitle').textContent=r?'試合':'試合';
   if(!r){$('ticker').innerHTML='<p class="empty">試合データがありません。</p>';return}
-  const list=r.list.filter(m=>!isSameMatch(m,S.feat));
-  if(!list.length){$('ticker').innerHTML='<p class="empty">この節のほかの試合はありません。</p>';return}
+  const list=r.list; // 注目試合の枠をやめたので、その節の試合はすべて帯に出す
+  if(!list.length){$('ticker').innerHTML='<p class="empty">この節の試合はありません。</p>';return}
   $('ticker').innerHTML=list.map(m=>{
     const done=isDone(m),h=+m.score?.home,a=+m.score?.away;
     return '<a class="tcard" href="'+detail(S.id,isDone(m)?m.matchId:'')+'"><div class="meta"><span>'+esc(fmtDate(m.date))+'</span>'+stBadge(m)+'</div>'+
