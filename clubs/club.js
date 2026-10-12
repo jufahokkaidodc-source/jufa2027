@@ -150,7 +150,7 @@
     html += '<div class="wrap reveal on">' + (next ? (() => {
       const d = daysUntil(next.m.date), me = next.home ? next.m.home : next.m.away;
       return '<div class="nextm"><div class="meta"><span class="lab">NEXT MATCH</span><span>' + esc(next.label) + (next.m.round ? '　' + esc(next.m.round) : '') + '</span></div>' +
-        '<div class="board"><div class="tm">' + emb(me, true) + '<b>' + esc(tname(me)) + '</b></div><div class="mid"><div class="en">VS</div><small>' + esc(next.home ? 'HOME' : 'AWAY') + '</small></div><div class="tm">' + emb(next.opp) + '<b>' + esc(tname(next.opp)) + '</b></div></div>' +
+        '<div class="board"><div class="tm">' + emb(me, true) + '<b>' + esc(tname(me)) + '</b></div><div class="mid"><div class="en">VS</div></div><div class="tm">' + emb(next.opp) + '<b>' + esc(tname(next.opp)) + '</b></div></div>' +
         '<div class="when">' + esc(fullDate(next.m.date)) + (next.m.kickoff ? '　' + esc(next.m.kickoff) + ' KICK OFF' : '') + (next.m.venue ? '　📍' + esc(next.m.venue) : '') + (d != null && d >= 0 ? '<span class="cd">' + (d === 0 ? 'TODAY' : 'あと ' + d + ' 日') + '</span>' : '') + '</div></div>';
     })() : '<div class="nextm"><div class="meta"><span class="lab">NEXT MATCH</span></div><p class="empty" style="padding:0">これからの試合は、日程が決まるとここに出ます。</p></div>') + '</div>';
     // LAST MATCH ＋ 順位

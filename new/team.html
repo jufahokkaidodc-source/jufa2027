@@ -154,7 +154,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 .tabs{display:inline-flex;background:#e6edf3;border-radius:10px;padding:3px;gap:2px}
 .tabs button{border:0;background:transparent;padding:6px 14px;border-radius:7px;font-size:12px;font-weight:700;color:var(--muted)}
 .tabs button[aria-selected=true]{background:#fff;color:var(--ink);box-shadow:0 1px 3px #0b2a4520}
-.mrow{display:grid;grid-template-columns:62px 34px minmax(0,1fr) 74px 40px;align-items:center;gap:10px;padding:13px 16px;border-top:1px solid var(--line);transition:background .15s}
+.mrow{display:grid;grid-template-columns:62px minmax(0,1fr) 74px 40px;align-items:center;gap:10px;padding:13px 16px;border-top:1px solid var(--line);transition:background .15s}
 .mrow:first-child{border-top:0}
 .mrow:hover{background:#f6f9fc}
 .mrow .d{font-family:var(--num);font-size:16px;font-weight:700;line-height:1.1}
@@ -317,7 +317,7 @@ dl.facts dd{margin:0;font-weight:700;overflow-wrap:anywhere}
   .main{padding-top:20px}
   .pair{grid-template-columns:minmax(0,1fr)}
   .sechead h2{font-size:19px}
-  .mrow{grid-template-columns:48px 28px minmax(0,1fr) 54px;gap:8px;padding:12px}
+  .mrow{grid-template-columns:48px minmax(0,1fr) 54px;gap:8px;padding:12px}
   .mrow .r{display:none}
   .mrow .sc{font-size:19px}
   .opp{font-size:13px}
@@ -605,7 +605,6 @@ function renderMatches(which){
     const mine=o?(home?m.score.home:m.score.away):null,their=o?(home?m.score.away:m.score.home):null;
     return '<a class="mrow" href="'+detail(S.comp,isDone(m)?m.matchId:'')+'">'+
       '<div class="d">'+esc(fmtDate(m.date,true))+'<small>（'+esc(wd(m.date))+'）'+esc(m.kickoff||'')+'</small></div>'+
-      '<div class="ha'+(home?' H':'')+'">'+(home?'HOME':'AWAY')+'</div>'+
       '<div class="opp">'+crest(opp,'sm')+'<div><span>vs '+esc(name(opp))+'</span><small>'+esc([m.round,m.venue].filter(has).join('　'))+'</small></div></div>'+
       (o?'<div class="sc">'+esc(mine)+' - '+esc(their)+'</div>':'<div class="sc vs">VS</div>')+
       '<div class="r">'+(o?'<span class="res '+o+'">'+OUT[o]+'</span>':'')+'</div></a>';
