@@ -124,7 +124,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 
 /* pickup */
 .main{padding:28px 0 64px}
-.pickup{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(300px,1fr);gap:20px}
+.pickup{display:grid;grid-template-columns:minmax(0,1fr);gap:20px}
 .hero{background:var(--navy);color:#fff;border-radius:16px;overflow:hidden;position:relative;min-height:340px;display:flex;flex-direction:column}
 .hero svg.pitch{position:absolute;inset:0;width:100%;height:100%;opacity:.08}
 .hero:before{content:"";position:absolute;inset:0;background:radial-gradient(600px 300px at 80% 0%,#1f5a8a,transparent 70%)}
@@ -399,10 +399,6 @@ html{scroll-padding-top:0}
 
 <main class="wrap main">
   <div class="pickup">
-    <section class="hero" id="hero">
-      <svg class="pitch" viewBox="0 0 800 340" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><g fill="none" stroke="#fff" stroke-width="2"><rect x="20" y="20" width="760" height="300"/><line x1="400" y1="20" x2="400" y2="320"/><circle cx="400" cy="170" r="60"/><rect x="20" y="95" width="100" height="150"/><rect x="680" y="95" width="100" height="150"/></g></svg>
-      <div class="hero-in" id="feature"><span class="sk" style="width:40%"></span></div>
-    </section>
     <aside class="newsbox">
       <div class="boxhead"><h3><small>LATEST</small>お知らせ・トピックス</h3><a href="./news.html">お知らせ一覧 ›</a></div>
       <div class="news" id="topics"><span class="sk"></span><span class="sk"></span><span class="sk"></span></div>
@@ -637,11 +633,14 @@ $('prevR').onclick=()=>setRound(S.ri-1);
 $('nextR').onclick=()=>setRound(S.ri+1);
 
 /* pickup */
+/* 注目試合はトップに出さない（2026-10 事務局）。枠がないときは何もしない */
+const featEl=()=>$('feature')||{};
 function renderFeatured(m){
-  if(!m){$('feature').innerHTML='<p class="empty" style="color:#c0d3e2">試合データはありません。</p>';return}
+  if(!$('feature'))return;
+  if(!m){featEl().innerHTML='<p class="empty" style="color:#c0d3e2">試合データはありません。</p>';return}
   const done=isDone(m),d=daysUntil(m.date);
   const lab=done?'LATEST RESULT':d===0?'TODAY':'NEXT MATCH';
-  $('feature').innerHTML=
+  featEl().innerHTML=
     '<div class="hero-top"><span class="label">'+lab+'</span><span class="label ghost">'+esc(m.round||'大会')+'</span></div>'+
     '<div class="duel"><div class="side-t">'+crest(m.home,'xl')+'<strong>'+esc(name(m.home))+'</strong></div>'+
       '<div class="mid">'+(done?'<div class="score">'+esc(m.score.home)+'<i>-</i>'+esc(m.score.away)+'</div>':'<div class="vs">VS</div>')+
@@ -795,7 +794,7 @@ async function load(id){
     renderTable(d.groups);renderScorers(d.scorers);renderClubs(collectTeams(ms),id);
     renderPhotos(heroFor(id,collectTeams(ms)));
   }catch(e){
-    $('feature').innerHTML='<p class="empty" style="color:#c0d3e2">データを読み込めません：'+esc(e.message)+'</p>';
+    featEl().innerHTML='<p class="empty" style="color:#c0d3e2">データを読み込めません：'+esc(e.message)+'</p>';
     for(const k of ['ticker','topics','matchList','table','scorerList','clubList'])$(k).innerHTML='<p class="empty">データを表示できません。</p>';
   }
 }
@@ -813,7 +812,7 @@ links.forEach(a=>{const s=document.querySelector(a.getAttribute('href'));if(s)sp
   try{d=await json('competitions.json')}
   catch(e){
     if(!/github\.io$/.test(location.hostname)){DEMO=true;d=await json('competitions.json')}
-    else{$('comptabs').innerHTML='<button>大会情報を取得できません</button>';$('feature').innerHTML='<p class="empty" style="color:#c0d3e2">大会一覧を取得できません：'+esc(e.message)+'</p>';return}
+    else{$('comptabs').innerHTML='<button>大会情報を取得できません</button>';featEl().innerHTML='<p class="empty" style="color:#c0d3e2">大会一覧を取得できません：'+esc(e.message)+'</p>';return}
   }
   $('demo').hidden=!DEMO;
   try{const r=DEMO?{ok:1,news:[{id:'a1',date:jstToday(),cat:'連盟',title:'（サンプル）2027年度 チーム登録の受付について',important:true},{id:'a2',date:jstToday(),cat:'demo-1',title:'（サンプル）第3節 会場変更のお知らせ',important:true}],hero:demoHero(),teamPhotos:demoTeamPhotos()}:await fetch('../results/data/news.json',{cache:'no-store'}).then(r=>r.ok?r.json():null);NEWS=r?.news||[];HERO=r?.hero||[];TEAMPH=r?.teamPhotos||[]}catch(_){NEWS=[]}
