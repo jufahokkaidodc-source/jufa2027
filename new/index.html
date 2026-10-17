@@ -68,6 +68,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 .st{font-weight:700;font-size:10px;padding:2px 7px;border-radius:4px;background:#eef2f6;color:var(--muted)}
 .st.done{background:var(--navy);color:#fff}
 .st.today{background:var(--lime);color:var(--navy)}
+.tcard .meta .ko{font-family:var(--num);font-weight:800;margin-left:4px;color:var(--ink,inherit)}
 .st.live{background:var(--red);color:#fff}
 .st.live::before{content:'';display:inline-block;width:6px;height:6px;border-radius:50%;background:#fff;margin-right:4px;vertical-align:1px;animation:lvp 1.4s infinite}
 @keyframes lvp{50%{opacity:.25}}
@@ -592,7 +593,7 @@ function stBadge(m){
   if(isDone(m))return '<span class="st done">試合終了</span>';
   const d=daysUntil(m.date);
   if(d===0)return '<span class="st today">本日</span>';
-  return '<span class="st">'+(m.kickoff?esc(m.kickoff)+' KO':'予定')+'</span>';
+  return '<span class="st">予定</span>';
 }
 /* 速報（確定前の試合だけ） */
 const liveOf=m=>!isDone(m)&&window.JUFA_LIVE?JUFA_LIVE.of(m.matchId):null;
@@ -607,7 +608,7 @@ function renderTicker(){
   $('ticker').innerHTML=list.map(m=>{
     const lv=liveOf(m),done=isDone(m),h=+m.score?.home,a=+m.score?.away;
     const sh=done?m.score.home:lv?lv.score.home:'',sa=done?m.score.away:lv?lv.score.away:'';
-    return '<a class="tcard" href="'+detail(S.id,done||lv?m.matchId:'')+'"><div class="meta"><span>'+esc(fmtDate(m.date))+'</span>'+(lv?'<span class="st '+(lv.state==='live'?'live':'done')+'">'+esc(JUFA_LIVE.label(lv))+'</span>':stBadge(m))+'</div>'+
+    return '<a class="tcard" href="'+detail(S.id,done||lv?m.matchId:'')+'"><div class="meta"><span>'+esc(fmtDate(m.date))+(m.kickoff?' <b class="ko">'+esc(m.kickoff)+'</b>':'')+'</span>'+(lv?'<span class="st '+(lv.state==='live'?'live':'done')+'">'+esc(JUFA_LIVE.label(lv))+'</span>':stBadge(m))+'</div>'+
       '<div class="trow'+(done&&h<a?' lose':'')+'">'+crest(m.home,'sm')+'<span>'+esc(name(m.home))+'</span><b>'+esc(sh)+'</b></div>'+
       '<div class="trow'+(done&&a<h?' lose':'')+'">'+crest(m.away,'sm')+'<span>'+esc(name(m.away))+'</span><b>'+esc(sa)+'</b></div>'+
       '<div class="venue">'+esc(m.venue||'会場未定')+'</div></a>';
