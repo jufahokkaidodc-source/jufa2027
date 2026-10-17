@@ -68,6 +68,10 @@ button{font:inherit;color:inherit;cursor:pointer}
 .st{font-weight:700;font-size:10px;padding:2px 7px;border-radius:4px;background:#eef2f6;color:var(--muted)}
 .st.done{background:var(--navy);color:#fff}
 .st.today{background:var(--lime);color:var(--navy)}
+.st.live{background:var(--red);color:#fff}
+.st.live::before{content:'';display:inline-block;width:6px;height:6px;border-radius:50%;background:#fff;margin-right:4px;vertical-align:1px;animation:lvp 1.4s infinite}
+@keyframes lvp{50%{opacity:.25}}
+@media (prefers-reduced-motion:reduce){.st.live::before{animation:none}}
 .trow{display:grid;grid-template-columns:32px 1fr auto;align-items:center;gap:10px;padding:5px 0;font-size:15.5px;font-weight:700}
 .trow span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .trow b{font-family:var(--num);font-size:26px;min-width:20px;text-align:right;line-height:1}
@@ -196,6 +200,8 @@ button{font:inherit;color:inherit;cursor:pointer}
 .tm.lose{color:#98a6b3;font-weight:500}
 .mrow .sc{text-align:center;font-family:var(--num);font-size:25px;font-weight:700;white-space:nowrap;background:#f1f4f7;border-radius:8px;padding:3px 0}
 .mrow .sc.done{background:var(--navy);color:#fff}
+.mrow .sc.live{background:var(--red);color:#fff;font-size:22px}
+.mrow .sc.live small{display:block;font-size:10px;font-family:inherit;font-weight:700;letter-spacing:0}
 .mrow .sc.vs{font-size:14px;color:var(--muted);letter-spacing:.1em;background:transparent;border:1px solid var(--line)}
 .mrow .go{color:var(--muted);font-size:14px;text-align:right}
 .mrow .vn{display:none}
@@ -444,6 +450,7 @@ html{scroll-padding-top:0}
   </div>
 </footer>
 
+<script src="./live.js"></script>
 <script>
 'use strict';
 const $=id=>document.getElementById(id);
@@ -587,6 +594,8 @@ function stBadge(m){
   if(d===0)return '<span class="st today">本日</span>';
   return '<span class="st">'+(m.kickoff?esc(m.kickoff)+' KO':'予定')+'</span>';
 }
+/* 速報（確定前の試合だけ） */
+const liveOf=m=>!isDone(m)&&window.JUFA_LIVE?JUFA_LIVE.of(m.matchId):null;
 function renderTicker(){
   const r=S.rounds[S.ri];
   $('roundLabel').textContent=r?r.label:'–';
@@ -596,10 +605,11 @@ function renderTicker(){
   const list=r.list; // 注目試合の枠をやめたので、その節の試合はすべて帯に出す
   if(!list.length){$('ticker').innerHTML='<p class="empty">この節の試合はありません。</p>';return}
   $('ticker').innerHTML=list.map(m=>{
-    const done=isDone(m),h=+m.score?.home,a=+m.score?.away;
-    return '<a class="tcard" href="'+detail(S.id,isDone(m)?m.matchId:'')+'"><div class="meta"><span>'+esc(fmtDate(m.date))+'</span>'+stBadge(m)+'</div>'+
-      '<div class="trow'+(done&&h<a?' lose':'')+'">'+crest(m.home,'sm')+'<span>'+esc(name(m.home))+'</span><b>'+(done?esc(m.score.home):'')+'</b></div>'+
-      '<div class="trow'+(done&&a<h?' lose':'')+'">'+crest(m.away,'sm')+'<span>'+esc(name(m.away))+'</span><b>'+(done?esc(m.score.away):'')+'</b></div>'+
+    const lv=liveOf(m),done=isDone(m),h=+m.score?.home,a=+m.score?.away;
+    const sh=done?m.score.home:lv?lv.score.home:'',sa=done?m.score.away:lv?lv.score.away:'';
+    return '<a class="tcard" href="'+detail(S.id,done||lv?m.matchId:'')+'"><div class="meta"><span>'+esc(fmtDate(m.date))+'</span>'+(lv?'<span class="st '+(lv.state==='live'?'live':'done')+'">'+esc(JUFA_LIVE.label(lv))+'</span>':stBadge(m))+'</div>'+
+      '<div class="trow'+(done&&h<a?' lose':'')+'">'+crest(m.home,'sm')+'<span>'+esc(name(m.home))+'</span><b>'+esc(sh)+'</b></div>'+
+      '<div class="trow'+(done&&a<h?' lose':'')+'">'+crest(m.away,'sm')+'<span>'+esc(name(m.away))+'</span><b>'+esc(sa)+'</b></div>'+
       '<div class="venue">'+esc(m.venue||'会場未定')+'</div></a>';
   }).join('');
   $('ticker').scrollLeft=0;
@@ -618,16 +628,17 @@ function renderSchedule(){
   let html='',cur=null;
   for(const m of r.list){
     if(m.date!==cur){cur=m.date;const d=daysUntil(m.date);html+='<div class="dayhead">'+esc(fmtDate(m.date))+(d===0?'　今日':d===1?'　明日':'')+'</div>'}
-    const done=isDone(m),h=+m.score?.home,a=+m.score?.away;
-    html+='<a class="mrow" href="'+detail(S.id,isDone(m)?m.matchId:'')+'">'+
+    const lv=liveOf(m),done=isDone(m),h=+m.score?.home,a=+m.score?.away;
+    html+='<a class="mrow" href="'+detail(S.id,done||lv?m.matchId:'')+'">'+
       '<div class="ko">'+esc(m.kickoff||'--:--')+'<small>'+esc(m.venue||'')+'</small></div>'+
       '<div class="tm h'+(done&&h<a?' lose':'')+'">'+crest(m.home,'sm')+'<span>'+esc(name(m.home))+'</span></div>'+
-      (done?'<div class="sc done">'+esc(m.score.home)+' - '+esc(m.score.away)+'</div>':'<div class="sc vs">VS</div>')+
+      (done?'<div class="sc done">'+esc(m.score.home)+' - '+esc(m.score.away)+'</div>':lv?'<div class="sc live">'+esc(lv.score.home)+' - '+esc(lv.score.away)+'<small>'+esc(JUFA_LIVE.label(lv))+'</small></div>':'<div class="sc vs">VS</div>')+
       '<div class="tm'+(done&&a<h?' lose':'')+'">'+crest(m.away,'sm')+'<span>'+esc(name(m.away))+'</span></div>'+
       '<div class="go">›</div>'+(m.venue?'<div class="vn">'+esc(m.venue)+'</div>':'')+'</a>';
   }
   $('matchList').innerHTML=html;
 }
+if(window.JUFA_LIVE)JUFA_LIVE.on(()=>{if(S.rounds&&S.rounds.length){renderTicker();renderSchedule();}});
 function setRound(i){S.ri=Math.max(0,Math.min(S.rounds.length-1,i));renderTicker();renderRoundTabs();renderSchedule()}
 $('prevR').onclick=()=>setRound(S.ri-1);
 $('nextR').onclick=()=>setRound(S.ri+1);

@@ -98,6 +98,9 @@ button{cursor:pointer}
 .mrow .tm.lose{font-weight:500}
 .mrow .sc{text-align:center;font-family:var(--num);font-size:22px;font-weight:800;border-radius:8px;padding:4px 0;line-height:1.1}
 .mrow .sc small{display:block;font-family:"Noto Sans JP";font-size:10px;font-weight:500;color:var(--muted)}
+.mrow .sc.live{background:var(--red,#E60012);color:#fff}
+.mrow .sc.live small{display:block;font-size:10px;font-weight:700;margin-top:2px}
+.lvtag{display:inline-block;background:var(--red,#E60012);color:#fff;font-size:12px;font-weight:700;border-radius:4px;padding:2px 8px;margin-top:6px}
 .mrow .sc.pend{font-size:14px;font-weight:700;border:1px solid var(--line);color:var(--muted)}
 .mrow .meta{grid-column:2 / 5;font-size:11.5px;color:var(--muted);margin-top:-6px;text-align:center}
 .mrow .meta .go{color:var(--blue);font-weight:700}
@@ -298,6 +301,7 @@ table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums}
   </div>
 </footer>
 
+<script src="./live.js"></script>
 <script>
 'use strict';
 const $=id=>document.getElementById(id);
@@ -450,15 +454,18 @@ function rSchedule(){
     return '<div class="sh"><h2>'+esc(g.k||'日程')+'</h2><small>'+dates.map(sd).join('・')+'</small></div><div class="card">'+body+'</div>';
   }).join('');
 }
+/* 速報（確定前の試合だけ） */
+const liveOf=m=>!m.score&&window.JUFA_LIVE?JUFA_LIVE.of(m.matchId):null;
 function mRow(m){
   const badges=(m.badges||[]).map(b=>'<span class="badge">'+esc(b)+'</span>').join('');
   const meta=[m.no?'No.'+m.no:'',m.venue,m.host?'当番校 '+m.host:''].filter(Boolean).map(esc).join('　');
   if(!m.home||!m.away)return '<div class="mrow tbd"><span class="ko">'+esc(m.kickoff||'')+'</span><span class="tm">'+badges+esc(m.placeholder||'未定')+'</span><div class="meta">'+meta+'</div></div>';
   let sc;
   if(m.score){const pk=m.score.pk?'<small>PK '+m.score.pk.home+'-'+m.score.pk.away+'</small>':m.score.extraTime?'<small>延長</small>':'';sc='<span class="sc done">'+m.score.home+' - '+m.score.away+pk+'</span>';}
+  else if(liveOf(m)){const lv=liveOf(m);sc='<span class="sc live">'+lv.score.home+' - '+lv.score.away+(lv.pk?'<small>PK '+lv.pk.home+'-'+lv.pk.away+'</small>':'')+'<small>'+esc(JUFA_LIVE.label(lv))+'</small></span>';}
   else sc='<span class="sc pend">'+({suspended:'中断',postponed:'延期',cancelled:'中止',unrecorded:'結果未登録'}[m.status]||'VS')+'</span>';
   const lose=id=>m.score&&m.winner&&m.winner!==id?' lose':'';
-  const link=!!m.score;
+  const link=!!m.score||!!liveOf(m);
   return '<div class="mrow'+(link?' link':'')+'"'+(link?' data-match="'+esc(m.matchId)+'" role="button" tabindex="0" aria-label="試合の詳細"':'')+'><span class="ko">'+esc(m.kickoff||'')+'</span>'+
     '<span class="tm h'+lose(m.home.id)+'">'+crest(m.home,'sm')+'<span>'+esc(m.home.short)+'</span></span>'+sc+
     '<span class="tm'+lose(m.away.id)+'">'+crest(m.away,'sm')+'<span>'+esc(m.away.short)+'</span></span>'+
@@ -583,12 +590,13 @@ async function openMatch(id){
   }catch(e){showErr(e)}
 }
 function rMatch(){
-  const d=DETAIL,m=d.match,H=m.home,A=m.away,sc=m.score||{};
+  const d=DETAIL,m=d.match,H=m.home,A=m.away,lv=liveOf(m),sc=m.score||(lv?{home:lv.score.home,away:lv.score.away,pk:lv.pk}:{});
   const halves=d.halves?'<div class="half">前半 '+d.halves.first[0]+'-'+d.halves.first[1]+'　後半 '+d.halves.second[0]+'-'+d.halves.second[1]+(d.halves.extra?'　延長 '+(d.halves.extra[0]??0)+'-'+(d.halves.extra[1]??0):'')+(sc.pk?'　PK '+sc.pk.home+'-'+sc.pk.away:'')+'</div>':(sc.pk?'<div class="half">PK '+sc.pk.home+'-'+sc.pk.away+'</div>':'');
   const head='<div class="mh"><div class="meta">'+esc(DATA.competition.name)+'　'+esc(m.round)+(m.no?'　No.'+esc(m.no):'')+'</div>'+
     '<div class="row"><span class="t">'+crest(H,'lg')+teamLink(H,H.name||H.short)+'</span><span class="big">'+(sc.home!=null?sc.home+' - '+sc.away:'VS')+'</span><span class="t">'+crest(A,'lg')+teamLink(A,A.name||A.short)+'</span></div>'+
-    halves+'<div class="meta">'+esc(jd(m.date))+(m.kickoff?' '+esc(m.kickoff):'')+'　'+esc((d.info&&d.info.venue)||m.venue||'')+'</div></div>';
-  const evs=[].concat(
+    halves+(lv?'<div><span class="lvtag">'+esc(JUFA_LIVE.label(lv))+'</span></div>':'')+'<div class="meta">'+esc(jd(m.date))+(m.kickoff?' '+esc(m.kickoff):'')+'　'+esc((d.info&&d.info.venue)||m.venue||'')+'</div></div>';
+  const lvGoals=lv&&!(d.goals||[]).length?lv.goals.map((g,i)=>({s:i,side:g.side,min:g.minute,html:'<span class="goal">⚽ '+esc(g.name)+'</span>'+(g.pk?' <small class="note">PK</small>':'')})):[];
+  const evs=[].concat(lvGoals,
     (d.goals||[]).map(g=>({s:g.sort,side:g.side,min:g.minute,html:'<span class="goal">⚽ '+esc(g.scorer)+'</span>'+(g.type&&!/^(シュート|通常)$/.test(g.type)&&!g.og?' <small class="note">'+esc(g.type)+'</small>':'')+(g.assist?'<br><small style="color:var(--muted)">アシスト '+esc(g.assist)+'</small>':'')})),
     (d.cards||[]).map(c=>({s:c.sort,side:c.side,min:c.minute,html:'<span class="ico '+(c.kind==='C'?'c':'s')+'"></span>'+esc(c.name)+' <small style="color:var(--muted)">'+esc(c.mark)+'</small>'})),
     (d.subs||[]).map(x=>({s:x.sort,side:x.side,min:x.minute,html:'<span style="color:#4caf50">▲ '+esc(x.in)+'</span><br><span style="color:var(--muted)">▼ '+esc(x.out)+'</span>'}))
@@ -602,11 +610,16 @@ function rMatch(){
   const pk=d.pk&&d.pk.length?'<div class="sh"><h2>PK戦</h2></div><div class="lu">'+['home','away'].map(sdn=>'<div class="card"><h3>'+esc((sdn==='home'?H:A).short)+'</h3><table>'+d.pk.filter(k=>k.side===sdn).map(k=>'<tr><td class="no">'+k.order+'</td><td>'+esc(k.name)+'</td><td>'+(/成功|○/.test(k.result)?'○':'×')+'</td></tr>').join('')+'</table></div>').join('')+'</div>':'';
   const inf=d.info;
   const off=inf&&(inf.referee||inf.ar1)?'<div class="sh"><h2>審判員・コンディション</h2></div><div class="card off">'+[['主審',inf.referee],['副審',[inf.ar1,inf.ar2].filter(Boolean).join('・')],['第4審',inf.fourth],['天候',inf.weather],['ピッチ',[inf.pitch,inf.pitchCondition].filter(Boolean).join('・')]].filter(x=>x[1]).map(x=>'<div><span>'+x[0]+'</span>'+esc(x[1])+'</div>').join('')+'</div>':'';
-  const note=d.source==='report'?'<p class="note">この試合は試合報告から取り込んだ記録です（先発・交代の記録はありません）。</p>':'';
+  const note=lv?'<p class="note">速報です（公式記録の確定前）。スコア・得点者・時間は、確定のときに変わることがあります。</p>':d.source==='report'?'<p class="note">この試合は試合報告から取り込んだ記録です（先発・交代の記録はありません）。</p>':'';
   const back={tournament:'トーナメント',cards:'警告・退場'}[S.tab]||'日程・結果';
   $('main').innerHTML='<a class="back" href="'+pageUrl(S.comp,S.tab)+'">‹ '+back+'に戻る</a>'+head+tl+lu+pk+off+note+'<div class="foot">'+esc(DATA.competition.name)+'　'+esc(m.matchId)+'</div>';
 }
 
+if(window.JUFA_LIVE)JUFA_LIVE.on(()=>{
+  if(!DATA)return;
+  if(DETAIL&&S.match){if(liveOf(DETAIL.match))rMatch();return;}
+  if(S.tab==='schedule'&&(DATA.matches||[]).some(m=>liveOf(m))){const y=window.scrollY;render();window.scrollTo(0,y);}
+});
 init();
 </script>
 </body>
