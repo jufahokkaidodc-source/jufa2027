@@ -88,3 +88,11 @@ tr.me td{background:#2a1416}
 
 /* 注目の試合の光（紺 → 赤み） */
 .hero:before{background:radial-gradient(600px 300px at 80% 0%,#5a0a12,transparent 70%)}
+
+/* 緊急のお知らせ（alert.js） */
+.alertbar{display:block;background:#E60012;color:#fff;text-decoration:none;font-weight:700;font-size:14px;line-height:1.55}
+.alertbar .alertin{max-width:1200px;margin:0 auto;padding:10px 16px;display:flex;gap:10px;align-items:center}
+.alertbar b{flex:none;background:#fff;color:#E60012;border-radius:4px;padding:1px 8px;font-size:12px}
+.alertbar span{flex:1;min-width:0;overflow-wrap:anywhere}
+.alertbar i{flex:none;font-style:normal;font-size:20px;line-height:1}
+a.alertbar:hover span{text-decoration:underline}
