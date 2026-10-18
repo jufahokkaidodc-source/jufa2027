@@ -348,6 +348,8 @@ dl.facts dd{margin:0;font-weight:700;overflow-wrap:anywhere}
 .calbox a{padding:6px 12px;border:1px solid var(--line);border-radius:999px;color:var(--ink);text-decoration:none;font-weight:700}
 .calbox a:hover{border-color:var(--red);color:var(--red)}
 .calbox small{flex-basis:100%;color:var(--muted);font-size:12px}
+.calbox .calsel{max-width:100%;font:inherit;font-size:13px;padding:6px 10px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+.calbox .calone{font-size:13px;color:var(--muted)}
 </style>
 <link rel="stylesheet" href="./theme.css">
 </head>
@@ -457,13 +459,15 @@ const $=id=>document.getElementById(id);
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
 /* カレンダーに入れる：../results/data/cal/*.ics（全体システムが書き出す）。ファイルがあるときだけ出す */
-function calBox(el,file,label){
-  if(!el)return;
-  const u=new URL('../results/data/cal/'+file,location.href).href;
-  fetch(u,{method:'HEAD',cache:'no-store'}).then(r=>{if(!r.ok)return;
-    const w=u.replace(/^https?:/,'webcal:');
-    el.innerHTML='<span class="cl">📅 '+esc(label)+'をカレンダーに入れる</span><a href="'+esc(w)+'">iPhone・Mac</a><a href="https://calendar.google.com/calendar/r?cid='+encodeURIComponent(w)+'" target="_blank" rel="noopener">Googleカレンダー</a><small>登録すると、日程や会場が変わったときもカレンダーが自動で変わります（反映まで数時間かかることがあります）</small>';
-    el.hidden=false;}).catch(()=>{});
+function calBox(el,choices,title){
+  if(!el||!choices.length)return;
+  const url=f=>new URL('../results/data/cal/'+f,location.href).href;
+  fetch(url(choices[0].file),{method:'HEAD',cache:'no-store'}).then(r=>{if(!r.ok)return;
+    el.innerHTML='<span class="cl">📅 '+esc(title)+'</span>'+(choices.length>1?'<select class="calsel" aria-label="カレンダーに入れる日程">'+choices.map((c,i)=>'<option value="'+i+'">'+esc(c.label)+'</option>').join('')+'</select>':'<span class="calone">'+esc(choices[0].label)+'</span>')+
+      '<a class="cal-ios" href="#">iPhone・Mac</a><a class="cal-g" href="#" target="_blank" rel="noopener">Googleカレンダー</a><small>登録すると、日程や会場が変わったときもカレンダーが自動で変わります（反映まで数時間かかることがあります）</small>';
+    const set=i=>{const w=url(choices[i].file).replace(/^https?:/,'webcal:');el.querySelector('.cal-ios').href=w;el.querySelector('.cal-g').href='https://calendar.google.com/calendar/r?cid='+encodeURIComponent(w);};
+    const sel=el.querySelector('.calsel');if(sel)sel.onchange=()=>set(+sel.value);
+    set(0);el.hidden=false;}).catch(()=>{});
 }
 const name=t=>typeof t==='string'?t:(t?.short||t?.name||'未定');
 const fullName=t=>typeof t==='string'?t:(t?.name||t?.short||'未定');
@@ -591,7 +595,7 @@ function renderHero(row,ms){
   document.documentElement.style.setProperty('--teamText',crestInk(teamColor(t))==='#fff'?'color-mix(in srgb,'+teamColor(t)+' 55%,#fff)':teamColor(t));
   document.title=fullName(t)+' | 北海道学生サッカー連盟';
   $('crumbName').textContent=name(t);
-  if(typeof t==='object'&&t.id)calBox($('calBox'),String(t.id).replace(/-[^-]*$/,'')+'.ics',(t.univ||name(t))+'の日程');
+  if(typeof t==='object'&&t.id)calBox($('calBox'),[{file:'t-'+t.id+'.ics',label:fullName(t)+'の試合'},{file:String(t.id).replace(/-[^-]*$/,'')+'.ics',label:(t.univ||name(t))+'の全チームの試合（リーグ・Iリーグなど）'}],'日程をカレンダーに入れる');
   $('heroCrest').innerHTML=crest(t,'xl');
   const hp=teamPhotoUrl(p,1600);
   $('heroPh').innerHTML=hp?'<img src="'+esc(hp)+'" alt="" decoding="async" onerror="this.remove()">':'';
