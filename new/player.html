@@ -274,6 +274,12 @@ table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums}
 .pt{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
 .pt span{display:block;font-size:12px;color:var(--muted)}.pt b{font-family:var(--num);font-size:28px}
 .plog .ev{white-space:nowrap}
+.pst td,.pst th{white-space:nowrap}
+.pst td.l:first-child{white-space:normal;min-width:120px}
+@media(max-width:560px){.pst .tn .tx{display:none}.pst td,.pst th{padding-left:6px;padding-right:6px}}
+.pst td.b{font-weight:700;font-size:15px}
+.pst tr.sum td{background:var(--card2);font-weight:900;border-top:2px solid var(--red)}
+.pst .tn{display:inline-flex;align-items:center;gap:6px}
 .plog .yc,.plog .rc{display:inline-block;width:9px;height:12px;border-radius:2px;vertical-align:-1px;background:#f5c400}.plog .rc{background:#e60012}
 @media(max-width:480px){.ph{flex-direction:column;text-align:center}.pmeta{justify-content:center}.pinfo h1{font-size:22px}}
 </style>
@@ -475,9 +481,13 @@ function render(me,rows,prof){
   const head='<div class="ph card">'+(photo?'<img class="pimg" src="'+esc(photo)+'" alt="" onerror="this.remove()">':'<div class="pimg none">'+crest(me,'xl')+'</div>')+
     '<div class="pinfo"><div class="pteam"><a href="'+teamUrlP(me)+'">'+crest(me,'xs')+esc(me.univ||me.name)+'</a></div><h1>'+esc(P.name)+'</h1>'+(prof&&prof.kana?'<div class="kana">'+esc(prof.kana)+'</div>':'')+
     '<div class="pmeta">'+[prof&&prof.no?'背番号 '+esc(prof.no):'',prof&&prof.pos?esc(prof.pos):'',prof&&prof.grade?esc(prof.grade)+'年':'',prof&&prof.school?esc(prof.school):''].filter(Boolean).map(x=>'<span>'+x+'</span>').join('')+'</div></div></div>';
-  const tiles='<div class="ptiles">'+(hasApps?[['出場',tot('apps')],['先発',tot('starts')]].concat(rows.some(r=>r.p.min)?[['出場時間',tot('min')+'分']]:[]):[]).concat([['得点',tot('goals')],['アシスト',tot('assists')],['警告',tot('yc')],['退場',tot('rc')]]).map(([l,v])=>'<div class="pt"><span>'+l+'</span><b>'+v+'</b></div>').join('')+'</div>';
-  const byComp=rows.length?'<div class="sh"><h2>大会ごとの成績</h2></div><div class="card scroll"><table class="tbl"><tr><th class="l">大会</th>'+(hasApps?'<th>出場</th><th>先発</th><th>時間</th>':'')+'<th>得点</th><th>A</th><th>警告</th><th>退場</th></tr>'+
-    rows.map(r=>'<tr><td class="l"><a href="./results.html?comp='+encodeURIComponent(r.comp.id)+'">'+esc(shortComp(r.comp.name))+'</a></td>'+(hasApps?'<td>'+(r.p.apps??'–')+'</td><td>'+(r.p.starts??'–')+'</td><td>'+(r.p.min?r.p.min+'分':'–')+'</td>':'')+'<td>'+(r.p.goals||0)+'</td><td>'+(r.p.assists||0)+'</td><td>'+(r.p.yc||0)+'</td><td>'+(r.p.rc||0)+'</td></tr>').join('')+'</table></div>':'';
+  // 大会ごとの成績＋全公式戦の合計（Jリーグの選手ページと同じ形）
+  const hasMin=rows.some(r=>r.p.min);
+  const cols=[['出場','apps'],['得点','goals']].concat(hasApps&&(tot('starts')||hasMin)?[['先発','starts']]:[],hasMin?[['時間','min']]:[],[['アシスト','assists'],['警告','yc'],['退場','rc']]);
+  const cell=(r,k)=>{const v=r.p[k];if(k==='min')return v?v+'分':'–';if((k==='apps'||k==='starts')&&v==null)return '–';return v||0;};
+  const byComp=rows.length?'<div class="sh"><h2>今シーズンの成績</h2></div><div class="card scroll"><table class="tbl pst"><tr><th class="l">大会</th><th class="l">チーム</th>'+cols.map(c=>'<th>'+c[0]+'</th>').join('')+'</tr>'+
+    rows.map(r=>'<tr><td class="l"><a href="./results.html?comp='+encodeURIComponent(r.comp.id)+'">'+esc(shortComp(r.comp.name))+'</a></td><td class="l"><span class="tn">'+crest(r.team,'xs')+'<span class="tx">'+esc(r.team.short||r.team.name)+'</span></span></td>'+cols.map(c=>'<td'+(c[1]==='apps'||c[1]==='goals'?' class="b"':'')+'>'+cell(r,c[1])+'</td>').join('')+'</tr>').join('')+
+    '<tr class="sum"><td class="l" colspan="2">全公式戦 合計</td>'+cols.map(c=>'<td class="b">'+(c[1]==='min'?tot('min')+'分':tot(c[1]))+'</td>').join('')+'</tr></table></div>':'';
   const logs=rows.filter(r=>r.p.log&&Object.keys(r.p.log).length).map(r=>{
     const g=new Map(r.games.map(x=>[x.id,x]));
     const ids=Object.keys(r.p.log).sort((a,b)=>String((g.get(a)||{}).date||'').localeCompare(String((g.get(b)||{}).date||'')));
@@ -485,7 +495,7 @@ function render(me,rows,prof){
       ids.map(id=>{const x=g.get(id)||{},l=r.p.log[id];const res=x.gf!=null?(x.gf>x.ga?'○':x.gf<x.ga?'●':'△')+' '+x.gf+'-'+x.ga:'';
         return '<tr data-mid="'+esc(id)+'"><td class="l">'+esc(sd(x.date))+'</td><td class="l">'+esc(x.round||'')+'</td><td class="l">'+(x.h?'':'@')+esc(x.opp||'')+'</td><td><a href="./results.html?comp='+encodeURIComponent(r.comp.id)+'&match='+encodeURIComponent(id)+'">'+esc(res||'詳細')+'</a></td><td>'+(l.st?'先発':(l.min!=null?'途中':'出場'))+'</td><td>'+(l.min!=null?l.min+'分':'')+'</td><td class="l ev"></td></tr>';}).join('')+'</table></div>';
   }).join('');
-  $('main').innerHTML='<a class="back" href="'+teamUrlP(me)+'">‹ '+esc(me.univ||me.name)+'のページへ</a>'+head+tiles+byComp+logs+
+  $('main').innerHTML='<a class="back" href="'+teamUrlP(me)+'">‹ '+esc(me.univ||me.name)+'のページへ</a>'+head+byComp+logs+
     (rows.length?'':'<div class="card empty">今シーズンの公式記録はまだありません</div>')+
     '<p class="note">成績は、連盟の公式記録（試合報告をふくむ）から自動で出しています。</p>';
   // 試合ごとの得点・警告（試合詳細のデータから。名前で合わせる）
