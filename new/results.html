@@ -270,6 +270,9 @@ table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums}
 .mphotos figcaption{padding:8px 10px;font-size:13px;color:var(--ink)}
 .mphotos figcaption span{display:block;font-size:11px;color:var(--muted);margin-top:2px}
 @media (max-width:420px){.mphotos{grid-template-columns:1fr}}
+
+.plink{color:inherit;text-decoration:none;border-bottom:1px dotted var(--muted)}
+.plink:hover{color:var(--red);border-bottom-color:var(--red)}
 </style>
 <link rel="stylesheet" href="./theme.css">
 <style>
@@ -418,6 +421,8 @@ function makeBadges(teams){
 }
 function crest(t,size){const h=crestBase(t,size),b=t&&BADGE.get(tkey(t));return b?h.replace(/<\/span>$/,'<i class="bdg">'+esc(b)+'</i></span>'):h}
 const teamUrl=t=>'./team.html?comp='+encodeURIComponent(S.comp)+'&team='+encodeURIComponent(tkey(t));
+/* 選手のページへのリンク（player.html） */
+const playerLink=(t,name)=>t&&t.id&&name?'<a class="plink" href="./player.html?comp='+encodeURIComponent(S.comp)+'&team='+encodeURIComponent(t.id)+'&name='+encodeURIComponent(name)+'">'+esc(name)+'</a>':esc(name||'');
 const teamLink=(t,label)=>t&&t.id?'<a href="'+teamUrl(t)+'">'+esc(label||name(t))+'</a>':esc(label||name(t));
 
 /* ---------- 状態・URL ---------- */
@@ -605,7 +610,7 @@ function rAwards(){
 function rRanking(list,label){
   if(!list||!list.length)return '<div class="card empty">記録はありません</div>';
   return '<div style="height:14px"></div><div class="card scroll"><table class="tbl rank"><tr><th>順位</th><th class="l">選手</th><th class="l">チーム</th><th>'+label+'</th></tr>'+
-    list.slice(0,50).map(r=>'<tr class="'+(r.rank===1?'top':'')+'"><td class="rk">'+r.rank+'</td><td class="nm">'+esc(r.name)+'</td><td class="l"><span class="tn">'+crest(r.team,'xs')+teamLink(r.team,r.team&&r.team.short||'')+'</span></td><td class="cnt">'+r.count+'</td></tr>').join('')+'</table></div>';
+    list.slice(0,50).map(r=>'<tr class="'+(r.rank===1?'top':'')+'"><td class="rk">'+r.rank+'</td><td class="nm">'+playerLink(r.team,r.name)+'</td><td class="l"><span class="tn">'+crest(r.team,'xs')+teamLink(r.team,r.team&&r.team.short||'')+'</span></td><td class="cnt">'+r.count+'</td></tr>').join('')+'</table></div>';
 }
 
 /* ---------- 警告・退場 ---------- */
@@ -617,14 +622,14 @@ function rCards(){
   const rdShort=r=>{const x=String(r||'').match(/第\d+節/);return x?x[0]:String(r||'');};
   const susTxt=p=>p.suspendedFor.map(id=>{const m=byId[id];return m&&m.home?sd(m.date)+'　'+rdShort(m.round)+'　'+m.home.short+' vs '+m.away.short:id;}).map(esc).join('<br>');
   const top=sus.length?'<div class="sh"><h2>出場停止（これからの試合）</h2></div><div class="card scroll"><table class="tbl"><tr><th class="l">大学名</th><th>背番号</th><th class="l">名前</th><th class="l">対象試合</th></tr>'+
-    sus.map(p=>'<tr><td class="l"><span class="tn">'+crest(p.team,'xs')+esc(p.team&&(p.team.univ||p.team.short)||'')+'</span></td><td>'+esc(p.no||'')+'</td><td class="l sus">'+esc(p.name)+'</td><td class="l">'+susTxt(p)+'</td></tr>').join('')+'</table></div>':'';
+    sus.map(p=>'<tr><td class="l"><span class="tn">'+crest(p.team,'xs')+esc(p.team&&(p.team.univ||p.team.short)||'')+'</span></td><td>'+esc(p.no||'')+'</td><td class="l sus">'+playerLink(p.team,p.name)+'</td><td class="l">'+susTxt(p)+'</td></tr>').join('')+'</table></div>':'';
   const bar='<div class="bar"><select id="cteamSel" aria-label="チーム"><option value="">すべてのチーム</option>'+tables.map(t=>'<option value="'+esc(t.team.id)+'"'+(t.team.id===S.cteam?' selected':'')+'>'+esc(t.team.short)+'</option>').join('')+'</select></div>';
   const md=d=>{const x=String(d||'').match(/\d{4}-(\d{2})-(\d{2})/);return x?(+x[1])+'/'+(+x[2]):'';};
   const body=tables.filter(t=>!S.cteam||t.team.id===S.cteam).map(t=>{
     const cols=t.matches;
     return '<div class="sh"><h2 style="display:flex;align-items:center;gap:8px">'+crest(t.team,'xs')+esc(t.team.name||t.team.short)+'</h2></div><div class="card scroll"><table class="ct">'+
       '<tr><th class="l">No.</th><th class="l" style="left:auto;position:static">選手</th><th>警告</th><th>退場</th>'+cols.map(c=>'<th><span class="rd">'+esc(rdShort(c.round))+'</span>'+esc(md(c.date))+'<span class="opp">'+(c.home?'':'@')+esc(c.opp)+'</span></th>').join('')+'</tr>'+
-      t.players.map(p=>'<tr><td class="l">'+esc(p.no)+'</td><td style="text-align:left">'+esc(p.name)+'</td><td>'+(p.c||'')+'</td><td>'+(p.s||'')+'</td>'+cols.map(c=>{
+      t.players.map(p=>'<tr><td class="l">'+esc(p.no)+'</td><td style="text-align:left">'+playerLink(t.team,p.name)+'</td><td>'+(p.c||'')+'</td><td>'+(p.s||'')+'</td>'+cols.map(c=>{
         const v=p.cells[c.matchId]||[];
         if(v.includes('停止')){const done=(p.suspended||[]).some(x=>x.matchId===c.matchId&&x.done);return '<td class="stop'+(done?' done':'')+'">停止</td>';}
         if(!v.length)return '<td></td>';
@@ -667,7 +672,7 @@ function rMatch(){
   const tl=evs.length?'<div class="sh"><h2>試合経過</h2></div><div class="card"><ul class="tl">'+evs.map(e=>'<li><span class="h">'+(e.side==='home'?e.html:'')+'</span><span class="min">'+esc(e.min)+(e.min?"'":'')+'</span><span>'+(e.side==='away'?e.html:'')+'</span></li>').join('')+'</ul></div>':'';
   const lu=d.lineups?'<div class="sh"><h2>メンバー</h2></div><div class="lu">'+['home','away'].map(sdn=>{
     const L=d.lineups[sdn],T=sdn==='home'?H:A;
-    const row=p=>'<tr><td class="no">'+esc(p.no)+'</td><td class="ps">'+esc(p.pos)+'</td><td>'+esc(p.name)+(p.goals?' <span class="ev">⚽'+(p.goals>1?'×'+p.goals:'')+'</span>':'')+(p.cards||[]).map(c=>'<span class="ico '+(c==='C'?'c':'s')+'"></span>').join('')+(p.out?' <span class="ev">▼'+esc(p.out)+"'</span>":'')+(p.in?' <span class="ev" style="color:#4caf50">▲'+esc(p.in)+"'</span>":'')+'</td></tr>';
+    const row=p=>'<tr><td class="no">'+esc(p.no)+'</td><td class="ps">'+esc(p.pos)+'</td><td>'+playerLink(T,p.name)+(p.goals?' <span class="ev">⚽'+(p.goals>1?'×'+p.goals:'')+'</span>':'')+(p.cards||[]).map(c=>'<span class="ico '+(c==='C'?'c':'s')+'"></span>').join('')+(p.out?' <span class="ev">▼'+esc(p.out)+"'</span>":'')+(p.in?' <span class="ev" style="color:#4caf50">▲'+esc(p.in)+"'</span>":'')+'</td></tr>';
     return '<div class="card"><h3>'+crest(T,'xs')+esc(T.short)+'</h3><h4>先発</h4><table>'+L.starters.map(row).join('')+'</table>'+(L.bench.length?'<h4>控え</h4><table>'+L.bench.map(row).join('')+'</table>':'')+'</div>';
   }).join('')+'</div>':'';
   const pk=d.pk&&d.pk.length?'<div class="sh"><h2>PK戦</h2></div><div class="lu">'+['home','away'].map(sdn=>'<div class="card"><h3>'+esc((sdn==='home'?H:A).short)+'</h3><table>'+d.pk.filter(k=>k.side===sdn).map(k=>'<tr><td class="no">'+k.order+'</td><td>'+esc(k.name)+'</td><td>'+(/成功|○/.test(k.result)?'○':'×')+'</td></tr>').join('')+'</table></div>').join('')+'</div>':'';
