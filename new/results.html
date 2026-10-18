@@ -262,6 +262,14 @@ table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums}
 .awb b{display:block;font-size:17px}
 .awb small{display:block;color:var(--muted);font-size:12px;margin-top:2px}
 .awb a{color:inherit}
+
+/* 試合の写真 */
+.mphotos{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;margin-bottom:8px}
+.mphotos figure{margin:0;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.mphotos img{display:block;width:100%;aspect-ratio:3/2;object-fit:cover;background:var(--card2)}
+.mphotos figcaption{padding:8px 10px;font-size:13px;color:var(--ink)}
+.mphotos figcaption span{display:block;font-size:11px;color:var(--muted);margin-top:2px}
+@media (max-width:420px){.mphotos{grid-template-columns:1fr}}
 </style>
 <link rel="stylesheet" href="./theme.css">
 <style>
@@ -667,7 +675,11 @@ function rMatch(){
   const off=inf&&(inf.referee||inf.ar1)?'<div class="sh"><h2>審判員・コンディション</h2></div><div class="card off">'+[['主審',inf.referee],['副審',[inf.ar1,inf.ar2].filter(Boolean).join('・')],['第4審',inf.fourth],['天候',inf.weather],['ピッチ',[inf.pitch,inf.pitchCondition].filter(Boolean).join('・')]].filter(x=>x[1]).map(x=>'<div><span>'+x[0]+'</span>'+esc(x[1])+'</div>').join('')+'</div>':'';
   const note=lv?'<p class="note">速報です（公式記録の確定前）。スコア・得点者・時間は、確定のときに変わることがあります。</p>':d.source==='report'?'<p class="note">この試合は試合報告から取り込んだ記録です（先発・交代の記録はありません）。</p>':'';
   const back={tournament:'トーナメント',cards:'警告・退場'}[S.tab]||'日程・結果';
-  $('main').innerHTML='<a class="back" href="'+pageUrl(S.comp,S.tab)+'">‹ '+back+'に戻る</a>'+head+tl+lu+pk+off+note+'<div class="foot">'+esc(DATA.competition.name)+'　'+esc(m.matchId)+'</div>';
+  // 試合の写真（全体システムの「発信」→「試合の写真」。写っている人の同意があるものだけ）
+  const dimg=(u,w)=>{const m=String(u||'').match(/drive\.google\.com\/(?:file\/d\/|open\?id=|uc\?(?:export=\w+&)?id=)([\w-]{20,})/);return m?'https://drive.google.com/thumbnail?id='+m[1]+'&sz=w'+w:(/^https:\/\//.test(u)?u:'');};
+  const phs=(d.photos||[]).filter(p=>dimg(p.url,800));
+  const ph=phs.length?'<div class="sh"><h2>写真</h2></div><div class="mphotos">'+phs.map(p=>'<figure><a href="'+esc(dimg(p.url,1600))+'" target="_blank" rel="noopener"><img src="'+esc(dimg(p.url,800))+'" alt="'+esc(p.caption||'試合の写真')+'" loading="lazy" decoding="async" onerror="this.closest(\'figure\').remove()"></a>'+(p.caption||p.credit?'<figcaption>'+esc(p.caption||'')+(p.credit?'<span>撮影：'+esc(p.credit)+'</span>':'')+'</figcaption>':'')+'</figure>').join('')+'</div>':'';
+  $('main').innerHTML='<a class="back" href="'+pageUrl(S.comp,S.tab)+'">‹ '+back+'に戻る</a>'+head+tl+ph+lu+pk+off+note+'<div class="foot">'+esc(DATA.competition.name)+'　'+esc(m.matchId)+'</div>';
 }
 
 if(window.JUFA_LIVE)JUFA_LIVE.on(()=>{
