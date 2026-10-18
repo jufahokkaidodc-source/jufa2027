@@ -1,0 +1,292 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//JUFA Hokkaido//schedule//JA
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:空知工科大学の試合（北海道学生サッカー連
+ 盟）
+X-WR-TIMEZONE:Asia/Tokyo
+REFRESH-INTERVAL;VALUE=DURATION:PT6H
+X-PUBLISHED-TTL:PT6H
+BEGIN:VTIMEZONE
+TZID:Asia/Tokyo
+BEGIN:STANDARD
+DTSTART:19700101T000000
+TZOFFSETFROM:+0900
+TZOFFSETTO:+0900
+TZNAME:JST
+END:STANDARD
+END:VTIMEZONE
+BEGIN:VEVENT
+UID:2027-DM-L1-103@jufa-hokkaido
+DTSTAMP:20261018T032229Z
+DTSTART;TZID=Asia/Tokyo:20270410T150000
+DTEND;TZID=Asia/Tokyo:20270410T170000
+SUMMARY:大雪 0-2 空知工科（【ダミー】2027年度 北海道学生
+ サッカーリーグ 1部 第1節）
+LOCATION:ダミー大学グラウンド
+DESCRIPTION:【ダミー】2027年度 北海道学生サッカーリーグ 
+ 1部　第1節\n会場：ダミー大学グラウンド\nhttps://jufahokka
+ idodc-source.github.io/jufa2027/results/results.html?comp=2027-DM-L1&match
+ =2027-DM-L1-103
+URL:https://jufahokkaidodc-source.github.io/jufa2027/results/results.html?c
+ omp=2027-DM-L1&match=2027-DM-L1-103
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-DM-L1-106@jufa-hokkaido
+DTSTAMP:20261018T032229Z
+DTSTART;TZID=Asia/Tokyo:20270417T123000
+DTEND;TZID=Asia/Tokyo:20270417T143000
+SUMMARY:空知工科 1-1 根室海洋（【ダミー】2027年度 北海道
+ 学生サッカーリーグ 1部 第2節）
+LOCATION:ダミー町スポーツセンター
+DESCRIPTION:【ダミー】2027年度 北海道学生サッカーリーグ 
+ 1部　第2節\n会場：ダミー町スポーツセンター\nhttps://juf
+ ahokkaidodc-source.github.io/jufa2027/results/results.html?comp=2027-DM-L1
+ &match=2027-DM-L1-106
+URL:https://jufahokkaidodc-source.github.io/jufa2027/results/results.html?c
+ omp=2027-DM-L1&match=2027-DM-L1-106
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-DM-L1-109@jufa-hokkaido
+DTSTAMP:20261018T032229Z
+DTSTART;TZID=Asia/Tokyo:20270424T100000
+DTEND;TZID=Asia/Tokyo:20270424T120000
+SUMMARY:石狩学院 1-2 空知工科（【ダミー】2027年度 北海道
+ 学生サッカーリーグ 1部 第3節）
+LOCATION:ダミー市総合運動公園
+DESCRIPTION:【ダミー】2027年度 北海道学生サッカーリーグ 
+ 1部　第3節\n会場：ダミー市総合運動公園\nhttps://jufahokka
+ idodc-source.github.io/jufa2027/results/results.html?comp=2027-DM-L1&match
+ =2027-DM-L1-109
+URL:https://jufahokkaidodc-source.github.io/jufa2027/results/results.html?c
+ omp=2027-DM-L1&match=2027-DM-L1-109
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-DM-L1-114@jufa-hokkaido
+DTSTAMP:20261018T032229Z
+DTSTART;TZID=Asia/Tokyo:20270501T123000
+DTEND;TZID=Asia/Tokyo:20270501T143000
+SUMMARY:十勝野 1-1 空知工科（【ダミー】2027年度 北海道学
+ 生サッカーリーグ 1部 第4節）
+LOCATION:ダミー町スポーツセンター
+DESCRIPTION:【ダミー】2027年度 北海道学生サッカーリーグ 
+ 1部　第4節\n会場：ダミー町スポーツセンター\nhttps://juf
+ ahokkaidodc-source.github.io/jufa2027/results/results.html?comp=2027-DM-L1
+ &match=2027-DM-L1-114
+URL:https://jufahokkaidodc-source.github.io/jufa2027/results/results.html?c
+ omp=2027-DM-L1&match=2027-DM-L1-114
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-DM-L1-119@jufa-hokkaido
+DTSTAMP:20261018T032229Z
+DTSTART;TZID=Asia/Tokyo:20270508T150000
+DTEND;TZID=Asia/Tokyo:20270508T170000
+SUMMARY:空知工科 1-0 羊蹄（【ダミー】2027年度 北海道学生
+ サッカーリーグ 1部 第5節）
+LOCATION:ダミー大学グラウンド
+DESCRIPTION:【ダミー】2027年度 北海道学生サッカーリーグ 
+ 1部　第5節\n会場：ダミー大学グラウンド\nhttps://jufahokka
+ idodc-source.github.io/jufa2027/results/results.html?comp=2027-DM-L1&match
+ =2027-DM-L1-119
+URL:https://jufahokkaidodc-source.github.io/jufa2027/results/results.html?c
+ omp=2027-DM-L1&match=2027-DM-L1-119
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-DM-L1-124@jufa-hokkaido
+DTSTAMP:20261018T032229Z
+DTSTART;TZID=Asia/Tokyo:20270515T173000
+DTEND;TZID=Asia/Tokyo:20270515T193000
+SUMMARY:留萌学園 2-2 空知工科（【ダミー】2027年度 北海道
+ 学生サッカーリーグ 1部 第6節）
+LOCATION:ダミー緑地競技場
+DESCRIPTION:【ダミー】2027年度 北海道学生サッカーリーグ 
+ 1部　第6節\n会場：ダミー緑地競技場\nhttps://jufahokkaidodc-
+ source.github.io/jufa2027/results/results.html?comp=2027-DM-L1&match=2027-
+ DM-L1-124
+URL:https://jufahokkaidodc-source.github.io/jufa2027/results/results.html?c
+ omp=2027-DM-L1&match=2027-DM-L1-124
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-DM-L1-128@jufa-hokkaido
+DTSTAMP:20261018T032229Z
+DTSTART;TZID=Asia/Tokyo:20270522T173000
+DTEND;TZID=Asia/Tokyo:20270522T193000
+SUMMARY:支笏湖 0-2 空知工科（【ダミー】2027年度 北海道学
+ 生サッカーリーグ 1部 第7節）
+LOCATION:ダミー緑地競技場
+DESCRIPTION:【ダミー】2027年度 北海道学生サッカーリーグ 
+ 1部　第7節\n会場：ダミー緑地競技場\nhttps://jufahokkaidodc-
+ source.github.io/jufa2027/results/results.html?comp=2027-DM-L1&match=2027-
+ DM-L1-128
+URL:https://jufahokkaidodc-source.github.io/jufa2027/results/results.html?c
+ omp=2027-DM-L1&match=2027-DM-L1-128
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-DM-L1-131@jufa-hokkaido
+DTSTAMP:20261018T032229Z
+DTSTART;TZID=Asia/Tokyo:20270529T150000
+DTEND;TZID=Asia/Tokyo:20270529T170000
+SUMMARY:空知工科 1-1 大雪（【ダミー】2027年度 北海道学生
+ サッカーリーグ 1部 第8節）
+LOCATION:ダミー大学グラウンド
+DESCRIPTION:【ダミー】2027年度 北海道学生サッカーリーグ 
+ 1部　第8節\n会場：ダミー大学グラウンド\nhttps://jufahokka
+ idodc-source.github.io/jufa2027/results/results.html?comp=2027-DM-L1&match
+ =2027-DM-L1-131
+URL:https://jufahokkaidodc-source.github.io/jufa2027/results/results.html?c
+ omp=2027-DM-L1&match=2027-DM-L1-131
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-DM-L1-134@jufa-hokkaido
+DTSTAMP:20261018T032229Z
+DTSTART;TZID=Asia/Tokyo:20270619T123000
+DTEND;TZID=Asia/Tokyo:20270619T143000
+SUMMARY:根室海洋 1-2 空知工科（【ダミー】2027年度 北海道
+ 学生サッカーリーグ 1部 第9節）
+LOCATION:ダミー町スポーツセンター
+DESCRIPTION:【ダミー】2027年度 北海道学生サッカーリーグ 
+ 1部　第9節\n会場：ダミー町スポーツセンター\nhttps://juf
+ ahokkaidodc-source.github.io/jufa2027/results/results.html?comp=2027-DM-L1
+ &match=2027-DM-L1-134
+URL:https://jufahokkaidodc-source.github.io/jufa2027/results/results.html?c
+ omp=2027-DM-L1&match=2027-DM-L1-134
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-DM-L1-137@jufa-hokkaido
+DTSTAMP:20261018T032229Z
+DTSTART;TZID=Asia/Tokyo:20270626T100000
+DTEND;TZID=Asia/Tokyo:20270626T120000
+SUMMARY:空知工科 1-2 石狩学院（【ダミー】2027年度 北海道
+ 学生サッカーリーグ 1部 第10節）
+LOCATION:ダミー市総合運動公園
+DESCRIPTION:【ダミー】2027年度 北海道学生サッカーリーグ 
+ 1部　第10節\n会場：ダミー市総合運動公園\nhttps://jufahokk
+ aidodc-source.github.io/jufa2027/results/results.html?comp=2027-DM-L1&matc
+ h=2027-DM-L1-137
+URL:https://jufahokkaidodc-source.github.io/jufa2027/results/results.html?c
+ omp=2027-DM-L1&match=2027-DM-L1-137
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-DM-L1-142@jufa-hokkaido
+DTSTAMP:20261018T032229Z
+DTSTART;TZID=Asia/Tokyo:20270703T123000
+DTEND;TZID=Asia/Tokyo:20270703T143000
+SUMMARY:空知工科 2-1 十勝野（【ダミー】2027年度 北海道学
+ 生サッカーリーグ 1部 第11節）
+LOCATION:ダミー町スポーツセンター
+DESCRIPTION:【ダミー】2027年度 北海道学生サッカーリーグ 
+ 1部　第11節\n会場：ダミー町スポーツセンター\nhttps://ju
+ fahokkaidodc-source.github.io/jufa2027/results/results.html?comp=2027-DM-L
+ 1&match=2027-DM-L1-142
+URL:https://jufahokkaidodc-source.github.io/jufa2027/results/results.html?c
+ omp=2027-DM-L1&match=2027-DM-L1-142
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-DM-L1-147@jufa-hokkaido
+DTSTAMP:20261018T032229Z
+DTSTART;TZID=Asia/Tokyo:20270710T150000
+DTEND;TZID=Asia/Tokyo:20270710T170000
+SUMMARY:羊蹄 4-3 空知工科（【ダミー】2027年度 北海道学生
+ サッカーリーグ 1部 第12節）
+LOCATION:ダミー大学グラウンド
+DESCRIPTION:【ダミー】2027年度 北海道学生サッカーリーグ 
+ 1部　第12節\n会場：ダミー大学グラウンド\nhttps://jufahokk
+ aidodc-source.github.io/jufa2027/results/results.html?comp=2027-DM-L1&matc
+ h=2027-DM-L1-147
+URL:https://jufahokkaidodc-source.github.io/jufa2027/results/results.html?c
+ omp=2027-DM-L1&match=2027-DM-L1-147
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-DM-L1-152@jufa-hokkaido
+DTSTAMP:20261018T032229Z
+DTSTART;TZID=Asia/Tokyo:20270717T173000
+DTEND;TZID=Asia/Tokyo:20270717T193000
+SUMMARY:空知工科 0-1 留萌学園（【ダミー】2027年度 北海道
+ 学生サッカーリーグ 1部 第13節）
+LOCATION:ダミー緑地競技場
+DESCRIPTION:【ダミー】2027年度 北海道学生サッカーリーグ 
+ 1部　第13節\n会場：ダミー緑地競技場\nhttps://jufahokkaidodc
+ -source.github.io/jufa2027/results/results.html?comp=2027-DM-L1&match=2027
+ -DM-L1-152
+URL:https://jufahokkaidodc-source.github.io/jufa2027/results/results.html?c
+ omp=2027-DM-L1&match=2027-DM-L1-152
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-DM-L1-156@jufa-hokkaido
+DTSTAMP:20261018T032229Z
+DTSTART;TZID=Asia/Tokyo:20270904T173000
+DTEND;TZID=Asia/Tokyo:20270904T193000
+SUMMARY:空知工科 3-1 支笏湖（【ダミー】2027年度 北海道学
+ 生サッカーリーグ 1部 第14節）
+LOCATION:ダミー緑地競技場
+DESCRIPTION:【ダミー】2027年度 北海道学生サッカーリーグ 
+ 1部　第14節\n会場：ダミー緑地競技場\nhttps://jufahokkaidodc
+ -source.github.io/jufa2027/results/results.html?comp=2027-DM-L1&match=2027
+ -DM-L1-156
+URL:https://jufahokkaidodc-source.github.io/jufa2027/results/results.html?c
+ omp=2027-DM-L1&match=2027-DM-L1-156
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-DM-PM-506@jufa-hokkaido
+DTSTAMP:20261018T032229Z
+DTSTART;TZID=Asia/Tokyo:20270605T123000
+DTEND;TZID=Asia/Tokyo:20270605T143000
+SUMMARY:空知工科 3-2 宗谷（【ダミー】2027年度 総理大臣杯
+  全日本大学サッカートーナメント北海道大会 1回戦）
+LOCATION:ダミー町スポーツセンター
+DESCRIPTION:【ダミー】2027年度 総理大臣杯 全日本大学サッ
+ カートーナメント北海道大会　1回戦\n会場：ダミー町
+ スポーツセンター\nhttps://jufahokkaidodc-source.github.io/jufa2027
+ /results/results.html?comp=2027-DM-PM&match=2027-DM-PM-506
+URL:https://jufahokkaidodc-source.github.io/jufa2027/results/results.html?c
+ omp=2027-DM-PM&match=2027-DM-PM-506
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-DM-PM-511@jufa-hokkaido
+DTSTAMP:20261018T032229Z
+DTSTART;TZID=Asia/Tokyo:20270606T150000
+DTEND;TZID=Asia/Tokyo:20270606T170000
+SUMMARY:檜山 2-3 空知工科（【ダミー】2027年度 総理大臣杯
+  全日本大学サッカートーナメント北海道大会 準々決勝
+ ）
+LOCATION:ダミー市総合運動公園
+DESCRIPTION:【ダミー】2027年度 総理大臣杯 全日本大学サッ
+ カートーナメント北海道大会　準々決勝\n会場：ダミー
+ 市総合運動公園\nhttps://jufahokkaidodc-source.github.io/jufa2027/re
+ sults/results.html?comp=2027-DM-PM&match=2027-DM-PM-511
+URL:https://jufahokkaidodc-source.github.io/jufa2027/results/results.html?c
+ omp=2027-DM-PM&match=2027-DM-PM-511
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-DM-PM-514@jufa-hokkaido
+DTSTAMP:20261018T032229Z
+DTSTART;TZID=Asia/Tokyo:20270612T123000
+DTEND;TZID=Asia/Tokyo:20270612T143000
+SUMMARY:空知工科 2-2 渡島学院（【ダミー】2027年度 総理大
+ 臣杯 全日本大学サッカートーナメント北海道大会 準決
+ 勝）
+LOCATION:ダミー市総合運動公園
+DESCRIPTION:【ダミー】2027年度 総理大臣杯 全日本大学サッ
+ カートーナメント北海道大会　準決勝\n会場：ダミー市
+ 総合運動公園\nhttps://jufahokkaidodc-source.github.io/jufa2027/resul
+ ts/results.html?comp=2027-DM-PM&match=2027-DM-PM-514
+URL:https://jufahokkaidodc-source.github.io/jufa2027/results/results.html?c
+ omp=2027-DM-PM&match=2027-DM-PM-514
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-DM-ROOKIE-703@jufa-hokkaido
+DTSTAMP:20261018T032229Z
+DTSTART;TZID=Asia/Tokyo:20270912T150000
+DTEND;TZID=Asia/Tokyo:20270912T170000
+SUMMARY:大雪新人 2-1 空知工科新人（【ダミー】2027年度 全
+ 日本大学サッカー新人戦北海道大会 準々決勝）
+LOCATION:ダミー大学グラウンド
+DESCRIPTION:【ダミー】2027年度 全日本大学サッカー新人戦
+ 北海道大会　準々決勝\n会場：ダミー大学グラウンド\nh
+ ttps://jufahokkaidodc-source.github.io/jufa2027/results/results.html?comp=
+ 2027-DM-ROOKIE&match=2027-DM-ROOKIE-703
+URL:https://jufahokkaidodc-source.github.io/jufa2027/results/results.html?c
+ omp=2027-DM-ROOKIE&match=2027-DM-ROOKIE-703
+END:VEVENT
+END:VCALENDAR
