@@ -1,0 +1,49 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//JUFA Hokkaido//schedule//JA
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:白老大学の試合（北海道学生サッカー連盟）
+X-WR-TIMEZONE:Asia/Tokyo
+REFRESH-INTERVAL;VALUE=DURATION:PT6H
+X-PUBLISHED-TTL:PT6H
+BEGIN:VTIMEZONE
+TZID:Asia/Tokyo
+BEGIN:STANDARD
+DTSTART:19700101T000000
+TZOFFSETFROM:+0900
+TZOFFSETTO:+0900
+TZNAME:JST
+END:STANDARD
+END:VTIMEZONE
+BEGIN:VEVENT
+UID:2027-DM-PM-502@jufa-hokkaido
+DTSTAMP:20261018T042213Z
+DTSTART;TZID=Asia/Tokyo:20270605T123000
+DTEND;TZID=Asia/Tokyo:20270605T143000
+SUMMARY:羊蹄 2-4 白老（【ダミー】2027年度 総理大臣杯 全
+ 日本大学サッカートーナメント北海道大会 1回戦）
+LOCATION:ダミー市総合運動公園
+DESCRIPTION:【ダミー】2027年度 総理大臣杯 全日本大学サッ
+ カートーナメント北海道大会　1回戦\n会場：ダミー市
+ 総合運動公園\nhttps://jufahokkaidodc-source.github.io/jufa2027/resul
+ ts/results.html?comp=2027-DM-PM&match=2027-DM-PM-502
+URL:https://jufahokkaidodc-source.github.io/jufa2027/results/results.html?c
+ omp=2027-DM-PM&match=2027-DM-PM-502
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-DM-PM-509@jufa-hokkaido
+DTSTAMP:20261018T042213Z
+DTSTART;TZID=Asia/Tokyo:20270606T100000
+DTEND;TZID=Asia/Tokyo:20270606T120000
+SUMMARY:雨竜 4-4 白老（【ダミー】2027年度 総理大臣杯 全
+ 日本大学サッカートーナメント北海道大会 準々決勝）
+LOCATION:ダミー市総合運動公園
+DESCRIPTION:【ダミー】2027年度 総理大臣杯 全日本大学サッ
+ カートーナメント北海道大会　準々決勝\n会場：ダミー
+ 市総合運動公園\nhttps://jufahokkaidodc-source.github.io/jufa2027/re
+ sults/results.html?comp=2027-DM-PM&match=2027-DM-PM-509
+URL:https://jufahokkaidodc-source.github.io/jufa2027/results/results.html?c
+ omp=2027-DM-PM&match=2027-DM-PM-509
+END:VEVENT
+END:VCALENDAR

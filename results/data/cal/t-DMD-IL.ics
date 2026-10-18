@@ -1,0 +1,125 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//JUFA Hokkaido//schedule//JA
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:十勝野大学Bの試合（北海道学生サッカー連盟
+ ）
+X-WR-TIMEZONE:Asia/Tokyo
+REFRESH-INTERVAL;VALUE=DURATION:PT6H
+X-PUBLISHED-TTL:PT6H
+BEGIN:VTIMEZONE
+TZID:Asia/Tokyo
+BEGIN:STANDARD
+DTSTART:19700101T000000
+TZOFFSETFROM:+0900
+TZOFFSETTO:+0900
+TZNAME:JST
+END:STANDARD
+END:VTIMEZONE
+BEGIN:VEVENT
+UID:2027-DM-IL-404@jufa-hokkaido
+DTSTAMP:20261018T042213Z
+DTSTART;TZID=Asia/Tokyo:20270411T173000
+DTEND;TZID=Asia/Tokyo:20270411T193000
+SUMMARY:十勝野B 0-1 渡島学院B（【ダミー】2027年度 インデ
+ ィペンデンスリーグ北海道大会 第1節）
+LOCATION:ダミー市総合運動公園
+DESCRIPTION:【ダミー】2027年度 インディペンデンスリーグ
+ 北海道大会　第1節\n会場：ダミー市総合運動公園\nhttps:
+ //jufahokkaidodc-source.github.io/jufa2027/results/results.html?comp=2027-
+ DM-IL&match=2027-DM-IL-404
+URL:https://jufahokkaidodc-source.github.io/jufa2027/results/results.html?c
+ omp=2027-DM-IL&match=2027-DM-IL-404
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-DM-IL-408@jufa-hokkaido
+DTSTAMP:20261018T042213Z
+DTSTART;TZID=Asia/Tokyo:20270418T173000
+DTEND;TZID=Asia/Tokyo:20270418T193000
+SUMMARY:十勝野B 2-2 大雪B（【ダミー】2027年度 インディペ
+ ンデンスリーグ北海道大会 第2節）
+LOCATION:ダミー市総合運動公園
+DESCRIPTION:【ダミー】2027年度 インディペンデンスリーグ
+ 北海道大会　第2節\n会場：ダミー市総合運動公園\nhttps:
+ //jufahokkaidodc-source.github.io/jufa2027/results/results.html?comp=2027-
+ DM-IL&match=2027-DM-IL-408
+URL:https://jufahokkaidodc-source.github.io/jufa2027/results/results.html?c
+ omp=2027-DM-IL&match=2027-DM-IL-408
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-DM-IL-411@jufa-hokkaido
+DTSTAMP:20261018T042213Z
+DTSTART;TZID=Asia/Tokyo:20270425T150000
+DTEND;TZID=Asia/Tokyo:20270425T170000
+SUMMARY:檜山B 1-1 十勝野B（【ダミー】2027年度 インディペ
+ ンデンスリーグ北海道大会 第3節）
+LOCATION:ダミー緑地競技場
+DESCRIPTION:【ダミー】2027年度 インディペンデンスリーグ
+ 北海道大会　第3節\n会場：ダミー緑地競技場\nhttps://jufa
+ hokkaidodc-source.github.io/jufa2027/results/results.html?comp=2027-DM-IL&
+ match=2027-DM-IL-411
+URL:https://jufahokkaidodc-source.github.io/jufa2027/results/results.html?c
+ omp=2027-DM-IL&match=2027-DM-IL-411
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-DM-IL-414@jufa-hokkaido
+DTSTAMP:20261018T042213Z
+DTSTART;TZID=Asia/Tokyo:20270502T123000
+DTEND;TZID=Asia/Tokyo:20270502T143000
+SUMMARY:十勝野B 0-0 胆振国際B（【ダミー】2027年度 インデ
+ ィペンデンスリーグ北海道大会 第4節）
+LOCATION:ダミー大学グラウンド
+DESCRIPTION:【ダミー】2027年度 インディペンデンスリーグ
+ 北海道大会　第4節\n会場：ダミー大学グラウンド\nhttps:
+ //jufahokkaidodc-source.github.io/jufa2027/results/results.html?comp=2027-
+ DM-IL&match=2027-DM-IL-414
+URL:https://jufahokkaidodc-source.github.io/jufa2027/results/results.html?c
+ omp=2027-DM-IL&match=2027-DM-IL-414
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-DM-IL-417@jufa-hokkaido
+DTSTAMP:20261018T042213Z
+DTSTART;TZID=Asia/Tokyo:20270509T100000
+DTEND;TZID=Asia/Tokyo:20270509T120000
+SUMMARY:石狩学院B 1-1 十勝野B（【ダミー】2027年度 インデ
+ ィペンデンスリーグ北海道大会 第5節）
+LOCATION:ダミー町スポーツセンター
+DESCRIPTION:【ダミー】2027年度 インディペンデンスリーグ
+ 北海道大会　第5節\n会場：ダミー町スポーツセンター\n
+ https://jufahokkaidodc-source.github.io/jufa2027/results/results.html?comp
+ =2027-DM-IL&match=2027-DM-IL-417
+URL:https://jufahokkaidodc-source.github.io/jufa2027/results/results.html?c
+ omp=2027-DM-IL&match=2027-DM-IL-417
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-DM-IL-422@jufa-hokkaido
+DTSTAMP:20261018T042213Z
+DTSTART;TZID=Asia/Tokyo:20270516T123000
+DTEND;TZID=Asia/Tokyo:20270516T143000
+SUMMARY:羊蹄B 1-4 十勝野B（【ダミー】2027年度 インディペ
+ ンデンスリーグ北海道大会 第6節）
+LOCATION:ダミー大学グラウンド
+DESCRIPTION:【ダミー】2027年度 インディペンデンスリーグ
+ 北海道大会　第6節\n会場：ダミー大学グラウンド\nhttps:
+ //jufahokkaidodc-source.github.io/jufa2027/results/results.html?comp=2027-
+ DM-IL&match=2027-DM-IL-422
+URL:https://jufahokkaidodc-source.github.io/jufa2027/results/results.html?c
+ omp=2027-DM-IL&match=2027-DM-IL-422
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-DM-IL-427@jufa-hokkaido
+DTSTAMP:20261018T042213Z
+DTSTART;TZID=Asia/Tokyo:20270523T150000
+DTEND;TZID=Asia/Tokyo:20270523T170000
+SUMMARY:十勝野B 3-1 宗谷B（【ダミー】2027年度 インディペ
+ ンデンスリーグ北海道大会 第7節）
+LOCATION:ダミー緑地競技場
+DESCRIPTION:【ダミー】2027年度 インディペンデンスリーグ
+ 北海道大会　第7節\n会場：ダミー緑地競技場\nhttps://jufa
+ hokkaidodc-source.github.io/jufa2027/results/results.html?comp=2027-DM-IL&
+ match=2027-DM-IL-427
+URL:https://jufahokkaidodc-source.github.io/jufa2027/results/results.html?c
+ omp=2027-DM-IL&match=2027-DM-IL-427
+END:VEVENT
+END:VCALENDAR
