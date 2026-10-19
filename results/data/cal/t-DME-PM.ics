@@ -1,0 +1,35 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//JUFA Hokkaido//schedule//JA
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:支笏湖大学の試合（北海道学生サッカー連盟
+ ）
+X-WR-TIMEZONE:Asia/Tokyo
+REFRESH-INTERVAL;VALUE=DURATION:PT6H
+X-PUBLISHED-TTL:PT6H
+BEGIN:VTIMEZONE
+TZID:Asia/Tokyo
+BEGIN:STANDARD
+DTSTART:19700101T000000
+TZOFFSETFROM:+0900
+TZOFFSETTO:+0900
+TZNAME:JST
+END:STANDARD
+END:VTIMEZONE
+BEGIN:VEVENT
+UID:2027-DM-PM-505@jufa-hokkaido
+DTSTAMP:20261018T042213Z
+DTSTART;TZID=Asia/Tokyo:20270605T100000
+DTEND;TZID=Asia/Tokyo:20270605T120000
+SUMMARY:支笏湖 1-3 檜山（【ダミー】2027年度 総理大臣杯 
+ 全日本大学サッカートーナメント北海道大会 1回戦）
+LOCATION:ダミー町スポーツセンター
+DESCRIPTION:【ダミー】2027年度 総理大臣杯 全日本大学サッ
+ カートーナメント北海道大会　1回戦\n会場：ダミー町
+ スポーツセンター\nhttps://jufahokkaidodc-source.github.io/jufa2027
+ /results/results.html?comp=2027-DM-PM&match=2027-DM-PM-505
+URL:https://jufahokkaidodc-source.github.io/jufa2027/results/results.html?c
+ omp=2027-DM-PM&match=2027-DM-PM-505
+END:VEVENT
+END:VCALENDAR
