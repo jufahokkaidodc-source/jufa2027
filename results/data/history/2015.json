@@ -459,6 +459,1234 @@
      ]
     }
    ]
+  },
+  {
+   "id": "2015-L2",
+   "name": "2015年度 第34回北海道学生サッカーリーグ 2部",
+   "short": "2部",
+   "format": "リーグ",
+   "finished": true,
+   "asOf": "",
+   "source": "past",
+   "champion": {
+    "name": "北海道教育大学函館校",
+    "short": "函教大"
+   },
+   "standings": [
+    {
+     "group": "",
+     "table": [
+      {
+       "rank": 1,
+       "team": {
+        "name": "北海道教育大学函館校",
+        "short": "函教大"
+       },
+       "played": 14,
+       "won": 11,
+       "drawn": 0,
+       "lost": 3,
+       "goalsFor": 35,
+       "goalsAgainst": 10,
+       "goalDiff": 25,
+       "points": 33,
+       "note": ""
+      },
+      {
+       "rank": 2,
+       "team": {
+        "name": "北海道大学医学部",
+        "short": "北大医"
+       },
+       "played": 14,
+       "won": 9,
+       "drawn": 2,
+       "lost": 3,
+       "goalsFor": 32,
+       "goalsAgainst": 16,
+       "goalDiff": 16,
+       "points": 29,
+       "note": ""
+      },
+      {
+       "rank": 3,
+       "team": {
+        "name": "小樽商科大学",
+        "short": "樽商大"
+       },
+       "played": 14,
+       "won": 7,
+       "drawn": 3,
+       "lost": 4,
+       "goalsFor": 27,
+       "goalsAgainst": 18,
+       "goalDiff": 9,
+       "points": 24,
+       "note": ""
+      },
+      {
+       "rank": 4,
+       "team": {
+        "name": "北海道教育大学旭川校",
+        "short": "旭教大"
+       },
+       "played": 14,
+       "won": 8,
+       "drawn": 0,
+       "lost": 6,
+       "goalsFor": 30,
+       "goalsAgainst": 25,
+       "goalDiff": 5,
+       "points": 24,
+       "note": ""
+      },
+      {
+       "rank": 5,
+       "team": {
+        "name": "札幌医科大学",
+        "short": "札医大"
+       },
+       "played": 14,
+       "won": 6,
+       "drawn": 0,
+       "lost": 8,
+       "goalsFor": 29,
+       "goalsAgainst": 33,
+       "goalDiff": -4,
+       "points": 18,
+       "note": ""
+      },
+      {
+       "rank": 6,
+       "team": {
+        "name": "北海道医療大学",
+        "short": "医療大"
+       },
+       "played": 14,
+       "won": 4,
+       "drawn": 2,
+       "lost": 8,
+       "goalsFor": 18,
+       "goalsAgainst": 35,
+       "goalDiff": -17,
+       "points": 14,
+       "note": ""
+      },
+      {
+       "rank": 7,
+       "team": {
+        "name": "北海道文教大学",
+        "short": "文教大"
+       },
+       "played": 14,
+       "won": 3,
+       "drawn": 2,
+       "lost": 9,
+       "goalsFor": 16,
+       "goalsAgainst": 27,
+       "goalDiff": -11,
+       "points": 11,
+       "note": ""
+      },
+      {
+       "rank": 8,
+       "team": {
+        "name": "旭川医科大学",
+        "short": "旭医大"
+       },
+       "played": 14,
+       "won": 2,
+       "drawn": 3,
+       "lost": 9,
+       "goalsFor": 12,
+       "goalsAgainst": 34,
+       "goalDiff": -22,
+       "points": 9,
+       "note": ""
+      }
+     ]
+    }
+   ],
+   "playoffs": [
+    {
+     "title": "1部・2部入れ替え戦",
+     "date": "",
+     "venue": "",
+     "matches": [
+      {
+       "home": {
+        "name": "北海学園大学",
+        "short": "学園大"
+       },
+       "homeNote": "1部7位",
+       "away": {
+        "name": "北海道大学医学部",
+        "short": "北大医"
+       },
+       "awayNote": "2部2位",
+       "score": "2-2",
+       "half": "引き分けのため北海学園大学が1部残留"
+      }
+     ]
+    },
+    {
+     "title": "2部・3部入れ替え戦",
+     "date": "",
+     "venue": "",
+     "matches": [
+      {
+       "home": {
+        "name": "北海道文教大学",
+        "short": "文教大"
+       },
+       "homeNote": "2部7位",
+       "away": {
+        "name": "北海道教育大学札幌校",
+        "short": "札教大"
+       },
+       "awayNote": "3部2位",
+       "score": "5-4",
+       "half": "北海道文教大学の勝利で2部残留"
+      }
+     ]
+    }
+   ],
+   "notes": [
+    "8チームによる2回戦総当たり（各14試合）。",
+    "優勝の北海道教育大学函館校は1部に昇格。",
+    "2位の北海道大学医学部は1部7位の北海学園大学との入れ替え戦（2-2）の結果、2部残留。",
+    "7位の北海道文教大学は3部2位の北海道教育大学札幌校との入れ替え戦に勝ち、2部残留。",
+    "8位の旭川医科大学は3部に降格。"
+   ]
+  },
+  {
+   "id": "2015-L3",
+   "name": "2015年度 第34回北海道学生サッカーリーグ 3部",
+   "short": "3部",
+   "format": "リーグ",
+   "finished": true,
+   "asOf": "",
+   "source": "past",
+   "champion": {
+    "name": "札幌大谷大学",
+    "short": "大谷大"
+   },
+   "standings": [
+    {
+     "group": "",
+     "table": [
+      {
+       "rank": 1,
+       "team": {
+        "name": "札幌大谷大学",
+        "short": "大谷大"
+       },
+       "played": 9,
+       "won": 8,
+       "drawn": 0,
+       "lost": 1,
+       "goalsFor": 26,
+       "goalsAgainst": 5,
+       "goalDiff": 21,
+       "points": 24,
+       "note": ""
+      },
+      {
+       "rank": 2,
+       "team": {
+        "name": "北海道教育大学札幌校",
+        "short": "札教大"
+       },
+       "played": 9,
+       "won": 7,
+       "drawn": 1,
+       "lost": 1,
+       "goalsFor": 38,
+       "goalsAgainst": 9,
+       "goalDiff": 29,
+       "points": 22,
+       "note": ""
+      },
+      {
+       "rank": 3,
+       "team": {
+        "name": "釧路公立大学",
+        "short": "釧公大"
+       },
+       "played": 9,
+       "won": 5,
+       "drawn": 2,
+       "lost": 2,
+       "goalsFor": 17,
+       "goalsAgainst": 6,
+       "goalDiff": 11,
+       "points": 17,
+       "note": ""
+      },
+      {
+       "rank": 4,
+       "team": {
+        "name": "酪農学園大学",
+        "short": "酪農大"
+       },
+       "played": 9,
+       "won": 5,
+       "drawn": 1,
+       "lost": 3,
+       "goalsFor": 21,
+       "goalsAgainst": 15,
+       "goalDiff": 6,
+       "points": 16,
+       "note": ""
+      },
+      {
+       "rank": 5,
+       "team": {
+        "name": "北海道教育大学釧路校",
+        "short": "釧教大"
+       },
+       "played": 9,
+       "won": 4,
+       "drawn": 2,
+       "lost": 3,
+       "goalsFor": 14,
+       "goalsAgainst": 10,
+       "goalDiff": 4,
+       "points": 14,
+       "note": ""
+      },
+      {
+       "rank": 6,
+       "team": {
+        "name": "札幌学院大学",
+        "short": "学院大"
+       },
+       "played": 9,
+       "won": 4,
+       "drawn": 0,
+       "lost": 5,
+       "goalsFor": 21,
+       "goalsAgainst": 13,
+       "goalDiff": 8,
+       "points": 12,
+       "note": ""
+      },
+      {
+       "rank": 7,
+       "team": {
+        "name": "東京農業大学（北海道オホーツク）",
+        "short": "東農大"
+       },
+       "played": 9,
+       "won": 4,
+       "drawn": 0,
+       "lost": 5,
+       "goalsFor": 16,
+       "goalsAgainst": 17,
+       "goalDiff": -1,
+       "points": 12,
+       "note": ""
+      },
+      {
+       "rank": 8,
+       "team": {
+        "name": "北海道科学大学",
+        "short": "科学大"
+       },
+       "played": 9,
+       "won": 2,
+       "drawn": 2,
+       "lost": 5,
+       "goalsFor": 6,
+       "goalsAgainst": 13,
+       "goalDiff": -7,
+       "points": 8,
+       "note": ""
+      },
+      {
+       "rank": 9,
+       "team": {
+        "name": "帯広畜産大学",
+        "short": "帯畜大"
+       },
+       "played": 9,
+       "won": 1,
+       "drawn": 0,
+       "lost": 8,
+       "goalsFor": 4,
+       "goalsAgainst": 32,
+       "goalDiff": -28,
+       "points": 3,
+       "note": ""
+      },
+      {
+       "rank": 10,
+       "team": {
+        "name": "北海道情報大学",
+        "short": "情報大"
+       },
+       "played": 9,
+       "won": 1,
+       "drawn": 0,
+       "lost": 8,
+       "goalsFor": 1,
+       "goalsAgainst": 45,
+       "goalDiff": -44,
+       "points": 3,
+       "note": ""
+      }
+     ]
+    }
+   ],
+   "playoffs": [
+    {
+     "title": "2部・3部入れ替え戦",
+     "date": "",
+     "venue": "",
+     "matches": [
+      {
+       "home": {
+        "name": "北海道文教大学",
+        "short": "文教大"
+       },
+       "homeNote": "2部",
+       "away": {
+        "name": "北海道教育大学札幌校",
+        "short": "札教大"
+       },
+       "awayNote": "3部2位",
+       "score": "5-4",
+       "half": ""
+      }
+     ]
+    }
+   ],
+   "notes": [
+    "10チームによる1回戦総当たりのリーグ戦。",
+    "優勝の札幌大谷大学が2部に昇格した。",
+    "準優勝の北海道教育大学札幌校は北海道文教大学との入れ替え戦に4-5で敗れ、3部に残留した。",
+    "3位は釧路公立大学。"
+   ]
+  },
+  {
+   "id": "2015-IL",
+   "name": "2015年度 インディペンデンスリーグ北海道大会",
+   "short": "Iリーグ",
+   "format": "リーグ",
+   "finished": true,
+   "asOf": "",
+   "source": "past",
+   "champion": {
+    "name": "北翔大学 A",
+    "short": "北翔大A"
+   },
+   "standings": [
+    {
+     "group": "予選リーグ",
+     "table": [
+      {
+       "rank": 1,
+       "team": {
+        "name": "東海大学札幌校舎",
+        "short": "東海大"
+       },
+       "played": 11,
+       "won": 9,
+       "drawn": 2,
+       "lost": 0,
+       "goalsFor": 32,
+       "goalsAgainst": 9,
+       "goalDiff": 23,
+       "points": 29,
+       "note": ""
+      },
+      {
+       "rank": 2,
+       "team": {
+        "name": "札幌大学 B",
+        "short": "札幌大B"
+       },
+       "played": 11,
+       "won": 9,
+       "drawn": 0,
+       "lost": 2,
+       "goalsFor": 39,
+       "goalsAgainst": 18,
+       "goalDiff": 21,
+       "points": 27,
+       "note": ""
+      },
+      {
+       "rank": 3,
+       "team": {
+        "name": "北翔大学 A",
+        "short": "北翔大A"
+       },
+       "played": 11,
+       "won": 9,
+       "drawn": 0,
+       "lost": 2,
+       "goalsFor": 32,
+       "goalsAgainst": 14,
+       "goalDiff": 18,
+       "points": 27,
+       "note": ""
+      },
+      {
+       "rank": 4,
+       "team": {
+        "name": "北海道教育大学岩見沢校",
+        "short": "岩教大"
+       },
+       "played": 11,
+       "won": 7,
+       "drawn": 1,
+       "lost": 3,
+       "goalsFor": 62,
+       "goalsAgainst": 18,
+       "goalDiff": 44,
+       "points": 22,
+       "note": ""
+      },
+      {
+       "rank": 5,
+       "team": {
+        "name": "札幌大学 A",
+        "short": "札幌大A"
+       },
+       "played": 11,
+       "won": 7,
+       "drawn": 0,
+       "lost": 4,
+       "goalsFor": 38,
+       "goalsAgainst": 20,
+       "goalDiff": 18,
+       "points": 21,
+       "note": ""
+      },
+      {
+       "rank": 6,
+       "team": {
+        "name": "北星学園大学",
+        "short": "北星大"
+       },
+       "played": 11,
+       "won": 5,
+       "drawn": 0,
+       "lost": 6,
+       "goalsFor": 20,
+       "goalsAgainst": 27,
+       "goalDiff": -7,
+       "points": 15,
+       "note": ""
+      },
+      {
+       "rank": 7,
+       "team": {
+        "name": "北海道大学 A",
+        "short": "北大A"
+       },
+       "played": 11,
+       "won": 4,
+       "drawn": 2,
+       "lost": 5,
+       "goalsFor": 19,
+       "goalsAgainst": 20,
+       "goalDiff": -1,
+       "points": 14,
+       "note": ""
+      },
+      {
+       "rank": 8,
+       "team": {
+        "name": "道都大学 B",
+        "short": "道都大B"
+       },
+       "played": 11,
+       "won": 4,
+       "drawn": 2,
+       "lost": 5,
+       "goalsFor": 16,
+       "goalsAgainst": 32,
+       "goalDiff": -16,
+       "points": 14,
+       "note": ""
+      },
+      {
+       "rank": 9,
+       "team": {
+        "name": "道都大学 A",
+        "short": "道都大A"
+       },
+       "played": 11,
+       "won": 3,
+       "drawn": 1,
+       "lost": 7,
+       "goalsFor": 25,
+       "goalsAgainst": 34,
+       "goalDiff": -9,
+       "points": 10,
+       "note": ""
+      },
+      {
+       "rank": 10,
+       "team": {
+        "name": "北翔大学 B",
+        "short": "北翔大B"
+       },
+       "played": 11,
+       "won": 3,
+       "drawn": 1,
+       "lost": 7,
+       "goalsFor": 14,
+       "goalsAgainst": 28,
+       "goalDiff": -14,
+       "points": 10,
+       "note": ""
+      },
+      {
+       "rank": 11,
+       "team": {
+        "name": "北海道大学 B",
+        "short": "北大B"
+       },
+       "played": 11,
+       "won": 1,
+       "drawn": 0,
+       "lost": 10,
+       "goalsFor": 9,
+       "goalsAgainst": 38,
+       "goalDiff": -29,
+       "points": 3,
+       "note": ""
+      },
+      {
+       "rank": 12,
+       "team": {
+        "name": "北海学園大学",
+        "short": "学園大"
+       },
+       "played": 11,
+       "won": 0,
+       "drawn": 1,
+       "lost": 10,
+       "goalsFor": 2,
+       "goalsAgainst": 50,
+       "goalDiff": -48,
+       "points": 1,
+       "note": ""
+      }
+     ]
+    },
+    {
+     "group": "決勝リーグ",
+     "table": [
+      {
+       "rank": 1,
+       "team": {
+        "name": "北翔大学 A",
+        "short": "北翔大A"
+       },
+       "played": 14,
+       "won": 11,
+       "drawn": 0,
+       "lost": 3,
+       "goalsFor": 38,
+       "goalsAgainst": 19,
+       "goalDiff": 19,
+       "points": 33,
+       "note": "予選リーグの成績を含む"
+      },
+      {
+       "rank": 2,
+       "team": {
+        "name": "北海道教育大学岩見沢校",
+        "short": "岩教大"
+       },
+       "played": 14,
+       "won": 10,
+       "drawn": 1,
+       "lost": 3,
+       "goalsFor": 77,
+       "goalsAgainst": 21,
+       "goalDiff": 56,
+       "points": 31,
+       "note": "予選リーグの成績を含む"
+      },
+      {
+       "rank": 3,
+       "team": {
+        "name": "札幌大学 B",
+        "short": "札幌大B"
+       },
+       "played": 14,
+       "won": 10,
+       "drawn": 0,
+       "lost": 4,
+       "goalsFor": 45,
+       "goalsAgainst": 30,
+       "goalDiff": 15,
+       "points": 30,
+       "note": "予選リーグの成績を含む"
+      },
+      {
+       "rank": 4,
+       "team": {
+        "name": "東海大学札幌校舎",
+        "short": "東海大"
+       },
+       "played": 14,
+       "won": 9,
+       "drawn": 2,
+       "lost": 3,
+       "goalsFor": 34,
+       "goalsAgainst": 18,
+       "goalDiff": 16,
+       "points": 29,
+       "note": "予選リーグの成績を含む"
+      }
+     ]
+    }
+   ],
+   "matches": [
+    {
+     "round": "決勝リーグ",
+     "group": "",
+     "date": "",
+     "home": {
+      "name": "東海大学札幌校舎",
+      "short": "東海大"
+     },
+     "away": {
+      "name": "札幌大学 B",
+      "short": "札幌大B"
+     },
+     "score": "2-3",
+     "pk": "",
+     "winner": "away"
+    },
+    {
+     "round": "決勝リーグ",
+     "group": "",
+     "date": "",
+     "home": {
+      "name": "東海大学札幌校舎",
+      "short": "東海大"
+     },
+     "away": {
+      "name": "北翔大学 A",
+      "short": "北翔大A"
+     },
+     "score": "0-1",
+     "pk": "",
+     "winner": "away"
+    },
+    {
+     "round": "決勝リーグ",
+     "group": "",
+     "date": "",
+     "home": {
+      "name": "東海大学札幌校舎",
+      "short": "東海大"
+     },
+     "away": {
+      "name": "北海道教育大学岩見沢校",
+      "short": "岩教大"
+     },
+     "score": "0-5",
+     "pk": "",
+     "winner": "away"
+    },
+    {
+     "round": "決勝リーグ",
+     "group": "",
+     "date": "",
+     "home": {
+      "name": "札幌大学 B",
+      "short": "札幌大B"
+     },
+     "away": {
+      "name": "北翔大学 A",
+      "short": "北翔大A"
+     },
+     "score": "2-3",
+     "pk": "",
+     "winner": "away"
+    },
+    {
+     "round": "決勝リーグ",
+     "group": "",
+     "date": "",
+     "home": {
+      "name": "札幌大学 B",
+      "short": "札幌大B"
+     },
+     "away": {
+      "name": "北海道教育大学岩見沢校",
+      "short": "岩教大"
+     },
+     "score": "1-7",
+     "pk": "",
+     "winner": "away"
+    },
+    {
+     "round": "決勝リーグ",
+     "group": "",
+     "date": "",
+     "home": {
+      "name": "北翔大学 A",
+      "short": "北翔大A"
+     },
+     "away": {
+      "name": "北海道教育大学岩見沢校",
+      "short": "岩教大"
+     },
+     "score": "2-3",
+     "pk": "",
+     "winner": "away"
+    }
+   ],
+   "notes": [
+    "平成27年度 第7回大会。12チームの予選リーグ（総当たり1回戦）を行い、上位4チームが決勝リーグへ進出（勝点・得失点差は持ち越し）。",
+    "優勝 北翔大学A、2位 北海道教育大学岩見沢校、3位 札幌大学B。",
+    "全国大会：北翔大学 1-3 仙台大学。"
+   ]
+  },
+  {
+   "id": "2015-PM",
+   "name": "2015年度 総理大臣杯 全日本大学サッカートーナメント北海道大会",
+   "short": "総理大臣杯",
+   "format": "トーナメント",
+   "finished": true,
+   "asOf": "",
+   "source": "past",
+   "champion": {
+    "name": "北海道教育大学岩見沢校",
+    "short": "岩教大"
+   },
+   "matches": [
+    {
+     "round": "1回戦",
+     "group": "",
+     "date": "",
+     "home": {
+      "name": "北海道教育大学札幌校",
+      "short": "札教大"
+     },
+     "away": {
+      "name": "帯広畜産大学",
+      "short": "帯畜大"
+     },
+     "score": "13-0",
+     "pk": "",
+     "winner": "home"
+    },
+    {
+     "round": "1回戦",
+     "group": "",
+     "date": "",
+     "home": {
+      "name": "北海道情報大学",
+      "short": "情報大"
+     },
+     "away": {
+      "name": "小樽商科大学",
+      "short": "樽商大"
+     },
+     "score": "0-6",
+     "pk": "",
+     "winner": "away"
+    },
+    {
+     "round": "1回戦",
+     "group": "",
+     "date": "",
+     "home": {
+      "name": "酪農学園大学",
+      "short": "酪農大"
+     },
+     "away": {
+      "name": "札幌学院大学",
+      "short": "学院大"
+     },
+     "score": "3-1",
+     "pk": "",
+     "winner": "home"
+    },
+    {
+     "round": "2回戦",
+     "group": "",
+     "date": "",
+     "home": {
+      "name": "北海道教育大学札幌校",
+      "short": "札教大"
+     },
+     "away": {
+      "name": "小樽商科大学",
+      "short": "樽商大"
+     },
+     "score": "0-2",
+     "pk": "",
+     "winner": "away"
+    },
+    {
+     "round": "2回戦",
+     "group": "",
+     "date": "",
+     "home": {
+      "name": "北海道教育大学旭川校",
+      "short": "旭教大"
+     },
+     "away": {
+      "name": "札幌国際大学",
+      "short": "国際大"
+     },
+     "score": "11-0",
+     "pk": "",
+     "winner": "home"
+    },
+    {
+     "round": "2回戦",
+     "group": "",
+     "date": "",
+     "home": {
+      "name": "北海道教育大学釧路校",
+      "short": "釧教大"
+     },
+     "away": {
+      "name": "旭川医科大学",
+      "short": "旭医大"
+     },
+     "score": "1-1（延長）",
+     "pk": "5-4",
+     "winner": "home"
+    },
+    {
+     "round": "2回戦",
+     "group": "",
+     "date": "",
+     "home": {
+      "name": "北海道大学医学部",
+      "short": "北大医"
+     },
+     "away": {
+      "name": "北海道薬科大学",
+      "short": "薬科大"
+     },
+     "score": "10-0",
+     "pk": "",
+     "winner": "home"
+    },
+    {
+     "round": "2回戦",
+     "group": "",
+     "date": "",
+     "home": {
+      "name": "釧路公立大学",
+      "short": "釧公大"
+     },
+     "away": {
+      "name": "北海道医療大学",
+      "short": "医療大"
+     },
+     "score": "0-1",
+     "pk": "",
+     "winner": "away"
+    },
+    {
+     "round": "2回戦",
+     "group": "",
+     "date": "",
+     "home": {
+      "name": "北海道教育大学函館校",
+      "short": "函教大"
+     },
+     "away": {
+      "name": "北海道科学大学",
+      "short": "科学大"
+     },
+     "score": "2-0",
+     "pk": "",
+     "winner": "home"
+    },
+    {
+     "round": "2回戦",
+     "group": "",
+     "date": "",
+     "home": {
+      "name": "札幌大谷大学",
+      "short": "大谷大"
+     },
+     "away": {
+      "name": "北海道文教大学",
+      "short": "文教大"
+     },
+     "score": "不戦勝",
+     "pk": "",
+     "winner": "home"
+    },
+    {
+     "round": "2回戦",
+     "group": "",
+     "date": "",
+     "home": {
+      "name": "札幌医科大学",
+      "short": "札医大"
+     },
+     "away": {
+      "name": "酪農学園大学",
+      "short": "酪農大"
+     },
+     "score": "6-1",
+     "pk": "",
+     "winner": "home"
+    },
+    {
+     "round": "3回戦",
+     "group": "",
+     "date": "",
+     "home": {
+      "name": "札幌大学",
+      "short": "札幌大"
+     },
+     "away": {
+      "name": "小樽商科大学",
+      "short": "樽商大"
+     },
+     "score": "7-0",
+     "pk": "",
+     "winner": "home"
+    },
+    {
+     "round": "3回戦",
+     "group": "",
+     "date": "",
+     "home": {
+      "name": "北海道教育大学旭川校",
+      "short": "旭教大"
+     },
+     "away": {
+      "name": "北星学園大学",
+      "short": "北星大"
+     },
+     "score": "4-6",
+     "pk": "",
+     "winner": "away"
+    },
+    {
+     "round": "3回戦",
+     "group": "",
+     "date": "",
+     "home": {
+      "name": "北翔大学",
+      "short": "北翔大"
+     },
+     "away": {
+      "name": "北海道教育大学釧路校",
+      "short": "釧教大"
+     },
+     "score": "12-0",
+     "pk": "",
+     "winner": "home"
+    },
+    {
+     "round": "3回戦",
+     "group": "",
+     "date": "",
+     "home": {
+      "name": "北海道大学医学部",
+      "short": "北大医"
+     },
+     "away": {
+      "name": "道都大学",
+      "short": "道都大"
+     },
+     "score": "1-3",
+     "pk": "",
+     "winner": "away"
+    },
+    {
+     "round": "3回戦",
+     "group": "",
+     "date": "",
+     "home": {
+      "name": "東海大学札幌校舎",
+      "short": "東海大"
+     },
+     "away": {
+      "name": "北海道医療大学",
+      "short": "医療大"
+     },
+     "score": "4-2",
+     "pk": "",
+     "winner": "home"
+    },
+    {
+     "round": "3回戦",
+     "group": "",
+     "date": "",
+     "home": {
+      "name": "北海道教育大学函館校",
+      "short": "函教大"
+     },
+     "away": {
+      "name": "北海道大学",
+      "short": "北大"
+     },
+     "score": "1-5",
+     "pk": "",
+     "winner": "away"
+    },
+    {
+     "round": "3回戦",
+     "group": "",
+     "date": "",
+     "home": {
+      "name": "北海学園大学",
+      "short": "学園大"
+     },
+     "away": {
+      "name": "札幌大谷大学",
+      "short": "大谷大"
+     },
+     "score": "4-1",
+     "pk": "",
+     "winner": "home"
+    },
+    {
+     "round": "3回戦",
+     "group": "",
+     "date": "",
+     "home": {
+      "name": "札幌医科大学",
+      "short": "札医大"
+     },
+     "away": {
+      "name": "北海道教育大学岩見沢校",
+      "short": "岩教大"
+     },
+     "score": "0-4",
+     "pk": "",
+     "winner": "away"
+    },
+    {
+     "round": "準々決勝",
+     "group": "",
+     "date": "",
+     "home": {
+      "name": "札幌大学",
+      "short": "札幌大"
+     },
+     "away": {
+      "name": "北星学園大学",
+      "short": "北星大"
+     },
+     "score": "7-2",
+     "pk": "",
+     "winner": "home"
+    },
+    {
+     "round": "準々決勝",
+     "group": "",
+     "date": "",
+     "home": {
+      "name": "北翔大学",
+      "short": "北翔大"
+     },
+     "away": {
+      "name": "道都大学",
+      "short": "道都大"
+     },
+     "score": "3-1",
+     "pk": "",
+     "winner": "home"
+    },
+    {
+     "round": "準々決勝",
+     "group": "",
+     "date": "",
+     "home": {
+      "name": "東海大学札幌校舎",
+      "short": "東海大"
+     },
+     "away": {
+      "name": "北海道大学",
+      "short": "北大"
+     },
+     "score": "2-0",
+     "pk": "",
+     "winner": "home"
+    },
+    {
+     "round": "準々決勝",
+     "group": "",
+     "date": "",
+     "home": {
+      "name": "北海学園大学",
+      "short": "学園大"
+     },
+     "away": {
+      "name": "北海道教育大学岩見沢校",
+      "short": "岩教大"
+     },
+     "score": "0-8",
+     "pk": "",
+     "winner": "away"
+    },
+    {
+     "round": "準決勝",
+     "group": "",
+     "date": "",
+     "home": {
+      "name": "札幌大学",
+      "short": "札幌大"
+     },
+     "away": {
+      "name": "北翔大学",
+      "short": "北翔大"
+     },
+     "score": "7-1",
+     "pk": "",
+     "winner": "home"
+    },
+    {
+     "round": "準決勝",
+     "group": "",
+     "date": "",
+     "home": {
+      "name": "東海大学札幌校舎",
+      "short": "東海大"
+     },
+     "away": {
+      "name": "北海道教育大学岩見沢校",
+      "short": "岩教大"
+     },
+     "score": "0-5",
+     "pk": "",
+     "winner": "away"
+    },
+    {
+     "round": "決勝",
+     "group": "",
+     "date": "",
+     "home": {
+      "name": "札幌大学",
+      "short": "札幌大"
+     },
+     "away": {
+      "name": "北海道教育大学岩見沢校",
+      "short": "岩教大"
+     },
+     "score": "0-4",
+     "pk": "",
+     "winner": "away"
+    }
+   ],
+   "notes": [
+    "第39回大会。優勝は北海道教育大学岩見沢校、準優勝は札幌大学、3位は北翔大学と東海大学札幌校舎。",
+    "表に日付・回戦名の記載はなく、回戦名は組み合わせの形から付けた（4回戦を準々決勝として記録）。",
+    "全国大会出場：北海道教育大学岩見沢校。全国大会の結果：1回戦 3-3（PK5-4）IPU・環太平洋大学、2回戦 0-1 明治大学で敗退（ベスト8）。"
+   ]
   }
  ]
 }

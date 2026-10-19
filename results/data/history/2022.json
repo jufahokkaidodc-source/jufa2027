@@ -165,7 +165,9 @@
      ]
     }
    ],
-   "notes": [],
+   "notes": [
+    "全国大会（インカレ）：北海道教育大学岩見沢校（北海道代表）は、1回戦でIPU・環太平洋大学に勝ち、2回戦で桐蔭横浜大学に敗れました。"
+   ],
    "source": "past",
    "awards": [
     {
@@ -363,6 +365,983 @@
       }
      ]
     }
+   ]
+  },
+  {
+   "id": "2022-L2",
+   "name": "2022年度 第41回北海道学生サッカーリーグ 2部",
+   "short": "2部",
+   "format": "リーグ",
+   "finished": true,
+   "asOf": "2022-10-23",
+   "source": "past",
+   "champion": {
+    "name": "北海道教育大学旭川校",
+    "short": "旭教大"
+   },
+   "standings": [
+    {
+     "group": "",
+     "table": [
+      {
+       "rank": 1,
+       "team": {
+        "name": "北海道教育大学旭川校",
+        "short": "旭教大"
+       },
+       "played": 13,
+       "won": 10,
+       "drawn": 0,
+       "lost": 3,
+       "goalsFor": 40,
+       "goalsAgainst": 13,
+       "goalDiff": 27,
+       "points": 30,
+       "note": "勝点率2.308"
+      },
+      {
+       "rank": 2,
+       "team": {
+        "name": "小樽商科大学",
+        "short": "樽商大"
+       },
+       "played": 13,
+       "won": 8,
+       "drawn": 2,
+       "lost": 3,
+       "goalsFor": 29,
+       "goalsAgainst": 21,
+       "goalDiff": 8,
+       "points": 26,
+       "note": "勝点率2"
+      },
+      {
+       "rank": 3,
+       "team": {
+        "name": "札幌国際大学",
+        "short": "国際大"
+       },
+       "played": 14,
+       "won": 9,
+       "drawn": 0,
+       "lost": 5,
+       "goalsFor": 45,
+       "goalsAgainst": 23,
+       "goalDiff": 22,
+       "points": 27,
+       "note": "勝点率1.929"
+      },
+      {
+       "rank": 4,
+       "team": {
+        "name": "北海道教育大学札幌校",
+        "short": "札教大"
+       },
+       "played": 13,
+       "won": 6,
+       "drawn": 1,
+       "lost": 6,
+       "goalsFor": 33,
+       "goalsAgainst": 33,
+       "goalDiff": 0,
+       "points": 19,
+       "note": "勝点率1.462"
+      },
+      {
+       "rank": 5,
+       "team": {
+        "name": "北星学園大学",
+        "short": "北星大"
+       },
+       "played": 13,
+       "won": 4,
+       "drawn": 2,
+       "lost": 7,
+       "goalsFor": 17,
+       "goalsAgainst": 33,
+       "goalDiff": -16,
+       "points": 13,
+       "note": "勝点率1。マッチミーティング遅刻により勝点1没収"
+      },
+      {
+       "rank": 6,
+       "team": {
+        "name": "北海道科学大学",
+        "short": "科学大"
+       },
+       "played": 13,
+       "won": 3,
+       "drawn": 1,
+       "lost": 9,
+       "goalsFor": 20,
+       "goalsAgainst": 36,
+       "goalDiff": -16,
+       "points": 10,
+       "note": "勝点率0.769"
+      },
+      {
+       "rank": 7,
+       "team": {
+        "name": "北海道大学医学部",
+        "short": "北大医"
+       },
+       "played": 13,
+       "won": 3,
+       "drawn": 1,
+       "lost": 9,
+       "goalsFor": 14,
+       "goalsAgainst": 39,
+       "goalDiff": -25,
+       "points": 9,
+       "note": "勝点率0.692。マッチミーティング遅刻により勝点1没収"
+      },
+      {
+       "rank": 8,
+       "team": {
+        "name": "札幌医科大学",
+        "short": "札医大"
+       },
+       "played": 8,
+       "won": 3,
+       "drawn": 1,
+       "lost": 4,
+       "goalsFor": 12,
+       "goalsAgainst": 12,
+       "goalDiff": 0,
+       "points": 10,
+       "note": "勝点率1.25。規定試合数（10/14）に満たないため順位に加えない（次年度編成のための暫定8位）"
+      }
+     ]
+    }
+   ],
+   "notes": [
+    "8チームによる2回戦総当たり（各14試合）の予定で、実施できなかった試合がある。順位は勝点率（勝点÷試合数）で決めている。",
+    "札幌医科大学は規定試合数（10/14）に満たなかったため順位に加えない。次年度のリーグ編成のための順位は暫定的に8位とする。",
+    "北星学園大学（マッチ204）と北海道大学医学部（マッチ250）はマッチミーティングに遅刻したため、それぞれ勝点1を没収された。",
+    "優勝は北海道教育大学旭川校、準優勝は小樽商科大学。"
+   ]
+  },
+  {
+   "id": "2022-L3",
+   "name": "2022年度 第41回北海道学生サッカーリーグ 3部",
+   "short": "3部",
+   "format": "リーグ",
+   "finished": true,
+   "asOf": "2022-10-23",
+   "source": "past",
+   "champion": {
+    "name": "札幌大谷大学",
+    "short": "大谷大"
+   },
+   "standings": [
+    {
+     "group": "",
+     "table": [
+      {
+       "rank": 1,
+       "team": {
+        "name": "札幌大谷大学",
+        "short": "大谷大"
+       },
+       "played": 9,
+       "won": 9,
+       "drawn": 0,
+       "lost": 0,
+       "goalsFor": 48,
+       "goalsAgainst": 3,
+       "goalDiff": 45,
+       "points": 27,
+       "note": ""
+      },
+      {
+       "rank": 2,
+       "team": {
+        "name": "北海道教育大学釧路校",
+        "short": "釧教大"
+       },
+       "played": 10,
+       "won": 6,
+       "drawn": 1,
+       "lost": 3,
+       "goalsFor": 30,
+       "goalsAgainst": 15,
+       "goalDiff": 15,
+       "points": 19,
+       "note": ""
+      },
+      {
+       "rank": 3,
+       "team": {
+        "name": "北海道医療大学",
+        "short": "医療大"
+       },
+       "played": 8,
+       "won": 5,
+       "drawn": 1,
+       "lost": 2,
+       "goalsFor": 22,
+       "goalsAgainst": 13,
+       "goalDiff": 9,
+       "points": 15,
+       "note": "勝点1没収（マッチNo.230 マッチミーティング遅刻）"
+      },
+      {
+       "rank": 4,
+       "team": {
+        "name": "釧路公立大学",
+        "short": "釧公大"
+       },
+       "played": 10,
+       "won": 5,
+       "drawn": 2,
+       "lost": 3,
+       "goalsFor": 33,
+       "goalsAgainst": 14,
+       "goalDiff": 19,
+       "points": 17,
+       "note": ""
+      },
+      {
+       "rank": 5,
+       "team": {
+        "name": "北洋大学",
+        "short": "北洋大"
+       },
+       "played": 10,
+       "won": 4,
+       "drawn": 3,
+       "lost": 3,
+       "goalsFor": 25,
+       "goalsAgainst": 26,
+       "goalDiff": -1,
+       "points": 14,
+       "note": "勝点1没収（マッチNo.324 マッチミーティング遅刻）"
+      },
+      {
+       "rank": 6,
+       "team": {
+        "name": "室蘭工業大学",
+        "short": "室工大"
+       },
+       "played": 10,
+       "won": 4,
+       "drawn": 2,
+       "lost": 4,
+       "goalsFor": 18,
+       "goalsAgainst": 16,
+       "goalDiff": 2,
+       "points": 14,
+       "note": ""
+      },
+      {
+       "rank": 7,
+       "team": {
+        "name": "旭川医科大学",
+        "short": "旭医大"
+       },
+       "played": 9,
+       "won": 4,
+       "drawn": 0,
+       "lost": 5,
+       "goalsFor": 18,
+       "goalsAgainst": 29,
+       "goalDiff": -11,
+       "points": 11,
+       "note": "勝点1没収（マッチNo.331 マッチミーティング遅刻）"
+      },
+      {
+       "rank": 8,
+       "team": {
+        "name": "東京農業大学（北海道オホーツク）",
+        "short": "東農大"
+       },
+       "played": 9,
+       "won": 3,
+       "drawn": 0,
+       "lost": 6,
+       "goalsFor": 17,
+       "goalsAgainst": 33,
+       "goalDiff": -16,
+       "points": 9,
+       "note": ""
+      },
+      {
+       "rank": 9,
+       "team": {
+        "name": "札幌学院大学",
+        "short": "札学大"
+       },
+       "played": 10,
+       "won": 3,
+       "drawn": 1,
+       "lost": 6,
+       "goalsFor": 20,
+       "goalsAgainst": 42,
+       "goalDiff": -22,
+       "points": 10,
+       "note": ""
+      },
+      {
+       "rank": 10,
+       "team": {
+        "name": "北海道文教大学",
+        "short": "文教大"
+       },
+       "played": 8,
+       "won": 1,
+       "drawn": 2,
+       "lost": 5,
+       "goalsFor": 10,
+       "goalsAgainst": 22,
+       "goalDiff": -12,
+       "points": 5,
+       "note": ""
+      },
+      {
+       "rank": 11,
+       "team": {
+        "name": "酪農学園大学",
+        "short": "酪農大"
+       },
+       "played": 9,
+       "won": 1,
+       "drawn": 0,
+       "lost": 8,
+       "goalsFor": 14,
+       "goalsAgainst": 42,
+       "goalDiff": -28,
+       "points": 1,
+       "note": "勝点2没収（マッチNo.203・354 マッチミーティング遅刻、各1点）"
+      }
+     ]
+    }
+   ],
+   "notes": [
+    "11チームによる1回戦総当たりのリーグ戦。行われなかった試合（札幌大谷大学対北海道文教大学、酪農学園大学対北海道文教大学、北海道医療大学対旭川医科大学、北海道医療大学対東京農業大学）があり、順位は勝点率（1試合あたりの勝点）で決めている。",
+    "優勝は札幌大谷大学、準優勝は北海道教育大学釧路校。",
+    "酪農学園大学（2点）、北洋大学・北海道医療大学・旭川医科大学（各1点）はマッチミーティング遅刻により勝点を没収された。"
+   ]
+  },
+  {
+   "id": "2022-IL",
+   "name": "2022年度 インディペンデンスリーグ北海道大会",
+   "short": "Iリーグ",
+   "format": "リーグ",
+   "finished": true,
+   "asOf": "",
+   "source": "past",
+   "champion": {
+    "name": "札幌大学",
+    "short": "札幌大"
+   },
+   "standings": [
+    {
+     "group": "",
+     "table": [
+      {
+       "rank": 1,
+       "team": {
+        "name": "札幌大学",
+        "short": "札幌大"
+       },
+       "played": 10,
+       "won": 9,
+       "drawn": 1,
+       "lost": 0,
+       "goalsFor": 37,
+       "goalsAgainst": 3,
+       "goalDiff": 34,
+       "points": 28,
+       "note": ""
+      },
+      {
+       "rank": 2,
+       "team": {
+        "name": "北海道教育大学岩見沢校 A",
+        "short": "岩教大A"
+       },
+       "played": 10,
+       "won": 7,
+       "drawn": 1,
+       "lost": 2,
+       "goalsFor": 38,
+       "goalsAgainst": 8,
+       "goalDiff": 30,
+       "points": 22,
+       "note": ""
+      },
+      {
+       "rank": 3,
+       "team": {
+        "name": "北海道教育大学岩見沢校 B",
+        "short": "岩教大B"
+       },
+       "played": 10,
+       "won": 7,
+       "drawn": 1,
+       "lost": 2,
+       "goalsFor": 28,
+       "goalsAgainst": 5,
+       "goalDiff": 23,
+       "points": 22,
+       "note": ""
+      },
+      {
+       "rank": 4,
+       "team": {
+        "name": "東海大学札幌校舎 A",
+        "short": "東海大A"
+       },
+       "played": 10,
+       "won": 5,
+       "drawn": 3,
+       "lost": 2,
+       "goalsFor": 20,
+       "goalsAgainst": 12,
+       "goalDiff": 8,
+       "points": 18,
+       "note": ""
+      },
+      {
+       "rank": 5,
+       "team": {
+        "name": "星槎道都大学 A",
+        "short": "道都大A"
+       },
+       "played": 10,
+       "won": 5,
+       "drawn": 1,
+       "lost": 4,
+       "goalsFor": 11,
+       "goalsAgainst": 17,
+       "goalDiff": -6,
+       "points": 16,
+       "note": ""
+      },
+      {
+       "rank": 6,
+       "team": {
+        "name": "北翔大学",
+        "short": "北翔大"
+       },
+       "played": 10,
+       "won": 5,
+       "drawn": 0,
+       "lost": 5,
+       "goalsFor": 26,
+       "goalsAgainst": 18,
+       "goalDiff": 8,
+       "points": 15,
+       "note": ""
+      },
+      {
+       "rank": 7,
+       "team": {
+        "name": "北海学園大学",
+        "short": "学園大"
+       },
+       "played": 10,
+       "won": 3,
+       "drawn": 1,
+       "lost": 6,
+       "goalsFor": 19,
+       "goalsAgainst": 31,
+       "goalDiff": -12,
+       "points": 10,
+       "note": ""
+      },
+      {
+       "rank": 8,
+       "team": {
+        "name": "東海大学札幌校舎 B",
+        "short": "東海大B"
+       },
+       "played": 10,
+       "won": 3,
+       "drawn": 1,
+       "lost": 6,
+       "goalsFor": 20,
+       "goalsAgainst": 36,
+       "goalDiff": -16,
+       "points": 10,
+       "note": ""
+      },
+      {
+       "rank": 9,
+       "team": {
+        "name": "北海道大学 B",
+        "short": "北大B"
+       },
+       "played": 10,
+       "won": 2,
+       "drawn": 1,
+       "lost": 7,
+       "goalsFor": 7,
+       "goalsAgainst": 33,
+       "goalDiff": -26,
+       "points": 7,
+       "note": ""
+      },
+      {
+       "rank": 10,
+       "team": {
+        "name": "北海道大学 A",
+        "short": "北大A"
+       },
+       "played": 10,
+       "won": 1,
+       "drawn": 3,
+       "lost": 6,
+       "goalsFor": 10,
+       "goalsAgainst": 23,
+       "goalDiff": -13,
+       "points": 6,
+       "note": ""
+      },
+      {
+       "rank": 11,
+       "team": {
+        "name": "星槎道都大学 B",
+        "short": "道都大B"
+       },
+       "played": 10,
+       "won": 1,
+       "drawn": 1,
+       "lost": 8,
+       "goalsFor": 3,
+       "goalsAgainst": 33,
+       "goalDiff": -30,
+       "points": 4,
+       "note": ""
+      }
+     ]
+    }
+   ],
+   "notes": [
+    "2022年度 第14回大会。11チームによるリーグ戦（総当たり1回戦）。リーグ1位の札幌大学が優勝し、全国大会に出場。",
+    "全国大会（アットホームカップ2022 第20回インディペンデンスリーグ 全日本大学サッカーフェスティバル）1回戦（2022年11月29日・清瀬内山運動公園サッカー場B面）：関西学院大学B1 2-0 札幌大学。優勝は大阪学院大学I。"
+   ]
+  },
+  {
+   "id": "2022-PM",
+   "name": "2022年度 総理大臣杯 全日本大学サッカートーナメント北海道大会",
+   "short": "総理大臣杯",
+   "format": "トーナメント",
+   "finished": true,
+   "asOf": "2022-07-24",
+   "source": "past",
+   "champion": {
+    "name": "北海道教育大学岩見沢校",
+    "short": "岩教大"
+   },
+   "matches": [
+    {
+     "round": "1回戦",
+     "group": "",
+     "date": "",
+     "home": {
+      "name": "北海道大学",
+      "short": "北大"
+     },
+     "away": {
+      "name": "北洋大学",
+      "short": "北洋大"
+     },
+     "score": "不戦勝",
+     "pk": "",
+     "winner": "home"
+    },
+    {
+     "round": "1回戦",
+     "group": "",
+     "date": "",
+     "home": {
+      "name": "北海道教育大学釧路校",
+      "short": "釧教大"
+     },
+     "away": {
+      "name": "北海道大学医学部",
+      "short": "北大医"
+     },
+     "score": "0-0",
+     "pk": "2-4",
+     "winner": "home"
+    },
+    {
+     "round": "1回戦",
+     "group": "",
+     "date": "",
+     "home": {
+      "name": "北海道教育大学旭川校",
+      "short": "旭教大"
+     },
+     "away": {
+      "name": "北海道教育大学函館校",
+      "short": "函教大"
+     },
+     "score": "4-0",
+     "pk": "",
+     "winner": "home"
+    },
+    {
+     "round": "1回戦",
+     "group": "",
+     "date": "",
+     "home": {
+      "name": "札幌国際大学",
+      "short": "国際大"
+     },
+     "away": {
+      "name": "札幌医科大学",
+      "short": "札医大"
+     },
+     "score": "4-1",
+     "pk": "",
+     "winner": "home"
+    },
+    {
+     "round": "1回戦",
+     "group": "",
+     "date": "",
+     "home": {
+      "name": "北海道文教大学",
+      "short": "文教大"
+     },
+     "away": {
+      "name": "釧路公立大学",
+      "short": "釧公大"
+     },
+     "score": "3-3",
+     "pk": "4-3",
+     "winner": "home"
+    },
+    {
+     "round": "1回戦",
+     "group": "",
+     "date": "",
+     "home": {
+      "name": "東京農業大学",
+      "short": "東農大"
+     },
+     "away": {
+      "name": "室蘭工業大学",
+      "short": "室工大"
+     },
+     "score": "0-5",
+     "pk": "",
+     "winner": "away"
+    },
+    {
+     "round": "1回戦",
+     "group": "",
+     "date": "",
+     "home": {
+      "name": "札幌大谷大学",
+      "short": "大谷大"
+     },
+     "away": {
+      "name": "北星学園大学",
+      "short": "北星大"
+     },
+     "score": "6-1",
+     "pk": "",
+     "winner": "home"
+    },
+    {
+     "round": "1回戦",
+     "group": "",
+     "date": "",
+     "home": {
+      "name": "北海道教育大学札幌校",
+      "short": "札教大"
+     },
+     "away": {
+      "name": "星槎道都大学",
+      "short": "星槎大"
+     },
+     "score": "2-6",
+     "pk": "",
+     "winner": "away"
+    },
+    {
+     "round": "1回戦",
+     "group": "",
+     "date": "",
+     "home": {
+      "name": "北海道科学大学",
+      "short": "科学大"
+     },
+     "away": {
+      "name": "小樽商科大学",
+      "short": "樽商大"
+     },
+     "score": "5-3",
+     "pk": "",
+     "winner": "home"
+    },
+    {
+     "round": "1回戦",
+     "group": "",
+     "date": "",
+     "home": {
+      "name": "札幌学院大学",
+      "short": "学院大"
+     },
+     "away": {
+      "name": "旭川医科大学",
+      "short": "旭医大"
+     },
+     "score": "5-2",
+     "pk": "",
+     "winner": "home"
+    },
+    {
+     "round": "2回戦",
+     "group": "",
+     "date": "2022-07-16",
+     "home": {
+      "name": "札幌大学",
+      "short": "札幌大"
+     },
+     "away": {
+      "name": "北海道大学",
+      "short": "北大"
+     },
+     "score": "5-1",
+     "pk": "",
+     "winner": "home"
+    },
+    {
+     "round": "2回戦",
+     "group": "",
+     "date": "2022-07-16",
+     "home": {
+      "name": "北海道教育大学釧路校",
+      "short": "釧教大"
+     },
+     "away": {
+      "name": "北海道教育大学旭川校",
+      "short": "旭教大"
+     },
+     "score": "0-4",
+     "pk": "",
+     "winner": "away"
+    },
+    {
+     "round": "2回戦",
+     "group": "",
+     "date": "2022-07-16",
+     "home": {
+      "name": "北翔大学",
+      "short": "北翔大"
+     },
+     "away": {
+      "name": "札幌国際大学",
+      "short": "国際大"
+     },
+     "score": "2-0",
+     "pk": "",
+     "winner": "home"
+    },
+    {
+     "round": "2回戦",
+     "group": "",
+     "date": "2022-07-16",
+     "home": {
+      "name": "北海道文教大学",
+      "short": "文教大"
+     },
+     "away": {
+      "name": "北海学園大学",
+      "short": "学園大"
+     },
+     "score": "0-10",
+     "pk": "",
+     "winner": "away"
+    },
+    {
+     "round": "2回戦",
+     "group": "",
+     "date": "2022-07-16",
+     "home": {
+      "name": "東海大学札幌校舎",
+      "short": "東海大"
+     },
+     "away": {
+      "name": "室蘭工業大学",
+      "short": "室工大"
+     },
+     "score": "5-0",
+     "pk": "",
+     "winner": "home"
+    },
+    {
+     "round": "2回戦",
+     "group": "",
+     "date": "2022-07-16",
+     "home": {
+      "name": "札幌大谷大学",
+      "short": "大谷大"
+     },
+     "away": {
+      "name": "星槎道都大学",
+      "short": "星槎大"
+     },
+     "score": "1-1",
+     "pk": "2-4",
+     "winner": "away"
+    },
+    {
+     "round": "2回戦",
+     "group": "",
+     "date": "2022-07-16",
+     "home": {
+      "name": "旭川大学",
+      "short": "旭川大"
+     },
+     "away": {
+      "name": "北海道科学大学",
+      "short": "科学大"
+     },
+     "score": "3-1",
+     "pk": "",
+     "winner": "home"
+    },
+    {
+     "round": "2回戦",
+     "group": "",
+     "date": "2022-07-16",
+     "home": {
+      "name": "札幌学院大学",
+      "short": "学院大"
+     },
+     "away": {
+      "name": "北海道教育大学岩見沢校",
+      "short": "岩教大"
+     },
+     "score": "0-15",
+     "pk": "",
+     "winner": "away"
+    },
+    {
+     "round": "準々決勝",
+     "group": "",
+     "date": "2022-07-17",
+     "home": {
+      "name": "札幌大学",
+      "short": "札幌大"
+     },
+     "away": {
+      "name": "北海道教育大学旭川校",
+      "short": "旭教大"
+     },
+     "score": "12-1",
+     "pk": "",
+     "winner": "home"
+    },
+    {
+     "round": "準々決勝",
+     "group": "",
+     "date": "2022-07-17",
+     "home": {
+      "name": "北翔大学",
+      "short": "北翔大"
+     },
+     "away": {
+      "name": "北海学園大学",
+      "short": "学園大"
+     },
+     "score": "4-0",
+     "pk": "",
+     "winner": "home"
+    },
+    {
+     "round": "準々決勝",
+     "group": "",
+     "date": "2022-07-17",
+     "home": {
+      "name": "東海大学札幌校舎",
+      "short": "東海大"
+     },
+     "away": {
+      "name": "星槎道都大学",
+      "short": "星槎大"
+     },
+     "score": "0-0",
+     "pk": "4-5",
+     "winner": "away"
+    },
+    {
+     "round": "準々決勝",
+     "group": "",
+     "date": "2022-07-17",
+     "home": {
+      "name": "旭川大学",
+      "short": "旭川大"
+     },
+     "away": {
+      "name": "北海道教育大学岩見沢校",
+      "short": "岩教大"
+     },
+     "score": "0-3",
+     "pk": "",
+     "winner": "away"
+    },
+    {
+     "round": "準決勝",
+     "group": "",
+     "date": "2022-07-23",
+     "home": {
+      "name": "札幌大学",
+      "short": "札幌大"
+     },
+     "away": {
+      "name": "北翔大学",
+      "short": "北翔大"
+     },
+     "score": "2-1",
+     "pk": "",
+     "winner": "home"
+    },
+    {
+     "round": "準決勝",
+     "group": "",
+     "date": "2022-07-23",
+     "home": {
+      "name": "星槎道都大学",
+      "short": "星槎大"
+     },
+     "away": {
+      "name": "北海道教育大学岩見沢校",
+      "short": "岩教大"
+     },
+     "score": "2-5",
+     "pk": "",
+     "winner": "away"
+    },
+    {
+     "round": "決勝",
+     "group": "",
+     "date": "2022-07-24",
+     "home": {
+      "name": "札幌大学",
+      "short": "札幌大"
+     },
+     "away": {
+      "name": "北海道教育大学岩見沢校",
+      "short": "岩教大"
+     },
+     "score": "0-3",
+     "pk": "",
+     "winner": "away"
+    }
+   ],
+   "notes": [
+    "優勝は北海道教育大学岩見沢校、準優勝は札幌大学。",
+    "1回戦は7月9日・10日。北洋大学は不戦敗（北大が不戦勝）。",
+    "3回戦（7月17日）を準々決勝として記録。",
+    "全国大会（第46回）出場：北海道教育大学岩見沢校（北海道地区第1代表）、札幌大学（北海道地区第2代表）。",
+    "全国大会の結果：岩教大は1回戦 3-3（PK5-3）九州共立大学、2回戦 3-1 福岡大学、3回戦 0-2 国士舘大学で敗退（ベスト8）。札幌大は1回戦 0-6 大阪学院大学で敗退。"
    ]
   }
  ]

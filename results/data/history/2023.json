@@ -898,6 +898,1256 @@
      ]
     }
    ]
+  },
+  {
+   "id": "2023-L2",
+   "name": "2023年度 第42回北海道学生サッカーリーグ 2部",
+   "short": "2部",
+   "format": "リーグ",
+   "finished": true,
+   "asOf": "2023-10-17",
+   "source": "past",
+   "champion": {
+    "name": "札幌国際大学",
+    "short": "国際大"
+   },
+   "standings": [
+    {
+     "group": "",
+     "table": [
+      {
+       "rank": 1,
+       "team": {
+        "name": "札幌国際大学",
+        "short": "国際大"
+       },
+       "played": 9,
+       "won": 8,
+       "drawn": 0,
+       "lost": 1,
+       "goalsFor": 23,
+       "goalsAgainst": 11,
+       "goalDiff": 12,
+       "points": 24,
+       "note": ""
+      },
+      {
+       "rank": 2,
+       "team": {
+        "name": "北海道教育大学旭川校",
+        "short": "旭教大"
+       },
+       "played": 9,
+       "won": 7,
+       "drawn": 1,
+       "lost": 1,
+       "goalsFor": 29,
+       "goalsAgainst": 15,
+       "goalDiff": 14,
+       "points": 22,
+       "note": ""
+      },
+      {
+       "rank": 3,
+       "team": {
+        "name": "札幌医科大学",
+        "short": "札医大"
+       },
+       "played": 9,
+       "won": 6,
+       "drawn": 0,
+       "lost": 3,
+       "goalsFor": 31,
+       "goalsAgainst": 21,
+       "goalDiff": 10,
+       "points": 18,
+       "note": ""
+      },
+      {
+       "rank": 4,
+       "team": {
+        "name": "小樽商科大学",
+        "short": "樽商大"
+       },
+       "played": 9,
+       "won": 5,
+       "drawn": 0,
+       "lost": 4,
+       "goalsFor": 23,
+       "goalsAgainst": 19,
+       "goalDiff": 4,
+       "points": 15,
+       "note": ""
+      },
+      {
+       "rank": 5,
+       "team": {
+        "name": "札幌大谷大学",
+        "short": "大谷大"
+       },
+       "played": 9,
+       "won": 5,
+       "drawn": 0,
+       "lost": 4,
+       "goalsFor": 23,
+       "goalsAgainst": 21,
+       "goalDiff": 2,
+       "points": 15,
+       "note": ""
+      },
+      {
+       "rank": 6,
+       "team": {
+        "name": "北星学園大学",
+        "short": "北星大"
+       },
+       "played": 9,
+       "won": 4,
+       "drawn": 1,
+       "lost": 4,
+       "goalsFor": 21,
+       "goalsAgainst": 21,
+       "goalDiff": 0,
+       "points": 11,
+       "note": "勝点2没収（マッチミーティング遅刻・10人で試合）"
+      },
+      {
+       "rank": 7,
+       "team": {
+        "name": "北海道科学大学",
+        "short": "科学大"
+       },
+       "played": 9,
+       "won": 3,
+       "drawn": 1,
+       "lost": 5,
+       "goalsFor": 16,
+       "goalsAgainst": 22,
+       "goalDiff": -6,
+       "points": 10,
+       "note": ""
+      },
+      {
+       "rank": 8,
+       "team": {
+        "name": "北海道教育大学函館校",
+        "short": "函教大"
+       },
+       "played": 9,
+       "won": 1,
+       "drawn": 2,
+       "lost": 6,
+       "goalsFor": 10,
+       "goalsAgainst": 20,
+       "goalDiff": -10,
+       "points": 5,
+       "note": ""
+      },
+      {
+       "rank": 9,
+       "team": {
+        "name": "北海道教育大学札幌校",
+        "short": "札教大"
+       },
+       "played": 9,
+       "won": 2,
+       "drawn": 1,
+       "lost": 6,
+       "goalsFor": 19,
+       "goalsAgainst": 24,
+       "goalDiff": -5,
+       "points": 4,
+       "note": "マッチNo217の不戦敗に加え勝点3没収"
+      },
+      {
+       "rank": 10,
+       "team": {
+        "name": "北海道大学医学部",
+        "short": "北大医"
+       },
+       "played": 9,
+       "won": 1,
+       "drawn": 0,
+       "lost": 8,
+       "goalsFor": 6,
+       "goalsAgainst": 27,
+       "goalDiff": -21,
+       "points": 3,
+       "note": ""
+      }
+     ]
+    }
+   ],
+   "notes": [
+    "10チームによる1回戦総当たり（各9試合）。",
+    "マッチNo217「札教大－北大医」は北海道教育大学札幌校の不戦敗とし、さらに北海道教育大学札幌校は勝点3を没収された。",
+    "北星学園大学はマッチNo214のマッチミーティングに遅刻し、マッチNo238を10人で試合したため、それぞれ勝点1（計2）を没収された。"
+   ],
+   "scorers": [
+    {
+     "rank": 1,
+     "name": "土田 拓",
+     "team": "札幌医科大学",
+     "count": 20
+    },
+    {
+     "rank": 2,
+     "name": "佐々木 琉玖",
+     "team": "札幌大谷大学",
+     "count": 12
+    },
+    {
+     "rank": 3,
+     "name": "深田 志之輔",
+     "team": "北海道教育大学札幌校",
+     "count": 9
+    },
+    {
+     "rank": 3,
+     "name": "田村 捷真",
+     "team": "札幌国際大学",
+     "count": 9
+    },
+    {
+     "rank": 5,
+     "name": "佐藤 有統",
+     "team": "小樽商科大学",
+     "count": 8
+    },
+    {
+     "rank": 6,
+     "name": "小沼 蓮",
+     "team": "北海道科学大学",
+     "count": 7
+    },
+    {
+     "rank": 6,
+     "name": "久保 佑太",
+     "team": "北星学園大学",
+     "count": 7
+    },
+    {
+     "rank": 8,
+     "name": "西川 温輝",
+     "team": "北海道教育大学旭川校",
+     "count": 5
+    },
+    {
+     "rank": 9,
+     "name": "堀部 舟雪",
+     "team": "小樽商科大学",
+     "count": 4
+    },
+    {
+     "rank": 9,
+     "name": "大泉 椋那",
+     "team": "北星学園大学",
+     "count": 4
+    },
+    {
+     "rank": 9,
+     "name": "猪股 壮大",
+     "team": "北海道教育大学旭川校",
+     "count": 4
+    },
+    {
+     "rank": 9,
+     "name": "林 千太郎",
+     "team": "札幌医科大学",
+     "count": 4
+    }
+   ],
+   "scorersAsOf": "2023-10-02"
+  },
+  {
+   "id": "2023-L3",
+   "name": "2023年度 第42回北海道学生サッカーリーグ 3部",
+   "short": "3部",
+   "format": "リーグ",
+   "finished": true,
+   "asOf": "2023-10-12",
+   "source": "past",
+   "champion": {
+    "name": "室蘭工業大学",
+    "short": "室工大"
+   },
+   "standings": [
+    {
+     "group": "",
+     "table": [
+      {
+       "rank": 1,
+       "team": {
+        "name": "室蘭工業大学",
+        "short": "室工大"
+       },
+       "played": 6,
+       "won": 5,
+       "drawn": 1,
+       "lost": 0,
+       "goalsFor": 29,
+       "goalsAgainst": 3,
+       "goalDiff": 26,
+       "points": 16,
+       "note": ""
+      },
+      {
+       "rank": 2,
+       "team": {
+        "name": "北海道教育大学釧路校",
+        "short": "釧教大"
+       },
+       "played": 6,
+       "won": 5,
+       "drawn": 1,
+       "lost": 0,
+       "goalsFor": 22,
+       "goalsAgainst": 8,
+       "goalDiff": 14,
+       "points": 16,
+       "note": ""
+      },
+      {
+       "rank": 3,
+       "team": {
+        "name": "釧路公立大学",
+        "short": "釧公大"
+       },
+       "played": 6,
+       "won": 4,
+       "drawn": 0,
+       "lost": 2,
+       "goalsFor": 25,
+       "goalsAgainst": 10,
+       "goalDiff": 15,
+       "points": 12,
+       "note": ""
+      },
+      {
+       "rank": 4,
+       "team": {
+        "name": "北海道文教大学",
+        "short": "文教大"
+       },
+       "played": 6,
+       "won": 3,
+       "drawn": 0,
+       "lost": 3,
+       "goalsFor": 19,
+       "goalsAgainst": 19,
+       "goalDiff": 0,
+       "points": 6,
+       "note": "勝点3没収（マッチNo.303 8人で試合）"
+      },
+      {
+       "rank": 5,
+       "team": {
+        "name": "旭川医科大学",
+        "short": "旭医大"
+       },
+       "played": 6,
+       "won": 2,
+       "drawn": 0,
+       "lost": 4,
+       "goalsFor": 18,
+       "goalsAgainst": 21,
+       "goalDiff": -3,
+       "points": 6,
+       "note": ""
+      },
+      {
+       "rank": 6,
+       "team": {
+        "name": "酪農学園大学",
+        "short": "酪農大"
+       },
+       "played": 5,
+       "won": 0,
+       "drawn": 0,
+       "lost": 5,
+       "goalsFor": 10,
+       "goalsAgainst": 33,
+       "goalDiff": -23,
+       "points": 0,
+       "note": ""
+      },
+      {
+       "rank": 7,
+       "team": {
+        "name": "東京農業大学（北海道オホーツク）",
+        "short": "東農大"
+       },
+       "played": 5,
+       "won": 0,
+       "drawn": 0,
+       "lost": 5,
+       "goalsFor": 5,
+       "goalsAgainst": 34,
+       "goalDiff": -29,
+       "points": 0,
+       "note": ""
+      }
+     ]
+    }
+   ],
+   "notes": [
+    "9チームで行ったが、北海道医療大学と北見工業大学は複数の試合を辞退したため順位に加えない（表から除いた）。",
+    "1位は室蘭工業大学、2位は北海道教育大学釧路校（勝点16で並び、得失点差で室蘭工業大学が上）。",
+    "マッチNo.303「室工大－文教大」で北海道文教大学が8人で試合をしたため、北海道文教大学から勝点3を没収した。",
+    "その結果、マッチNo.325「酪農大－文教大」は酪農学園大学の不戦敗、マッチNo.327「釧公大－文教大」とマッチNo.330「釧教大－文教大」は北海道文教大学の不戦敗とされた。",
+    "東京農業大学対酪農学園大学の試合は表に結果がない。"
+   ],
+   "scorers": [
+    {
+     "rank": 1,
+     "name": "三田 悠斗",
+     "team": "室蘭工業大学",
+     "count": 11
+    },
+    {
+     "rank": 2,
+     "name": "藤澤 直音",
+     "team": "北海道文教大学",
+     "count": 10
+    },
+    {
+     "rank": 3,
+     "name": "宮本 怜於",
+     "team": "室蘭工業大学",
+     "count": 7
+    },
+    {
+     "rank": 4,
+     "name": "工藤 大河",
+     "team": "北海道教育大学釧路校",
+     "count": 5
+    },
+    {
+     "rank": 4,
+     "name": "綿貫 友哉",
+     "team": "旭川医科大学",
+     "count": 5
+    },
+    {
+     "rank": 4,
+     "name": "三木 光貴",
+     "team": "旭川医科大学",
+     "count": 5
+    },
+    {
+     "rank": 4,
+     "name": "熊谷 壮馬",
+     "team": "室蘭工業大学",
+     "count": 5
+    },
+    {
+     "rank": 8,
+     "name": "加藤 匠真",
+     "team": "北海道文教大学",
+     "count": 4
+    },
+    {
+     "rank": 8,
+     "name": "米島 幸汰",
+     "team": "室蘭工業大学",
+     "count": 4
+    },
+    {
+     "rank": 8,
+     "name": "高田 賢太",
+     "team": "室蘭工業大学",
+     "count": 4
+    },
+    {
+     "rank": 8,
+     "name": "渡辺 永遠",
+     "team": "酪農学園大学",
+     "count": 4
+    },
+    {
+     "rank": 8,
+     "name": "真籠 征那",
+     "team": "釧路公立大学",
+     "count": 4
+    }
+   ],
+   "scorersAsOf": "2023-09-25",
+   "scorersNote": "2023年9月25日現在の得点者一覧（星取表は10月12日現在）。順位は得点数から付けた。"
+  },
+  {
+   "id": "2023-IL",
+   "name": "2023年度 インディペンデンスリーグ北海道大会",
+   "short": "Iリーグ",
+   "format": "リーグ",
+   "finished": true,
+   "asOf": "",
+   "source": "past",
+   "champion": {
+    "name": "札幌大学",
+    "short": "札幌大"
+   },
+   "standings": [
+    {
+     "group": "予選リーグ グループ1",
+     "table": [
+      {
+       "rank": 1,
+       "team": {
+        "name": "札幌大学",
+        "short": "札幌大"
+       },
+       "played": 2,
+       "won": 2,
+       "drawn": 0,
+       "lost": 0,
+       "goalsFor": 4,
+       "goalsAgainst": 0,
+       "goalDiff": 4,
+       "points": 6,
+       "note": ""
+      },
+      {
+       "rank": 2,
+       "team": {
+        "name": "北海道教育大学岩見沢校",
+        "short": "岩教大"
+       },
+       "played": 2,
+       "won": 1,
+       "drawn": 0,
+       "lost": 1,
+       "goalsFor": 4,
+       "goalsAgainst": 1,
+       "goalDiff": 3,
+       "points": 3,
+       "note": ""
+      },
+      {
+       "rank": 3,
+       "team": {
+        "name": "星槎道都大学",
+        "short": "星槎大"
+       },
+       "played": 2,
+       "won": 0,
+       "drawn": 0,
+       "lost": 2,
+       "goalsFor": 0,
+       "goalsAgainst": 7,
+       "goalDiff": -7,
+       "points": 0,
+       "note": ""
+      }
+     ]
+    },
+    {
+     "group": "予選リーグ グループ2",
+     "table": [
+      {
+       "rank": 1,
+       "team": {
+        "name": "東海大学札幌校舎",
+        "short": "東海大"
+       },
+       "played": 2,
+       "won": 2,
+       "drawn": 0,
+       "lost": 0,
+       "goalsFor": 8,
+       "goalsAgainst": 1,
+       "goalDiff": 7,
+       "points": 6,
+       "note": ""
+      },
+      {
+       "rank": 2,
+       "team": {
+        "name": "北海道大学",
+        "short": "北大"
+       },
+       "played": 2,
+       "won": 1,
+       "drawn": 0,
+       "lost": 1,
+       "goalsFor": 2,
+       "goalsAgainst": 2,
+       "goalDiff": 0,
+       "points": 3,
+       "note": ""
+      },
+      {
+       "rank": 3,
+       "team": {
+        "name": "北翔大学",
+        "short": "北翔大"
+       },
+       "played": 2,
+       "won": 0,
+       "drawn": 0,
+       "lost": 2,
+       "goalsFor": 1,
+       "goalsAgainst": 8,
+       "goalDiff": -7,
+       "points": 0,
+       "note": ""
+      }
+     ]
+    }
+   ],
+   "matches": [
+    {
+     "round": "準決勝",
+     "group": "",
+     "date": "",
+     "home": {
+      "name": "札幌大学",
+      "short": "札幌大"
+     },
+     "away": {
+      "name": "北海道大学",
+      "short": "北大"
+     },
+     "score": "6-0",
+     "pk": "",
+     "winner": "home"
+    },
+    {
+     "round": "準決勝",
+     "group": "",
+     "date": "",
+     "home": {
+      "name": "東海大学札幌校舎",
+      "short": "東海大"
+     },
+     "away": {
+      "name": "北海道教育大学岩見沢校",
+      "short": "岩教大"
+     },
+     "score": "2-1",
+     "pk": "",
+     "winner": "home"
+    },
+    {
+     "round": "決勝",
+     "group": "",
+     "date": "",
+     "home": {
+      "name": "札幌大学",
+      "short": "札幌大"
+     },
+     "away": {
+      "name": "東海大学札幌校舎",
+      "short": "東海大"
+     },
+     "score": "4-0",
+     "pk": "",
+     "winner": "home"
+    }
+   ],
+   "scorers": [
+    {
+     "rank": 1,
+     "name": "中川 希星",
+     "team": "札幌大学",
+     "count": 4
+    },
+    {
+     "rank": 2,
+     "name": "藤原 徳大",
+     "team": "北海道教育大学岩見沢校",
+     "count": 3
+    },
+    {
+     "rank": 3,
+     "name": "郷家 太貴",
+     "team": "札幌大学",
+     "count": 2
+    },
+    {
+     "rank": 3,
+     "name": "西田 将也",
+     "team": "札幌大学",
+     "count": 2
+    },
+    {
+     "rank": 5,
+     "name": "船川 充希",
+     "team": "札幌大学",
+     "count": 1
+    },
+    {
+     "rank": 5,
+     "name": "吉見 優海",
+     "team": "札幌大学",
+     "count": 1
+    },
+    {
+     "rank": 5,
+     "name": "秋谷 虎太郎",
+     "team": "札幌大学",
+     "count": 1
+    },
+    {
+     "rank": 5,
+     "name": "鬼倉 洋人",
+     "team": "札幌大学",
+     "count": 1
+    },
+    {
+     "rank": 5,
+     "name": "笹波 太陽",
+     "team": "札幌大学",
+     "count": 1
+    },
+    {
+     "rank": 5,
+     "name": "柘植 瑛人",
+     "team": "札幌大学",
+     "count": 1
+    },
+    {
+     "rank": 5,
+     "name": "木下 壱紗",
+     "team": "東海大学札幌校舎",
+     "count": 1
+    },
+    {
+     "rank": 5,
+     "name": "小林 一心",
+     "team": "東海大学札幌校舎",
+     "count": 1
+    },
+    {
+     "rank": 5,
+     "name": "東峰 太陽",
+     "team": "東海大学札幌校舎",
+     "count": 1
+    },
+    {
+     "rank": 5,
+     "name": "猪股 智哉",
+     "team": "東海大学札幌校舎",
+     "count": 1
+    },
+    {
+     "rank": 5,
+     "name": "古川 竜成",
+     "team": "東海大学札幌校舎",
+     "count": 1
+    },
+    {
+     "rank": 5,
+     "name": "豊永 心",
+     "team": "東海大学札幌校舎",
+     "count": 1
+    },
+    {
+     "rank": 5,
+     "name": "西沢 勇輝",
+     "team": "東海大学札幌校舎",
+     "count": 1
+    },
+    {
+     "rank": 5,
+     "name": "山内 颯斗",
+     "team": "東海大学札幌校舎",
+     "count": 1
+    },
+    {
+     "rank": 5,
+     "name": "菅野 颯",
+     "team": "東海大学札幌校舎",
+     "count": 1
+    },
+    {
+     "rank": 5,
+     "name": "野呂 奏偉",
+     "team": "北翔大学",
+     "count": 1
+    },
+    {
+     "rank": 5,
+     "name": "菅原 彬人",
+     "team": "北海道教育大学岩見沢校",
+     "count": 1
+    },
+    {
+     "rank": 5,
+     "name": "久家 悠輔",
+     "team": "北海道教育大学岩見沢校",
+     "count": 1
+    },
+    {
+     "rank": 5,
+     "name": "和久 友翔",
+     "team": "北海道教育大学岩見沢校",
+     "count": 1
+    },
+    {
+     "rank": 5,
+     "name": "吉田 光希",
+     "team": "北海道大学",
+     "count": 1
+    },
+    {
+     "rank": 5,
+     "name": "西方 詩竜",
+     "team": "北海道大学",
+     "count": 1
+    }
+   ],
+   "scorersAsOf": "2023-11-06",
+   "notes": [
+    "2023年度 第15回大会。3チームずつ2グループの予選リーグ（総当たり）を行い、各グループ上位2チームが決勝トーナメントに進出。",
+    "決勝トーナメント：準決勝 札幌大学 6-0 北海道大学、東海大学札幌校舎 2-1 北海道教育大学岩見沢校。決勝 札幌大学 4-0 東海大学札幌校舎で札幌大学が優勝。",
+    "全国大会の結果は資料にない。"
+   ]
+  },
+  {
+   "id": "2023-PM",
+   "name": "2023年度 総理大臣杯 全日本大学サッカートーナメント北海道大会",
+   "short": "総理大臣杯",
+   "format": "トーナメント",
+   "finished": true,
+   "asOf": "2023-07-23",
+   "source": "past",
+   "champion": {
+    "name": "北海道教育大学岩見沢校",
+    "short": "岩教大"
+   },
+   "matches": [
+    {
+     "round": "1回戦",
+     "group": "",
+     "date": "2023-07-01",
+     "home": {
+      "name": "北海道文教大学",
+      "short": "文教大"
+     },
+     "away": {
+      "name": "東京農業大学",
+      "short": "東農大"
+     },
+     "score": "3-2",
+     "pk": "",
+     "winner": "home"
+    },
+    {
+     "round": "1回戦",
+     "group": "",
+     "date": "",
+     "home": {
+      "name": "札幌大谷大学",
+      "short": "大谷大"
+     },
+     "away": {
+      "name": "北工大",
+      "short": "北工大"
+     },
+     "score": "不戦勝",
+     "pk": "",
+     "winner": "home"
+    },
+    {
+     "round": "1回戦",
+     "group": "",
+     "date": "2023-07-02",
+     "home": {
+      "name": "小樽商科大学",
+      "short": "樽商大"
+     },
+     "away": {
+      "name": "釧路公立大学",
+      "short": "釧公大"
+     },
+     "score": "2-1",
+     "pk": "",
+     "winner": "home"
+    },
+    {
+     "round": "1回戦",
+     "group": "",
+     "date": "2023-07-01",
+     "home": {
+      "name": "北海道教育大学札幌校",
+      "short": "札教大"
+     },
+     "away": {
+      "name": "旭川医科大学",
+      "short": "旭医大"
+     },
+     "score": "2-0",
+     "pk": "",
+     "winner": "home"
+    },
+    {
+     "round": "1回戦",
+     "group": "",
+     "date": "2023-07-01",
+     "home": {
+      "name": "北星学園大学",
+      "short": "北星大"
+     },
+     "away": {
+      "name": "室蘭工業大学",
+      "short": "室工大"
+     },
+     "score": "3-0",
+     "pk": "",
+     "winner": "home"
+    },
+    {
+     "round": "1回戦",
+     "group": "",
+     "date": "2023-07-01",
+     "home": {
+      "name": "北海道教育大学旭川校",
+      "short": "旭教大"
+     },
+     "away": {
+      "name": "北海道大学医学部",
+      "short": "北大医"
+     },
+     "score": "3-1",
+     "pk": "",
+     "winner": "home"
+    },
+    {
+     "round": "1回戦",
+     "group": "",
+     "date": "2023-07-01",
+     "home": {
+      "name": "札幌国際大学",
+      "short": "国際大"
+     },
+     "away": {
+      "name": "札幌医科大学",
+      "short": "札医大"
+     },
+     "score": "5-1",
+     "pk": "",
+     "winner": "home"
+    },
+    {
+     "round": "1回戦",
+     "group": "",
+     "date": "2023-07-02",
+     "home": {
+      "name": "北海道教育大学釧路校",
+      "short": "釧教大"
+     },
+     "away": {
+      "name": "北海道科学大学",
+      "short": "科学大"
+     },
+     "score": "0-2",
+     "pk": "",
+     "winner": "away"
+    },
+    {
+     "round": "2回戦",
+     "group": "",
+     "date": "2023-07-08",
+     "home": {
+      "name": "北海道教育大学岩見沢校",
+      "short": "岩教大"
+     },
+     "away": {
+      "name": "北海道文教大学",
+      "short": "文教大"
+     },
+     "score": "28-0",
+     "pk": "",
+     "winner": "home"
+    },
+    {
+     "round": "2回戦",
+     "group": "",
+     "date": "2023-07-08",
+     "home": {
+      "name": "札幌大谷大学",
+      "short": "大谷大"
+     },
+     "away": {
+      "name": "北海道教育大学函館校",
+      "short": "函教大"
+     },
+     "score": "4-3",
+     "pk": "",
+     "winner": "home"
+    },
+    {
+     "round": "2回戦",
+     "group": "",
+     "date": "2023-07-08",
+     "home": {
+      "name": "北海学園大学",
+      "short": "学園大"
+     },
+     "away": {
+      "name": "小樽商科大学",
+      "short": "樽商大"
+     },
+     "score": "6-2",
+     "pk": "",
+     "winner": "home"
+    },
+    {
+     "round": "2回戦",
+     "group": "",
+     "date": "2023-07-08",
+     "home": {
+      "name": "北海道教育大学札幌校",
+      "short": "札教大"
+     },
+     "away": {
+      "name": "東海大学札幌校舎",
+      "short": "東海大"
+     },
+     "score": "2-8",
+     "pk": "",
+     "winner": "away"
+    },
+    {
+     "round": "2回戦",
+     "group": "",
+     "date": "2023-07-08",
+     "home": {
+      "name": "札幌大学",
+      "short": "札幌大"
+     },
+     "away": {
+      "name": "北星学園大学",
+      "short": "北星大"
+     },
+     "score": "7-0",
+     "pk": "",
+     "winner": "home"
+    },
+    {
+     "round": "2回戦",
+     "group": "",
+     "date": "",
+     "home": {
+      "name": "北海道教育大学旭川校",
+      "short": "旭教大"
+     },
+     "away": {
+      "name": "北海道大学",
+      "short": "北大"
+     },
+     "score": "不戦勝",
+     "pk": "",
+     "winner": "home"
+    },
+    {
+     "round": "2回戦",
+     "group": "",
+     "date": "2023-07-08",
+     "home": {
+      "name": "星槎道都大学",
+      "short": "星槎大"
+     },
+     "away": {
+      "name": "札幌国際大学",
+      "short": "国際大"
+     },
+     "score": "1-3",
+     "pk": "",
+     "winner": "away"
+    },
+    {
+     "round": "2回戦",
+     "group": "",
+     "date": "2023-07-08",
+     "home": {
+      "name": "北海道科学大学",
+      "short": "科学大"
+     },
+     "away": {
+      "name": "北翔大学",
+      "short": "北翔大"
+     },
+     "score": "0-6",
+     "pk": "",
+     "winner": "away"
+    },
+    {
+     "round": "準々決勝",
+     "group": "",
+     "date": "2023-07-09",
+     "home": {
+      "name": "北海道教育大学岩見沢校",
+      "short": "岩教大"
+     },
+     "away": {
+      "name": "札幌大谷大学",
+      "short": "大谷大"
+     },
+     "score": "4-0",
+     "pk": "",
+     "winner": "home"
+    },
+    {
+     "round": "準々決勝",
+     "group": "",
+     "date": "2023-07-09",
+     "home": {
+      "name": "北海学園大学",
+      "short": "学園大"
+     },
+     "away": {
+      "name": "東海大学札幌校舎",
+      "short": "東海大"
+     },
+     "score": "0-1",
+     "pk": "",
+     "winner": "away"
+    },
+    {
+     "round": "準々決勝",
+     "group": "",
+     "date": "2023-07-09",
+     "home": {
+      "name": "札幌大学",
+      "short": "札幌大"
+     },
+     "away": {
+      "name": "北海道教育大学旭川校",
+      "short": "旭教大"
+     },
+     "score": "11-0",
+     "pk": "",
+     "winner": "home"
+    },
+    {
+     "round": "準々決勝",
+     "group": "",
+     "date": "2023-07-09",
+     "home": {
+      "name": "札幌国際大学",
+      "short": "国際大"
+     },
+     "away": {
+      "name": "北翔大学",
+      "short": "北翔大"
+     },
+     "score": "0-5",
+     "pk": "",
+     "winner": "away"
+    },
+    {
+     "round": "準決勝",
+     "group": "",
+     "date": "2023-07-16",
+     "home": {
+      "name": "北海道教育大学岩見沢校",
+      "short": "岩教大"
+     },
+     "away": {
+      "name": "東海大学札幌校舎",
+      "short": "東海大"
+     },
+     "score": "3-0",
+     "pk": "",
+     "winner": "home"
+    },
+    {
+     "round": "準決勝",
+     "group": "",
+     "date": "2023-07-16",
+     "home": {
+      "name": "札幌大学",
+      "short": "札幌大"
+     },
+     "away": {
+      "name": "北翔大学",
+      "short": "北翔大"
+     },
+     "score": "1-0",
+     "pk": "",
+     "winner": "home"
+    },
+    {
+     "round": "決勝",
+     "group": "",
+     "date": "2023-07-23",
+     "home": {
+      "name": "北海道教育大学岩見沢校",
+      "short": "岩教大"
+     },
+     "away": {
+      "name": "札幌大学",
+      "short": "札幌大"
+     },
+     "score": "1-1",
+     "pk": "5-4",
+     "winner": "home"
+    }
+   ],
+   "awards": [
+    {
+     "award": "最優秀選手賞",
+     "list": [
+      {
+       "pos": "DF",
+       "name": "田中 光太",
+       "no": "7",
+       "team": "北海道教育大学岩見沢校"
+      }
+     ]
+    },
+    {
+     "award": "最優秀GK",
+     "list": [
+      {
+       "pos": "GK",
+       "name": "伊藤 誉将",
+       "no": "21",
+       "team": "北海道教育大学岩見沢校"
+      }
+     ]
+    },
+    {
+     "award": "最優秀DF",
+     "list": [
+      {
+       "pos": "DF",
+       "name": "田中 光太",
+       "no": "7",
+       "team": "北海道教育大学岩見沢校"
+      }
+     ]
+    },
+    {
+     "award": "最優秀MF",
+     "list": [
+      {
+       "pos": "MF",
+       "name": "井波 勇太",
+       "no": "7",
+       "team": "札幌大学"
+      }
+     ]
+    },
+    {
+     "award": "最優秀FW",
+     "list": [
+      {
+       "pos": "FW",
+       "name": "小笠原 大将",
+       "no": "10",
+       "team": "札幌大学"
+      }
+     ]
+    }
+   ],
+   "notes": [
+    "第47回大会。優勝は北海道教育大学岩見沢校（決勝は1-1、PK5-4）、準優勝は札幌大学。",
+    "北工大（1回戦）と北海道大学（2回戦）は表で斜線が引かれており、不戦勝として記録（大谷大、旭教大が勝ち上がり）。",
+    "3回戦（7月9日）を準々決勝として記録。",
+    "表に全国大会出場校と全国大会の結果の記載はない。"
+   ]
   }
  ]
 }
