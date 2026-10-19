@@ -6,7 +6,7 @@
  *    color … 強調色。空ならチーム紹介の「チームカラー」
  *    hero  … トップ画像のURL。空ならチーム紹介の「チーム写真」
  *    lead  … トップの一言（キャッチコピー）。空ならチーム紹介の紹介文の最初の一文
- *  ページ：HOME・NEWS・MATCH（日程・結果・順位表）・TEAM（選手・スタッフ・個人成績）・ABOUT・GALLERY・CONTACT
+ *  ページ：HOME・NEWS・BLOG（選手ブログ）・MATCH（日程・結果・順位表）・TEAM（選手・スタッフ・個人成績）・ABOUT・GALLERY・CONTACT
  *  デザインは body[data-tpl]（a・b・c）で切り替え。ページ構成とデータは共通（club.css）
  *  データ：公式記録（results/data/*.json）と、管理画面の名鑑・ニュース（*-roster.json）。新しい入力は作らない
  */
@@ -41,7 +41,7 @@
   const mine = t => t && typeof t === 'object' && t.univ === CFG.univ;
   const isDone = m => m.status === 'finished' && m.score && m.score.home != null && m.score.home !== '' && m.score.away != null && m.score.away !== '';
 
-  const S = { comps: [], data: {}, roster: {}, teams: [], profile: null, matches: [], players: [], staff: [], news: [], stats: [], gallery: [], sponsors: [], ext: [] };
+  const S = { comps: [], data: {}, roster: {}, teams: [], profile: null, matches: [], players: [], staff: [], news: [], blog: [], stats: [], gallery: [], sponsors: [], ext: [] };
 
   /* ───────── 読み込み ───────── */
   async function getJSON(f) { const r = await fetch(CFG.data + f, { cache: 'no-store' }); if (!r.ok) throw Error('HTTP ' + r.status); return r.json(); }
@@ -61,7 +61,7 @@
     }
     S.teams.forEach(x => { x.label = shortComp(x.comp.name) + (S.teams.filter(y => y.comp.id === x.comp.id).length > 1 ? '（' + tname(x.team) + '）' : ''); });
     // チーム紹介・名鑑・ニュース
-    const newsSeen = new Set(), pmap = new Map();
+    const newsSeen = new Set(), blogSeen = new Set(), pmap = new Map();
     for (const comp of S.comps) {
       for (const t of (S.roster[comp.id]?.teams || []).filter(t => mine(t.team))) {
         if (!S.profile && t.profile) S.profile = t.profile;
@@ -70,6 +70,7 @@
         if (!S.sponsors.length && (t.sponsors || []).length) S.sponsors = t.sponsors;
         if (!S.ext.length && (t.ext || []).length) S.ext = t.ext;
         for (const n of t.news || []) { const k = n.id || (n.date + '|' + n.title); if (!newsSeen.has(k)) { newsSeen.add(k); S.news.push(n); } }
+        for (const b of t.blog || []) { const k = b.id || (b.date + '|' + b.title); if (!blogSeen.has(k)) { blogSeen.add(k); S.blog.push(b); } }
         for (const p of t.players || []) {
           if (!pmap.has(p.id)) pmap.set(p.id, { ...p, teams: [] });
           const q = pmap.get(p.id);
@@ -80,6 +81,7 @@
     }
     S.players = [...pmap.values()];
     S.news.sort((a, b) => String(b.date).localeCompare(String(a.date)));
+    S.blog.sort((a, b) => String(b.date).localeCompare(String(a.date)));
     for (const x of S.teams) {
       for (const m of S.data[x.comp.id].matches || []) {
         if (m.placeholder) continue;
@@ -166,6 +168,8 @@
       '<div class="card" style="margin-top:12px">' + S.matches.filter(x => isDone(x.m)).slice(-3).reverse().map(matchRow).join('') + '</div></div></div>', '<a href="#matches">試合一覧 ›</a>');
     // LATEST NEWS
     html += band('alt', 'LATEST NEWS', '最新ニュース', S.news.length ? '<div class="ng compact">' + S.news.slice(0, 3).map(newsCard).join('') + '</div>' : emptyBox('ニュースはまだありません'), S.news.length ? '<a href="#news">ニュース一覧 ›</a>' : '');
+    // PLAYERS BLOG
+    if (S.blog.length) html += band('', 'PLAYERS BLOG', '選手ブログ', '<div class="ng compact">' + S.blog.slice(0, 3).map(blogCard).join('') + '</div>', '<a href="#blog">ブログ一覧 ›</a>');
     // PLAYERS（注目選手）
     const fp = featured(8);
     if (fp.length) html += band('dark', 'OUR PLAYERS', '注目選手', '<div class="pl">' + fp.map(card).join('') + '</div>', '<a href="#players">選手一覧 ›</a>');
@@ -223,6 +227,47 @@
       '<form class="search" id="nq"><input type="search" placeholder="キーワードでさがす" value="' + esc(NQ) + '" aria-label="ニュースをさがす"><button class="btn" type="submit">検索</button></form>' +
       (list.length ? '<div class="ng">' + list.slice((NP - 1) * per, NP * per).map(newsCard).join('') + '</div>' : emptyBox(S.news.length ? '見つかりませんでした' : 'ニュースはまだありません（管理画面の「チームニュース」に入れると表示されます）')) +
       (pages > 1 ? '<div class="pager">' + Array.from({ length: pages }, (_, i) => '<button data-np="' + (i + 1) + '" aria-current="' + (i + 1 === NP) + '">' + (i + 1) + '</button>').join('') + '</div>' : '') + '</div></section>';
+  }
+
+  /* ───────── BLOG（選手ブログ） ───────── */
+  let BA = 'ALL', BP = 1;
+  const nmKey = s => String(s || '').normalize('NFKC').replace(/\s+/g, '');
+  /* 書いた人が名鑑の選手なら、その選手（写真・背番号を出す） */
+  const blogPlayer = b => { const k = nmKey(b.author); return k ? S.players.find(p => nmKey(p.name) === k) : null; };
+  function avatar(p, name) {
+    const ph = p && img(p.photo, 200);
+    return '<span class="av">' + (ph ? '<img src="' + esc(ph) + '" alt="" loading="lazy" decoding="async" onerror="this.remove()">' : esc([...String(name || '?')].slice(0, 1).join(''))) + '</span>';
+  }
+  const excerpt = t => { const x = String(t || '').replace(/https?:\/\/\S+/g, '').replace(/\s+/g, ' ').trim(); return x.length > 70 ? x.slice(0, 70) + '…' : x; };
+  function blogCard(b) {
+    const p = blogPlayer(b), ph = img(b.photo, 600) || (p && img(p.photo, 600));
+    return '<a class="nc bc" href="#blog/' + encodeURIComponent(b.id || '') + '"><span class="im">' + (ph ? '<img src="' + esc(ph) + '" alt="" loading="lazy" decoding="async" onerror="this.remove()">' : '<span class="en">BLOG</span>') + '</span>' +
+      '<span class="bd"><time>' + esc(String(b.date || '').replace(/-/g, '.')) + '</time><b>' + esc(b.title) + '</b>' + (has(b.body) ? '<span class="ex">' + esc(excerpt(b.body)) + '</span>' : '') +
+      (has(b.author) ? '<span class="au">' + avatar(p, b.author) + '<span>' + (p && has(p.no) ? '<i>' + esc(p.no) + '</i>' : '') + esc(b.author) + '</span></span>' : '') + '</span></a>';
+  }
+  function viewBlog(id) {
+    if (id) {
+      const b = S.blog.find(x => String(x.id) === id);
+      if (b) {
+        const p = blogPlayer(b), ph = img(b.photo, 1400);
+        const more = S.blog.filter(x => x !== b && has(b.author) && nmKey(x.author) === nmKey(b.author)).slice(0, 3);
+        const rel = more.length ? more : S.blog.filter(x => x !== b).slice(0, 3);
+        const who = has(b.author) ? '<' + (p ? 'button type="button" data-pid="' + esc(p.id) + '"' : 'div') + ' class="bauth">' + avatar(p, b.author) + '<span><small>WRITTEN BY</small><b>' + (p && has(p.no) ? '<i>' + esc(p.no) + '</i>' : '') + esc(b.author) + '</b>' +
+          (p ? '<em>' + [p.pos, p.grade ? p.grade + '年' : '', p.school || ''].filter(Boolean).map(esc).join('・') + '</em>' : '') + '</span>' + (p ? '<span class="go">選手を見る ›</span>' : '') + '</' + (p ? 'button' : 'div') + '>' : '';
+        return pageTop('BLOG', '選手ブログ') + '<section class="band"><div class="wrap"><article class="art"><div style="font-size:13px;color:var(--sub)"><time>' + esc(fullDate(b.date)) + '</time></div>' +
+          '<h2>' + esc(b.title) + '</h2>' + who + (ph ? '<figure><img src="' + esc(ph) + '" alt="" decoding="async" onerror="this.parentNode.remove()"></figure>' : '') +
+          (has(b.body) ? '<div class="body">' + richText(b.body) + '</div>' : '') + '<br><a class="back" href="#blog">‹ ブログ一覧へ</a></article></div></section>' +
+          (rel.length ? band('alt', more.length ? 'MORE' : 'LATEST', more.length ? esc(b.author) + ' のほかの記事' : '新しい記事', '<div class="ng">' + rel.map(blogCard).join('') + '</div>') : '');
+      }
+    }
+    const authors = [...new Set(S.blog.map(b => String(b.author || '').trim()).filter(Boolean))];
+    if (BA !== 'ALL' && !authors.includes(BA)) BA = 'ALL';
+    const list = S.blog.filter(b => BA === 'ALL' || String(b.author || '').trim() === BA);
+    const per = 9, pages = Math.max(1, Math.ceil(list.length / per)); if (BP > pages) BP = pages;
+    const chips = authors.length > 1 ? '<div class="chips" data-k="ba">' + [['ALL', 'すべて'], ...authors.map(a => [a, a])].map(([k, l]) => '<button aria-pressed="' + (k === BA) + '" data-v="' + esc(k) + '">' + esc(l) + '</button>').join('') + '</div>' : '';
+    return pageTop('BLOG', '選手ブログ') + '<section class="band"><div class="wrap">' + chips +
+      (list.length ? '<div class="ng">' + list.slice((BP - 1) * per, BP * per).map(blogCard).join('') + '</div>' : emptyBox('ブログはまだありません（管理画面の「選手ブログ」に入れると表示されます）')) +
+      (pages > 1 ? '<div class="pager">' + Array.from({ length: pages }, (_, i) => '<button data-bp="' + (i + 1) + '" aria-current="' + (i + 1 === BP) + '">' + (i + 1) + '</button>').join('') + '</div>' : '') + '</div></section>';
   }
 
   /* ───────── MATCH ───────── */
@@ -439,7 +484,7 @@
   }
 
   /* ───────── 画面の切り替え ───────── */
-  const VIEWS = { home: viewHome, news: viewNews, matches: viewMatches, players: viewPlayers, stats: () => { TV = 'stats'; return viewPlayers(); }, club: viewClub, gallery: viewGallery, contact: viewContact };
+  const VIEWS = { home: viewHome, news: viewNews, blog: viewBlog, matches: viewMatches, players: viewPlayers, stats: () => { TV = 'stats'; return viewPlayers(); }, club: viewClub, gallery: viewGallery, contact: viewContact };
   const NAVMAP = { stats: 'players' };
   function route() {
     const h = decodeURIComponent(location.hash.replace(/^#/, '')) || 'home';
@@ -448,7 +493,7 @@
     document.querySelectorAll('.nav a,.bnav a').forEach(a => a.setAttribute('aria-current', a.getAttribute('href') === '#' + cur ? 'page' : 'false'));
     $('hero').hidden = view !== 'home';
     $('main').innerHTML = VIEWS[view](arg);
-    document.title = ({ home: '', news: 'ニュース | ', matches: '試合情報 | ', players: '選手・スタッフ | ', stats: '個人成績 | ', club: 'クラブ紹介 | ', gallery: 'ギャラリー | ', contact: 'お問い合わせ | ' }[view]) + siteName();
+    document.title = ({ home: '', news: 'ニュース | ', blog: '選手ブログ | ', matches: '試合情報 | ', players: '選手・スタッフ | ', stats: '個人成績 | ', club: 'クラブ紹介 | ', gallery: 'ギャラリー | ', contact: 'お問い合わせ | ' }[view]) + siteName();
     reveal();
     embeds();
   }
@@ -464,12 +509,13 @@
     const b = e.target.closest('.chips button');
     if (b) {
       const k = b.parentNode.dataset.k, v = b.dataset.v;
-      if (k === 'pt') PT = v; if (k === 'pp') PP = v; if (k === 'tv') TV = v; if (k === 'mt') MT = v; if (k === 'ms') MS = v; if (k === 'nk') { NK = v; NP = 1; }
+      if (k === 'pt') PT = v; if (k === 'pp') PP = v; if (k === 'tv') TV = v; if (k === 'mt') MT = v; if (k === 'ms') MS = v; if (k === 'nk') { NK = v; NP = 1; } if (k === 'ba') { BA = v; BP = 1; }
       route(); return;
     }
     const s = e.target.closest('th button[data-sort]'); if (s) { SK = s.dataset.sort; route(); return; }
     const pg = e.target.closest('[data-np]'); if (pg) { NP = +pg.dataset.np; route(); window.scrollTo(0, 0); return; }
-    const pc = e.target.closest('.p[data-pid],.st-p[data-pid]'); if (pc) { openPlayer(pc.dataset.pid); return; }
+    const bg = e.target.closest('[data-bp]'); if (bg) { BP = +bg.dataset.bp; route(); window.scrollTo(0, 0); return; }
+    const pc = e.target.closest('.p[data-pid],.st-p[data-pid],.bauth[data-pid]'); if (pc) { openPlayer(pc.dataset.pid); return; }
     const gi = e.target.closest('[data-gi]'); if (gi) { e.preventDefault(); lightbox(+gi.dataset.gi); }
   });
   $('main').addEventListener('submit', e => { if (e.target.id === 'nq') { e.preventDefault(); NQ = e.target.querySelector('input').value.trim(); NP = 1; route(); } });

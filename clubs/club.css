@@ -184,6 +184,21 @@ th button[aria-sort]{color:var(--c-text)}
 .nc .bd{padding:14px 16px 18px}
 .nc time{font-size:12px;color:var(--sub);margin-right:8px;font-family:var(--en);font-weight:700;letter-spacing:.04em;font-size:14px}
 .nc b{display:block;margin-top:6px;font-size:15px;line-height:1.55;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+/* 選手ブログ */
+.bc .ex{display:block;margin-top:6px;font-size:13px;line-height:1.7;color:var(--sub);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.bc .au,.bauth{display:flex;align-items:center;gap:10px;margin-top:12px;font-size:13px;font-weight:700;min-width:0}
+.bc .au>span:last-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bc .au i,.bauth i{font-style:normal;font-family:var(--en);color:var(--c-text);margin-right:6px}
+.av{flex:none;width:32px;height:32px;border-radius:50%;overflow:hidden;display:grid;place-items:center;background:var(--c);color:var(--c-ink);font-size:13px;font-weight:700}
+.av img{width:100%;height:100%;object-fit:cover}
+.bauth{width:100%;margin:0 0 20px;padding:12px 14px;border:1px solid var(--line);border-radius:var(--r);background:var(--card);color:var(--ink);text-align:left;font:inherit}
+button.bauth{cursor:pointer}
+.bauth .av{width:52px;height:52px;font-size:18px}
+.bauth>span:nth-child(2){flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.bauth small{font-family:var(--en);font-size:11px;letter-spacing:.08em;color:var(--sub)}
+.bauth b{font-size:16px}
+.bauth em{font-style:normal;font-size:12px;font-weight:400;color:var(--sub)}
+.bauth .go{flex:none;font-size:12px;color:var(--c-text)}
 .search{display:flex;gap:8px;margin:0 0 14px}
 .search input{flex:1;min-width:0;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:var(--btn-r);padding:10px 14px;font:inherit;min-height:44px}
 .pager{display:flex;gap:8px;justify-content:center;margin-top:20px}
