@@ -696,7 +696,7 @@
    "source": "past",
    "notes": [
     "1部の予選リーグ5位・6位のチームと、2部のチームによる順位決定リーグです。",
-    "勝点は記録表のとおりに載せています。"
+    "勝点は、勝ち・引き分けから計算しています。"
    ],
    "standings": [
     {
@@ -774,22 +774,6 @@
       {
        "rank": 1,
        "team": {
-        "name": "北星学園大学",
-        "short": "北星大"
-       },
-       "played": 6,
-       "won": 4,
-       "drawn": 1,
-       "lost": 1,
-       "goalsFor": 23,
-       "goalsAgainst": 12,
-       "goalDiff": 11,
-       "points": 14,
-       "note": ""
-      },
-      {
-       "rank": 2,
-       "team": {
         "name": "北海道教育大学旭川校",
         "short": "旭教大"
        },
@@ -801,6 +785,22 @@
        "goalsAgainst": 10,
        "goalDiff": 11,
        "points": 14,
+       "note": ""
+      },
+      {
+       "rank": 2,
+       "team": {
+        "name": "北星学園大学",
+        "short": "北星大"
+       },
+       "played": 6,
+       "won": 4,
+       "drawn": 1,
+       "lost": 1,
+       "goalsFor": 23,
+       "goalsAgainst": 12,
+       "goalDiff": 11,
+       "points": 13,
        "note": ""
       },
       {
@@ -853,7 +853,7 @@
        "goalsFor": 28,
        "goalsAgainst": 9,
        "goalDiff": 19,
-       "points": 14,
+       "points": 13,
        "note": ""
       },
       {
@@ -885,7 +885,7 @@
        "goalsFor": 11,
        "goalsAgainst": 20,
        "goalDiff": -9,
-       "points": 6,
+       "points": 7,
        "note": ""
       },
       {
@@ -901,7 +901,7 @@
        "goalsFor": 8,
        "goalsAgainst": 27,
        "goalDiff": -19,
-       "points": 0,
+       "points": 1,
        "note": ""
       }
      ]
