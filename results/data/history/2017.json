@@ -1,0 +1,493 @@
+{
+ "ok": true,
+ "year": "2017",
+ "updatedAt": "2026-10-19T00:00:00+09:00",
+ "competitions": [
+  {
+   "id": "2017-L1",
+   "name": "2017年度 第36回北海道学生サッカーリーグ 1部",
+   "short": "1部",
+   "format": "リーグ",
+   "finished": true,
+   "asOf": "",
+   "champion": {
+    "name": "北海道教育大学岩見沢校",
+    "short": "岩教大"
+   },
+   "standings": [
+    {
+     "group": "",
+     "table": [
+      {
+       "rank": 1,
+       "team": {
+        "name": "北海道教育大学岩見沢校",
+        "short": "岩教大"
+       },
+       "played": 12,
+       "won": 10,
+       "drawn": 1,
+       "lost": 1,
+       "goalsFor": 55,
+       "goalsAgainst": 11,
+       "goalDiff": 44,
+       "points": 31,
+       "note": ""
+      },
+      {
+       "rank": 2,
+       "team": {
+        "name": "札幌大学",
+        "short": "札幌大"
+       },
+       "played": 12,
+       "won": 10,
+       "drawn": 0,
+       "lost": 2,
+       "goalsFor": 51,
+       "goalsAgainst": 14,
+       "goalDiff": 37,
+       "points": 30,
+       "note": ""
+      },
+      {
+       "rank": 3,
+       "team": {
+        "name": "東海大学札幌校舎",
+        "short": "東海大"
+       },
+       "played": 12,
+       "won": 7,
+       "drawn": 2,
+       "lost": 3,
+       "goalsFor": 32,
+       "goalsAgainst": 15,
+       "goalDiff": 17,
+       "points": 23,
+       "note": ""
+      },
+      {
+       "rank": 4,
+       "team": {
+        "name": "道都大学",
+        "short": "道都大"
+       },
+       "played": 12,
+       "won": 4,
+       "drawn": 2,
+       "lost": 6,
+       "goalsFor": 23,
+       "goalsAgainst": 31,
+       "goalDiff": -8,
+       "points": 14,
+       "note": ""
+      },
+      {
+       "rank": 5,
+       "team": {
+        "name": "北海道大学",
+        "short": "北大"
+       },
+       "played": 12,
+       "won": 3,
+       "drawn": 2,
+       "lost": 7,
+       "goalsFor": 22,
+       "goalsAgainst": 42,
+       "goalDiff": -20,
+       "points": 11,
+       "note": ""
+      },
+      {
+       "rank": 6,
+       "team": {
+        "name": "北翔大学",
+        "short": "北翔大"
+       },
+       "played": 12,
+       "won": 3,
+       "drawn": 1,
+       "lost": 8,
+       "goalsFor": 16,
+       "goalsAgainst": 25,
+       "goalDiff": -9,
+       "points": 10,
+       "note": ""
+      },
+      {
+       "rank": 7,
+       "team": {
+        "name": "北海道大学医学部",
+        "short": "北大医学部"
+       },
+       "played": 12,
+       "won": 1,
+       "drawn": 0,
+       "lost": 11,
+       "goalsFor": 4,
+       "goalsAgainst": 65,
+       "goalDiff": -61,
+       "points": 3,
+       "note": ""
+      }
+     ]
+    }
+   ],
+   "notes": [
+    "全国大会（インカレ）：北海道教育大学岩見沢校 0-2 東京国際大学（1回戦）",
+    "北海道大学医学部は、入れ替え戦の結果2部に降格しました。"
+   ],
+   "source": "past",
+   "awards": [
+    {
+     "award": "最優秀選手賞（MVP）",
+     "list": [
+      {
+       "pos": "",
+       "name": "福永 浩哉",
+       "no": "1",
+       "team": "北海道教育大学岩見沢校",
+       "note": "4年"
+      }
+     ]
+    },
+    {
+     "award": "得点王",
+     "list": [
+      {
+       "pos": "",
+       "name": "下田 友也",
+       "no": "41",
+       "team": "北海道教育大学岩見沢校",
+       "note": "1部・14点"
+      },
+      {
+       "pos": "",
+       "name": "新田 裕平",
+       "no": "10",
+       "team": "札幌大学",
+       "note": "1部・14点"
+      },
+      {
+       "pos": "",
+       "name": "有田 将人",
+       "no": "9",
+       "team": "小樽商科大学",
+       "note": "2部・12点"
+      },
+      {
+       "pos": "",
+       "name": "岩館 汰一",
+       "no": "8",
+       "team": "旭川大学",
+       "note": "3部EAST・14点"
+      },
+      {
+       "pos": "",
+       "name": "小林 玲央",
+       "no": "99",
+       "team": "酪農学園大学",
+       "note": "3部WEST・14点"
+      }
+     ]
+    },
+    {
+     "award": "ベストイレブン",
+     "list": [
+      {
+       "pos": "GK",
+       "name": "福永 浩哉",
+       "no": "1",
+       "team": "北海道教育大学岩見沢校",
+       "note": "4年"
+      },
+      {
+       "pos": "",
+       "name": "深井 祐希",
+       "no": "3",
+       "team": "北海道教育大学岩見沢校",
+       "note": "3年"
+      },
+      {
+       "pos": "",
+       "name": "重森 剛司",
+       "no": "8",
+       "team": "北海道教育大学岩見沢校",
+       "note": "4年"
+      },
+      {
+       "pos": "",
+       "name": "見原 一歩",
+       "no": "6",
+       "team": "北海道教育大学岩見沢校",
+       "note": "3年"
+      },
+      {
+       "pos": "",
+       "name": "小笠原 光研",
+       "no": "23",
+       "team": "北海道教育大学岩見沢校",
+       "note": "3年"
+      },
+      {
+       "pos": "",
+       "name": "遠藤 祐馬",
+       "no": "33",
+       "team": "北海道教育大学岩見沢校",
+       "note": "2年"
+      },
+      {
+       "pos": "",
+       "name": "平塚 悠知",
+       "no": "7",
+       "team": "札幌大学",
+       "note": "3年"
+      },
+      {
+       "pos": "",
+       "name": "佐賀 俊之輔",
+       "no": "9",
+       "team": "北海道教育大学岩見沢校",
+       "note": "3年"
+      },
+      {
+       "pos": "",
+       "name": "中本 俊平",
+       "no": "35",
+       "team": "北海道教育大学岩見沢校",
+       "note": "2年"
+      },
+      {
+       "pos": "FW",
+       "name": "下田 友也",
+       "no": "41",
+       "team": "北海道教育大学岩見沢校",
+       "note": "1年"
+      },
+      {
+       "pos": "FW",
+       "name": "新田 裕平",
+       "no": "10",
+       "team": "札幌大学",
+       "note": "3年"
+      }
+     ]
+    },
+    {
+     "award": "最優秀新人賞",
+     "list": [
+      {
+       "pos": "",
+       "name": "下田 友也",
+       "no": "41",
+       "team": "北海道教育大学岩見沢校",
+       "note": ""
+      }
+     ]
+    },
+    {
+     "award": "新人賞",
+     "list": [
+      {
+       "pos": "",
+       "name": "相田 勇樹",
+       "no": "20",
+       "team": "札幌大学",
+       "note": ""
+      },
+      {
+       "pos": "",
+       "name": "川崎 凌",
+       "no": "22",
+       "team": "東海大学札幌校舎",
+       "note": ""
+      },
+      {
+       "pos": "",
+       "name": "石川 タデオ",
+       "no": "33",
+       "team": "星槎道都大学",
+       "note": ""
+      },
+      {
+       "pos": "",
+       "name": "本田 大聖",
+       "no": "46",
+       "team": "北翔大学",
+       "note": ""
+      },
+      {
+       "pos": "",
+       "name": "高橋 恒大",
+       "no": "37",
+       "team": "北翔大学",
+       "note": ""
+      }
+     ]
+    },
+    {
+     "award": "4年間出場",
+     "list": [
+      {
+       "pos": "",
+       "name": "北野 翔平",
+       "no": "9",
+       "team": "酪農学園大学",
+       "note": ""
+      },
+      {
+       "pos": "",
+       "name": "中山 僚平",
+       "no": "29",
+       "team": "釧路公立大学",
+       "note": ""
+      },
+      {
+       "pos": "",
+       "name": "上杉 賢也",
+       "no": "23",
+       "team": "釧路公立大学",
+       "note": ""
+      },
+      {
+       "pos": "",
+       "name": "木内 怜平",
+       "no": "3",
+       "team": "旭川医科大学",
+       "note": ""
+      }
+     ]
+    },
+    {
+     "award": "フェアプレー賞",
+     "list": [
+      {
+       "pos": "",
+       "name": "北海道大学医学部",
+       "no": "",
+       "team": "",
+       "note": "1部・5P"
+      },
+      {
+       "pos": "",
+       "name": "札幌医科大学",
+       "no": "",
+       "team": "",
+       "note": "2部・3P"
+      },
+      {
+       "pos": "",
+       "name": "帯広畜産大学",
+       "no": "",
+       "team": "",
+       "note": "3部EAST・1P"
+      },
+      {
+       "pos": "",
+       "name": "北海道科学大学",
+       "no": "",
+       "team": "",
+       "note": "3部WEST・1P"
+      }
+     ]
+    },
+    {
+     "award": "ベスト当番校",
+     "list": [
+      {
+       "pos": "",
+       "name": "北海道大学",
+       "no": "",
+       "team": "",
+       "note": "1部"
+      },
+      {
+       "pos": "",
+       "name": "北海道教育大学旭川校",
+       "no": "",
+       "team": "",
+       "note": "2部"
+      },
+      {
+       "pos": "",
+       "name": "苫小牧駒澤大学",
+       "no": "",
+       "team": "",
+       "note": "3部WEST"
+      }
+     ]
+    },
+    {
+     "award": "優秀主務",
+     "list": [
+      {
+       "pos": "",
+       "name": "中島 真由",
+       "no": "",
+       "team": "北海道大学",
+       "note": "1部"
+      },
+      {
+       "pos": "",
+       "name": "村田 優樹",
+       "no": "",
+       "team": "北海道大学医学部",
+       "note": "1部"
+      },
+      {
+       "pos": "",
+       "name": "竹澤 明里",
+       "no": "",
+       "team": "北星学園大学",
+       "note": "2部"
+      },
+      {
+       "pos": "",
+       "name": "大黒 敦矢",
+       "no": "",
+       "team": "札幌医科大学",
+       "note": "2部"
+      },
+      {
+       "pos": "",
+       "name": "山口 紗弓",
+       "no": "",
+       "team": "帯広畜産大学",
+       "note": "3部EAST"
+      },
+      {
+       "pos": "",
+       "name": "高橋 健",
+       "no": "",
+       "team": "札幌学院大学",
+       "note": "3部WEST"
+      }
+     ]
+    }
+   ],
+   "playoffs": [
+    {
+     "title": "1部・2部入れ替え戦",
+     "date": "",
+     "venue": "",
+     "matches": [
+      {
+       "home": {
+        "name": "北海道大学医学部",
+        "short": "北大医学部"
+       },
+       "homeNote": "1部7位",
+       "away": {
+        "name": "小樽商科大学",
+        "short": "樽商大"
+       },
+       "awayNote": "2部2位",
+       "score": "0-1",
+       "half": "小樽商科大学が1部に昇格"
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

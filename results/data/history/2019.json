@@ -1,0 +1,389 @@
+{
+ "ok": true,
+ "year": "2019",
+ "updatedAt": "2026-10-19T00:00:00+09:00",
+ "competitions": [
+  {
+   "id": "2019-L1",
+   "name": "2019年度 第38回北海道学生サッカーリーグ 1部",
+   "short": "1部",
+   "format": "リーグ",
+   "finished": true,
+   "asOf": "",
+   "champion": {
+    "name": "北海道教育大学岩見沢校",
+    "short": "岩教大"
+   },
+   "standings": [
+    {
+     "group": "",
+     "table": [
+      {
+       "rank": 1,
+       "team": {
+        "name": "北海道教育大学岩見沢校",
+        "short": "岩教大"
+       },
+       "played": 14,
+       "won": 12,
+       "drawn": 1,
+       "lost": 1,
+       "goalsFor": 53,
+       "goalsAgainst": 10,
+       "goalDiff": 43,
+       "points": 37,
+       "note": ""
+      },
+      {
+       "rank": 2,
+       "team": {
+        "name": "札幌大学",
+        "short": "札幌大"
+       },
+       "played": 14,
+       "won": 12,
+       "drawn": 0,
+       "lost": 2,
+       "goalsFor": 42,
+       "goalsAgainst": 12,
+       "goalDiff": 30,
+       "points": 36,
+       "note": ""
+      },
+      {
+       "rank": 3,
+       "team": {
+        "name": "東海大学札幌校舎",
+        "short": "東海大"
+       },
+       "played": 14,
+       "won": 8,
+       "drawn": 2,
+       "lost": 4,
+       "goalsFor": 32,
+       "goalsAgainst": 19,
+       "goalDiff": 13,
+       "points": 26,
+       "note": ""
+      },
+      {
+       "rank": 4,
+       "team": {
+        "name": "北翔大学",
+        "short": "北翔大"
+       },
+       "played": 14,
+       "won": 6,
+       "drawn": 0,
+       "lost": 8,
+       "goalsFor": 25,
+       "goalsAgainst": 32,
+       "goalDiff": -7,
+       "points": 18,
+       "note": ""
+      },
+      {
+       "rank": 5,
+       "team": {
+        "name": "旭川大学",
+        "short": "旭川大"
+       },
+       "played": 14,
+       "won": 4,
+       "drawn": 3,
+       "lost": 7,
+       "goalsFor": 24,
+       "goalsAgainst": 30,
+       "goalDiff": -6,
+       "points": 15,
+       "note": ""
+      },
+      {
+       "rank": 6,
+       "team": {
+        "name": "星槎道都大学",
+        "short": "星槎大"
+       },
+       "played": 14,
+       "won": 2,
+       "drawn": 4,
+       "lost": 8,
+       "goalsFor": 17,
+       "goalsAgainst": 36,
+       "goalDiff": -19,
+       "points": 10,
+       "note": ""
+      },
+      {
+       "rank": 7,
+       "team": {
+        "name": "北海学園大学",
+        "short": "学園大"
+       },
+       "played": 14,
+       "won": 3,
+       "drawn": 1,
+       "lost": 10,
+       "goalsFor": 14,
+       "goalsAgainst": 52,
+       "goalDiff": -38,
+       "points": 10,
+       "note": ""
+      },
+      {
+       "rank": 8,
+       "team": {
+        "name": "北海道大学",
+        "short": "北大"
+       },
+       "played": 14,
+       "won": 2,
+       "drawn": 3,
+       "lost": 9,
+       "goalsFor": 13,
+       "goalsAgainst": 29,
+       "goalDiff": -16,
+       "points": 9,
+       "note": ""
+      }
+     ]
+    }
+   ],
+   "notes": [],
+   "source": "past",
+   "awards": [
+    {
+     "award": "最優秀選手賞（MVP）",
+     "list": [
+      {
+       "pos": "DF",
+       "name": "泉山 凌馬",
+       "no": "40",
+       "team": "北海道教育大学岩見沢校",
+       "note": ""
+      }
+     ]
+    },
+    {
+     "award": "得点王",
+     "list": [
+      {
+       "pos": "FW",
+       "name": "橋本 恭佑",
+       "no": "25",
+       "team": "北海道教育大学岩見沢校",
+       "note": "1部・13点"
+      },
+      {
+       "pos": "FW",
+       "name": "石川 理久",
+       "no": "9",
+       "team": "北海道教育大学函館校",
+       "note": "2部・18点"
+      },
+      {
+       "pos": "FW",
+       "name": "相馬 舜",
+       "no": "10",
+       "team": "釧路公立大学",
+       "note": "3部・20点"
+      }
+     ]
+    },
+    {
+     "award": "優秀選手賞",
+     "list": [
+      {
+       "pos": "DF",
+       "name": "忠政 慶之",
+       "no": "4",
+       "team": "北海道教育大学岩見沢校",
+       "note": ""
+      },
+      {
+       "pos": "DF",
+       "name": "原 巧佑",
+       "no": "37",
+       "team": "北海道教育大学岩見沢校",
+       "note": ""
+      },
+      {
+       "pos": "DF",
+       "name": "泉山 凌馬",
+       "no": "40",
+       "team": "北海道教育大学岩見沢校",
+       "note": ""
+      },
+      {
+       "pos": "DF",
+       "name": "相田 勇樹",
+       "no": "48",
+       "team": "札幌大学",
+       "note": ""
+      },
+      {
+       "pos": "MF",
+       "name": "河合 悠人",
+       "no": "28",
+       "team": "北海道教育大学岩見沢校",
+       "note": ""
+      },
+      {
+       "pos": "MF",
+       "name": "鈴木 理久",
+       "no": "35",
+       "team": "北海道教育大学岩見沢校",
+       "note": ""
+      },
+      {
+       "pos": "MF",
+       "name": "遠藤 祐馬",
+       "no": "17",
+       "team": "北海道教育大学岩見沢校",
+       "note": ""
+      },
+      {
+       "pos": "MF",
+       "name": "金城 光希",
+       "no": "13",
+       "team": "東海大学札幌校舎",
+       "note": ""
+      },
+      {
+       "pos": "MF",
+       "name": "吉行 豊輝",
+       "no": "14",
+       "team": "東海大学札幌校舎",
+       "note": ""
+      },
+      {
+       "pos": "FW",
+       "name": "橋本 恭祐",
+       "no": "25",
+       "team": "北海道教育大学岩見沢校",
+       "note": ""
+      },
+      {
+       "pos": "FW",
+       "name": "中本 峻平",
+       "no": "11",
+       "team": "北海道教育大学岩見沢校",
+       "note": ""
+      },
+      {
+       "pos": "FW",
+       "name": "半田 航也",
+       "no": "47",
+       "team": "札幌大学",
+       "note": ""
+      }
+     ]
+    },
+    {
+     "award": "優秀選手賞（2部）",
+     "list": [
+      {
+       "pos": "MF",
+       "name": "柴田 友也",
+       "no": "10",
+       "team": "北海道教育大学函館校",
+       "note": ""
+      }
+     ]
+    },
+    {
+     "award": "最優秀新人賞",
+     "list": [
+      {
+       "pos": "MF",
+       "name": "河合 悠人",
+       "no": "28",
+       "team": "北海道教育大学岩見沢校",
+       "note": ""
+      }
+     ]
+    },
+    {
+     "award": "優秀新人賞",
+     "list": [
+      {
+       "pos": "DF",
+       "name": "浄土 駿介",
+       "no": "16",
+       "team": "東海大学札幌校舎",
+       "note": ""
+      },
+      {
+       "pos": "MF",
+       "name": "河合 悠人",
+       "no": "28",
+       "team": "北海道教育大学岩見沢校",
+       "note": ""
+      },
+      {
+       "pos": "MF",
+       "name": "山内 陸",
+       "no": "8",
+       "team": "札幌大学",
+       "note": ""
+      },
+      {
+       "pos": "MF",
+       "name": "南谷 陽介",
+       "no": "11",
+       "team": "札幌大学",
+       "note": ""
+      },
+      {
+       "pos": "MF",
+       "name": "成田 新",
+       "no": "27",
+       "team": "北翔大学",
+       "note": ""
+      },
+      {
+       "pos": "FW",
+       "name": "鷲塚 蓮",
+       "no": "9",
+       "team": "札幌大学",
+       "note": ""
+      },
+      {
+       "pos": "FW",
+       "name": "高橋 歩武",
+       "no": "18",
+       "team": "札幌大学",
+       "note": ""
+      }
+     ]
+    },
+    {
+     "award": "優秀主務",
+     "list": [
+      {
+       "pos": "",
+       "name": "鈴木 毬那",
+       "no": "",
+       "team": "北海道大学",
+       "note": "1部"
+      },
+      {
+       "pos": "",
+       "name": "清水 彩加",
+       "no": "",
+       "team": "北海道教育大学函館校",
+       "note": "2部"
+      },
+      {
+       "pos": "",
+       "name": "金澤 孝憲",
+       "no": "",
+       "team": "札幌国際大学",
+       "note": "3部"
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

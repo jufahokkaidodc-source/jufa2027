@@ -1,0 +1,429 @@
+{
+ "ok": true,
+ "year": "2024",
+ "updatedAt": "2026-10-19T00:00:00+09:00",
+ "competitions": [
+  {
+   "id": "2024-L1",
+   "name": "2024年度 第43回北海道学生サッカーリーグ 1部",
+   "short": "1部",
+   "format": "リーグ",
+   "finished": true,
+   "asOf": "2024-11-12",
+   "champion": {
+    "name": "札幌大学",
+    "short": "札幌大"
+   },
+   "standings": [
+    {
+     "group": "",
+     "table": [
+      {
+       "rank": 1,
+       "team": {
+        "name": "札幌大学",
+        "short": "札幌大"
+       },
+       "played": 10,
+       "won": 9,
+       "drawn": 1,
+       "lost": 0,
+       "goalsFor": 31,
+       "goalsAgainst": 11,
+       "goalDiff": 20,
+       "points": 31,
+       "note": ""
+      },
+      {
+       "rank": 2,
+       "team": {
+        "name": "北海道教育大学岩見沢校",
+        "short": "岩教大"
+       },
+       "played": 10,
+       "won": 8,
+       "drawn": 1,
+       "lost": 1,
+       "goalsFor": 28,
+       "goalsAgainst": 6,
+       "goalDiff": 22,
+       "points": 28,
+       "note": ""
+      },
+      {
+       "rank": 3,
+       "team": {
+        "name": "北翔大学",
+        "short": "北翔大"
+       },
+       "played": 10,
+       "won": 4,
+       "drawn": 1,
+       "lost": 5,
+       "goalsFor": 15,
+       "goalsAgainst": 20,
+       "goalDiff": -5,
+       "points": 13,
+       "note": ""
+      },
+      {
+       "rank": 4,
+       "team": {
+        "name": "北海道大学",
+        "short": "北大"
+       },
+       "played": 10,
+       "won": 2,
+       "drawn": 2,
+       "lost": 6,
+       "goalsFor": 12,
+       "goalsAgainst": 18,
+       "goalDiff": -6,
+       "points": 8,
+       "note": ""
+      },
+      {
+       "rank": 5,
+       "team": {
+        "name": "北海学園大学",
+        "short": "学園大"
+       },
+       "played": 10,
+       "won": 2,
+       "drawn": 1,
+       "lost": 7,
+       "goalsFor": 16,
+       "goalsAgainst": 38,
+       "goalDiff": -22,
+       "points": 7,
+       "note": ""
+      },
+      {
+       "rank": 6,
+       "team": {
+        "name": "東海大学札幌校舎",
+        "short": "東海大"
+       },
+       "played": 10,
+       "won": 1,
+       "drawn": 2,
+       "lost": 7,
+       "goalsFor": 10,
+       "goalsAgainst": 19,
+       "goalDiff": -9,
+       "points": 5,
+       "note": ""
+      }
+     ]
+    }
+   ],
+   "notes": [],
+   "source": "past",
+   "scorers": [
+    {
+     "rank": 1,
+     "name": "井波 勇太",
+     "team": "札幌大学",
+     "count": 5
+    },
+    {
+     "rank": 2,
+     "name": "佐藤 隼之丞",
+     "team": "札幌大学",
+     "count": 4
+    },
+    {
+     "rank": 2,
+     "name": "曽根 幹大",
+     "team": "北翔大学",
+     "count": 4
+    },
+    {
+     "rank": 2,
+     "name": "和嶋 陽佳",
+     "team": "北海道教育大学岩見沢校",
+     "count": 4
+    },
+    {
+     "rank": 2,
+     "name": "堀本 壮玄",
+     "team": "北海学園大学",
+     "count": 4
+    },
+    {
+     "rank": 2,
+     "name": "河合 駿樹",
+     "team": "札幌大学",
+     "count": 4
+    },
+    {
+     "rank": 7,
+     "name": "櫻井 廉",
+     "team": "札幌大学",
+     "count": 3
+    },
+    {
+     "rank": 7,
+     "name": "小野 優貴",
+     "team": "北翔大学",
+     "count": 3
+    },
+    {
+     "rank": 7,
+     "name": "中村 颯汰",
+     "team": "北海道教育大学岩見沢校",
+     "count": 3
+    },
+    {
+     "rank": 7,
+     "name": "山口 莉生",
+     "team": "札幌大学",
+     "count": 3
+    },
+    {
+     "rank": 7,
+     "name": "佐藤 航",
+     "team": "札幌大学",
+     "count": 3
+    },
+    {
+     "rank": 7,
+     "name": "美濃又 叶翔",
+     "team": "北海道教育大学岩見沢校",
+     "count": 3
+    },
+    {
+     "rank": 7,
+     "name": "桂 清鳳",
+     "team": "札幌大学",
+     "count": 3
+    },
+    {
+     "rank": 7,
+     "name": "菅野 紘希",
+     "team": "北海道教育大学岩見沢校",
+     "count": 3
+    },
+    {
+     "rank": 7,
+     "name": "松下 人樹",
+     "team": "北海道教育大学岩見沢校",
+     "count": 3
+    },
+    {
+     "rank": 7,
+     "name": "水上 路矢",
+     "team": "北海学園大学",
+     "count": 3
+    },
+    {
+     "rank": 7,
+     "name": "美馬 生玖",
+     "team": "北翔大学",
+     "count": 3
+    },
+    {
+     "rank": 7,
+     "name": "村上 皓星",
+     "team": "東海大学札幌校舎",
+     "count": 3
+    },
+    {
+     "rank": 7,
+     "name": "佐藤 麻陽",
+     "team": "北海道教育大学岩見沢校",
+     "count": 3
+    }
+   ],
+   "scorersAsOf": "2024-09-02",
+   "awards": [
+    {
+     "award": "最優秀選手賞（MVP）",
+     "list": [
+      {
+       "pos": "MF",
+       "name": "井波 勇太",
+       "no": "10",
+       "team": "札幌大学",
+       "note": "4年"
+      }
+     ]
+    },
+    {
+     "award": "優秀選手賞",
+     "list": [
+      {
+       "pos": "GK",
+       "name": "岡本 歩夢",
+       "no": "1",
+       "team": "札幌大学",
+       "note": "2年"
+      },
+      {
+       "pos": "DF",
+       "name": "中村 涼",
+       "no": "3",
+       "team": "札幌大学",
+       "note": "4年"
+      },
+      {
+       "pos": "DF",
+       "name": "菅野 紘希",
+       "no": "5",
+       "team": "北海道教育大学岩見沢校",
+       "note": "4年"
+      },
+      {
+       "pos": "DF",
+       "name": "金子 真貴人",
+       "no": "4",
+       "team": "北海道教育大学岩見沢校",
+       "note": "4年"
+      },
+      {
+       "pos": "DF",
+       "name": "山口 大翔",
+       "no": "2",
+       "team": "札幌大学",
+       "note": "3年"
+      },
+      {
+       "pos": "DF",
+       "name": "菊地 柊斗",
+       "no": "72",
+       "team": "北翔大学",
+       "note": "4年"
+      },
+      {
+       "pos": "MF",
+       "name": "河合 駿樹",
+       "no": "8",
+       "team": "札幌大学",
+       "note": "4年"
+      },
+      {
+       "pos": "MF",
+       "name": "相澤 匠",
+       "no": "50",
+       "team": "東海大学札幌校舎",
+       "note": "3年"
+      },
+      {
+       "pos": "MF",
+       "name": "佐藤 航",
+       "no": "14",
+       "team": "札幌大学",
+       "note": "3年"
+      },
+      {
+       "pos": "MF",
+       "name": "山口 莉生",
+       "no": "11",
+       "team": "札幌大学",
+       "note": "2年"
+      },
+      {
+       "pos": "MF",
+       "name": "井波 勇太",
+       "no": "10",
+       "team": "札幌大学",
+       "note": "4年"
+      },
+      {
+       "pos": "MF",
+       "name": "堀本 壮玄",
+       "no": "25",
+       "team": "北海学園大学",
+       "note": "4年"
+      },
+      {
+       "pos": "FW",
+       "name": "桂 清鳳",
+       "no": "9",
+       "team": "札幌大学",
+       "note": "4年"
+      },
+      {
+       "pos": "FW",
+       "name": "説田 周",
+       "no": "5",
+       "team": "北海道大学",
+       "note": "3年"
+      },
+      {
+       "pos": "FW",
+       "name": "和嶋 陽佳",
+       "no": "38",
+       "team": "北海道教育大学岩見沢校",
+       "note": "1年"
+      }
+     ]
+    },
+    {
+     "award": "優秀選手賞（2部）",
+     "list": [
+      {
+       "pos": "MF",
+       "name": "渡邉 俊太",
+       "no": "8",
+       "team": "札幌大谷大学",
+       "note": "3年"
+      }
+     ]
+    },
+    {
+     "award": "最優秀新人賞",
+     "list": [
+      {
+       "pos": "FW",
+       "name": "和嶋 陽佳",
+       "no": "38",
+       "team": "北海道教育大学岩見沢校",
+       "note": ""
+      }
+     ]
+    },
+    {
+     "award": "優秀新人賞",
+     "list": [
+      {
+       "pos": "FW",
+       "name": "和嶋 陽佳",
+       "no": "38",
+       "team": "北海道教育大学岩見沢校",
+       "note": ""
+      },
+      {
+       "pos": "FW",
+       "name": "村上 皓星",
+       "no": "16",
+       "team": "東海大学札幌校舎",
+       "note": ""
+      },
+      {
+       "pos": "FW",
+       "name": "小野 優貴",
+       "no": "28",
+       "team": "北翔大学",
+       "note": ""
+      },
+      {
+       "pos": "MF",
+       "name": "佐藤 麻陽",
+       "no": "42",
+       "team": "北海道教育大学岩見沢校",
+       "note": ""
+      },
+      {
+       "pos": "DF",
+       "name": "横山 太輝",
+       "no": "47",
+       "team": "北海道教育大学岩見沢校",
+       "note": ""
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}
