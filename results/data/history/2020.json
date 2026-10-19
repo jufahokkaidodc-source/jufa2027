@@ -1,0 +1,341 @@
+{
+ "ok": true,
+ "year": "2020",
+ "updatedAt": "2026-10-19T00:00:00+09:00",
+ "competitions": [
+  {
+   "id": "2020-L1",
+   "name": "2020年度 第39回北海道学生サッカーリーグ 1部",
+   "short": "1部",
+   "format": "リーグ",
+   "finished": true,
+   "asOf": "",
+   "champion": {
+    "name": "札幌大学",
+    "short": "札幌大"
+   },
+   "standings": [
+    {
+     "group": "",
+     "table": [
+      {
+       "rank": 1,
+       "team": {
+        "name": "札幌大学",
+        "short": "札幌大"
+       },
+       "played": 6,
+       "won": 5,
+       "drawn": 0,
+       "lost": 1,
+       "goalsFor": 20,
+       "goalsAgainst": 4,
+       "goalDiff": 16,
+       "points": 15,
+       "note": ""
+      },
+      {
+       "rank": 2,
+       "team": {
+        "name": "東海大学札幌校舎",
+        "short": "東海大"
+       },
+       "played": 6,
+       "won": 4,
+       "drawn": 1,
+       "lost": 1,
+       "goalsFor": 10,
+       "goalsAgainst": 4,
+       "goalDiff": 6,
+       "points": 13,
+       "note": ""
+      },
+      {
+       "rank": 3,
+       "team": {
+        "name": "北海道教育大学岩見沢校",
+        "short": "岩教大"
+       },
+       "played": 6,
+       "won": 4,
+       "drawn": 0,
+       "lost": 2,
+       "goalsFor": 13,
+       "goalsAgainst": 5,
+       "goalDiff": 8,
+       "points": 12,
+       "note": ""
+      },
+      {
+       "rank": 4,
+       "team": {
+        "name": "北海学園大学",
+        "short": "学園大"
+       },
+       "played": 6,
+       "won": 3,
+       "drawn": 0,
+       "lost": 3,
+       "goalsFor": 8,
+       "goalsAgainst": 14,
+       "goalDiff": -6,
+       "points": 9,
+       "note": ""
+      },
+      {
+       "rank": 5,
+       "team": {
+        "name": "北翔大学",
+        "short": "北翔大"
+       },
+       "played": 6,
+       "won": 2,
+       "drawn": 1,
+       "lost": 3,
+       "goalsFor": 3,
+       "goalsAgainst": 7,
+       "goalDiff": -4,
+       "points": 7,
+       "note": ""
+      },
+      {
+       "rank": 6,
+       "team": {
+        "name": "旭川大学",
+        "short": "旭川大"
+       },
+       "played": 6,
+       "won": 2,
+       "drawn": 0,
+       "lost": 4,
+       "goalsFor": 6,
+       "goalsAgainst": 12,
+       "goalDiff": -6,
+       "points": 6,
+       "note": ""
+      },
+      {
+       "rank": 7,
+       "team": {
+        "name": "星槎道都大学",
+        "short": "星槎大"
+       },
+       "played": 6,
+       "won": 0,
+       "drawn": 0,
+       "lost": 6,
+       "goalsFor": 0,
+       "goalsAgainst": 14,
+       "goalDiff": -14,
+       "points": 0,
+       "note": ""
+      },
+      {
+       "rank": "-",
+       "team": {
+        "name": "北海道教育大学函館校",
+        "short": "函教大"
+       },
+       "played": 0,
+       "won": 0,
+       "drawn": 0,
+       "lost": 0,
+       "goalsFor": 0,
+       "goalsAgainst": 0,
+       "goalDiff": 0,
+       "points": 0,
+       "note": "全試合中止"
+      }
+     ]
+    }
+   ],
+   "notes": [
+    "新型コロナウイルス感染症の影響で、一部の試合は中止になりました。"
+   ],
+   "source": "past",
+   "awards": [
+    {
+     "award": "最優秀選手賞（MVP）",
+     "list": [
+      {
+       "pos": "MF",
+       "name": "吉行 豊輝",
+       "no": "14",
+       "team": "東海大学札幌校舎",
+       "note": ""
+      }
+     ]
+    },
+    {
+     "award": "優秀選手賞",
+     "list": [
+      {
+       "pos": "DF",
+       "name": "泉山 凌馬",
+       "no": "5",
+       "team": "北海道教育大学岩見沢校",
+       "note": ""
+      },
+      {
+       "pos": "FW",
+       "name": "吉行 豊輝",
+       "no": "14",
+       "team": "東海大学札幌校舎",
+       "note": ""
+      },
+      {
+       "pos": "GK",
+       "name": "坂井 甫",
+       "no": "1",
+       "team": "東海大学札幌校舎",
+       "note": ""
+      },
+      {
+       "pos": "DF",
+       "name": "中山 和紀",
+       "no": "3",
+       "team": "札幌大学",
+       "note": ""
+      },
+      {
+       "pos": "MF",
+       "name": "野瀬 龍世",
+       "no": "11",
+       "team": "札幌大学",
+       "note": ""
+      },
+      {
+       "pos": "MF",
+       "name": "山内 陸",
+       "no": "8",
+       "team": "札幌大学",
+       "note": ""
+      },
+      {
+       "pos": "MF",
+       "name": "高橋 耕平",
+       "no": "7",
+       "team": "札幌大学",
+       "note": ""
+      },
+      {
+       "pos": "MF",
+       "name": "鈴木 理久",
+       "no": "7",
+       "team": "北海道教育大学岩見沢校",
+       "note": ""
+      },
+      {
+       "pos": "MF",
+       "name": "河合 悠人",
+       "no": "29",
+       "team": "北海道教育大学岩見沢校",
+       "note": ""
+      },
+      {
+       "pos": "GK",
+       "name": "國田 修平",
+       "no": "1",
+       "team": "札幌大学",
+       "note": ""
+      },
+      {
+       "pos": "MF",
+       "name": "向井 ひな太",
+       "no": "26",
+       "team": "札幌大学",
+       "note": ""
+      },
+      {
+       "pos": "FW",
+       "name": "小笠原 大将",
+       "no": "38",
+       "team": "札幌大学",
+       "note": ""
+      },
+      {
+       "pos": "FW",
+       "name": "小山田 凌",
+       "no": "39",
+       "team": "北海道教育大学岩見沢校",
+       "note": ""
+      },
+      {
+       "pos": "MF",
+       "name": "金城 光希",
+       "no": "13",
+       "team": "東海大学札幌校舎",
+       "note": ""
+      }
+     ]
+    },
+    {
+     "award": "優秀選手賞（2部）",
+     "list": [
+      {
+       "pos": "DF",
+       "name": "多賀 遼太郎",
+       "no": "4",
+       "team": "北海道大学",
+       "note": ""
+      }
+     ]
+    },
+    {
+     "award": "優秀新人賞",
+     "list": [
+      {
+       "pos": "GK",
+       "name": "國田 修平",
+       "no": "1",
+       "team": "札幌大学",
+       "note": ""
+      },
+      {
+       "pos": "MF",
+       "name": "向井 ひな太",
+       "no": "26",
+       "team": "札幌大学",
+       "note": ""
+      },
+      {
+       "pos": "FW",
+       "name": "小笠原 大将",
+       "no": "38",
+       "team": "札幌大学",
+       "note": ""
+      },
+      {
+       "pos": "FW",
+       "name": "小山田 凌",
+       "no": "39",
+       "team": "北海道教育大学岩見沢校",
+       "note": ""
+      },
+      {
+       "pos": "DF",
+       "name": "早川 峻央",
+       "no": "23",
+       "team": "東海大学札幌校舎",
+       "note": ""
+      },
+      {
+       "pos": "DF",
+       "name": "田中 光太",
+       "no": "38",
+       "team": "北海道教育大学岩見沢校",
+       "note": ""
+      },
+      {
+       "pos": "DF",
+       "name": "工藤 幹大",
+       "no": "14",
+       "team": "旭川大学",
+       "note": ""
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}
