@@ -24,62 +24,62 @@
         "name": "札幌大学",
         "short": "札幌大"
        },
-       "played": 6,
-       "won": 5,
-       "drawn": 0,
-       "lost": 1,
-       "goalsFor": 20,
-       "goalsAgainst": 4,
-       "goalDiff": 16,
-       "points": 15,
+       "played": 7,
+       "won": 6,
+       "drawn": 1,
+       "lost": 0,
+       "goalsFor": 22,
+       "goalsAgainst": 7,
+       "goalDiff": 15,
+       "points": 19,
        "note": ""
       },
       {
        "rank": 2,
        "team": {
-        "name": "東海大学札幌校舎",
-        "short": "東海大"
+        "name": "北海道教育大学岩見沢校",
+        "short": "岩教大"
        },
-       "played": 6,
-       "won": 4,
+       "played": 7,
+       "won": 5,
        "drawn": 1,
        "lost": 1,
-       "goalsFor": 10,
+       "goalsFor": 28,
        "goalsAgainst": 4,
-       "goalDiff": 6,
-       "points": 13,
+       "goalDiff": 24,
+       "points": 16,
        "note": ""
       },
       {
        "rank": 3,
        "team": {
-        "name": "北海道教育大学岩見沢校",
-        "short": "岩教大"
+        "name": "東海大学札幌校舎",
+        "short": "東海大"
        },
-       "played": 6,
-       "won": 4,
-       "drawn": 0,
-       "lost": 2,
-       "goalsFor": 13,
-       "goalsAgainst": 5,
-       "goalDiff": 8,
-       "points": 12,
+       "played": 7,
+       "won": 5,
+       "drawn": 1,
+       "lost": 1,
+       "goalsFor": 26,
+       "goalsAgainst": 10,
+       "goalDiff": 16,
+       "points": 16,
        "note": ""
       },
       {
        "rank": 4,
        "team": {
-        "name": "北海学園大学",
-        "short": "学園大"
+        "name": "旭川大学",
+        "short": "旭川大"
        },
-       "played": 6,
+       "played": 7,
        "won": 3,
-       "drawn": 0,
-       "lost": 3,
-       "goalsFor": 8,
-       "goalsAgainst": 14,
-       "goalDiff": -6,
-       "points": 9,
+       "drawn": 2,
+       "lost": 2,
+       "goalsFor": 13,
+       "goalsAgainst": 9,
+       "goalDiff": 4,
+       "points": 11,
        "note": ""
       },
       {
@@ -88,69 +88,69 @@
         "name": "北翔大学",
         "short": "北翔大"
        },
-       "played": 6,
+       "played": 7,
        "won": 2,
-       "drawn": 1,
+       "drawn": 2,
        "lost": 3,
-       "goalsFor": 3,
-       "goalsAgainst": 7,
-       "goalDiff": -4,
-       "points": 7,
+       "goalsFor": 10,
+       "goalsAgainst": 10,
+       "goalDiff": 0,
+       "points": 8,
        "note": ""
       },
       {
        "rank": 6,
        "team": {
-        "name": "旭川大学",
-        "short": "旭川大"
+        "name": "星槎道都大学",
+        "short": "星槎大"
        },
-       "played": 6,
+       "played": 7,
        "won": 2,
        "drawn": 0,
-       "lost": 4,
-       "goalsFor": 6,
-       "goalsAgainst": 12,
-       "goalDiff": -6,
+       "lost": 5,
+       "goalsFor": 7,
+       "goalsAgainst": 22,
+       "goalDiff": -15,
        "points": 6,
        "note": ""
       },
       {
        "rank": 7,
        "team": {
-        "name": "星槎道都大学",
-        "short": "星槎大"
+        "name": "北海学園大学",
+        "short": "学園大"
        },
-       "played": 6,
-       "won": 0,
-       "drawn": 0,
-       "lost": 6,
-       "goalsFor": 0,
-       "goalsAgainst": 14,
-       "goalDiff": -14,
-       "points": 0,
+       "played": 7,
+       "won": 1,
+       "drawn": 1,
+       "lost": 5,
+       "goalsFor": 10,
+       "goalsAgainst": 20,
+       "goalDiff": -10,
+       "points": 4,
        "note": ""
       },
       {
-       "rank": "-",
+       "rank": 8,
        "team": {
         "name": "北海道教育大学函館校",
         "short": "函教大"
        },
-       "played": 0,
+       "played": 7,
        "won": 0,
        "drawn": 0,
-       "lost": 0,
-       "goalsFor": 0,
-       "goalsAgainst": 0,
-       "goalDiff": 0,
+       "lost": 7,
+       "goalsFor": 11,
+       "goalsAgainst": 45,
+       "goalDiff": -34,
        "points": 0,
-       "note": "全試合中止"
+       "note": ""
       }
      ]
     }
    ],
    "notes": [
-    "新型コロナウイルス感染症の影響で、一部の試合は中止になりました。"
+    "不戦勝・不戦敗の試合の得点・失点は、ほかの試合の得点・失点の平均から出しています。"
    ],
    "source": "past",
    "awards": [

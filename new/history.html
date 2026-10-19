@@ -271,7 +271,7 @@ function drawChamps(){
   $('champs').innerHTML='<div class="champ">'+YEARS.map(y=>{const c=l1(Y[y]);if(!c)return '';
     const w=c.finished?(c.champion||topT(c,0)):null,lead=!c.finished?topT(c,0):null;
     const kAw=(((c.awards||[]).find(a=>a.award==='得点王')||{}).list||[]).filter(p=>/^1部/.test(p.note||'')||!p.note),ks=(c.scorers||[]).length?(c.scorers||[]).filter(s=>s.rank===1):kAw.map(p=>({name:p.name,count:(String(p.note).match(/(\d+)点/)||[])[1]||''})),mvp=((c.awards||[]).find(a=>/最優秀選手|MVP/.test(a.award))||{}).list||[];
-    const sub=[c.finished&&topT(c,1)?'2位 '+topT(c,1).name:'',ks.length&&c.finished&&!(c.scorersAsOf&&c.asOf&&c.scorersAsOf<c.asOf)?'得点王 '+ks.map(s=>s.name+'（'+s.count+'点）').join('・'):'',mvp.length?'MVP '+mvp.map(p=>p.name).join('・'):''].filter(Boolean);
+    const sub=[c.finished&&topT(c,1)?'2位 '+topT(c,1).name:'',ks.length&&c.finished&&(c.scorersNote||!(c.scorersAsOf&&c.asOf&&c.scorersAsOf<c.asOf))?'得点王 '+ks.map(s=>s.name+'（'+s.count+'点）').join('・'):'',mvp.length?'MVP '+mvp.map(p=>p.name).join('・'):''].filter(Boolean);
     return `<a href="?year=${y}&comp=L1#yearSec" data-y="${y}"><div class="y">${y}<small>${c.finished?'':'シーズン中'}</small></div>
       <div class="w">${w?'<b>優勝</b>'+esc(w.name):lead?'<b>首位</b>'+esc(lead.name)+'<span class="ing">'+esc(md(c.asOf))+'時点</span>':'—'}</div>
       ${sub.length?`<div class="s">${sub.map(esc).join('<br>')}</div>`:''}</a>`}).join('')+'</div>';
@@ -304,8 +304,8 @@ function drawComp(c){
   });
   if(c.notes&&c.notes.length)h+=`<div class="note">${c.notes.map(n=>'※'+esc(n)).join('<br>')}</div>`;
   if(c.scorers&&c.scorers.length){
-    const asOf=c.scorersAsOf||c.asOf,early=c.scorersAsOf&&c.asOf&&c.scorersAsOf<c.asOf;
-    h+=`<div class="block"><h4>得点ランキング<span class="note" style="margin-left:8px">${asOf?esc(md(asOf))+'時点':''}${early?'（最終ではありません）':''}</span></h4><div class="card tw"><table class="ht" style="min-width:0"><tr><th>順位</th><th class="l">選手</th><th class="l">チーム</th><th>得点</th></tr>
+    const asOf=c.scorersAsOf||c.asOf,early=!c.scorersNote&&c.scorersAsOf&&c.asOf&&c.scorersAsOf<c.asOf;
+    h+=`<div class="block"><h4>得点ランキング<span class="note" style="margin-left:8px">${c.scorersNote?esc(c.scorersNote):(asOf?esc(md(asOf))+'時点':'')+(early?'（最終ではありません）':'')}</span></h4><div class="card tw"><table class="ht" style="min-width:0"><tr><th>順位</th><th class="l">選手</th><th class="l">チーム</th><th>得点</th></tr>
       ${c.scorers.map(s=>`<tr><td><span class="rk${s.rank===1?' r1':''}">${esc(s.rank)}</span></td><td class="l"><b>${esc(s.name)}</b></td><td class="l" style="white-space:normal;color:var(--muted)">${esc(s.team)}</td><td class="pts">${esc(s.count)}</td></tr>`).join('')}</table></div></div>`;
   }
   if(c.awards&&c.awards.length){
