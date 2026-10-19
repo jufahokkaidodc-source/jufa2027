@@ -200,6 +200,26 @@ table.ht tr.top1 td{background:rgba(230,0,18,.10)}
 .mt .m b.win{color:var(--accent,#E60012)}
 .mt .m .sc{font-family:var(--num);font-size:18px;font-weight:800;width:64px;text-align:center;flex:none}
 .mt .m .sc small{display:block;font-size:10px;color:var(--muted);font-weight:700}
+/* トーナメント表（右が決勝） */
+.bk{overflow-x:auto;-webkit-overflow-scrolling:touch;padding:12px 4px}
+.bkn{display:flex;align-items:center}
+.bkk{display:flex;flex-direction:column}
+.bkk>.bkc{position:relative;padding:3px 14px 3px 0}
+.bkk>.bkc::after{content:"";position:absolute;right:0;width:14px;border-right:2px solid var(--line)}
+.bkk>.bkc:first-child::after{top:50%;bottom:0;border-top:2px solid var(--line)}
+.bkk>.bkc:last-child::after{top:0;bottom:50%;border-bottom:2px solid var(--line)}
+.bkm{position:relative;margin-left:14px;background:var(--card2,#232323);border:1px solid var(--line);border-radius:8px;width:178px;flex:none;font-size:12px}
+.bkm.first{margin-left:0}
+.bkm.first::before{display:none}
+.bkm::before{content:"";position:absolute;left:-16px;top:50%;width:14px;border-top:2px solid var(--line)}
+.bkn.root>.bkm{border-color:var(--accent,#E60012)}
+.bkm .t{display:flex;justify-content:space-between;gap:6px;padding:5px 8px;line-height:1.3}
+.bkm .t+.t{border-top:1px solid var(--line)}
+.bkm .t b{font-family:var(--num);font-size:15px;flex:none}
+.bkm .t.w{color:var(--accent,#E60012);font-weight:900}
+.bkm .r{font-size:10px;color:var(--muted);padding:3px 8px 0}
+.bkm .pk{font-size:10px;color:var(--muted);padding:0 8px 4px;text-align:right}
+.bkl{background:transparent;border:1px dashed var(--line);border-radius:8px;width:178px;padding:5px 8px;font-size:12px;color:var(--muted);flex:none}
 @media(max-width:680px){.champ{grid-template-columns:1fr 1fr}.champ a{padding:12px}.champ .w{font-size:13px}table.ht{font-size:12px}}
 </style>
 <link rel="stylesheet" href="./theme.css">
@@ -289,15 +309,38 @@ function drawYear(){
   try{history.replaceState(null,'','?year='+SEL.y+'&comp='+encodeURIComponent(SEL.c))}catch(e){}
   if(d.updatedAt)$('updated').textContent='最終更新 '+String(d.updatedAt).replace('T',' ').slice(0,16);
 }
+/* 試合の一覧からトーナメント表を作る：決勝から、両チームが勝ち上がってきた前の試合をたどる */
+function bracket(ms){
+  const nm=t=>t&&t.name||'';
+  const win=m=>m.winner==='home'?nm(m.home):m.winner==='away'?nm(m.away):'';
+  const fin=[...ms].reverse().find(m=>m.round==='決勝')||null;
+  if(!fin)return null;
+  const used=new Set(),idx=new Map(ms.map((m,i)=>[m,i]));
+  const node=(m,depth)=>{
+    used.add(m);
+    const kid=team=>{const prev=ms.filter(x=>!used.has(x)&&idx.get(x)<idx.get(m)&&win(x)===team&&!/3位|順位/.test(x.round||'')).pop();return prev&&depth<8?node(prev,depth+1):null};
+    const ka=kid(nm(m.home)),kb=kid(nm(m.away));
+    // 両チームともこの試合から出るとき（1回戦など）は、外に名前を出さない。片方だけのとき（シード）は名前の札を出す
+    const leaf=t=>`<div class="bkl">${esc(nm(t))}</div>`;
+    const kids=ka||kb?`<div class="bkk"><div class="bkc">${ka||leaf(m.home)}</div><div class="bkc">${kb||leaf(m.away)}</div></div>`:'';
+    const sc=String(m.score||'').match(/^(\d+)-(\d+)(.*)$/);
+    const row=(t,side,v)=>`<div class="t${m.winner===side?' w':''}"><span>${esc(nm(t))}</span><b>${esc(v)}</b></div>`;
+    const box=`<div class="bkm${kids?'':' first'}"><div class="r">${esc(m.round||'')}${m.date?'　'+esc(md(m.date)):''}</div>${sc?row(m.home,'home',sc[1])+row(m.away,'away',sc[2]):row(m.home,'home',m.winner==='home'?'○':'')+row(m.away,'away',m.winner==='away'?'○':'')}${m.pk?`<div class="pk">PK ${esc(m.pk)}</div>`:sc&&sc[3]?`<div class="pk">${esc(sc[3])}</div>`:!sc&&m.score?`<div class="pk">${esc(m.score)}</div>`:''}</div>`;
+    return `<div class="bkn${depth?'':' root'}">${kids}${box}</div>`;
+  };
+  return {html:node(fin,0),used};
+}
 function drawComp(c){
   let h=`<div class="yh"><h3>${esc(c.name)}</h3><span class="sub">${c.finished?(c.champion?'優勝：'+esc(c.champion.name):'最終結果'):'シーズン中'+(c.asOf?'（'+esc(md(c.asOf))+'時点）':'')}</span></div>`;
   (c.standings||[]).forEach((g,gi)=>{
     h+=`<div class="block">${g.group?`<h4>${esc(g.group)}${/グループ|組|ブロック|リーグ|順位/.test(g.group)?'':'グループ'}</h4>`:'<h4>順位表</h4>'}<div class="card tw"><table class="ht"><tr><th>順位</th><th class="l">チーム</th><th>試合</th><th>勝点</th><th>勝</th><th>分</th><th>敗</th><th>得点</th><th>失点</th><th>得失点</th></tr>
       ${g.table.map(r=>`<tr${r.rank===1&&c.finished&&(gi===0||!/予選/.test(g.group))?' class="top1"':''}><td><span class="rk${r.rank===1?' r1':''}">${esc(r.rank)}</span></td><td class="l"><b>${esc(r.team&&r.team.name)}</b>${r.note?`<div class="note" style="margin:2px 0 0">${esc(r.note)}</div>`:''}</td><td class="num">${esc(r.played)}</td><td class="pts">${esc(r.points)}</td><td class="num">${esc(r.won)}</td><td class="num">${esc(r.drawn)}</td><td class="num">${esc(r.lost)}</td><td class="num">${esc(r.goalsFor)}</td><td class="num">${esc(r.goalsAgainst)}</td><td class="num">${r.goalDiff>0?'+':''}${esc(r.goalDiff)}</td></tr>`).join('')}</table></div></div>`;
   });
-  if(c.matches&&c.matches.length){
-    const rs=[];c.matches.forEach(m=>{const k=m.group?m.group+'グループ':m.round;let r=rs.find(x=>x.k===k);if(!r)rs.push(r={k,list:[]});r.list.push(m)});
-    h+=`<div class="block"><h4>試合結果</h4><div class="card mt" style="padding:4px 16px 8px">${rs.reverse().map(r=>`<div class="rd">${esc(r.k)}</div>${r.list.map(m=>`<div class="m"><span class="h">${m.winner==='home'?'<b class="win">':'<b>'}${esc(m.home&&m.home.name)}</b></span><span class="sc">${esc(m.score)}${m.pk?`<small>PK ${esc(m.pk)}</small>`:''}</span><span class="a">${m.winner==='away'?'<b class="win">':'<b>'}${esc(m.away&&m.away.name)}</b></span></div>`).join('')}`).join('')}</div></div>`;
+  let rest=c.matches||[];
+  if(c.format==='トーナメント'&&rest.length){const bk=bracket(rest);if(bk){h+=`<div class="block"><h4>トーナメント表<span class="note" style="margin-left:8px">右が決勝。赤い字が勝ったチーム</span></h4><div class="card bk">${bk.html}</div></div>`;rest=rest.filter(m=>!bk.used.has(m));if(rest.length)h+='<div class="note" style="margin:4px 2px 0">ほかの試合（順位決定戦など）は下にあります。</div>';}}
+  if(rest.length){
+    const rs=[];rest.forEach(m=>{const k=m.group?m.group+'グループ':m.round;let r=rs.find(x=>x.k===k);if(!r)rs.push(r={k,list:[]});r.list.push(m)});
+    h+=`<div class="block"><h4>${c.format==='トーナメント'?'ほかの試合':'試合結果'}</h4><div class="card mt" style="padding:4px 16px 8px">${rs.reverse().map(r=>`<div class="rd">${esc(r.k)}</div>${r.list.map(m=>`<div class="m"><span class="h">${m.winner==='home'?'<b class="win">':'<b>'}${esc(m.home&&m.home.name)}</b></span><span class="sc">${esc(m.score)}${m.pk?`<small>PK ${esc(m.pk)}</small>`:''}</span><span class="a">${m.winner==='away'?'<b class="win">':'<b>'}${esc(m.away&&m.away.name)}</b></span></div>`).join('')}`).join('')}</div></div>`;
   }
   (c.playoffs||[]).forEach(p=>{
     h+=`<div class="block po"><h4>${esc(p.title)}<span class="note" style="margin-left:8px">${esc(md(p.date))}${p.venue?'・'+esc(p.venue):''}</span></h4>${p.matches.map(m=>`<div class="card">${esc(m.home.name)} <small>（${esc(m.homeNote)}）</small><span class="sc">${esc(m.score)}</span>${esc(m.away.name)} <small>（${esc(m.awayNote)}）</small>${m.half?`<div class="note">${esc(m.half)}</div>`:''}</div>`).join('')}</div>`;
