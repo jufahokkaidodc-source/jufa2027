@@ -327,6 +327,15 @@ table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums}
 .crest.img.hasdark .ed{display:block}
 .crest.img:not(.hasdark){background:#fff!important;border-radius:50%!important}
 .crest.img:not(.hasdark) img{position:absolute;inset:15%;width:70%;height:70%}
+/* 大会のテーマカラー（applyCompColor が --cc を決める） */
+.comptabs a{display:inline-flex;align-items:center;gap:6px}
+.comptabs .cdot{width:8px;height:8px;border-radius:50%;background:var(--k,var(--red));flex:none}
+.comptabs a[aria-current=page]{background:var(--k,var(--red));color:var(--k-on,#fff)}
+.comptabs a[aria-current=page] .cdot{background:var(--k-on,#fff)}
+.subtabs a[aria-current=page]{background:var(--cc,var(--red));border-color:var(--cc,var(--red));color:var(--cc-on,#fff)}
+.sh{border-bottom-color:var(--cc,var(--red))}
+.pagehead .eyebrow{color:var(--cc-t,#ff3b47)}
+.mst .bars i.h,.ana-bars i{background:var(--cc,var(--red))}
 </style>
 </head>
 <body>
@@ -460,6 +469,11 @@ const TABS=[
 ];
 let COMPS=[],DATA=null,DETAIL=null,SCROLL_Y=0;
 const S={comp:QS.get('comp')||'',tab:QS.get('tab')||'schedule',match:QS.get('match')||'',round:'',team:'',cteam:''};
+/* 大会のテーマカラー（2026-10 事務局決定）：1部 赤・2部 青・3部 緑・Iリーグ 紫・総理大臣杯 金。ほかの大会は赤（SNSの画像も同じ色） */
+const COMP_COLORS=[[/総理大臣杯|-PM$/,'#D4AF37','#111','#E8C65A'],[/インディペンデンス|Iリーグ|-IL$/,'#9C27B0','#fff','#CE6BE0'],
+  [/3部|-L3$/,'#1E9E48','#fff','#3DC56A'],[/2部|-L2$/,'#1976D2','#fff','#5AA9F0'],[/1部|-L1$/,'#E60012','#fff','#ff3b47']];
+function compColor(c){const t=c?(c.name||'')+' '+(c.id||''):'';const r=COMP_COLORS.find(x=>x[0].test(t));return r?{c:r[1],on:r[2],t:r[3]}:{c:'#E60012',on:'#fff',t:'#ff3b47'};}
+function applyCompColor(){const k=compColor(COMPS.find(c=>c.id===S.comp)),st=document.documentElement.style;st.setProperty('--cc',k.c);st.setProperty('--cc-on',k.on);st.setProperty('--cc-t',k.t);}
 const pageUrl=(comp,tab,match)=>'./results.html?comp='+encodeURIComponent(comp)+(tab&&tab!=='schedule'?'&tab='+encodeURIComponent(tab):'')+(match?'&match='+encodeURIComponent(match):'');
 function setQS(){try{const q=new URLSearchParams();if(S.comp)q.set('comp',S.comp);if(S.tab&&S.tab!=='schedule')q.set('tab',S.tab);if(DETAIL&&S.match)q.set('match',S.match);history.replaceState(null,'','?'+q.toString());}catch(e){}}
 function showErr(e){$('main').innerHTML='<div class="card empty">読み込めませんでした。時間をおいて、もう一度開いてください。<br><small>'+esc(e&&e.message||e)+'</small></div>';}
@@ -472,7 +486,8 @@ async function init(){
     COMPS=r.competitions||[];
     if(!COMPS.length){$('main').innerHTML='<div class="card empty">公開中の大会はありません</div>';$('comptabs').innerHTML='';return;}
     if(!COMPS.some(c=>c.id===S.comp))S.comp=COMPS[0].id;
-    $('comptabs').innerHTML=COMPS.map(c=>'<a href="'+pageUrl(c.id,S.tab)+'"'+(c.id===S.comp?' aria-current="page"':'')+'>'+esc(shortComp(c.name))+'</a>').join('');
+    applyCompColor();
+    $('comptabs').innerHTML=COMPS.map(c=>'<a href="'+pageUrl(c.id,S.tab)+'"'+(c.id===S.comp?' aria-current="page"':'')+' style="--k:'+compColor(c).c+';--k-on:'+compColor(c).on+'"><i class="cdot"></i>'+esc(shortComp(c.name))+'</a>').join('');
     const cur=$('comptabs').querySelector('[aria-current]');if(cur)cur.scrollIntoView({inline:'center',block:'nearest'});
     load();
   }catch(e){showErr(e)}
