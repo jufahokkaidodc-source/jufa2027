@@ -271,6 +271,25 @@ table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums}
 .mphotos figcaption span{display:block;font-size:11px;color:var(--muted);margin-top:2px}
 @media (max-width:420px){.mphotos{grid-template-columns:1fr}}
 
+.mst{padding:6px 14px 12px}
+.mst .hd{display:flex;justify-content:space-between;align-items:center;font-weight:800;font-size:13px;padding:8px 0 4px}
+.mst .hd span{display:flex;align-items:center;gap:6px}
+.mst .r{display:grid;grid-template-columns:44px 1fr 44px;align-items:center;gap:8px;padding:8px 0;border-top:1px solid var(--line)}
+.mst .r>b{font-family:var(--num);font-size:20px;font-weight:800;text-align:center}
+.mst .r>b.lo{color:var(--muted)}
+.mst .lb{display:block;text-align:center;font-size:12px;font-weight:700;margin-bottom:4px}
+.mst .bars{display:flex;gap:3px;height:8px}
+.mst .bars span{flex:1;display:flex;background:var(--card2,#eef2f6);border-radius:4px;overflow:hidden}
+.mst .bars span:first-child{justify-content:flex-end}
+.mst .bars i{display:block;height:100%}
+.mst .bars i.h{background:var(--red,#E60012)}.mst .bars i.a{background:var(--ink,#222)}
+.mst small{display:block;text-align:center;font-size:11px;color:var(--muted);margin-top:4px}
+.ana-bars{padding:10px 14px}
+.ana-bars div{display:grid;grid-template-columns:62px 1fr 34px;align-items:center;gap:8px;padding:5px 0;font-size:12.5px}
+.ana-bars i{display:block;height:14px;border-radius:0 4px 4px 0;background:var(--red,#E60012);min-width:2px}
+.ana-bars b{font-family:var(--num);text-align:right}
+.tbl td small{color:var(--muted);font-size:11px;margin-left:2px}
+.tbl td.z{color:var(--muted)}
 .plink{color:inherit;text-decoration:none;border-bottom:1px dotted var(--muted)}
 .plink:hover{color:var(--red);border-bottom-color:var(--red)}
 </style>
@@ -436,7 +455,8 @@ const TABS=[
   ['scorers','得点',d=>d.scorers&&d.scorers.length],
   ['assists','アシスト',d=>d.assists&&d.assists.length],
   ['cards','警告・退場',d=>d.cards&&d.cards.length],
-  ['awards','表彰',d=>d.awards&&d.awards.length]
+  ['awards','表彰',d=>d.awards&&d.awards.length],
+  ['analysis','分析',d=>(d.playerStats||[]).some(t=>(t.games||[]).some(g=>g.rec))]
 ];
 let COMPS=[],DATA=null,DETAIL=null,SCROLL_Y=0;
 const S={comp:QS.get('comp')||'',tab:QS.get('tab')||'schedule',match:QS.get('match')||'',round:'',team:'',cteam:''};
@@ -491,7 +511,7 @@ document.addEventListener('keydown',e=>{if(e.key==='Enter'){const m=e.target.clo
 $('menu').addEventListener('click',()=>{const o=$('nav').classList.toggle('open');$('menu').setAttribute('aria-expanded',String(o))});
 
 function render(){
-  const f={schedule:rSchedule,standings:rStandings,grid:rGrid,tournament:rTournament,scorers:()=>rRanking(DATA.scorers,'得点'),assists:()=>rRanking(DATA.assists,'アシスト'),cards:rCards,awards:rAwards}[S.tab]||rSchedule;
+  const f={schedule:rSchedule,standings:rStandings,grid:rGrid,tournament:rTournament,scorers:()=>rRanking(DATA.scorers,'得点'),assists:()=>rRanking(DATA.assists,'アシスト'),cards:rCards,awards:rAwards,analysis:rAnalysis}[S.tab]||rSchedule;
   $('main').innerHTML=f();
   const on=(id,k)=>{const el=$(id);if(el)el.addEventListener('change',e=>{S[k]=e.target.value;render();});};
   on('roundSel','round');on('teamSel','team');on('cteamSel','cteam');
@@ -646,6 +666,74 @@ function rCards(){
   return top+bar+(body||'<div class="card empty">警告・退場はありません</div>')+legend;
 }
 
+/* ---------- 分析（公式記録の画面で入力された試合だけ） ---------- */
+let MD=null;
+async function loadMD(){if(!MD||MD.comp!==S.comp){const d=await getJSON(encodeURIComponent(S.comp)+'-matches.json');MD={comp:S.comp,det:d.details||{}};}return MD.det;}
+function rAnalysis(){
+  const comp=S.comp;
+  loadMD().then(det=>{if(S.comp!==comp||S.tab!=='analysis'||DETAIL)return;const el=$('ana');if(el)el.innerHTML=anaHtml(det);}).catch(e=>{const el=$('ana');if(el)el.innerHTML='<div class="card empty">読み込めませんでした<br><small>'+esc(e&&e.message||e)+'</small></div>';});
+  return '<div id="ana"><div class="loading">読み込み中…</div></div>';
+}
+function anaHtml(det){
+  const off=Object.values(det).filter(x=>x&&x.source==='official'&&x.match&&x.match.score&&x.match.home&&x.match.away);
+  const all=(DATA.matches||[]).filter(m=>m.score&&m.status==='finished').length;
+  if(!off.length)return '<div class="card empty">公式記録の画面で入力された試合がまだありません</div>';
+  const T={},tm=t=>T[t.id]=T[t.id]||{team:t,gf:[0,0,0,0,0,0,0],ga:[0,0,0,0,0,0,0],fs:[0,0,0],cs:[0,0,0],n:0,sn:0,sf:0,sa:0,sg:0,ck:0,fk:0,of:0,ht:[0,0,0]};
+  const lg=[0,0,0,0,0,0,0];let unk=0,timed=0;
+  const band=g=>{const n=parseInt(String(g.minute||''),10);if(isNaN(n)||n<=0)return -1;return n>90?6:Math.min(5,Math.floor((n-1)/15));};
+  const res=(a,b)=>a>b?0:a===b?1:2;
+  for(const d of off){
+    const m=d.match,H=tm(m.home),A=tm(m.away),gs=d.goals||[],sh=+m.score.home,sa=+m.score.away;
+    H.n++;A.n++;
+    for(const g of gs){const b=band(g),me=g.side==='home'?H:g.side==='away'?A:null,op=me===H?A:H;if(!me)continue;if(b<0){unk++;continue;}timed++;lg[b]++;me.gf[b]++;op.ga[b]++;}
+    // 先制：得点がすべて時間つきの試合だけ
+    if(gs.length&&gs.every(g=>band(g)>=0)){const f=[...gs].sort((a,b)=>a.sort-b.sort)[0],fs=f.side==='home'?H:A,fc=fs===H?A:H;
+      fs.fs[res(fs===H?sh:sa,fs===H?sa:sh)]++;fc.cs[res(fc===H?sh:sa,fc===H?sa:sh)]++;}
+    // 前半リードしたとき
+    if(d.halves&&d.halves.first&&d.halves.first[0]!=null){const [a,b]=d.halves.first;if(a>b)H.ht[res(sh,sa)]++;else if(b>a)A.ht[res(sa,sh)]++;}
+    // チーム記録
+    if(d.stats){[['home',H,A,sh],['away',A,H,sa]].forEach(([sd,me,op,gl])=>{const s=d.stats[sd],o=d.stats[sd==='home'?'away':'home'];if(!s||!s.shots||s.shots[3]==null)return;
+      me.sn++;me.sf+=s.shots[3]||0;me.sa+=o&&o.shots&&o.shots[3]||0;me.sg+=gl;me.ck+=s.ck&&s.ck[3]||0;me.fk+=(s.dfk&&s.dfk[3]||0)+(s.ifk&&s.ifk[3]||0);me.of+=s.off&&s.off[3]||0;});}
+  }
+  const teams=Object.values(T).sort((a,b)=>String(a.team.short).localeCompare(String(b.team.short),'ja'));
+  const tn=t=>'<td class="l"><span class="tn">'+crest(t.team,'xs')+teamLink(t.team,t.team.short)+'</span></td>';
+  const BL=['1-15分','16-30分','31-45分','46-60分','61-75分','76-90分','延長'],ex=lg[6]>0||teams.some(t=>t.gf[6]||t.ga[6]),nb=ex?7:6;
+  const f1=x=>(Math.round(x*10)/10).toFixed(1),pct=(a,b)=>b?Math.round(a/b*100)+'%':'-',z=v=>v?v:'<span class="z">0</span>';
+  let h='<p class="note" style="margin-top:14px">公式記録の画面で入力された <b>'+off.length+'</b> 試合（終わった '+all+' 試合のうち）から集計しています。入力された試合が増えると、自動で増えます。</p>';
+  // 1. 時間帯
+  const mx=Math.max(...lg,1);
+  h+='<div class="sh"><h2>時間帯別の得点</h2><small>大会全体・'+timed+'点</small></div><div class="card ana-bars">'+BL.slice(0,nb).map((l,i)=>'<div><span>'+l+'</span><i style="width:'+Math.round(lg[i]/mx*100)+'%"></i><b>'+lg[i]+'</b></div>').join('')+'</div>'+
+    (unk?'<p class="note">時間が記録されていない得点（'+unk+'点）は数えていません。</p>':'');
+  h+='<div class="sh"><h2>チームの時間帯別 得点-失点</h2></div><div class="card scroll"><table class="tbl"><tr><th class="l">チーム</th>'+BL.slice(0,nb).map(l=>'<th>'+l.replace('分','')+'</th>').join('')+'</tr>'+
+    teams.map(t=>'<tr>'+tn(t)+t.gf.slice(0,nb).map((g,i)=>'<td>'+z(g)+'<small>-'+t.ga[i]+'</small></td>').join('')+'</tr>').join('')+'</table></div>';
+  // 2. 先制・逆転
+  const wdl=a=>a[0]+'勝'+a[1]+'分'+a[2]+'敗';
+  h+='<div class="sh"><h2>先制したとき・されたとき</h2></div><div class="card scroll"><table class="tbl"><tr><th class="l">チーム</th><th>先制した試合</th><th>勝率</th><th>先制された試合</th><th>逆転勝ち</th><th>前半リード</th></tr>'+
+    teams.map(t=>{const a=t.fs.reduce((x,y)=>x+y,0),b=t.cs.reduce((x,y)=>x+y,0),c=t.ht.reduce((x,y)=>x+y,0);
+      return '<tr>'+tn(t)+'<td>'+(a?wdl(t.fs):'-')+'</td><td>'+pct(t.fs[0],a)+'</td><td>'+(b?wdl(t.cs):'-')+'</td><td>'+z(t.cs[0])+'</td><td>'+(c?wdl(t.ht):'-')+'</td></tr>';}).join('')+
+    '</table></div><p class="note">先制は、得点の時間がすべて記録された試合だけで数えています。前半リードは、前半を勝って終えた試合の結果です。</p>';
+  // 3. チーム記録
+  const ts=teams.filter(t=>t.sn).sort((a,b)=>b.sf/b.sn-a.sf/a.sn);
+  if(ts.length)h+='<div class="sh"><h2>シュート・セットプレー</h2><small>1試合あたり</small></div><div class="card scroll"><table class="tbl"><tr><th class="l">チーム</th><th>試合</th><th>シュート</th><th>打たれた<br>シュート</th><th>決定率</th><th>CK</th><th>FK</th><th>オフサイド</th></tr>'+
+    ts.map(t=>'<tr>'+tn(t)+'<td>'+t.sn+'</td><td><b>'+f1(t.sf/t.sn)+'</b></td><td>'+f1(t.sa/t.sn)+'</td><td>'+pct(t.sg,t.sf)+'</td><td>'+f1(t.ck/t.sn)+'</td><td>'+f1(t.fk/t.sn)+'</td><td>'+f1(t.of/t.sn)+'</td></tr>').join('')+
+    '</table></div><p class="note">決定率＝得点÷シュート。FKは直接FKと間接FKの合計です。シュートなどの記録が入っている試合だけで計算しています。</p>';
+  // 4. 選手
+  const P=[];
+  for(const st of DATA.playerStats||[])for(const p of st.players||[]){
+    let min=0,g=0,sub=0,apps=0,starts=0;
+    for(const L of Object.values(p.log||{})){if(L.min==null)continue;apps++;if(L.st)starts++;min+=L.min;g+=L.g||0;if(!L.st&&L.g)sub+=L.g;}
+    if(apps)P.push({p,team:st.team,min,g,sub,apps,starts,ga:(p.goals||0)+(p.assists||0)});
+  }
+  const pn=x=>'<td class="nm l">'+playerLink(x.team,x.p.name)+'</td><td class="l"><span class="tn">'+crest(x.team,'xs')+esc(x.team.short)+'</span></td>';
+  const tbl=(title,sub,cols,list,row,note)=>list.length?'<div class="sh"><h2>'+title+'</h2>'+(sub?'<small>'+sub+'</small>':'')+'</div><div class="card scroll"><table class="tbl rank"><tr><th>順位</th><th class="l">選手</th><th class="l">チーム</th>'+cols.map(c=>'<th>'+c+'</th>').join('')+'</tr>'+list.map((x,i,a)=>'<tr><td class="rk">'+(i&&row(a[i-1])[0]===row(x)[0]?'':i+1)+'</td>'+pn(x)+row(x).map((v,j)=>'<td'+(j?'':' class="cnt"')+'>'+v+'</td>').join('')+'</tr>').join('')+'</table></div>'+(note?'<p class="note">'+note+'</p>':''):'';
+  const full=Math.max(...off.map(d=>parseInt(d.info&&d.info.duration,10)||90));
+  h+=tbl('出場時間','上位20人',['分','出場','先発'],[...P].sort((a,b)=>b.min-a.min).slice(0,20),x=>[x.min,x.apps,x.starts],'');
+  const g90=P.filter(x=>x.g&&x.min>=full*2).map(x=>({...x,r:x.g/x.min*90})).sort((a,b)=>b.r-a.r).slice(0,20);
+  h+=tbl('90分あたりの得点','出場 '+full*2+'分以上',['得点/90分','得点','分'],g90,x=>[x.r.toFixed(2),x.g,x.min],'公式記録の画面で入力された試合の得点と出場時間で計算しています。');
+  h+=tbl('途中出場からの得点','',['得点'],P.filter(x=>x.sub).sort((a,b)=>b.sub-a.sub).slice(0,20),x=>[x.sub],'ベンチから出て決めた得点（公式記録の画面で入力された試合）。');
+  return h;
+}
+
 /* ---------- 試合詳細 ---------- */
 async function openMatch(id){
   S.match=id;SCROLL_Y=window.scrollY;
@@ -671,6 +759,16 @@ function rMatch(){
     (d.subs||[]).map(x=>({s:x.sort,side:x.side,min:x.minute,html:'<span style="color:#4caf50">▲ '+esc(x.in)+'</span><br><span style="color:var(--muted)">▼ '+esc(x.out)+'</span>'}))
   ).sort((a,b)=>a.s-b.s);
   const tl=evs.length?'<div class="sh"><h2>試合経過</h2></div><div class="card"><ul class="tl">'+evs.map(e=>'<li><span class="h">'+(e.side==='home'?e.html:'')+'</span><span class="min">'+esc(e.min)+(e.min?"'":'')+'</span><span>'+(e.side==='away'?e.html:'')+'</span></li>').join('')+'</ul></div>':'';
+  const STL=[['shots','シュート'],['gk','ゴールキック'],['ck','コーナーキック'],['dfk','直接FK'],['ifk','間接FK'],['off','オフサイド'],['pk','PK']];
+  const stx=d.stats?(()=>{
+    const h=d.stats.home||{},a=d.stats.away||{},v=(o,k,i)=>o[k]&&o[k][i]!=null?o[k][i]:null;
+    const rows=STL.filter(([k])=>v(h,k,3)!=null||v(a,k,3)!=null).map(([k,l])=>{
+      const x=v(h,k,3)||0,y=v(a,k,3)||0,mx=Math.max(x,y,1);
+      const hf=[0,1,2].map(i=>[v(h,k,i),v(a,k,i)]),bk=['前半','後半','延長'].map((n,i)=>hf[i][0]!=null||hf[i][1]!=null?n+' '+(hf[i][0]??0)+'-'+(hf[i][1]??0):'').filter(Boolean).join('　');
+      return '<div class="r"><b class="'+(x<y?'lo':'')+'">'+x+'</b><div><span class="lb">'+l+'</span><div class="bars"><span><i class="h" style="width:'+Math.round(x/mx*100)+'%"></i></span><span><i class="a" style="width:'+Math.round(y/mx*100)+'%"></i></span></div>'+(bk?'<small>'+esc(bk)+'</small>':'')+'</div><b class="'+(y<x?'lo':'')+'">'+y+'</b></div>';
+    });
+    return rows.length?'<div class="sh"><h2>スタッツ</h2></div><div class="card mst"><div class="hd"><span>'+crest(H,'xs')+esc(H.short)+'</span><span>'+esc(A.short)+crest(A,'xs')+'</span></div>'+rows.join('')+'</div>':'';
+  })():'';
   const lu=d.lineups?'<div class="sh"><h2>メンバー</h2></div><div class="lu">'+['home','away'].map(sdn=>{
     const L=d.lineups[sdn],T=sdn==='home'?H:A;
     const row=p=>'<tr><td class="no">'+esc(p.no)+'</td><td class="ps">'+esc(p.pos)+'</td><td>'+playerLink(T,p.name)+(p.goals?' <span class="ev">⚽'+(p.goals>1?'×'+p.goals:'')+'</span>':'')+(p.cards||[]).map(c=>'<span class="ico '+(c==='C'?'c':'s')+'"></span>').join('')+(p.out?' <span class="ev">▼'+esc(p.out)+"'</span>":'')+(p.in?' <span class="ev" style="color:#4caf50">▲'+esc(p.in)+"'</span>":'')+'</td></tr>';
@@ -685,7 +783,7 @@ function rMatch(){
   const dimg=(u,w)=>{const m=String(u||'').match(/drive\.google\.com\/(?:file\/d\/|open\?id=|uc\?(?:export=\w+&)?id=)([\w-]{20,})/);return m?'https://drive.google.com/thumbnail?id='+m[1]+'&sz=w'+w:(/^https:\/\//.test(u)?u:'');};
   const phs=(d.photos||[]).filter(p=>dimg(p.url,800));
   const ph=phs.length?'<div class="sh"><h2>写真</h2></div><div class="mphotos">'+phs.map(p=>'<figure><a href="'+esc(dimg(p.url,1600))+'" target="_blank" rel="noopener"><img src="'+esc(dimg(p.url,800))+'" alt="'+esc(p.caption||'試合の写真')+'" loading="lazy" decoding="async" onerror="this.closest(\'figure\').remove()"></a>'+(p.caption||p.credit?'<figcaption>'+esc(p.caption||'')+(p.credit?'<span>撮影：'+esc(p.credit)+'</span>':'')+'</figcaption>':'')+'</figure>').join('')+'</div>':'';
-  $('main').innerHTML='<a class="back" href="'+pageUrl(S.comp,S.tab)+'">‹ '+back+'に戻る</a>'+head+tl+ph+lu+pk+off+note+'<div class="foot">'+esc(DATA.competition.name)+'　'+esc(m.matchId)+'</div>';
+  $('main').innerHTML='<a class="back" href="'+pageUrl(S.comp,S.tab)+'">‹ '+back+'に戻る</a>'+head+tl+stx+ph+lu+pk+off+note+'<div class="foot">'+esc(DATA.competition.name)+'　'+esc(m.matchId)+'</div>';
 }
 
 if(window.JUFA_LIVE)JUFA_LIVE.on(()=>{
