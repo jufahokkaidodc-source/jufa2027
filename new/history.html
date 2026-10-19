@@ -291,9 +291,9 @@ function drawYear(){
 }
 function drawComp(c){
   let h=`<div class="yh"><h3>${esc(c.name)}</h3><span class="sub">${c.finished?(c.champion?'優勝：'+esc(c.champion.name):'最終結果'):'シーズン中'+(c.asOf?'（'+esc(md(c.asOf))+'時点）':'')}</span></div>`;
-  (c.standings||[]).forEach(g=>{
-    h+=`<div class="block">${g.group?`<h4>${esc(g.group)}${/グループ|組|ブロック/.test(g.group)?'':'グループ'}</h4>`:'<h4>順位表</h4>'}<div class="card tw"><table class="ht"><tr><th>順位</th><th class="l">チーム</th><th>試合</th><th>勝点</th><th>勝</th><th>分</th><th>敗</th><th>得点</th><th>失点</th><th>得失点</th></tr>
-      ${g.table.map(r=>`<tr${r.rank===1&&c.finished?' class="top1"':''}><td><span class="rk${r.rank===1?' r1':''}">${esc(r.rank)}</span></td><td class="l"><b>${esc(r.team&&r.team.name)}</b>${r.note?`<div class="note" style="margin:2px 0 0">${esc(r.note)}</div>`:''}</td><td class="num">${esc(r.played)}</td><td class="pts">${esc(r.points)}</td><td class="num">${esc(r.won)}</td><td class="num">${esc(r.drawn)}</td><td class="num">${esc(r.lost)}</td><td class="num">${esc(r.goalsFor)}</td><td class="num">${esc(r.goalsAgainst)}</td><td class="num">${r.goalDiff>0?'+':''}${esc(r.goalDiff)}</td></tr>`).join('')}</table></div></div>`;
+  (c.standings||[]).forEach((g,gi)=>{
+    h+=`<div class="block">${g.group?`<h4>${esc(g.group)}${/グループ|組|ブロック|リーグ|順位/.test(g.group)?'':'グループ'}</h4>`:'<h4>順位表</h4>'}<div class="card tw"><table class="ht"><tr><th>順位</th><th class="l">チーム</th><th>試合</th><th>勝点</th><th>勝</th><th>分</th><th>敗</th><th>得点</th><th>失点</th><th>得失点</th></tr>
+      ${g.table.map(r=>`<tr${r.rank===1&&c.finished&&(gi===0||!/予選/.test(g.group))?' class="top1"':''}><td><span class="rk${r.rank===1?' r1':''}">${esc(r.rank)}</span></td><td class="l"><b>${esc(r.team&&r.team.name)}</b>${r.note?`<div class="note" style="margin:2px 0 0">${esc(r.note)}</div>`:''}</td><td class="num">${esc(r.played)}</td><td class="pts">${esc(r.points)}</td><td class="num">${esc(r.won)}</td><td class="num">${esc(r.drawn)}</td><td class="num">${esc(r.lost)}</td><td class="num">${esc(r.goalsFor)}</td><td class="num">${esc(r.goalsAgainst)}</td><td class="num">${r.goalDiff>0?'+':''}${esc(r.goalDiff)}</td></tr>`).join('')}</table></div></div>`;
   });
   if(c.matches&&c.matches.length){
     const rs=[];c.matches.forEach(m=>{const k=m.group?m.group+'グループ':m.round;let r=rs.find(x=>x.k===k);if(!r)rs.push(r={k,list:[]});r.list.push(m)});
@@ -303,11 +303,13 @@ function drawComp(c){
     h+=`<div class="block po"><h4>${esc(p.title)}<span class="note" style="margin-left:8px">${esc(md(p.date))}${p.venue?'・'+esc(p.venue):''}</span></h4>${p.matches.map(m=>`<div class="card">${esc(m.home.name)} <small>（${esc(m.homeNote)}）</small><span class="sc">${esc(m.score)}</span>${esc(m.away.name)} <small>（${esc(m.awayNote)}）</small>${m.half?`<div class="note">${esc(m.half)}</div>`:''}</div>`).join('')}</div>`;
   });
   if(c.notes&&c.notes.length)h+=`<div class="note">${c.notes.map(n=>'※'+esc(n)).join('<br>')}</div>`;
+  const scT=(title,sub,list)=>`<div class="block"><h4>${esc(title)}<span class="note" style="margin-left:8px">${sub}</span></h4><div class="card tw"><table class="ht" style="min-width:0"><tr><th>順位</th><th class="l">選手</th><th class="l">チーム</th><th>得点</th></tr>
+      ${list.map(s=>`<tr><td><span class="rk${s.rank===1?' r1':''}">${esc(s.rank)}</span></td><td class="l"><b>${esc(s.name)}</b></td><td class="l" style="white-space:normal;color:var(--muted)">${esc(s.team)}</td><td class="pts">${esc(s.count)}</td></tr>`).join('')}</table></div></div>`;
   if(c.scorers&&c.scorers.length){
     const asOf=c.scorersAsOf||c.asOf,early=!c.scorersNote&&c.scorersAsOf&&c.asOf&&c.scorersAsOf<c.asOf;
-    h+=`<div class="block"><h4>得点ランキング<span class="note" style="margin-left:8px">${c.scorersNote?esc(c.scorersNote):(asOf?esc(md(asOf))+'時点':'')+(early?'（最終ではありません）':'')}</span></h4><div class="card tw"><table class="ht" style="min-width:0"><tr><th>順位</th><th class="l">選手</th><th class="l">チーム</th><th>得点</th></tr>
-      ${c.scorers.map(s=>`<tr><td><span class="rk${s.rank===1?' r1':''}">${esc(s.rank)}</span></td><td class="l"><b>${esc(s.name)}</b></td><td class="l" style="white-space:normal;color:var(--muted)">${esc(s.team)}</td><td class="pts">${esc(s.count)}</td></tr>`).join('')}</table></div></div>`;
+    h+=scT('得点ランキング',c.scorersNote?esc(c.scorersNote):(asOf?esc(md(asOf))+'時点':'')+(early?'（最終ではありません）':''),c.scorers);
   }
+  (c.scorerTables||[]).forEach(t=>{h+=scT('得点ランキング（'+t.title+'）',t.asOf?esc(md(t.asOf))+'時点':'',t.list)});
   if(c.awards&&c.awards.length){
     h+=`<div class="block"><h4>個人表彰</h4><div class="aw">${c.awards.map(a=>`<div class="card"><h5>${esc(a.award)}</h5><ul>${a.list.map(p=>`<li><span class="p">${esc(p.pos)}</span><span class="n">${esc(p.name)}${p.note?` <small style="color:var(--muted)">${esc(p.note)}</small>`:''}</span><span class="t">${esc(p.team)}</span></li>`).join('')}</ul></div>`).join('')}</div></div>`;
   }
