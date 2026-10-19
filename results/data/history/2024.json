@@ -31,7 +31,7 @@
        "goalsFor": 31,
        "goalsAgainst": 11,
        "goalDiff": 20,
-       "points": 31,
+       "points": 28,
        "note": ""
       },
       {
@@ -47,7 +47,7 @@
        "goalsFor": 28,
        "goalsAgainst": 6,
        "goalDiff": 22,
-       "points": 28,
+       "points": 25,
        "note": ""
       },
       {
@@ -236,6 +236,7 @@
     }
    ],
    "scorersAsOf": "2024-09-02",
+   "scorersNote": "予選リーグ終了時点（チャレンジリーグ（順位決定リーグ）の得点は含みません）",
    "awards": [
     {
      "award": "最優秀選手賞（MVP）",
