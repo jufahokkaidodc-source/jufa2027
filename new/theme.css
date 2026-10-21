@@ -17,6 +17,9 @@
   --accent:#E60012;
 }
 body{background:var(--bg);color:var(--ink)}
+/* 小さい文字は 12px まで（DESIGN.md）。<small> は大きさを決めていないと親の 83% になるので、12px より小さくしない */
+small{font-size:max(12px,.85em)}
+.boxhead a{white-space:nowrap;flex:none;margin-left:10px}
 
 /* ヘッダー：白 */
 .header{background:#fff;color:#111;box-shadow:0 1px 0 #e5e5e5}
@@ -27,6 +30,9 @@ body{background:var(--bg);color:var(--ink)}
 .menubtn{border-color:#ccc;color:#111}
 .comptabs{background:#161616;border-top:0}
 @media(max-width:680px){
+  /* 英語の連盟名は1行に（入りきらないときは …）。文字を 12px にしてもヘッダーの高さを変えない */
+  .brand,.brandname{min-width:0}
+  .brandname small{white-space:nowrap!important;overflow:hidden;text-overflow:ellipsis}
   .nav{background:#fff;border-bottom:1px solid #e5e5e5}
   .nav a{border-bottom-color:#eee}
 }

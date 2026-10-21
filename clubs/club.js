@@ -132,7 +132,7 @@
     return '<' + tag + ' class="mr' + (x.ext ? ' ext' : '') + '"' + (u ? ' href="' + esc(u) + '"' + (x.ext ? ' target="_blank" rel="noopener"' : '') : '') + '>' +
       '<div class="d"><b>' + esc(md(m.date)) + '</b>' + esc(wd(m.date) ? '（' + wd(m.date) + '）' : '') + '</div>' +
       '<div class="o"><b>vs ' + esc(tname(x.opp)) + '</b><small>' + esc(x.label) + (m.round ? '　' + esc(m.round) : '') + (m.venue ? '　' + esc(m.venue) : '') + '</small></div>' +
-      '<div class="s">' + (done ? esc(myScore(x)) + ' - ' + esc(opScore(x)) + (pk ? '<small style="font-size:11px;color:var(--sub);font-family:Noto Sans JP,sans-serif">' + esc(pk) + '</small>' : '') + '<span class="res ' + r + '">' + RES[r] + '</span>' : '<span class="ko">' + esc(m.kickoff ? m.kickoff + ' KO' : '予定') + '</span>') + '</div>' + (x.ext && m.note ? '<div class="nt">' + esc(m.note) + '</div>' : '') + '</' + tag + '>';
+      '<div class="s">' + (done ? esc(myScore(x)) + ' - ' + esc(opScore(x)) + (pk ? '<small style="font-size:12px;color:var(--sub);font-family:Noto Sans JP,sans-serif">' + esc(pk) + '</small>' : '') + '<span class="res ' + r + '">' + RES[r] + '</span>' : '<span class="ko">' + esc(m.kickoff ? m.kickoff + ' KO' : '予定') + '</span>') + '</div>' + (x.ext && m.note ? '<div class="nt">' + esc(m.note) + '</div>' : '') + '</' + tag + '>';
   }
   const ini = () => [...CFG.univ.replace(/(大学|大)$/, '')].slice(0, 2).join('');
   function emb(t, mineSide) {
@@ -337,7 +337,7 @@
       '<dl>' + [['背番号', p.no], ['ポジション', p.pos], ['学年', p.grade ? p.grade + '年' : ''], ['出身校', p.school], ['所属', (p.teams || []).map(t => t.label).join('・')]].filter(r => has(r[1])).map(r => '<dt>' + r[0] + '</dt><dd>' + esc(r[1]) + '</dd>').join('') + '</dl>' +
       (has(p.comment) ? '<p style="margin:0;font-size:14px;line-height:1.8">「' + esc(p.comment) + '」</p>' : '') +
       compStats(p.id) +
-      '<p style="font-size:11.5px;color:var(--sub);margin:12px 0 0">成績は公式記録から大会ごとに自動で集計しています。</p></div></div>';
+      '<p style="font-size:12px;color:var(--sub);margin:12px 0 0">成績は公式記録から大会ごとに自動で集計しています。</p></div></div>';
     const close = () => { box.remove(); document.removeEventListener('keydown', esc1); if (location.hash.startsWith('#players/')) history.replaceState(null, '', '#players'); };
     const esc1 = e => { if (e.key === 'Escape') close(); };
     box.addEventListener('click', e => { if (e.target === box || e.target.closest('.x')) close(); });
