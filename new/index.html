@@ -140,6 +140,9 @@ button{font:inherit;color:inherit;cursor:pointer}
 
 /* pickup */
 .main{padding:28px 0 64px}
+.parts-main{padding-bottom:64px}
+.mpart{margin-top:40px}
+.parts-main>.mpart:first-child{margin-top:28px}
 .pickup{display:grid;grid-template-columns:minmax(0,1fr);gap:20px}
 .hero{background:var(--navy);color:#fff;border-radius:16px;overflow:hidden;position:relative;min-height:340px;display:flex;flex-direction:column}
 .hero svg.pitch{position:absolute;inset:0;width:100%;height:100%;opacity:.08}
@@ -370,12 +373,13 @@ html{scroll-padding-top:0}
 @media(max-width:680px){.club>.crest{width:60px;height:60px;margin-top:-32px;font-size:21px}.club>.crest.two{font-size:16px}}
 </style>
 <link rel="stylesheet" href="./theme.css">
+<script src="./site.js"></script>
 </head>
 <body>
 <div class="trial" style="background:#fff4d6;color:#7a5a00;font-size:12px;text-align:center;padding:7px 16px;line-height:1.6">2027年度の試験用ページです。大会名に【ダミー】が付いた大会は、テスト用の架空のデータです。</div>
 <div class="demo" id="demo" hidden>プレビュー用のサンプルデータを表示しています（公開環境では公式データに自動で切り替わります）</div>
 
-<div class="clubbar"><div class="wrap" id="clubbar"><small>CLUBS</small></div></div>
+<div class="clubbar" data-part="clubbar"><div class="wrap" id="clubbar"><small>CLUBS</small></div></div>
 
 <header class="header">
   <div class="wrap head">
@@ -395,14 +399,15 @@ html{scroll-padding-top:0}
 
 <div class="alert" id="alert" hidden></div>
 
-<section class="photos" id="photos" hidden aria-roledescription="carousel" aria-label="トップ写真">
+<div id="parts">
+<section class="photos" id="photos" data-part="photos" hidden aria-roledescription="carousel" aria-label="トップ写真">
   <div class="ph-stage" id="phStage"></div>
   <button class="ph-nav p" id="phPrev" aria-label="前の写真">‹</button>
   <button class="ph-nav n" id="phNext" aria-label="次の写真">›</button>
   <div class="ph-cap" id="phCap"><div class="tx" id="phTx" aria-live="polite"></div><div class="ph-dots" id="phDots"></div></div>
 </section>
 
-<section class="ticker">
+<section class="ticker" data-part="ticker">
   <div class="wrap">
     <div class="ticker-head">
       <h2><small>MATCHES</small><span id="tickerTitle">試合</span></h2>
@@ -416,23 +421,23 @@ html{scroll-padding-top:0}
   </div>
 </section>
 
-<main class="wrap main">
-  <div class="pickup">
+<main class="parts-main">
+  <div class="wrap mpart pickup" data-part="news">
     <aside class="newsbox">
       <div class="boxhead"><h3><small>LATEST</small>お知らせ・トピックス</h3><a href="./news.html">お知らせ一覧 ›</a></div>
       <div class="news" id="topics"><span class="sk"></span><span class="sk"></span><span class="sk"></span></div>
     </aside>
   </div>
 
-  <div class="cols section">
-    <section id="schedule">
+  <div class="wrap mpart cols" data-part="results">
+    <section id="schedule" data-part="schedule">
       <div class="sechead"><h2><small>SCHEDULE & RESULTS</small>日程・結果</h2><a class="js-detail" href="./results.html">全試合 ↗</a></div>
       <div class="subtabs" id="roundTabs" role="tablist"></div>
       <div class="card" id="matchList"><span class="sk"></span><span class="sk"></span><span class="sk"></span></div>
       <p class="note">試合をタップすると公式記録ページ（得点者・警告などの詳細）に移動します。</p>
     </section>
 
-    <div class="side" id="ranking">
+    <div class="side" id="ranking" data-part="standings">
       <section>
         <div class="sechead"><h2><small>STANDINGS</small>順位表</h2><a class="js-detail" data-tab="standings" href="./results.html?tab=standings">詳細 ↗</a></div>
         <div class="card table-wrap" id="table"><span class="sk"></span><span class="sk"></span></div>
@@ -440,21 +445,22 @@ html{scroll-padding-top:0}
     </div>
   </div>
 
-  <section class="section" id="scorers">
+  <section class="wrap mpart" id="scorers" data-part="scorers">
     <div class="sechead"><h2><small>RANKING</small>得点ランキング</h2><a class="js-detail" data-tab="scorers" href="./results.html?tab=scorers">一覧 ↗</a></div>
     <div class="card scorers" id="scorerList"><span class="sk"></span><span class="sk"></span></div>
   </section>
 
-  <section class="section" id="clubs">
+  <section class="wrap mpart" id="clubs" data-part="clubs">
     <div class="sechead"><h2><small>CLUBS</small>参加クラブ</h2><span class="note" style="margin:0" id="clubCount"></span></div>
     <div class="clubs" id="clubList"><span class="sk"></span></div>
   </section>
 
-  <div class="partner">
+  <div class="wrap mpart partner" data-part="partner">
     <div class="p1"><span class="label">FOR UNIVERSITIES</span><h3>各大学・クラブの専用ページを、公式データでつくる。</h3><p>試合結果や個人成績は公式記録から自動で反映。広報の負担を減らしながら、ファンや新入生に活動を届ける仕組みを準備しています。</p></div>
     <div class="p2"><b>パートナー・スポンサー</b>北海道の大学サッカーを、一緒に盛り上げませんか。<br>掲載スペース（準備中）</div>
   </div>
 </main>
+</div><!-- /#parts -->
 
 <footer class="footer">
   <div class="wrap">
@@ -680,6 +686,8 @@ function renderAlert(){
   $('alert').hidden=!imp.length;
   $('alert').innerHTML='<div class="wrap"><b>重要なお知らせ</b><div class="al">'+imp.map(n=>'<a href="./news.html?id='+encodeURIComponent(n.id)+'"><time>'+esc(fmtDate(n.date))+'</time><span>'+esc(n.title)+'</span></a>').join('')+'</div></div>';
 }
+/* お知らせの数：ニュース中心（テンプレート3）は多め */
+const NEWS_N=()=>window.JUFA_SITE&&JUFA_SITE.get().layout===3?10:6;
 function renderTopics(ms,scorers,compName){
   const done=order(ms).filter(isDone).reverse(),items=[];
   const byRound=new Map();for(const m of done){const k=m.round||'';if(!byRound.has(k))byRound.set(k,[]);byRound.get(k).push(m)}
@@ -690,9 +698,9 @@ function renderTopics(ms,scorers,compName){
   const up=order(ms).find(m=>!isDone(m)&&(m.date||'9999')>=jstToday());
   if(up)items.unshift({date:up.date,cat:'予定',text:(up.round?up.round+'　':'')+fmtDate(up.date)+' 開催 '+name(up.home)+' vs '+name(up.away)+' ほか'});
   if(scorers?.length){const t=scorers[0];items.splice(1,0,{date:done[0]?.date,cat:'記録',text:'得点ランキング首位は'+name(t.team)+'・'+t.name+'選手（'+t.count+'得点）'})}
-  for(const n of NEWS.filter(n=>n.cat==='連盟'||n.cat===S.id).slice(0,6))items.push({date:n.date,cat:n.cat==='連盟'?'連盟':'お知らせ',text:n.title,href:'./news.html?id='+encodeURIComponent(n.id),imp:n.important,news:true});
+  for(const n of NEWS.filter(n=>n.cat==='連盟'||n.cat===S.id).slice(0,NEWS_N()))items.push({date:n.date,cat:n.cat==='連盟'?'連盟':'お知らせ',text:n.title,href:'./news.html?id='+encodeURIComponent(n.id),imp:n.important,news:true});
   items.sort((a,b)=>String(b.date||'').localeCompare(String(a.date||'')));
-  $('topics').innerHTML=items.length?items.slice(0,6).map(it=>'<a href="'+esc(it.href||detail(S.id))+'"><time>'+esc(it.date?fmtDate(it.date):'')+'<span class="cat'+(it.news?' nw':'')+'">'+esc(it.cat)+'</span>'+(it.imp?'<span class="cat imp">重要</span>':'')+'</time><p>'+esc(it.text)+'</p></a>').join(''):'<p class="empty">'+esc(compName)+'のトピックスはまだありません。</p>';
+  $('topics').innerHTML=items.length?items.slice(0,NEWS_N()).map(it=>'<a href="'+esc(it.href||detail(S.id))+'"><time>'+esc(it.date?fmtDate(it.date):'')+'<span class="cat'+(it.news?' nw':'')+'">'+esc(it.cat)+'</span>'+(it.imp?'<span class="cat imp">重要</span>':'')+'</time><p>'+esc(it.text)+'</p></a>').join(''):'<p class="empty">'+esc(compName)+'のトピックスはまだありません。</p>';
 }
 
 /* top photos：写真がないときは何も出さない。今の1枚と次の1枚だけ読み込む */

@@ -6,6 +6,7 @@
  *    color … 強調色。空ならチーム紹介の「チームカラー」
  *    hero  … トップ画像のURL。空ならチーム紹介の「チーム写真」
  *    lead  … トップの一言（キャッチコピー）。空ならチーム紹介の紹介文の最初の一文
+ *    layout … 構成（テンプレート 1〜5）、hide … 載せないもの（管理画面の「チーム紹介」。?layout=・&hide= でプレビュー）
  *  ページ：HOME・NEWS・BLOG（選手ブログ）・MATCH（日程・結果・順位表）・TEAM（選手・スタッフ・個人成績）・ABOUT・GALLERY・CONTACT
  *  デザインは body[data-tpl]（a・b・c）で切り替え。ページ構成とデータは共通（club.css）
  *  データ：公式記録（results/data/*.json）と、管理画面の名鑑・ニュース（*-roster.json）。新しい入力は作らない
@@ -42,6 +43,28 @@
   const isDone = m => m.status === 'finished' && m.score && m.score.home != null && m.score.home !== '' && m.score.away != null && m.score.away !== '';
 
   const S = { comps: [], data: {}, roster: {}, teams: [], profile: null, matches: [], players: [], staff: [], news: [], blog: [], stats: [], gallery: [], sponsors: [], ext: [] };
+
+  /* ───────── 構成（テンプレート5つ・載せないもの）：管理画面の「チーム紹介」→ clubs.json の layout・hide ───────── */
+  // home＝トップのブロックの順。シンプル（5）はトップを試合・ニュース・紹介・スポンサーだけにする
+  const LAYOUTS = {
+    1: { name: 'スタンダード', home: ['next', 'last', 'news', 'blog', 'players', 'about', 'gallery', 'movie', 'instagram', 'sponsors'] },
+    2: { name: '試合中心', home: ['next', 'last', 'players', 'news', 'blog', 'about', 'gallery', 'movie', 'instagram', 'sponsors'] },
+    3: { name: 'ニュース・ブログ中心', home: ['news', 'blog', 'next', 'last', 'gallery', 'players', 'about', 'movie', 'instagram', 'sponsors'] },
+    4: { name: 'ビジュアル', home: ['next', 'gallery', 'movie', 'instagram', 'players', 'news', 'blog', 'last', 'about', 'sponsors'] },
+    5: { name: 'シンプル', home: ['next', 'last', 'news', 'about', 'sponsors'] }
+  };
+  const PV = Number(new URLSearchParams(location.search).get('layout'));
+  const LAYOUT = () => LAYOUTS[PV] || LAYOUTS[CFG.layout] || LAYOUTS[1];
+  // プレビュー（管理画面の「プレビューを見る」）：&hide= に管理画面の選択肢の名前が「、」区切りで来る
+  const HIDE_LABEL = { 'トップ：次の試合': 'next', 'トップ：試合結果・順位': 'last', 'トップ：最新ニュース': 'news', 'トップ：選手ブログ': 'blog', 'トップ：注目選手': 'players',
+    'トップ：クラブ紹介': 'about', 'トップ：ギャラリー': 'gallery', 'トップ：動画': 'movie', 'トップ：Instagram': 'instagram', 'トップ：スポンサー': 'sponsors',
+    'ページ：ニュース（NEWS）': 'p:news', 'ページ：選手ブログ（BLOG）': 'p:blog', 'ページ：選手・スタッフ（TEAM）': 'p:players', 'ページ：個人成績': 'p:stats',
+    'ページ：ギャラリー（GALLERY）': 'p:gallery', 'ページ：お問い合わせ（CONTACT）': 'p:contact' };
+  const QH = new URLSearchParams(location.search).get('hide');
+  const HIDE = QH != null ? QH.split('、').map(x => HIDE_LABEL[x]).filter(Boolean) : Array.isArray(CFG.hide) ? CFG.hide : [];
+  const hidden = k => HIDE.indexOf(k) >= 0;
+  const PAGE_OFF = { news: 'p:news', blog: 'p:blog', players: 'p:players', stats: 'p:stats', gallery: 'p:gallery', contact: 'p:contact' };
+  const pageOn = v => !PAGE_OFF[v] || !hidden(PAGE_OFF[v]);
 
   /* ───────── 読み込み ───────── */
   async function getJSON(f) { const r = await fetch(CFG.data + f, { cache: 'no-store' }); if (!r.ok) throw Error('HTTP ' + r.status); return r.json(); }
@@ -147,9 +170,9 @@
   function nextMatch() { const t = jstToday(); return S.matches.find(x => !isDone(x.m) && (x.m.date || '9999') >= t); }
   function viewHome() {
     const next = nextMatch(), last = S.matches.filter(x => isDone(x.m)).slice(-1)[0];
-    let html = '';
+    const P = {}; // トップのブロック（テンプレートの順に並べる）
     // NEXT MATCH（メインビジュアルの下に重ねる）
-    html += '<div class="wrap reveal on">' + (next ? (() => {
+    P.next = '<div class="wrap reveal on">' + (next ? (() => {
       const d = daysUntil(next.m.date), me = next.home ? next.m.home : next.m.away;
       return '<div class="nextm"><div class="meta"><span class="lab">NEXT MATCH</span><span>' + esc(next.label) + (next.m.round ? '　' + esc(next.m.round) : '') + '</span></div>' +
         '<div class="board"><div class="tm">' + emb(me, true) + '<b>' + esc(tname(me)) + '</b></div><div class="mid"><div class="en">VS</div></div><div class="tm">' + emb(next.opp) + '<b>' + esc(tname(next.opp)) + '</b></div></div>' +
@@ -164,26 +187,28 @@
         '<div class="board"><div class="tm">' + emb(me, true) + '<b>' + esc(tname(me)) + '</b></div><div class="mid"><div class="en">' + esc(myScore(last)) + ' - ' + esc(opScore(last)) + '</div><small>' + esc(pk || 'FULL TIME') + '</small></div><div class="tm">' + emb(last.opp) + '<b>' + esc(tname(last.opp)) + '</b></div></div>' +
         '<div class="rs"><span class="res ' + r + '" style="width:auto;padding:0 14px">' + RES[r] + '</span></div></a>';
     })() : emptyBox('まだ試合の結果はありません');
-    html += band('', 'MATCH', '試合結果・順位', '<div class="duo">' + lastBox + '<div>' + (st.length ? standBox(st) : emptyBox('順位表は、リーグ戦が始まると出ます')) +
+    P.last = band('', 'MATCH', '試合結果・順位', '<div class="duo">' + lastBox + '<div>' + (st.length ? standBox(st) : emptyBox('順位表は、リーグ戦が始まると出ます')) +
       '<div class="card" style="margin-top:12px">' + S.matches.filter(x => isDone(x.m)).slice(-3).reverse().map(matchRow).join('') + '</div></div></div>', '<a href="#matches">試合一覧 ›</a>');
     // LATEST NEWS
-    html += band('alt', 'LATEST NEWS', '最新ニュース', S.news.length ? '<div class="ng compact">' + S.news.slice(0, 3).map(newsCard).join('') + '</div>' : emptyBox('ニュースはまだありません'), S.news.length ? '<a href="#news">ニュース一覧 ›</a>' : '');
+    P.news = band('alt', 'LATEST NEWS', '最新ニュース', S.news.length ? '<div class="ng compact">' + S.news.slice(0, 3).map(newsCard).join('') + '</div>' : emptyBox('ニュースはまだありません'), S.news.length ? '<a href="#news">ニュース一覧 ›</a>' : '');
     // PLAYERS BLOG
-    if (S.blog.length) html += band('', 'PLAYERS BLOG', '選手ブログ', '<div class="ng compact">' + S.blog.slice(0, 3).map(blogCard).join('') + '</div>', '<a href="#blog">ブログ一覧 ›</a>');
+    if (S.blog.length) P.blog = band('', 'PLAYERS BLOG', '選手ブログ', '<div class="ng compact">' + S.blog.slice(0, 3).map(blogCard).join('') + '</div>', '<a href="#blog">ブログ一覧 ›</a>');
     // PLAYERS（注目選手）
     const fp = featured(8);
-    if (fp.length) html += band('dark', 'OUR PLAYERS', '注目選手', '<div class="pl">' + fp.map(card).join('') + '</div>', '<a href="#players">選手一覧 ›</a>');
+    if (fp.length) P.players = band('dark', 'OUR PLAYERS', '注目選手', '<div class="pl">' + fp.map(card).join('') + '</div>', '<a href="#players">選手一覧 ›</a>');
     // ABOUT CLUB
-    html += band('', 'ABOUT CLUB', 'クラブ紹介', aboutBlock(true), '<a href="#club">くわしく ›</a>');
+    P.about = band('', 'ABOUT CLUB', 'クラブ紹介', aboutBlock(true), '<a href="#club">くわしく ›</a>');
     // GALLERY
-    if (S.gallery.length) html += band('alt', 'GALLERY', 'ギャラリー', galleryGrid(S.gallery.slice(0, 7), true), '<a href="#gallery">すべて見る ›</a>');
+    if (S.gallery.length) P.gallery = band('alt', 'GALLERY', 'ギャラリー', galleryGrid(S.gallery.slice(0, 7), true), '<a href="#gallery">すべて見る ›</a>');
     // MOVIE・INSTAGRAM
     const vs = videos(), ig = igPosts();
-    if (vs.length) html += band('dark', 'MOVIE', '動画', vidGrid(vs.slice(0, 2)), vs.length > 2 ? '<a href="#gallery">すべて見る ›</a>' : '');
-    if (ig.length) html += band('', 'INSTAGRAM', 'インスタグラム', igGrid(ig.slice(0, 3)), igMore());
+    if (vs.length) P.movie = band('dark', 'MOVIE', '動画', vidGrid(vs.slice(0, 2)), vs.length > 2 ? '<a href="#gallery">すべて見る ›</a>' : '');
+    if (ig.length) P.instagram = band('', 'INSTAGRAM', 'インスタグラム', igGrid(ig.slice(0, 3)), igMore());
     // OFFICIAL PARTNERS
-    if (S.sponsors.length) html += band('', 'OFFICIAL PARTNERS', 'スポンサー', sponsorList());
-    return html;
+    if (S.sponsors.length) P.sponsors = band('', 'OFFICIAL PARTNERS', 'スポンサー', sponsorList());
+    // テンプレートの順に、出さないものを除いて並べる。帯の背景（白・灰）は並べたあとで交互にする（黒い帯はそのまま）
+    let alt = false;
+    return LAYOUT().home.filter(k => P[k] && !hidden(k)).map(k => P[k].replace(/^<section class="band (alt)?"/, (m0) => { alt = !alt; return '<section class="band ' + (alt ? '' : 'alt') + '"'; })).join('');
   }
   function standings() {
     const st = [];
@@ -300,7 +325,7 @@
   let PT = 'ALL', PP = 'ALL', TV = 'players';
   function viewPlayers(id) {
     const teamOpts = S.teams.filter(x => S.players.some(p => p.teams.some(t => t.teamId === x.team.id)));
-    const chipsV = '<div class="chips" data-k="tv">' + [['players', '選手一覧'], ['stats', '個人成績'], ['staff', 'スタッフ']].map(([k, l]) => '<button aria-pressed="' + (k === TV) + '" data-v="' + k + '">' + l + '</button>').join('') + '</div>';
+    const chipsV = '<div class="chips" data-k="tv">' + [['players', '選手一覧'], ['stats', '個人成績'], ['staff', 'スタッフ']].filter(([k]) => k !== 'stats' || pageOn('stats')).map(([k, l]) => '<button aria-pressed="' + (k === TV) + '" data-v="' + k + '">' + l + '</button>').join('') + '</div>';
     let body = '';
     if (TV === 'stats') body = statsTable();
     else if (TV === 'staff') body = S.staff.length ? '<div class="card tw"><table><tbody>' + S.staff.map(s => '<tr><td class="l" style="color:var(--sub);width:40%">' + esc(s.role) + '</td><td class="l"><b>' + esc(s.name) + '</b></td></tr>').join('') + '</tbody></table></div>' : emptyBox('スタッフの登録はまだありません');
@@ -489,7 +514,7 @@
   function route() {
     const h = decodeURIComponent(location.hash.replace(/^#/, '')) || 'home';
     const [v, arg] = h.split('/');
-    const view = VIEWS[v] ? v : 'home', cur = NAVMAP[view] || view;
+    const view = VIEWS[v] && pageOn(v) ? v : 'home', cur = NAVMAP[view] || view;
     document.querySelectorAll('.nav a,.bnav a').forEach(a => a.setAttribute('aria-current', a.getAttribute('href') === '#' + cur ? 'page' : 'false'));
     $('hero').hidden = view !== 'home';
     $('main').innerHTML = VIEWS[view](arg);
@@ -565,6 +590,8 @@
       await load();
       if (!S.teams.length) throw Error(CFG.univ + ' のチームが、今年度の大会に見つかりません');
       applyBrand();
+      document.documentElement.setAttribute('data-layout', String(LAYOUTS[PV] ? PV : LAYOUTS[CFG.layout] ? CFG.layout : 1));
+      Object.keys(PAGE_OFF).forEach(v => { if (!pageOn(v)) document.querySelectorAll('a[href="#' + v + '"],a[href^="#' + v + '/"]').forEach(a => a.classList.add('site-off')); });
       const up = [...Object.values(S.data)].map(d => d.updatedAt).filter(Boolean).sort().pop();
       $('updated').textContent = up ? '最終更新 ' + String(up).replace('T', ' ').slice(0, 16) : '';
       route();
