@@ -42,7 +42,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 .clubbar{background:#fff;border-bottom:1px solid var(--line)}
 .clubbar .wrap{display:flex;align-items:center;gap:6px;height:46px;overflow-x:auto;scrollbar-width:none}
 .clubbar .wrap::-webkit-scrollbar{display:none}
-.clubbar small{font-family:var(--num);font-size:11px;font-weight:700;letter-spacing:.12em;color:var(--muted);margin-right:8px;white-space:nowrap}
+.clubbar small{font-family:var(--num);font-size:12px;font-weight:700;letter-spacing:.12em;color:var(--muted);margin-right:8px;white-space:nowrap}
 .clubbar a{flex:none;border-radius:50%;transition:transform .15s;opacity:.55}
 .clubbar a:hover{transform:scale(1.12);opacity:1}
 .clubbar a.on{opacity:1;box-shadow:0 0 0 2px #fff,0 0 0 4px var(--ink)}
@@ -54,7 +54,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 .logo{height:46px;border-radius:8px;background:#fff;display:flex;align-items:center;flex:none;padding:4px 7px}
 .logo img{height:100%;width:auto;display:block}
 .brandname{font-size:15px;font-weight:900;line-height:1.25}
-.brandname small{display:block;font-family:var(--num);font-size:11px;color:#9fb8cc;letter-spacing:.04em;font-weight:600}
+.brandname small{display:block;font-family:var(--num);font-size:12px;color:#9fb8cc;letter-spacing:.04em;font-weight:600}
 .nav{display:flex;margin-left:auto;height:100%}
 .nav a{display:flex;align-items:center;padding:0 13px;font-size:13px;font-weight:700;color:#d2e0eb;border-bottom:3px solid transparent;transition:.15s}
 .nav a:hover,.nav a.on{color:#fff;border-bottom-color:var(--lime)}
@@ -105,7 +105,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 /* 上部の光はチームカラー（theme.css の赤い光より優先） */
 #hero.hero:before{background:radial-gradient(760px 380px at 85% 0%,color-mix(in srgb,var(--team) 75%,transparent),transparent 72%)}
 @media(max-width:680px){.hero .hph:after{background:linear-gradient(180deg,rgba(11,17,32,.55) 0%,rgba(11,17,32,.88) 60%,rgba(11,17,32,.95) 100%)}}
-.crumb{font-size:11px;color:#9fb8cc;margin-bottom:20px}
+.crumb{font-size:12px;color:#9fb8cc;margin-bottom:20px}
 .crumb a:hover{color:#fff;text-decoration:underline}
 .club-id{display:flex;align-items:center;gap:22px}
 .club-id h1{font-size:clamp(26px,4.2vw,44px);margin:2px 0 6px;line-height:1.25;font-weight:900;letter-spacing:-.02em}
@@ -116,9 +116,9 @@ button{font:inherit;color:inherit;cursor:pointer}
 .hstat+.hstat{border-left:1px solid #ffffff1f;padding-left:18px}
 .hstat b{display:block;font-family:var(--num);font-size:34px;font-weight:700;line-height:1}
 .hstat b small{font-size:15px;color:#9fb8cc;margin-left:2px}
-.hstat span{font-size:11px;color:#9fb8cc}
+.hstat span{font-size:12px;color:#9fb8cc}
 .form{display:flex;gap:4px;margin-top:2px}
-.form i{width:24px;height:24px;border-radius:5px;display:grid;place-items:center;font-style:normal;font-size:11px;font-weight:900;color:#fff}
+.form i{width:24px;height:24px;border-radius:5px;display:grid;place-items:center;font-style:normal;font-size:12px;font-weight:900;color:#fff}
 .form i.W{background:var(--win)}.form i.D{background:var(--draw)}.form i.L{background:var(--lose)}
 .form i.E{background:#ffffff14;color:#ffffff40}
 
@@ -135,14 +135,14 @@ button{font:inherit;color:inherit;cursor:pointer}
 .side{display:grid;gap:36px;align-content:start;min-width:0}
 .card{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden}
 .empty{padding:22px;color:var(--muted);font-size:12.5px;margin:0;line-height:1.8}
-.note{font-size:11px;color:var(--muted);margin:9px 2px 0;line-height:1.7}
+.note{font-size:12px;color:var(--muted);margin:9px 2px 0;line-height:1.7}
 #schedule,#record,#players,#about{scroll-margin-top:118px}
 
 /* next / last */
 .pair{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .mcard{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 18px;display:flex;flex-direction:column;gap:12px}
 .mcard.next{background:var(--navy);color:#fff;border-color:var(--navy)}
-.mcard .top{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--muted)}
+.mcard .top{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--muted)}
 .mcard.next .top{color:#9fb8cc}
 .lbl{font-family:var(--num);font-size:12px;font-weight:700;letter-spacing:.14em;padding:3px 9px;border-radius:4px;background:#eef2f6;color:var(--ink)}
 .mcard.next .lbl{background:var(--lime);color:var(--navy)}
@@ -153,11 +153,11 @@ button{font:inherit;color:inherit;cursor:pointer}
 .duel .c{text-align:center;min-width:76px}
 .duel .c b{display:block;font-family:var(--num);font-size:36px;font-weight:800;line-height:1}
 .duel .c .vs{color:var(--lime)}
-.duel .c small{display:block;font-size:11px;color:var(--muted);margin-top:4px}
+.duel .c small{display:block;font-size:12px;color:var(--muted);margin-top:4px}
 .mcard.next .duel .c small{color:#b5cadb}
-.res{display:inline-block;font-size:11px;font-weight:900;color:#fff;padding:2px 8px;border-radius:4px}
+.res{display:inline-block;font-size:12px;font-weight:900;color:#fff;padding:2px 8px;border-radius:4px}
 .res.W{background:var(--win)}.res.D{background:var(--draw)}.res.L{background:var(--lose)}
-.mcard .foot{font-size:11.5px;color:var(--muted);border-top:1px solid var(--line);padding-top:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mcard .foot{font-size:12px;color:var(--muted);border-top:1px solid var(--line);padding-top:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .mcard.next .foot{color:#bcd0df;border-color:#ffffff1c}
 .cd{font-family:var(--num);color:var(--lime);font-weight:700;font-size:14px;letter-spacing:.04em}
 
@@ -169,12 +169,12 @@ button{font:inherit;color:inherit;cursor:pointer}
 .mrow:first-child{border-top:0}
 .mrow:hover{background:#f6f9fc}
 .mrow .d{font-family:var(--num);font-size:16px;font-weight:700;line-height:1.1}
-.mrow .d small{display:block;font-family:"Noto Sans JP";font-size:10px;color:var(--muted);font-weight:500;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.ha{font-size:10px;font-weight:700;text-align:center;border:1px solid var(--line);border-radius:4px;padding:2px 0;color:var(--muted)}
+.mrow .d small{display:block;font-family:"Noto Sans JP";font-size:12px;color:var(--muted);font-weight:500;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ha{font-size:12px;font-weight:700;text-align:center;border:1px solid var(--line);border-radius:4px;padding:2px 0;color:var(--muted)}
 .ha.H{background:var(--ink);color:#fff;border-color:var(--ink)}
 .opp{display:flex;align-items:center;gap:9px;min-width:0;font-size:14px;font-weight:700}
 .opp span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.opp small{display:block;font-size:10.5px;color:var(--muted);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.opp small{display:block;font-size:12px;color:var(--muted);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .opp div{min-width:0}
 .mrow .sc{text-align:center;font-family:var(--num);font-size:22px;font-weight:700;white-space:nowrap}
 .mrow .sc.vs{font-size:13px;color:var(--muted);letter-spacing:.08em;font-weight:600}
@@ -184,7 +184,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 table{border-collapse:collapse;width:100%;font-size:12.5px}
 th,td{padding:10px 7px;text-align:center;white-space:nowrap;border-bottom:1px solid var(--line)}
 tr:last-child td{border-bottom:0}
-th{font-size:10.5px;color:var(--muted);font-weight:700}
+th{font-size:12px;color:var(--muted);font-weight:700}
 th.l,td.l{text-align:left}
 td.n{font-family:var(--num);font-size:15px;font-weight:600}
 td.pts{font-family:var(--num);font-size:18px;font-weight:800}
@@ -192,16 +192,16 @@ tr.me td{background:#f1f8e2}
 tr.me td:first-child{box-shadow:inset 4px 0 0 var(--team)}
 .pos{font-family:var(--num);font-weight:700;font-size:15px}
 .tt{display:flex;align-items:center;gap:8px;font-weight:700}
-.tbl-foot{display:block;text-align:center;font-size:11.5px;color:var(--blue);font-weight:700;padding:11px;border-top:1px solid var(--line)}
+.tbl-foot{display:block;text-align:center;font-size:12px;color:var(--blue);font-weight:700;padding:11px;border-top:1px solid var(--line)}
 
 /* scorers */
 .scorer{display:grid;grid-template-columns:26px 1fr auto;align-items:center;gap:10px;padding:11px 16px;border-top:1px solid var(--line)}
 .scorer:first-child{border-top:0}
 .scorer .rk{font-family:var(--num);font-size:18px;font-weight:700;color:var(--muted);text-align:center}
 .scorer .who b{display:block;font-size:13.5px}
-.scorer .who small{font-size:10.5px;color:var(--muted)}
+.scorer .who small{font-size:12px;color:var(--muted)}
 .scorer .g{font-family:var(--num);font-size:24px;font-weight:800;line-height:1}
-.scorer .g small{font-family:"Noto Sans JP";font-size:10px;color:var(--muted);font-weight:500;margin-left:2px}
+.scorer .g small{font-family:"Noto Sans JP";font-size:12px;color:var(--muted);font-weight:500;margin-left:2px}
 
 /* record */
 .rec{display:grid;grid-template-columns:repeat(4,1fr)}
@@ -209,7 +209,7 @@ tr.me td:first-child{box-shadow:inset 4px 0 0 var(--team)}
 .rec div:nth-child(4n+1){border-left:0}
 .rec div:nth-child(-n+4){border-top:0}
 .rec b{display:block;font-family:var(--num);font-size:30px;font-weight:700;line-height:1}
-.rec span{font-size:11px;color:var(--muted)}
+.rec span{font-size:12px;color:var(--muted)}
 .wdl{display:flex;height:8px;border-radius:8px;overflow:hidden;margin:0 16px 16px;background:#eef2f6}
 .wdl i{display:block}
 .wdl .w{background:var(--win)}.wdl .d{background:var(--draw)}.wdl .l{background:var(--lose)}
@@ -233,14 +233,14 @@ dl.facts dd{margin:0;font-weight:700;overflow-wrap:anywhere}
 /* players */
 .posgroup+.posgroup{margin-top:22px}
 .posgroup h3{font-family:var(--num);font-size:15px;letter-spacing:.12em;margin:0 0 10px;display:flex;align-items:center;gap:8px}
-.posgroup h3 span{font-family:"Noto Sans JP";font-size:11px;color:var(--muted);letter-spacing:0;font-weight:500}
+.posgroup h3 span{font-family:"Noto Sans JP";font-size:12px;color:var(--muted);letter-spacing:0;font-weight:500}
 .players{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px}
 .player{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px;display:grid;grid-template-columns:auto 1fr;gap:4px 12px;align-items:center}
 .player .no{grid-row:1/3;font-family:var(--num);font-size:34px;font-weight:800;color:var(--teamText,var(--team));line-height:1;min-width:38px;text-align:center}
 .player b{font-size:14px;line-height:1.35}
-.player small{font-size:10.5px;color:var(--muted)}
-.player .gl{grid-column:1/-1;font-size:10.5px;color:var(--blue);font-weight:700;border-top:1px solid var(--line);padding-top:7px;margin-top:6px;line-height:1.6}
-.player .gl i{display:inline-block;font-style:normal;color:var(--ink);font-size:10px;width:14px;height:18px;line-height:18px;text-align:center;border-radius:2px;margin-left:5px;vertical-align:-3px}
+.player small{font-size:12px;color:var(--muted)}
+.player .gl{grid-column:1/-1;font-size:12px;color:var(--blue);font-weight:700;border-top:1px solid var(--line);padding-top:7px;margin-top:6px;line-height:1.6}
+.player .gl i{display:inline-block;font-style:normal;color:var(--ink);font-size:12px;width:14px;height:18px;line-height:18px;text-align:center;border-radius:2px;margin-left:5px;vertical-align:-3px}
 .player .gl i.yc{background:#f2c200;color:#222;font-weight:800}.player .gl i.rc{background:var(--lose);color:#fff}
 
 /* news */
@@ -275,7 +275,7 @@ dl.facts dd{margin:0;font-weight:700;overflow-wrap:anywhere}
 .sq .pp{font-family:var(--num);font-weight:700;color:var(--muted);width:40px;font-size:13px}
 .sq td.nm{text-align:left;white-space:normal;min-width:120px}
 .sq td.nm b{font-size:14px}
-.sq td.nm small{display:block;font-size:10.5px;color:var(--muted);font-weight:500}
+.sq td.nm small{display:block;font-size:12px;color:var(--muted);font-weight:500}
 .sq td.nm small.sp{display:none}
 .sq td.sch{max-width:180px;overflow:hidden;text-overflow:ellipsis;font-size:12px;color:var(--muted)}
 .sq td.pc{font-size:12px;color:var(--muted)}
@@ -283,10 +283,10 @@ dl.facts dd{margin:0;font-weight:700;overflow-wrap:anywhere}
 .sq td.n small{font-size:12px;color:var(--muted);margin-left:2px}
 .sq td.g{font-weight:800;color:var(--ink)}
 .sq .z{color:#c5ced6;font-weight:400}
-.sq td.cd i{display:inline-block;font-style:normal;font-family:var(--num);font-size:11px;width:15px;height:19px;line-height:19px;border-radius:2px;margin:0 1px;color:var(--ink)}
+.sq td.cd i{display:inline-block;font-style:normal;font-family:var(--num);font-size:12px;width:15px;height:19px;line-height:19px;border-radius:2px;margin:0 1px;color:var(--ink)}
 .sq td.cd i.yc{background:#f2c200;color:#222;font-weight:800}.sq td.cd i.rc{background:var(--lose);color:#fff}
 .sq tr.grp td{background:#fff;text-align:left;font-family:var(--num);font-weight:800;font-size:15px;letter-spacing:.1em;padding:14px 10px 6px;border-bottom:2px solid var(--ink)}
-.sq tr.grp td span{font-family:"Noto Sans JP";font-size:11px;font-weight:500;letter-spacing:0;color:var(--muted);margin-left:4px}
+.sq tr.grp td span{font-family:"Noto Sans JP";font-size:12px;font-weight:500;letter-spacing:0;color:var(--muted);margin-left:4px}
 .sq tr.grp:first-child td{padding-top:10px}
 @media(max-width:680px){
   .sq .pc,.sq .pp{display:none}
@@ -311,7 +311,7 @@ dl.facts dd{margin:0;font-weight:700;overflow-wrap:anywhere}
   .brandname{font-size:13px}
   .menubtn{font-size:0;padding:6px 11px;flex:none}
   .menubtn:before{content:"☰";font-size:18px;line-height:1}
-  .brandname small{font-size:9.5px;letter-spacing:0;white-space:normal;line-height:1.25}
+  .brandname small{font-size:12px;letter-spacing:0;white-space:normal;line-height:1.25}
   .brandname{font-size:13px}
   .menubtn{display:block}
   .nav{display:none;position:absolute;top:56px;left:0;right:0;flex-direction:column;background:var(--navy);padding:6px 16px 14px;height:auto;border-bottom:1px solid #ffffff1a}
@@ -321,7 +321,7 @@ dl.facts dd{margin:0;font-weight:700;overflow-wrap:anywhere}
   .club-id{gap:14px}
   .crest.xl{width:64px;height:64px;font-size:26px}
   .crest.xl.two{font-size:20px}
-  .club-id p{font-size:11.5px}
+  .club-id p{font-size:12px}
   .hstats{grid-template-columns:repeat(3,minmax(0,1fr))}
   .hstat:nth-child(4){border-left:0;padding-left:4px}
   .hstat b{font-size:28px}
