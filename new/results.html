@@ -294,6 +294,7 @@ table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums}
 .plink:hover{color:var(--red);border-bottom-color:var(--red)}
 </style>
 <link rel="stylesheet" href="./theme.css">
+<script src="./site.js"></script>
 <style>
 /* 黒い背景（theme.css）の上での調整 */
 .pagehead .eyebrow{color:#ff3b47}
@@ -506,7 +507,7 @@ async function load(){
     $('compSub').textContent='日程・結果・順位表・得点ランキング・警告・退場';
     document.title=(c.name||'大会記録')+' | 北海道学生サッカー連盟';
     $('updated').textContent=d.updatedAt?'更新：'+String(d.updatedAt).replace('T',' ').slice(0,16):'';
-    const avail=TABS.filter(t=>t[2](d));
+    const avail=TABS.filter(t=>t[2](d)&&(!window.JUFA_SITE||JUFA_SITE.tabOn(t[0])));
     if(!avail.some(t=>t[0]===S.tab))S.tab='schedule';
     $('subtabs').innerHTML=avail.map(t=>'<a href="'+pageUrl(S.comp,t[0])+'"'+(t[0]===S.tab?' aria-current="page"':'')+'>'+t[1]+'</a>').join('');
     // ヘッダーの「日程・結果」「順位・ランキング」：今の大会のページへ

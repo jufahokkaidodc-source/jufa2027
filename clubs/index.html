@@ -84,7 +84,7 @@
   var normTpl = function (v) { v = String(v || '').trim().toLowerCase(); v = OLD[v] || v; return /^[abc]$/.test(v) ? v : ''; };
   var tpl = normTpl(qs.get('tpl')) || normTpl(c.tpl) || 'a';
   document.body.setAttribute('data-tpl', tpl);
-  window.CLUB = { univ: c.univ, name: c.name, en: c.en, lead: c.lead, color: '', hero: '', heroCaption: '', data: '../results/data/', results: '../results/', site: '../new/' };
+  window.CLUB = { univ: c.univ, name: c.name, en: c.en, lead: c.lead, layout: c.layout || 1, hide: c.hide || [], color: '', hero: '', heroCaption: '', data: '../results/data/', results: '../results/', site: '../new/' };
   document.title = (preview ? '【プレビュー】' : '') + c.name;
   if (preview) {
     // プレビュー：検索に出さない・上に帯

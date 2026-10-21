@@ -374,3 +374,7 @@ div.mr{cursor:default}
 @media(max-width:400px){.vid .fr.ig{height:580px}}
 /* 小さい文字は 12px まで（DESIGN.md） */
 small{font-size:max(12px,.85em)}
+/* 構成（テンプレート・載せないもの）：出さないページへのリンク */
+.site-off{display:none!important}
+/* 4 ビジュアル：トップ画像を高く */
+html[data-layout="4"] .hero{min-height:min(88vh,760px)}
