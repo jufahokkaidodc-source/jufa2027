@@ -777,14 +777,32 @@ function renderTopics(ms,scorers,compName){
 
 /* マッチビジュアル：注目の試合（速報中 → 今日・これからの試合 → なければ最近の結果）を5試合まで、6秒ごとに切り替え */
 const MV={list:[],i:0,timer:null,paused:false};
+/* 背景にする色：明るい色は白い文字が読めるように暗くする */
+function bgColor(c){
+  const n=parseInt(c.slice(1),16),rgb=[n>>16&255,n>>8&255,n&255],L=rgb.map(v=>{v/=255;return v<=.03928?v/12.92:Math.pow((v+.055)/1.055,2.4)});
+  return .2126*L[0]+.7152*L[1]+.0722*L[2]>.3?'#'+rgb.map(v=>Math.round(v*.55).toString(16).padStart(2,'0')).join(''):c;
+}
+function teamProf(t){return PROF.get(tkey(t))||PROF.get(typeof t==='object'?t.univ:'')}
 function teamColor(t){
   const k=tkey(t);let h=0;for(const ch of k)h=(h*31+ch.charCodeAt(0))>>>0;
-  const p=PROF.get(k)||PROF.get(typeof t==='object'?t.univ:'');
-  let c=/^#[0-9a-f]{6}$/i.test(p?.color||'')?p.color:PALETTE[h%PALETTE.length];
-  // 明るい色は白い文字が読めるように暗くする
-  const n=parseInt(c.slice(1),16),rgb=[n>>16&255,n>>8&255,n&255],L=rgb.map(v=>{v/=255;return v<=.03928?v/12.92:Math.pow((v+.055)/1.055,2.4)});
-  if(.2126*L[0]+.7152*L[1]+.0722*L[2]>.3)c='#'+rgb.map(v=>Math.round(v*.55).toString(16).padStart(2,'0')).join('');
-  return c;
+  const p=teamProf(t);
+  return bgColor(/^#[0-9a-f]{6}$/i.test(p?.color||'')?p.color:PALETTE[h%PALETTE.length]);
+}
+/* 2つの色の見た目の差（CIE Lab の距離。だいたい 30 より小さいと近い色に見える） */
+function colorDiff(a,b){
+  const lab=c=>{const n=parseInt(c.slice(1),16);let [r,g,b2]=[n>>16&255,n>>8&255,n&255].map(v=>{v/=255;return v<=.04045?v/12.92:Math.pow((v+.055)/1.055,2.4)});
+    let x=(r*.4124+g*.3576+b2*.1805)/.95047,y=r*.2126+g*.7152+b2*.0722,z=(r*.0193+g*.1192+b2*.9505)/1.08883;
+    const f=t=>t>.008856?Math.cbrt(t):7.787*t+16/116;x=f(x);y=f(y);z=f(z);return [116*y-16,500*(x-y),200*(y-z)]};
+  const p=lab(a),q=lab(b);return Math.hypot(p[0]-q[0],p[1]-q[1],p[2]-q[2]);
+}
+/* 左右の色：近いときは、右（アウェイ）をサブカラーに。サブカラーがない・それも近いときは、右を暗くする */
+function matchColors(m){
+  const hc=teamColor(m.home);let ac=teamColor(m.away);
+  if(colorDiff(hc,ac)<30){
+    const s2=teamProf(m.away)?.color2,alt=/^#[0-9a-f]{6}$/i.test(s2||'')?bgColor(s2):'';
+    ac=alt&&colorDiff(hc,alt)>=30?alt:'#'+[1,3,5].map(i=>Math.round(parseInt(ac.substr(i,2),16)*.32).toString(16).padStart(2,'0')).join('');
+  }
+  return [hc,ac];
 }
 function renderMV(ms,compLabel){
   const today=jstToday(),o=order(ms||[]).filter(m=>m.home&&m.away&&typeof m.home==='object'&&typeof m.away==='object');
@@ -803,7 +821,7 @@ function showMV(i){
   const dt=dm?(+dm[2])+'.'+dm[3]+'<small>'+WD[new Date(+dm[1],+dm[2]-1,+dm[3]).getDay()]+'</small>':'日程未定';
   const sc=done?esc(m.score.home)+' - '+esc(m.score.away):lv?esc(lv.score.home)+' - '+esc(lv.score.away):'';
   const tm=t=>'<div class="mv-tm">'+crest(t,'xl')+'<b><span class="fn">'+esc(t.name||t.short||'')+'</span><span class="sn">'+esc(t.short||t.name||'')+'</span></b></div>';
-  $('mvBg').style.setProperty('--hc',teamColor(m.home));$('mvBg').style.setProperty('--ac',teamColor(m.away));
+  const [hc,ac]=matchColors(m);$('mvBg').style.setProperty('--hc',hc);$('mvBg').style.setProperty('--ac',ac);
   $('mvMatch').innerHTML=tm(m.home)+
     '<div class="mv-c"><span class="cp">'+esc([MV.label,m.round].filter(Boolean).join('　'))+'</span>'+
       (sc?'<span class="dt">'+sc+'</span><span class="ko" style="font-size:clamp(18px,3vw,26px)">'+(dm?(+dm[2])+'.'+dm[3]:'')+(m.kickoff?' '+esc(m.kickoff)+'KO':'')+'</span>':'<span class="dt">'+dt+'</span>'+(m.kickoff?'<span class="ko">'+esc(m.kickoff)+'KO</span>':''))+
