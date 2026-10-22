@@ -387,7 +387,12 @@ html{scroll-padding-top:0}
 /* エンブレムは白い丸にのせず、チームカラーの上にそのまま（画像がないチームは頭文字を白い線の丸で） */
 .mv .crest.img,.mv .crest.img:not(.hasdark){background:none!important;border-radius:0;box-shadow:none}
 .mv .crest.img img,.mv .crest.img:not(.hasdark) img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
-.mv .crest.img.hasdark .el{display:block}.mv .crest.img.hasdark .ed{display:none}
+.mv .crest.img.hasdark .el{display:none}.mv .crest.img.hasdark .ed{display:block}
+/* 白い版がないエンブレムは、形にそって白い細い縁取り（チームカラーと同じ色のエンブレムでも見えるように） */
+.mv .crest.img:not(.hasdark) img{filter:drop-shadow(1px 0 0 #fff) drop-shadow(-1px 0 0 #fff) drop-shadow(0 1px 0 #fff) drop-shadow(0 -1px 0 #fff)}
+/* チーム名：スマホは略称（長い正式名称が何行にもならないように） */
+.mv-tm b .sn{display:none}
+@media(max-width:680px){.mv-tm b .fn{display:none}.mv-tm b .sn{display:inline}}
 .mv .crest .bdg{display:none}
 .mv .crest:not(.img){background:none!important;color:#fff!important;box-shadow:inset 0 0 0 2px rgba(255,255,255,.7)}
 /* ギャラリー（今まで登録したトップ写真） */
@@ -422,7 +427,7 @@ html{scroll-padding-top:0}
 .mv-dots button{width:28px;height:28px;border:0;background:transparent;padding:0;display:grid;place-items:center}
 .mv-dots button:before{content:"";width:8px;height:8px;border-radius:50%;background:#ffffff70;transition:.2s}
 .mv-dots button[aria-current=true]:before{background:#fff;width:28px;border-radius:4px}
-@media(max-width:680px){.mv-in{padding-top:20px}.mv-match{gap:6px;min-height:170px}.mv-c .vn{font-size:12px}.mv-btn{font-size:15px;padding:0 26px}}
+@media(max-width:680px){.mv-in{padding-top:20px}.mv-match{gap:6px;min-height:170px;grid-template-columns:minmax(84px,1fr) minmax(0,1.7fr) minmax(84px,1fr)}.mv-tm .crest{width:76px;height:76px}.mv-c .vn{font-size:12px}.mv-btn{font-size:15px;padding:0 26px}}
 @media(prefers-reduced-motion:reduce){.mv-bg{transition:none}}
 /* 試合の帯：暗いカード（状態・チーム・得点、下に「試合詳細」） */
 .ticker{background:var(--bg)!important;border-bottom:0}
@@ -797,7 +802,7 @@ function showMV(i){
   const dm=/^(\d{4})-(\d{2})-(\d{2})/.exec(m.date||'');
   const dt=dm?(+dm[2])+'.'+dm[3]+'<small>'+WD[new Date(+dm[1],+dm[2]-1,+dm[3]).getDay()]+'</small>':'日程未定';
   const sc=done?esc(m.score.home)+' - '+esc(m.score.away):lv?esc(lv.score.home)+' - '+esc(lv.score.away):'';
-  const tm=t=>'<div class="mv-tm">'+crest(t,'xl')+'<b>'+esc(t.name||t.short||'')+'</b></div>';
+  const tm=t=>'<div class="mv-tm">'+crest(t,'xl')+'<b><span class="fn">'+esc(t.name||t.short||'')+'</span><span class="sn">'+esc(t.short||t.name||'')+'</span></b></div>';
   $('mvBg').style.setProperty('--hc',teamColor(m.home));$('mvBg').style.setProperty('--ac',teamColor(m.away));
   $('mvMatch').innerHTML=tm(m.home)+
     '<div class="mv-c"><span class="cp">'+esc([MV.label,m.round].filter(Boolean).join('　'))+'</span>'+
