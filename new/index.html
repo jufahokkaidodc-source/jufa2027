@@ -383,7 +383,28 @@ html{scroll-padding-top:0}
 .mv-match{width:100%;display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:12px;min-height:200px}
 .mv-tm{display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;min-width:0}
 .mv-tm b{font-size:clamp(14px,2.2vw,22px);font-weight:900;line-height:1.35;overflow-wrap:anywhere}
-.mv-tm .crest{width:clamp(72px,11vw,128px);height:clamp(72px,11vw,128px);font-size:clamp(22px,3.4vw,40px)}
+.mv-tm .crest{width:clamp(80px,13vw,150px);height:clamp(80px,13vw,150px);font-size:clamp(22px,3.4vw,40px)}
+/* エンブレムは白い丸にのせず、チームカラーの上にそのまま（画像がないチームは頭文字を白い線の丸で） */
+.mv .crest.img,.mv .crest.img:not(.hasdark){background:none!important;border-radius:0;box-shadow:none}
+.mv .crest.img img,.mv .crest.img:not(.hasdark) img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+.mv .crest.img.hasdark .el{display:block}.mv .crest.img.hasdark .ed{display:none}
+.mv .crest .bdg{display:none}
+.mv .crest:not(.img){background:none!important;color:#fff!important;box-shadow:inset 0 0 0 2px rgba(255,255,255,.7)}
+/* ギャラリー（今まで登録したトップ写真） */
+.gal{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.gal button{position:relative;display:block;padding:0;border:0;border-radius:14px;overflow:hidden;background:var(--card);aspect-ratio:4/3;cursor:zoom-in}
+.gal button:first-child{grid-column:span 2;grid-row:span 2}
+.gal img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
+.gal button:hover img{transform:scale(1.04)}
+.gal small{position:absolute;left:0;right:0;bottom:0;padding:18px 10px 8px;font-size:12px;font-weight:700;color:#fff;text-align:left;background:linear-gradient(transparent,rgba(0,0,0,.7));white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media(max-width:680px){.gal{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.lb{position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.9);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px}
+.lb img{max-width:100%;max-height:calc(100vh - 140px);object-fit:contain;border-radius:8px}
+.lb p{color:#fff;font-size:14px;margin:12px 0 0;text-align:center}
+.lb p small{display:block;color:var(--muted);font-size:12px}
+.lb button{position:absolute;width:48px;height:48px;border-radius:50%;border:0;background:rgba(255,255,255,.14);color:#fff;font-size:24px;line-height:1}
+.lb .x{top:12px;right:12px}.lb .p{left:12px;top:calc(50% - 24px)}.lb .n{right:12px;top:calc(50% - 24px)}
+@media(prefers-reduced-motion:reduce){.gal img{transition:none}}
 .mv-c{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;min-width:0}
 .mv-c .cp{font-size:13px;font-weight:700;letter-spacing:.04em;opacity:.95}
 .mv-c .dt{font-family:var(--num);font-weight:800;font-size:clamp(48px,11vw,112px);line-height:.95;letter-spacing:.01em;white-space:nowrap}
@@ -392,11 +413,7 @@ html{scroll-padding-top:0}
 .mv-c .vn{font-size:13px;font-weight:700;max-width:22em;overflow-wrap:anywhere}
 .mv-c .bx{margin-top:8px;background:#fff;color:#111;font-weight:900;font-size:14px;padding:5px 16px;border-radius:4px;white-space:nowrap}
 .mv-c .bx.live{background:var(--red);color:#fff}
-.mv-photos{width:min(760px,100%);margin:20px auto 0;border-radius:14px;background:#000}
-.mv-photos .ph-stage{max-height:min(40vh,380px)}
-.mv-photos .ph-cap{background:#000}
-.mv-btn{position:relative;z-index:3;display:inline-flex;align-items:center;gap:10px;margin-top:16px;min-height:52px;padding:0 32px;border-radius:999px;background:#fff;color:#111;font-weight:900;font-size:16px}
-.mv-photos[hidden]+.mv-btn{margin-top:20px}
+.mv-btn{position:relative;z-index:3;display:inline-flex;align-items:center;gap:10px;margin-top:24px;min-height:52px;padding:0 32px;border-radius:999px;background:#fff;color:#111;font-weight:900;font-size:16px}
 /* 左右の境目に細い線（同じような色のチームどうしでも分かれて見える） */
 .mv-bg:before{content:"";position:absolute;top:0;bottom:0;left:50%;width:2px;margin-left:-1px;background:rgba(255,255,255,.18);z-index:1}
 .mv-btn span{font-family:var(--num);font-size:22px;line-height:1}
@@ -447,12 +464,6 @@ html{scroll-padding-top:0}
   <div class="mv-bg" id="mvBg"></div>
   <div class="mv-in">
     <div class="mv-match" id="mvMatch" aria-live="polite"></div>
-    <div class="photos mv-photos" id="photos" hidden aria-roledescription="carousel" aria-label="写真">
-  <div class="ph-stage" id="phStage"></div>
-  <button class="ph-nav p" id="phPrev" aria-label="前の写真">‹</button>
-  <button class="ph-nav n" id="phNext" aria-label="次の写真">›</button>
-  <div class="ph-cap" id="phCap"><div class="tx" id="phTx" aria-live="polite"></div><div class="ph-dots" id="phDots"></div></div>
-</div>
     <a class="mv-btn" id="mvBtn" href="./results.html">試合情報はこちら<span aria-hidden="true">»</span></a>
     <div class="mv-dots" id="mvDots"></div>
   </div>
@@ -499,6 +510,11 @@ html{scroll-padding-top:0}
   <section class="wrap mpart" id="scorers" data-part="scorers">
     <div class="sechead"><h2><small>RANKING</small>得点ランキング</h2><a class="js-detail" data-tab="scorers" href="./results.html?tab=scorers">一覧 ↗</a></div>
     <div class="card scorers" id="scorerList"><span class="sk"></span><span class="sk"></span></div>
+  </section>
+
+  <section class="wrap mpart" id="gallery" data-part="gallery" hidden>
+    <div class="sechead"><h2><small>GALLERY</small>ギャラリー</h2><span class="note" style="margin:0" id="galCount"></span></div>
+    <div class="gal" id="galList"></div>
   </section>
 
   <section class="wrap mpart" id="clubs" data-part="clubs">
@@ -801,7 +817,6 @@ $('mvMatch').addEventListener('mouseenter',()=>MV.paused=true);$('mvMatch').addE
 if(window.JUFA_LIVE)JUFA_LIVE.on(()=>{if(MV.list.length)showMV(MV.i)});
 
 /* top photos：写真がないときは何も出さない。今の1枚と次の1枚だけ読み込む */
-const PH={list:[],i:0,timer:null,paused:false,key:''};
 let HERO=[],TEAMPH=[];
 /* 大会ごとの写真：
    ・連盟が登録した、その大会の写真（あれば先に）
@@ -816,60 +831,29 @@ function heroFor(id,teams){
   const list=own.concat(pool).slice(0,10);
   return list.length?list:HERO.filter(x=>!x.comp&&ok(x)).slice(0,10);
 }
+/* ギャラリー：今まで登録したトップ写真（大会の写真・各大学の「トップに使う」写真）を並べる。押すと大きく */
+let GAL=[];
 function renderPhotos(list){
-  list=(list||[]).filter(x=>photoUrl(x.photo,1600)).slice(0,10);
-  const key=list.map(x=>x.photo).join('|');
-  if(key&&key===PH.key)return; // 同じ写真なら作り直さない
-  PH.key=key;stopPhotos();
-  PH.list=list;
-  const box=$('photos');
-  $('phStage').style.aspectRatio='';
-  if(!PH.list.length){box.hidden=true;$('phStage').innerHTML='';return}
-  box.hidden=false;
-  $('phStage').innerHTML=PH.list.map((x,i)=>{
-    const set=photoSet(x.photo,[800,1200,1600,2400]);
-    const src=' data-src="'+esc(photoUrl(x.photo,1600))+'"'+(set?' data-srcset="'+esc(set)+'" sizes="(max-width:960px) 100vw, 960px"':'');
-    const img='<img class="bg"'+src+' alt="" aria-hidden="true"><img class="fg"'+src+' alt="'+esc(x.caption||'トップ写真')+'" decoding="async"'+(i===0?' fetchpriority="high"':'')+'>';
-    const u=safeUrl(x.url);
-    return '<figure class="ph" data-i="'+i+'" aria-roledescription="slide" aria-label="'+(i+1)+' / '+PH.list.length+'">'+(u?'<a href="'+esc(u)+'"'+(/^https?:/i.test(u)&&!u.startsWith(location.origin)?' target="_blank" rel="noopener"':'')+'>'+img+'</a>':img)+'</figure>';
-  }).join('');
-  /* 枠の形は、最初に表示できた写真の縦横比に合わせる（極端な形は 4:3〜21:9 に収める） */
-  let fitted=false;
-  $('phStage').querySelectorAll('img.fg').forEach(im=>im.addEventListener('load',()=>{
-    if(fitted||!im.naturalWidth||!im.naturalHeight)return;fitted=true;
-    $('phStage').style.aspectRatio=String(Math.min(21/9,Math.max(4/3,im.naturalWidth/im.naturalHeight)));
-  }));
-  $('phStage').querySelectorAll('img.fg').forEach(im=>im.onerror=()=>{const f=im.closest('.ph');const i=+f.dataset.i;PH.list[i]=null;f.remove();if(!PH.list.some(Boolean)){box.hidden=true;stopPhotos()}else if(i===PH.i)showPhoto(PH.i+1)});
-  const many=PH.list.length>1;
-  $('phPrev').hidden=$('phNext').hidden=!many;
-  $('phDots').innerHTML=many?PH.list.map((_,i)=>'<button data-i="'+i+'" aria-label="'+(i+1)+'枚目の写真"></button>').join(''):'';
-  showPhoto(0);startPhotos();
+  GAL=(list||[]).filter(x=>photoUrl(x.photo,800)).slice(0,10);
+  const box=$('gallery');
+  if(!GAL.length){box.hidden=true;$('galList').innerHTML='';return}
+  box.hidden=false;$('galCount').textContent=GAL.length+'枚';
+  $('galList').innerHTML=GAL.map((x,i)=>'<button type="button" data-i="'+i+'" aria-label="'+esc(x.caption||'写真')+'を大きく見る"><img src="'+esc(photoUrl(x.photo,i?600:1200))+'" alt="'+esc(x.caption||'')+'" loading="lazy" decoding="async" onerror="this.parentNode.remove()">'+(x.caption||x.univ?'<small>'+esc(x.caption||x.univ)+'</small>':'')+'</button>').join('');
 }
-function loadImg(i){const f=$('phStage').querySelector('.ph[data-i="'+i+'"]');if(!f)return;f.querySelectorAll('img[data-src]').forEach(im=>{if(im.dataset.srcset)im.srcset=im.dataset.srcset;im.src=im.dataset.src;im.removeAttribute('data-src')})}
-function showPhoto(i){
-  const n=PH.list.length;if(!n)return;
-  for(let k=0;k<n;k++){i=((i%n)+n)%n;if(PH.list[i])break;i++}
-  PH.i=i;loadImg(i);
-  let j=i;for(let k=1;k<n;k++){const x=(i+k)%n;if(PH.list[x]){j=x;break}}loadImg(j);
-  $('phStage').querySelectorAll('.ph').forEach(f=>{const on=+f.dataset.i===i;f.classList.toggle('on',on);f.setAttribute('aria-hidden',String(!on));f.querySelectorAll('a').forEach(a=>a.tabIndex=on?0:-1)});
-  $('phDots').querySelectorAll('button').forEach(b=>b.setAttribute('aria-current',String(+b.dataset.i===i)));
-  const x=PH.list[i];
-  $('phTx').innerHTML=(x.caption?'<span>'+esc(x.caption)+'</span>':'')+(x.credit?'<small>撮影：'+esc(x.credit)+'</small>':'')+(x.univ?'<small>'+esc(x.univ)+'</small>':'');
-  $('phCap').hidden=!x.caption&&!x.credit&&!x.univ&&PH.list.filter(Boolean).length<2;
+function openLb(i){
+  const n=GAL.length;if(!n)return;i=((i%n)+n)%n;
+  let lb=document.querySelector('.lb');
+  if(!lb){lb=document.createElement('div');lb.className='lb';lb.setAttribute('role','dialog');lb.setAttribute('aria-modal','true');document.body.appendChild(lb);
+    lb.addEventListener('click',e=>{if(e.target===lb||e.target.closest('.x'))closeLb();else if(e.target.closest('.p'))openLb(+lb.dataset.i-1);else if(e.target.closest('.n'))openLb(+lb.dataset.i+1)});
+    document.addEventListener('keydown',lbKey)}
+  const x=GAL[i];lb.dataset.i=i;
+  lb.innerHTML='<button class="x" type="button" aria-label="閉じる">×</button>'+(n>1?'<button class="p" type="button" aria-label="前の写真">‹</button><button class="n" type="button" aria-label="次の写真">›</button>':'')+
+    '<img src="'+esc(photoUrl(x.photo,2000))+'" alt="'+esc(x.caption||'')+'"><p>'+esc(x.caption||'')+(x.credit||x.univ?'<small>'+esc([x.credit?'撮影：'+x.credit:'',x.univ||''].filter(Boolean).join('　'))+'</small>':'')+'</p>';
+  lb.querySelector('.x').focus();
 }
-const reduceMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
-function stopPhotos(){clearInterval(PH.timer);PH.timer=null}
-function startPhotos(){stopPhotos();if(reduceMotion||PH.list.filter(Boolean).length<2)return;PH.timer=setInterval(()=>{if(!PH.paused&&!document.hidden)showPhoto(PH.i+1)},6000)}
-$('phPrev').onclick=()=>{showPhoto(PH.i-1);startPhotos()};
-$('phNext').onclick=()=>{showPhoto(PH.i+1);startPhotos()};
-$('phDots').addEventListener('click',e=>{const b=e.target.closest('button');if(b){showPhoto(+b.dataset.i);startPhotos()}});
-$('photos').addEventListener('mouseenter',()=>PH.paused=true);
-$('photos').addEventListener('mouseleave',()=>PH.paused=false);
-$('photos').addEventListener('focusin',()=>PH.paused=true);
-$('photos').addEventListener('focusout',()=>PH.paused=false);
-let phX=null;
-$('photos').addEventListener('touchstart',e=>{phX=e.touches[0].clientX},{passive:true});
-$('photos').addEventListener('touchend',e=>{if(phX==null)return;const dx=e.changedTouches[0].clientX-phX;phX=null;if(Math.abs(dx)>40){showPhoto(PH.i+(dx<0?1:-1));startPhotos()}},{passive:true});
+function closeLb(){const lb=document.querySelector('.lb');if(lb)lb.remove();document.removeEventListener('keydown',lbKey)}
+function lbKey(e){const lb=document.querySelector('.lb');if(!lb)return;if(e.key==='Escape')closeLb();if(e.key==='ArrowLeft')openLb(+lb.dataset.i-1);if(e.key==='ArrowRight')openLb(+lb.dataset.i+1)}
+$('galList').addEventListener('click',e=>{const b=e.target.closest('button[data-i]');if(b)openLb(+b.dataset.i)});
 
 /* standings */
 function renderTable(groups){
