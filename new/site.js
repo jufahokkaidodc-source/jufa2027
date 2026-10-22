@@ -1,7 +1,7 @@
 /* ホームページの構成（テンプレート5つ・載せるもの）
  *  ダッシュボードの「発信」→「ホームページの構成」で決める → 全体システムが ../results/data/site.json に書き出す
  *  { layout: 1〜5, hide: ['photos', 'p:history', 't:analysis', …] }
- *    ブロック（トップページ）… clubbar・photos・ticker・news・results・schedule・standings・scorers・clubs・partner
+ *    ブロック（トップページ）… clubbar・photos（注目の試合）・ticker・gallery（写真）・news・results・schedule・standings・scorers・clubs・partner
  *    ページ（p:）… news・history・about        大会記録のタブ（t:）… grid・tournament・scorers・assists・cards・awards・analysis
  *  ・<head> で読む。前に開いたときの構成（localStorage）をすぐ当てるので、ちらつかない。site.json を読んだら当て直す
  *  ・?layout=1〜5（＆hide=…）で、保存する前の見え方を試せる（ダッシュボードの「プレビュー」）
@@ -9,11 +9,11 @@
  */
 (function () {
   var LAYOUTS = {
-    1: { name: 'スタンダード', order: ['photos', 'ticker', 'news', 'results', 'scorers', 'clubs', 'partner'] },
-    2: { name: '試合中心', order: ['ticker', 'results', 'scorers', 'news', 'photos', 'clubs', 'partner'] },
-    3: { name: 'ニュース中心', order: ['photos', 'news', 'ticker', 'results', 'scorers', 'clubs', 'partner'] },
-    4: { name: 'ビジュアル', order: ['photos', 'clubs', 'ticker', 'news', 'results', 'scorers', 'partner'] },
-    5: { name: 'シンプル', order: ['ticker', 'results', 'news', 'scorers', 'photos', 'clubs', 'partner'] }
+    1: { name: 'スタンダード', order: ['photos', 'ticker', 'news', 'results', 'scorers', 'gallery', 'clubs', 'partner'] },
+    2: { name: '試合中心', order: ['ticker', 'results', 'scorers', 'news', 'photos', 'gallery', 'clubs', 'partner'] },
+    3: { name: 'ニュース中心', order: ['photos', 'news', 'ticker', 'results', 'scorers', 'gallery', 'clubs', 'partner'] },
+    4: { name: 'ビジュアル', order: ['photos', 'gallery', 'clubs', 'ticker', 'news', 'results', 'scorers', 'partner'] },
+    5: { name: 'シンプル', order: ['ticker', 'results', 'news', 'scorers', 'photos', 'gallery', 'clubs', 'partner'] }
   };
   var PAGES = { news: 'news.html', history: 'history.html', about: 'about.html' };
   var KEY = 'jufa-site-v1', html = document.documentElement;

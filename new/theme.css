@@ -107,14 +107,11 @@ a.alertbar:hover span{text-decoration:underline}
 html.hide-clubbar [data-part="clubbar"],html.hide-photos [data-part="photos"],html.hide-ticker [data-part="ticker"],
 html.hide-news [data-part="news"],html.hide-results [data-part="results"],html.hide-schedule [data-part="schedule"],
 html.hide-standings [data-part="standings"],html.hide-scorers [data-part="scorers"],html.hide-clubs [data-part="clubs"],
-html.hide-partner [data-part="partner"],.site-off{display:none!important}
+html.hide-partner [data-part="partner"],html.hide-gallery [data-part="gallery"],.site-off{display:none!important}
 html.hide-schedule .cols,html.hide-standings .cols{grid-template-columns:minmax(0,1fr)}
-/* 2 試合中心：写真は低く（試合を先に見せる） */
-html[data-layout="2"] .photos .ph-stage{max-height:min(42vh,360px)}
 /* 3 ニュース中心：お知らせを2列に（PC） */
 @media(min-width:921px){html[data-layout="3"] .news{display:grid;grid-template-columns:1fr 1fr}html[data-layout="3"] .news a:nth-child(2){border-top:0}html[data-layout="3"] .news a:nth-child(even){border-left:1px solid var(--line)}}
-/* 4 ビジュアル：写真を画面の幅いっぱいに、高く */
-html[data-layout="4"] .photos{width:100%}
-html[data-layout="4"] .photos .ph-stage{min-height:min(70vh,640px)}
+/* 4 ビジュアル：ギャラリーの写真を大きく（PCは3列） */
+@media(min-width:681px){html[data-layout="4"] .gal{grid-template-columns:repeat(3,minmax(0,1fr))}}
 /* 5 シンプル：日程と順位表を縦に並べる */
 html[data-layout="5"] .cols{grid-template-columns:minmax(0,1fr)}
