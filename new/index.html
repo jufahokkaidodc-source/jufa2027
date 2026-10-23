@@ -379,7 +379,8 @@ html{scroll-padding-top:0}
   background:repeating-linear-gradient(115deg,rgba(255,255,255,.06) 0 2px,transparent 2px 18px),linear-gradient(180deg,rgba(255,255,255,.16),transparent 50%),linear-gradient(105deg,var(--hc,#3a3a3a) 0 50%,var(--ac,#2a2a2a) 50% 100%)}
 .mv-bg:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 0 55%,rgba(14,14,14,.5) 80%,var(--bg) 100%)}
 .mv-in{position:relative;width:min(1200px,100% - 32px);margin:auto;padding:28px 0 24px;display:flex;flex-direction:column;align-items:center}
-.mv-match{width:100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:center;gap:12px;min-height:clamp(300px,34vw,420px);padding-top:clamp(8px,3vw,40px)}
+/* 3列×2段：上の段に エンブレム｜大会名・日付・会場｜エンブレム（上下の真ん中をそろえる）、下の段に左右のチーム名 */
+.mv-match{width:100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-areas:"eh c ea" "nh . na";align-items:center;justify-items:center;row-gap:16px;gap:12px;min-height:clamp(300px,34vw,420px);padding-top:clamp(8px,3vw,40px)}
 /* 左右の背景に大きなエンブレム（うすく）。画像がないチームは色だけ */
 /* エンブレムはチーム名の真上（左右とも同じ大きさ・同じ高さ）。画像がないチームも場所はあける */
 .mv-emb{position:relative;z-index:0;width:min(100%,26vw,330px);aspect-ratio:1;opacity:.95;pointer-events:none;animation:mvEmbIn .7s cubic-bezier(.2,.8,.2,1) both}
@@ -399,9 +400,12 @@ html{scroll-padding-top:0}
 /* 白い版（暗い背景用）は縁取りなし */
 /* エンブレムの上でも文字が読めるように */
 .mv-c,.mv-tm b{text-shadow:0 1px 3px rgba(0,0,0,.45)}
-.mv-tm{align-self:start}
+.mv-tm{display:contents}
+.mv-match>.mv-tm:first-child>.mv-emb{grid-area:eh}.mv-match>.mv-tm:first-child>b{grid-area:nh}
+.mv-match>.mv-tm:last-child>.mv-emb{grid-area:ea}.mv-match>.mv-tm:last-child>b{grid-area:na}
+.mv-match>.mv-c{grid-area:c}
+.mv-tm>b{align-self:start;text-align:center;max-width:100%}
 .mv-tm b{font-size:clamp(15px,2.4vw,26px);text-shadow:0 1px 2px rgba(0,0,0,.35);word-break:keep-all;overflow-wrap:anywhere}
-.mv-tm{display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center;min-width:0}
 .mv-tm b{font-size:clamp(14px,2.2vw,22px);font-weight:900;line-height:1.35;overflow-wrap:anywhere}
 /* エンブレムは白い丸にのせず、チームカラーの上にそのまま（画像がないチームは頭文字を白い線の丸で） */
 .mv .crest.img,.mv .crest.img:not(.hasdark){background:none!important;border-radius:0;box-shadow:none}
@@ -447,8 +451,8 @@ html{scroll-padding-top:0}
 .mv-dots button[aria-current=true]:before{background:#fff;width:28px;border-radius:4px}
 /* スマホ：上に大会名・日付・会場、その下に2チームを横に並べて、エンブレムを大きく。ボタンは小さめ */
 @media(max-width:680px){.mv-in{padding-top:16px;padding-bottom:10px}
-  .mv-match{gap:14px 10px;min-height:0;padding-top:0;align-items:start;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-areas:"c c" "h a"}
-  .mv-match>.mv-tm:first-child{grid-area:h}.mv-match>.mv-c{grid-area:c}.mv-match>.mv-tm:last-child{grid-area:a}
+  .mv-match{gap:8px 10px;min-height:0;padding-top:0;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-areas:"c c" "eh ea" "nh na"}
+  .mv-match>.mv-c{margin-bottom:6px}
   .mv-c .vn{font-size:12px}.mv-c .bx{margin-top:6px}
   .mv-tm{gap:8px}.mv-tm b{font-size:13px;line-height:1.45}.mv-emb{width:min(100%,40vw)}
   .mv-btn{margin-top:14px;min-height:40px;padding:0 20px;font-size:13px;gap:6px}.mv-btn span{font-size:17px}}
@@ -877,7 +881,7 @@ function showMV(i){
     '<div class="mv-c"><span class="cp">'+esc([MV.label,m.round].filter(Boolean).join('　'))+'</span>'+
       (sc?'<span class="dt">'+sc+'</span><span class="ko" style="font-size:clamp(18px,3vw,26px)">'+(dm?(+dm[2])+'.'+dm[3]:'')+(m.kickoff?' '+esc(m.kickoff)+'KO':'')+'</span>':'<span class="dt">'+dt+'</span>'+(m.kickoff?'<span class="ko">'+esc(m.kickoff)+'KO</span>':''))+
       '<span class="vn">'+vn(m.venue||'会場未定')+'</span>'+
-      (lv?'<span class="bx live">'+esc(JUFA_LIVE.label(lv))+'</span>':done?'<span class="bx">試合終了</span>':daysUntil(m.date)===0?'<span class="bx">本日開催</span>':daysUntil(m.date)>0?'<span class="bx">あと '+daysUntil(m.date)+' 日</span>':'')+
+      (lv?'<span class="bx live">'+esc(JUFA_LIVE.label(lv))+'</span>':done?'<span class="bx">試合終了</span>':daysUntil(m.date)===0?'<span class="bx">本日開催</span>':'')+ // 「あと○日」は出さない
     '</div>'+tm(m.away,ea,' r'+lt(ac,m.away));
   $('mvBtn').href=detail(S.id,done||lv?m.matchId:'');
   $('mvDots').querySelectorAll('button').forEach(b=>b.setAttribute('aria-current',String(+b.dataset.i===i)));
