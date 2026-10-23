@@ -445,7 +445,13 @@ html{scroll-padding-top:0}
 .mv-dots button{width:28px;height:28px;border:0;background:transparent;padding:0;display:grid;place-items:center}
 .mv-dots button:before{content:"";width:8px;height:8px;border-radius:50%;background:#ffffff70;transition:.2s}
 .mv-dots button[aria-current=true]:before{background:#fff;width:28px;border-radius:4px}
-@media(max-width:680px){.mv-in{padding-top:16px;padding-bottom:12px}.mv-match{gap:6px;min-height:0;padding-top:0;align-items:start;grid-template-columns:minmax(76px,1fr) minmax(0,1.6fr) minmax(76px,1fr)}.mv-c .vn{font-size:12px}.mv-tm{gap:10px}.mv-tm b{font-size:12px;line-height:1.45}.mv-emb{width:min(100%,26vw)}.mv-btn{margin-top:16px}.mv-c .vn{font-size:12px}.mv-btn{font-size:15px;padding:0 26px}}
+/* スマホ：上に大会名・日付・会場、その下に2チームを横に並べて、エンブレムを大きく。ボタンは小さめ */
+@media(max-width:680px){.mv-in{padding-top:16px;padding-bottom:10px}
+  .mv-match{gap:14px 10px;min-height:0;padding-top:0;align-items:start;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-areas:"c c" "h a"}
+  .mv-match>.mv-tm:first-child{grid-area:h}.mv-match>.mv-c{grid-area:c}.mv-match>.mv-tm:last-child{grid-area:a}
+  .mv-c .vn{font-size:12px}.mv-c .bx{margin-top:6px}
+  .mv-tm{gap:8px}.mv-tm b{font-size:13px;line-height:1.45}.mv-emb{width:min(100%,40vw)}
+  .mv-btn{margin-top:14px;min-height:40px;padding:0 20px;font-size:13px;gap:6px}.mv-btn span{font-size:17px}}
 @media(prefers-reduced-motion:reduce){.mv-bg{transition:none}}
 /* 試合の帯：暗いカード（状態・チーム・得点、下に「試合詳細」） */
 .ticker{background:var(--bg)!important;border-bottom:0}
