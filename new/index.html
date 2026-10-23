@@ -379,18 +379,18 @@ html{scroll-padding-top:0}
   background:repeating-linear-gradient(115deg,rgba(255,255,255,.06) 0 2px,transparent 2px 18px),linear-gradient(180deg,rgba(255,255,255,.16),transparent 50%),linear-gradient(105deg,var(--hc,#3a3a3a) 0 50%,var(--ac,#2a2a2a) 50% 100%)}
 .mv-bg:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 0 55%,rgba(14,14,14,.5) 80%,var(--bg) 100%)}
 .mv-in{position:relative;width:min(1200px,100% - 32px);margin:auto;padding:28px 0 24px;display:flex;flex-direction:column;align-items:center}
-.mv-match{width:100%;display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:end;gap:12px;min-height:clamp(300px,34vw,420px);padding-top:clamp(8px,3vw,40px)}
+.mv-match{width:100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:center;gap:12px;min-height:clamp(300px,34vw,420px);padding-top:clamp(8px,3vw,40px)}
 /* 左右の背景に大きなエンブレム（うすく）。画像がないチームは色だけ */
-.mv-emb{position:absolute;z-index:2;top:38%;width:min(29vw,370px);aspect-ratio:1;transform:translate(-50%,-50%);opacity:.95;pointer-events:none;animation:mvEmbIn .7s cubic-bezier(.2,.8,.2,1) both}
+/* エンブレムはチーム名の真上（左右とも同じ大きさ・同じ高さ）。画像がないチームも場所はあける */
+.mv-emb{position:relative;z-index:0;width:min(100%,26vw,330px);aspect-ratio:1;opacity:.95;pointer-events:none;animation:mvEmbIn .7s cubic-bezier(.2,.8,.2,1) both}
 /* エンブレムのうしろを、まるく明るく（スポットライト） */
 .mv-emb:before{content:"";position:absolute;inset:-35%;z-index:-1;border-radius:50%;background:radial-gradient(closest-side,rgba(255,255,255,.34),rgba(255,255,255,.12) 55%,transparent)}
 .mv-emb.l{--dx:-60px}.mv-emb.r{--dx:60px}
 /* 白い版のうしろは、スポットライトを弱く（白飛びしないように） */
 .mv-emb:has(img.dk):before{opacity:.3}
-@keyframes mvEmbIn{from{opacity:0;transform:translate(calc(-50% + var(--dx,0px)),-50%) scale(.92)}}
+@keyframes mvEmbIn{from{opacity:0;transform:translateX(var(--dx,0px)) scale(.92)}}
 .mv-c{animation:mvCIn .6s ease both}@keyframes mvCIn{from{opacity:0;transform:translateY(10px)}}
 @media(prefers-reduced-motion:reduce){.mv-emb,.mv-c{animation:none}}
-.mv-emb.l{left:25%}.mv-emb.r{left:75%}
 /* エンブレムの影：暗い背景には白っぽい光、明るい背景（.lt）と白い版（.dk）には黒っぽい影 */
 .mv-emb img{width:100%;height:100%;object-fit:contain;display:block;filter:drop-shadow(0 0 3px rgba(255,255,255,.55)) drop-shadow(0 0 22px rgba(255,255,255,.45))}
 .mv-emb.lt img,.mv-emb img.dk{filter:drop-shadow(0 2px 3px rgba(0,0,0,.4)) drop-shadow(0 10px 22px rgba(0,0,0,.6))}
@@ -399,9 +399,9 @@ html{scroll-padding-top:0}
 /* 白い版（暗い背景用）は縁取りなし */
 /* エンブレムの上でも文字が読めるように */
 .mv-c,.mv-tm b{text-shadow:0 1px 3px rgba(0,0,0,.45)}
-.mv-tm{align-self:end;padding-bottom:0}
+.mv-tm{align-self:start}
 .mv-tm b{font-size:clamp(15px,2.4vw,26px);text-shadow:0 1px 2px rgba(0,0,0,.35);word-break:keep-all;overflow-wrap:anywhere}
-.mv-tm{display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;min-width:0}
+.mv-tm{display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center;min-width:0}
 .mv-tm b{font-size:clamp(14px,2.2vw,22px);font-weight:900;line-height:1.35;overflow-wrap:anywhere}
 /* エンブレムは白い丸にのせず、チームカラーの上にそのまま（画像がないチームは頭文字を白い線の丸で） */
 .mv .crest.img,.mv .crest.img:not(.hasdark){background:none!important;border-radius:0;box-shadow:none}
@@ -445,7 +445,7 @@ html{scroll-padding-top:0}
 .mv-dots button{width:28px;height:28px;border:0;background:transparent;padding:0;display:grid;place-items:center}
 .mv-dots button:before{content:"";width:8px;height:8px;border-radius:50%;background:#ffffff70;transition:.2s}
 .mv-dots button[aria-current=true]:before{background:#fff;width:28px;border-radius:4px}
-@media(max-width:680px){.mv-in{padding-top:16px;padding-bottom:12px}.mv-match{gap:6px;min-height:0;padding-top:0;align-items:start;grid-template-columns:minmax(76px,1fr) minmax(0,1.6fr) minmax(76px,1fr)}.mv-c .vn{font-size:12px}.mv-tm{align-self:start;padding:calc(28vw + 26px) 0 0}.mv-tm b{font-size:12px;line-height:1.45}.mv-emb{top:calc(16px + 14vw + 6px);width:28vw}.mv-emb.l{left:16%}.mv-emb.r{left:84%}.mv-btn{margin-top:16px}.mv-c .vn{font-size:12px}.mv-btn{font-size:15px;padding:0 26px}}
+@media(max-width:680px){.mv-in{padding-top:16px;padding-bottom:12px}.mv-match{gap:6px;min-height:0;padding-top:0;align-items:start;grid-template-columns:minmax(76px,1fr) minmax(0,1.6fr) minmax(76px,1fr)}.mv-c .vn{font-size:12px}.mv-tm{gap:10px}.mv-tm b{font-size:12px;line-height:1.45}.mv-emb{width:min(100%,26vw)}.mv-btn{margin-top:16px}.mv-c .vn{font-size:12px}.mv-btn{font-size:15px;padding:0 26px}}
 @media(prefers-reduced-motion:reduce){.mv-bg{transition:none}}
 /* 試合の帯：暗いカード（状態・チーム・得点、下に「試合詳細」） */
 .ticker{background:var(--bg)!important;border-bottom:0}
@@ -859,7 +859,7 @@ function showMV(i){
   const sc=done?esc(m.score.home)+' - '+esc(m.score.away):lv?esc(lv.score.home)+' - '+esc(lv.score.away):'';
   // チーム名：「大学」の後ろ・空白で改行できるようにする（ほかの所では改行しない）
   const tn=v=>esc(v).replace(/(大学)(?=.)/g,'$1<wbr>').replace(/\s+/g,' <wbr>');
-  const tm=t=>'<div class="mv-tm"><b>'+tn(t.name||t.short||'')+'</b></div>';
+  const tm=(t,e,c)=>'<div class="mv-tm"><div class="mv-emb'+c+'">'+e+'</div><b>'+tn(t.name||t.short||'')+'</b></div>';
   // 会場名：「（」の前・「）」「・」の後ろ・空白で改行できるようにする（ほかの所では改行しない）
   const vn=v=>esc(v).replace(/([（(])/g,'<wbr>$1').replace(/([）)・])/g,'$1<wbr>').replace(/\s+/g,' <wbr>');
   // 背景の大きなエンブレム（ドライブの画像は大きめの縮小版で）
@@ -867,13 +867,12 @@ function showMV(i){
   const eh=big(m.home),ea=big(m.away);
   const [hc,ac]=matchColors(m);$('mvBg').style.setProperty('--hc',hc);$('mvBg').style.setProperty('--ac',ac);
   const lt=(c,t)=>(WHITE_GLOW.includes(t.univ||'')?' wg':'')+(isRed(c)?' rd':lum(c)>.15?' lt':''); // 白い光の大学・赤い背景・明るい背景
-  $('mvBg').innerHTML=(eh?'<div class="mv-emb l'+lt(hc,m.home)+'">'+eh+'</div>':'')+(ea?'<div class="mv-emb r'+lt(ac,m.away)+'">'+ea+'</div>':'');
-  $('mvMatch').innerHTML=tm(m.home)+
+  $('mvMatch').innerHTML=tm(m.home,eh,' l'+lt(hc,m.home))+
     '<div class="mv-c"><span class="cp">'+esc([MV.label,m.round].filter(Boolean).join('　'))+'</span>'+
       (sc?'<span class="dt">'+sc+'</span><span class="ko" style="font-size:clamp(18px,3vw,26px)">'+(dm?(+dm[2])+'.'+dm[3]:'')+(m.kickoff?' '+esc(m.kickoff)+'KO':'')+'</span>':'<span class="dt">'+dt+'</span>'+(m.kickoff?'<span class="ko">'+esc(m.kickoff)+'KO</span>':''))+
       '<span class="vn">'+vn(m.venue||'会場未定')+'</span>'+
       (lv?'<span class="bx live">'+esc(JUFA_LIVE.label(lv))+'</span>':done?'<span class="bx">試合終了</span>':daysUntil(m.date)===0?'<span class="bx">本日開催</span>':daysUntil(m.date)>0?'<span class="bx">あと '+daysUntil(m.date)+' 日</span>':'')+
-    '</div>'+tm(m.away);
+    '</div>'+tm(m.away,ea,' r'+lt(ac,m.away));
   $('mvBtn').href=detail(S.id,done||lv?m.matchId:'');
   $('mvDots').querySelectorAll('button').forEach(b=>b.setAttribute('aria-current',String(+b.dataset.i===i)));
 }
