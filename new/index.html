@@ -395,6 +395,8 @@ html{scroll-padding-top:0}
 /* エンブレムの影：暗い背景には白っぽい光、明るい背景（.lt）と白い版（.dk）には黒っぽい影 */
 .mv-emb img{width:100%;height:100%;object-fit:contain;display:block;filter:drop-shadow(0 0 3px rgba(255,255,255,.55)) drop-shadow(0 0 22px rgba(255,255,255,.45))}
 .mv-emb.lt img,.mv-emb img.dk{filter:drop-shadow(0 2px 3px rgba(0,0,0,.4)) drop-shadow(0 10px 22px rgba(0,0,0,.6))}
+/* 赤・オレンジの背景（.rd）は、明るさや白い版にかかわらず白い光 */
+.mv-emb.rd img,.mv-emb.rd img.dk{filter:drop-shadow(0 0 3px rgba(255,255,255,.6)) drop-shadow(0 0 22px rgba(255,255,255,.5))}
 /* 白い版（暗い背景用）は縁取りなし */
 /* エンブレムの上でも文字が読めるように */
 .mv-c,.mv-tm b{text-shadow:0 1px 3px rgba(0,0,0,.45)}
@@ -809,6 +811,9 @@ function renderTopics(ms,scorers,compName){
 const MV={list:[],i:0,timer:null,paused:false};
 /* 背景にする色：明るい色は白い文字が読めるように暗くする */
 function lum(c){const n=parseInt(c.slice(1),16),L=[n>>16&255,n>>8&255,n&255].map(v=>{v/=255;return v<=.03928?v/12.92:Math.pow((v+.055)/1.055,2.4)});return .2126*L[0]+.7152*L[1]+.0722*L[2]}
+/* 赤・オレンジ系（色相 345〜40度・あざやか）か */
+function isRed(c){const n=parseInt(c.slice(1),16),r=(n>>16&255)/255,g=(n>>8&255)/255,b=(n&255)/255,mx=Math.max(r,g,b),mn=Math.min(r,g,b),d=mx-mn;
+  if(!d||d/mx<.45)return false;let h=mx===r?((g-b)/d)%6:mx===g?(b-r)/d+2:(r-g)/d+4;h=(h*60+360)%360;return h>=345||h<=40}
 function bgColor(c){
   const n=parseInt(c.slice(1),16),rgb=[n>>16&255,n>>8&255,n&255];
   return lum(c)>.3?'#'+rgb.map(v=>Math.round(v*.55).toString(16).padStart(2,'0')).join(''):c;
@@ -860,7 +865,7 @@ function showMV(i){
   const big=t=>{const p=teamProf(t),w=x=>x.replace(/sz=w\d+/,'sz=w1000'),dk=w(emblemUrl({emblem:p?.emblemDark})),nm=w(emblemUrl(p)||embFor(t.univ||'',name(t),t.name||''));const u=dk||nm;return u?embImg(u,!!dk,dk?nm:''):''};
   const eh=big(m.home),ea=big(m.away);
   const [hc,ac]=matchColors(m);$('mvBg').style.setProperty('--hc',hc);$('mvBg').style.setProperty('--ac',ac);
-  const lt=c=>lum(c)>.15?' lt':''; // 明るい背景か
+  const lt=c=>isRed(c)?' rd':lum(c)>.15?' lt':''; // 赤い背景か・明るい背景か
   $('mvBg').innerHTML=(eh?'<div class="mv-emb l'+lt(hc)+'">'+eh+'</div>':'')+(ea?'<div class="mv-emb r'+lt(ac)+'">'+ea+'</div>':'');
   $('mvMatch').innerHTML=tm(m.home)+
     '<div class="mv-c"><span class="cp">'+esc([MV.label,m.round].filter(Boolean).join('　'))+'</span>'+
