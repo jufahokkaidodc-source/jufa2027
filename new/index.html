@@ -382,15 +382,15 @@ html{scroll-padding-top:0}
 .mv-in{position:relative;width:min(1200px,100% - 32px);margin:auto;padding:28px 0 24px;display:flex;flex-direction:column;align-items:center}
 .mv-match{width:100%;display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:end;gap:12px;min-height:clamp(300px,34vw,420px);padding-top:clamp(8px,3vw,40px)}
 /* 左右の背景に大きなエンブレム（うすく）。画像がないチームは色だけ */
-.mv-emb{position:absolute;top:47%;width:min(30vw,400px);aspect-ratio:1;transform:translate(-50%,-50%);opacity:.6;pointer-events:none}
+.mv-emb{position:absolute;z-index:2;top:38%;width:min(27vw,340px);aspect-ratio:1;transform:translate(-50%,-50%);opacity:.92;pointer-events:none}
 .mv-emb.l{left:25%}.mv-emb.r{left:75%}
-/* エンブレムの影：暗い背景には白っぽい光、明るい背景（.lt）には黒っぽい影 */
-.mv-emb img{width:100%;height:100%;object-fit:contain;display:block;filter:drop-shadow(0 0 2px rgba(255,255,255,.45)) drop-shadow(0 0 16px rgba(255,255,255,.4))}
-.mv-emb.lt img{filter:drop-shadow(0 0 2px rgba(0,0,0,.35)) drop-shadow(0 6px 14px rgba(0,0,0,.55))}
+/* エンブレムの影：暗い背景には白っぽい光、明るい背景（.lt）と白い版（.dk）には黒っぽい影 */
+.mv-emb img{width:100%;height:100%;object-fit:contain;display:block;filter:drop-shadow(0 0 3px rgba(255,255,255,.55)) drop-shadow(0 0 22px rgba(255,255,255,.45))}
+.mv-emb.lt img,.mv-emb img.dk{filter:drop-shadow(0 2px 3px rgba(0,0,0,.4)) drop-shadow(0 10px 22px rgba(0,0,0,.6))}
 /* 白い版（暗い背景用）は縁取りなし */
 /* エンブレムの上でも文字が読めるように */
 .mv-c,.mv-tm b{text-shadow:0 1px 3px rgba(0,0,0,.45)}
-.mv-tm{align-self:end;padding-bottom:clamp(30px,4vw,52px)}
+.mv-tm{align-self:end;padding-bottom:0}
 .mv-tm b{font-size:clamp(15px,2.4vw,26px);text-shadow:0 1px 2px rgba(0,0,0,.35);word-break:keep-all;overflow-wrap:anywhere}
 .mv-tm{display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;min-width:0}
 .mv-tm b{font-size:clamp(14px,2.2vw,22px);font-weight:900;line-height:1.35;overflow-wrap:anywhere}
@@ -436,7 +436,7 @@ html{scroll-padding-top:0}
 .mv-dots button{width:28px;height:28px;border:0;background:transparent;padding:0;display:grid;place-items:center}
 .mv-dots button:before{content:"";width:8px;height:8px;border-radius:50%;background:#ffffff70;transition:.2s}
 .mv-dots button[aria-current=true]:before{background:#fff;width:28px;border-radius:4px}
-@media(max-width:680px){.mv-in{padding-top:16px;padding-bottom:12px}.mv-match{gap:6px;min-height:0;padding-top:0;align-items:start;grid-template-columns:minmax(76px,1fr) minmax(0,1.6fr) minmax(76px,1fr)}.mv-c .vn{font-size:12px}.mv-tm{align-self:start;padding:calc(34vw + 26px) 0 0}.mv-tm b{font-size:12px;line-height:1.45}.mv-emb{top:calc(16px + 17vw + 6px);width:34vw}.mv-emb.l{left:22%}.mv-emb.r{left:78%}.mv-btn{margin-top:16px}.mv-c .vn{font-size:12px}.mv-btn{font-size:15px;padding:0 26px}}
+@media(max-width:680px){.mv-in{padding-top:16px;padding-bottom:12px}.mv-match{gap:6px;min-height:0;padding-top:0;align-items:start;grid-template-columns:minmax(76px,1fr) minmax(0,1.6fr) minmax(76px,1fr)}.mv-c .vn{font-size:12px}.mv-tm{align-self:start;padding:calc(28vw + 26px) 0 0}.mv-tm b{font-size:12px;line-height:1.45}.mv-emb{top:calc(16px + 14vw + 6px);width:28vw}.mv-emb.l{left:16%}.mv-emb.r{left:84%}.mv-btn{margin-top:16px}.mv-c .vn{font-size:12px}.mv-btn{font-size:15px;padding:0 26px}}
 @media(prefers-reduced-motion:reduce){.mv-bg{transition:none}}
 /* 試合の帯：暗いカード（状態・チーム・得点、下に「試合詳細」） */
 .ticker{background:var(--bg)!important;border-bottom:0}
@@ -881,32 +881,46 @@ function cutoutCanvas(img){
   while(st.length){const y=st.pop(),x=st.pop(),q=y*W+x;if(seen[q])continue;const i=q*4,dd=dist(i);if(dd>=T2)continue;seen[q]=1;
     d[i+3]=dd<T1?0:Math.round(d[i+3]*(dd-T1)/(T2-T1));n++;if(dd>=T1)continue;
     if(x>0)st.push(x-1,y);if(x<W-1)st.push(x+1,y);if(y>0)st.push(x,y-1);if(y<H-1)st.push(x,y+1)}
-  if(n<W*H*.03)return null;
+  if(n<W*H*.03||n>W*H*.97)return null;
   g.putImageData(im,0,0);return c.toDataURL('image/png');
 }
-/* 画像は1回だけ読む：まず切り抜ける形（crossorigin）で読み、だめならふつうに読み直す */
-/* 白い版（dk）は、背景が透明か切り抜けたときだけ使う。切り抜けないときは、ふつうのエンブレム（alt）に切りかえる */
+/* エンブレムの読み方（1枚ずつ順に試す）
+   ・ドライブの画像は、まず元の画像（lh3。透明がそのまま残る）→ だめなら縮小版（thumbnail。透明が白くぬられることがある）
+   ・それぞれ、まず切り抜ける形（crossorigin）で読み、だめならふつうに読む
+   ・白い版（dk）は、透明か切り抜けたときだけ使う。だめなら、ふつうのエンブレム（alt）に切りかえる（白い四角を出さない） */
+function embTries(u,dk){
+  const m=u.match(/drive\.google\.com\/thumbnail\?id=([\w-]+)/),t=[];
+  if(m)t.push(['https://lh3.googleusercontent.com/d/'+m[1]+'=w1000',1],['https://lh3.googleusercontent.com/d/'+m[1]+'=w1000',0]);
+  t.push([u,1]);if(!dk||!m)t.push([u,0]);
+  return t;
+}
 function embImg(u,dk,alt){
-  const v=CUT.get(u);
-  if(v==='T')return '<img'+(dk?' class="dk"':'')+' src="'+esc(u)+'" alt="">';
-  if(v)return '<img'+(dk?' class="dk"':'')+' src="'+esc(v)+'" alt="">';
-  if(dk&&v===null&&alt)return embImg(alt,false);
-  return '<img'+(dk?' class="dk"':'')+(CUT.has(u)?'':' crossorigin="anonymous" data-cut="1"')+' data-u="'+esc(u)+'"'+(dk&&alt?' data-alt="'+esc(alt)+'"':'')+' src="'+esc(u)+'" alt="" onload="embLoaded(this)" onerror="embFailed(this)">';
+  const v=CUT.get(u),c=dk?' class="dk"':'';
+  if(v)return '<img'+c+' src="'+esc(v)+'" alt="">';
+  if(v===null&&dk&&alt)return embImg(alt,false);
+  const t=embTries(u,dk)[0];
+  return '<img'+c+' data-u="'+esc(u)+'" data-k="0"'+(dk&&alt?' data-alt="'+esc(alt)+'"':'')+(t[1]?' crossorigin="anonymous"':'')+' src="'+esc(t[0])+'" alt="" onload="embLoaded(this)" onerror="embNext(this)">';
 }
+function embStart(el){
+  const t=embTries(el.dataset.u,el.classList.contains('dk'))[+el.dataset.k];
+  if(!t){if(el.dataset.alt)return embToAlt(el);CUT.set(el.dataset.u,null);return el.remove()}
+  if(t[1])el.setAttribute('crossorigin','anonymous');else el.removeAttribute('crossorigin');
+  el.src=t[0];
+}
+function embFin(el,src){el.dataset.done='1';CUT.set(el.dataset.u,src);if(el.getAttribute('src')!==src)el.src=src}
+function embToAlt(el){const a=el.dataset.alt;CUT.set(el.dataset.u,null);delete el.dataset.alt;el.classList.remove('dk');el.dataset.u=a;el.dataset.k='0';embStart(el)}
 function embLoaded(el){
-  if(!el.dataset.cut)return;delete el.dataset.cut;
-  const u=el.dataset.u;let v=null;try{v=cutoutCanvas(el)}catch(e){}
-  CUT.set(u,v);
-  if(v&&v!=='T'){el.src=v;return}
-  if(!v&&el.dataset.alt){const a=el.dataset.alt;delete el.dataset.alt;el.classList.remove('dk');el.dataset.u=a;el.dataset.cut='1';el.src=a}
+  if(el.dataset.done||!el.dataset.u)return;
+  const dk=el.classList.contains('dk'),t=embTries(el.dataset.u,dk)[+el.dataset.k];if(!t)return;
+  if(!t[1])return embFin(el,t[0]);           // ふつうに読めた（切り抜きは試せない）
+  let v;try{v=cutoutCanvas(el)}catch(e){v=undefined}
+  if(v==='T')return embFin(el,t[0]);          // もう透明
+  if(v)return embFin(el,v);                   // 切り抜けた
+  if(v===undefined){el.dataset.k=+el.dataset.k+1;return embStart(el)} // 読めない形だった → 次へ
+  if(dk&&el.dataset.alt)return embToAlt(el);  // 白い版が切り抜けない → ふつうのエンブレムへ
+  embFin(el,t[0]);
 }
-function embFailed(el){
-  if(el.dataset.cut){delete el.dataset.cut;el.removeAttribute('crossorigin');
-    if(el.dataset.alt){CUT.set(el.dataset.u,null);const a=el.dataset.alt;delete el.dataset.alt;el.classList.remove('dk');el.dataset.u=a;el.dataset.cut='1';el.setAttribute('crossorigin','anonymous');el.src=a;return}
-    CUT.set(el.dataset.u,null);el.src=el.dataset.u+(el.dataset.u.includes('?')?'&':'?')+'nc=1';return}
-  if(el.dataset.alt){const a=el.dataset.alt;delete el.dataset.alt;el.classList.remove('dk');el.dataset.u=a;el.src=a;return}
-  el.remove();
-}
+function embNext(el){if(el.dataset.done){el.remove();return}el.dataset.k=+el.dataset.k+1;embStart(el)}
 function stopMV(){clearInterval(MV.timer);MV.timer=null}
 function startMV(){stopMV();if(matchMedia('(prefers-reduced-motion: reduce)').matches||MV.list.length<2)return;MV.timer=setInterval(()=>{if(!MV.paused&&!document.hidden)showMV(MV.i+1)},6000)}
 $('mvDots').addEventListener('click',e=>{const b=e.target.closest('button');if(b){showMV(+b.dataset.i);startMV()}});
