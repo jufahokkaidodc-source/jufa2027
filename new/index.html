@@ -451,7 +451,9 @@ html{scroll-padding-top:0}
 .mv-dots button[aria-current=true]:before{background:#fff;width:28px;border-radius:4px}
 /* スマホ：上に大会名・日付・会場、その下に2チームを横に並べて、エンブレムを大きく。ボタンは小さめ */
 @media(max-width:680px){.mv-in{padding-top:16px;padding-bottom:10px}
-  .mv-match{gap:8px 10px;min-height:0;padding-top:0;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-areas:"c c" "eh ea" "nh na"}
+  /* 左右の列は画面のちょうど半分ずつ（エンブレムとチーム名は、それぞれの半分の真ん中） */
+  .mv-match{gap:8px 0;min-height:0;padding-top:0;width:calc(100% + 32px);align-self:center;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-areas:"c c" "eh ea" "nh na"}
+  .mv-match>.mv-c{padding:0 16px}.mv-tm>b{padding:0 8px}
   .mv-match>.mv-c{margin-bottom:6px}
   .mv-c .vn{font-size:12px}.mv-c .bx{margin-top:6px}
   .mv-tm{gap:8px}.mv-tm b{font-size:13px;line-height:1.45}.mv-emb{width:min(100%,40vw)}
