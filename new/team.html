@@ -104,6 +104,11 @@ button{font:inherit;color:inherit;cursor:pointer}
 .hero:before{z-index:1}.hero:after{z-index:2}
 /* 上部の光はチームカラー（theme.css の赤い光より優先） */
 #hero.hero:before{background:radial-gradient(760px 380px at 85% 0%,color-mix(in srgb,var(--team) 75%,transparent),transparent 72%)}
+.hero .hemb{position:absolute;z-index:1;top:16px;bottom:21px;right:max(16px,calc((100% - 1200px)/2));aspect-ratio:1;opacity:.5;pointer-events:none;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 45%);mask-image:linear-gradient(90deg,transparent 0,#000 45%)}
+.hero .hemb img{width:100%;height:100%;object-fit:contain;display:block}
+.hero.has-emb #heroCrest{display:none}
+@media(max-width:680px){.hero .hemb{top:14px;bottom:auto;right:8px;width:50vw;opacity:.4;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 25%);mask-image:linear-gradient(90deg,transparent 0,#000 25%)}}
 @media(max-width:680px){.hero .hph:after{background:linear-gradient(180deg,rgba(11,17,32,.55) 0%,rgba(11,17,32,.88) 60%,rgba(11,17,32,.95) 100%)}}
 .crumb{font-size:12px;color:#9fb8cc;margin-bottom:20px}
 .crumb a:hover{color:#fff;text-decoration:underline}
@@ -382,6 +387,7 @@ dl.facts dd{margin:0;font-weight:700;overflow-wrap:anywhere}
 
 <section class="hero" id="hero">
   <div class="hph" id="heroPh" aria-hidden="true"></div>
+  <div class="hemb" id="heroEmb" aria-hidden="true"></div>
   <div class="wrap">
     <div class="crumb"><a href="./">ホーム</a> ／ <a href="./#clubs">参加クラブ</a> ／ <span id="crumbName">チーム</span></div>
     <div class="club-id">
@@ -547,6 +553,7 @@ function teamPhotoUrl(p,w){
 let EMB={};
 const embReady=fetch('./emblems/index.json',{cache:'no-store'}).then(r=>r.ok?r.json():{}).then(j=>{EMB=j&&typeof j==='object'?j:{}}).catch(()=>{});
 function embFor(...names){for(const n of names){const f=n&&EMB[String(n).trim()];if(f&&/^[^\/\\?#]+\.(png|jpe?g|webp|svg|gif)$/i.test(f))return './emblems/'+encodeURIComponent(f)}return ''}
+function heroEmbFail(img){const a=img.dataset.alt;if(a){img.dataset.alt='';img.src=a;return}$('hero').classList.remove('has-emb');img.remove()}
 function crestFail(img){const s=img.parentNode;if(img.classList.contains('ed')){s.classList.remove('hasdark');img.remove();return}s.classList.remove('img','hasdark');s.querySelectorAll('img').forEach(x=>x.remove());s.insertBefore(document.createTextNode(s.dataset.ch),s.firstChild)}
 const WD=['日','月','火','水','木','金','土'];
 function fmtDate(s,short){const m=/^(\d{4})-(\d{2})-(\d{2})/.exec(s||'');if(!m)return s||'日程未定';return (+m[2])+'/'+(+m[3])+(short?'':'（'+WD[new Date(+m[1],+m[2]-1,+m[3]).getDay()]+'）')}
@@ -602,6 +609,13 @@ function renderHero(row,ms){
   $('crumbName').textContent=name(t);
   if(typeof t==='object'&&t.id)calBox($('calBox'),[{file:'t-'+t.id+'.ics',label:fullName(t)+'の試合'},{file:String(t.id).replace(/-[^-]*$/,'')+'.ics',label:(t.univ||name(t))+'の全チームの試合（リーグ・Iリーグなど）'}],'日程をカレンダーに入れる');
   $('heroCrest').innerHTML=crest(t,'xl');
+  // エンブレムは白い丸にのせず、見出しの右側の背景に大きく（暗い背景用があればそれ）。画像がないチームは色の丸に略称
+  const eu=emblemUrl({emblem:p?.emblemDark})||emblemUrl(p)||embFor(typeof t==='object'?t.univ:'',name(t),typeof t==='object'?t.name:'');
+  const big=String(eu).replace(/sz=w\d+/,'sz=w1000');
+  // ドライブの画像は元の画像（lh3。透明がそのまま）を先に、だめなら縮小版
+  const did=(big.match(/drive\.google\.com\/thumbnail\?id=([\w-]+)/)||[])[1],first=did?'https://lh3.googleusercontent.com/d/'+did+'=w1000':big;
+  $('heroEmb').innerHTML=big?'<img src="'+esc(first)+'" data-alt="'+(did?esc(big):'')+'" alt="" decoding="async" onerror="heroEmbFail(this)">':'';
+  $('hero').classList.toggle('has-emb',!!big);
   const hp=teamPhotoUrl(p,1600);
   $('heroPh').innerHTML=hp?'<img src="'+esc(hp)+'" alt="" decoding="async" onerror="this.remove()">':'';
   $('teamTitle').textContent=(p&&has(p.displayName))?p.displayName:fullName(t);
