@@ -382,9 +382,13 @@ html{scroll-padding-top:0}
 .mv-in{position:relative;width:min(1200px,100% - 32px);margin:auto;padding:28px 0 24px;display:flex;flex-direction:column;align-items:center}
 .mv-match{width:100%;display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:end;gap:12px;min-height:clamp(300px,34vw,420px);padding-top:clamp(8px,3vw,40px)}
 /* 左右の背景に大きなエンブレム（うすく）。画像がないチームは色だけ */
-.mv-emb{position:absolute;top:47%;width:min(30vw,400px);aspect-ratio:1;transform:translate(-50%,-50%);opacity:.42;pointer-events:none}
+.mv-emb{position:absolute;top:47%;width:min(30vw,400px);aspect-ratio:1;transform:translate(-50%,-50%);opacity:.6;pointer-events:none}
 .mv-emb.l{left:25%}.mv-emb.r{left:75%}
-.mv-emb img{width:100%;height:100%;object-fit:contain;display:block}
+.mv-emb img{width:100%;height:100%;object-fit:contain;display:block;filter:drop-shadow(1.5px 0 0 rgba(255,255,255,.85)) drop-shadow(-1.5px 0 0 rgba(255,255,255,.85)) drop-shadow(0 1.5px 0 rgba(255,255,255,.85)) drop-shadow(0 -1.5px 0 rgba(255,255,255,.85))}
+/* 白い版（暗い背景用）は縁取りなし */
+.mv-emb img.dk{filter:none}
+/* エンブレムの上でも文字が読めるように */
+.mv-c,.mv-tm b{text-shadow:0 1px 3px rgba(0,0,0,.45)}
 .mv-tm{align-self:end;padding-bottom:clamp(30px,4vw,52px)}
 .mv-tm b{font-size:clamp(15px,2.4vw,26px);text-shadow:0 1px 2px rgba(0,0,0,.35);word-break:keep-all;overflow-wrap:anywhere}
 .mv-tm{display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;min-width:0}
@@ -843,7 +847,7 @@ function showMV(i){
   // 会場名：「（」の前・「）」「・」の後ろ・空白で改行できるようにする（ほかの所では改行しない）
   const vn=v=>esc(v).replace(/([（(])/g,'<wbr>$1').replace(/([）)・])/g,'$1<wbr>').replace(/\s+/g,' <wbr>');
   // 背景の大きなエンブレム（ドライブの画像は大きめの縮小版で）
-  const big=t=>{const p=teamProf(t);let u=emblemUrl(p)||embFor(t.univ||'',name(t),t.name||'');u=u.replace(/sz=w\d+/,'sz=w1000');return u?'<img src="'+esc(u)+'" alt="" onerror="this.remove()">':''};
+  const big=t=>{const p=teamProf(t),dk=emblemUrl({emblem:p?.emblemDark});let u=dk||emblemUrl(p)||embFor(t.univ||'',name(t),t.name||'');u=u.replace(/sz=w\d+/,'sz=w1000');return u?'<img'+(dk?' class="dk"':'')+' src="'+esc(u)+'" alt="" onerror="this.remove()">':''};
   const eh=big(m.home),ea=big(m.away);
   const [hc,ac]=matchColors(m);$('mvBg').style.setProperty('--hc',hc);$('mvBg').style.setProperty('--ac',ac);
   $('mvBg').innerHTML=(eh?'<div class="mv-emb l">'+eh+'</div>':'')+(ea?'<div class="mv-emb r">'+ea+'</div>':'');
