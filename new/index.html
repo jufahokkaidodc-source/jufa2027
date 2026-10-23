@@ -847,7 +847,7 @@ function showMV(i){
   // 会場名：「（」の前・「）」「・」の後ろ・空白で改行できるようにする（ほかの所では改行しない）
   const vn=v=>esc(v).replace(/([（(])/g,'<wbr>$1').replace(/([）)・])/g,'$1<wbr>').replace(/\s+/g,' <wbr>');
   // 背景の大きなエンブレム（ドライブの画像は大きめの縮小版で）
-  const big=t=>{const p=teamProf(t),dk=emblemUrl({emblem:p?.emblemDark});let u=dk||emblemUrl(p)||embFor(t.univ||'',name(t),t.name||'');u=u.replace(/sz=w\d+/,'sz=w1000');return u?'<img'+(dk?' class="dk"':'')+' src="'+esc(u)+'" alt="" onerror="this.remove()">':''};
+  const big=t=>{const p=teamProf(t),w=x=>x.replace(/sz=w\d+/,'sz=w1000'),dk=w(emblemUrl({emblem:p?.emblemDark})),nm=w(emblemUrl(p)||embFor(t.univ||'',name(t),t.name||''));const u=dk||nm;return u?embImg(u,!!dk,dk?nm:''):''};
   const eh=big(m.home),ea=big(m.away);
   const [hc,ac]=matchColors(m);$('mvBg').style.setProperty('--hc',hc);$('mvBg').style.setProperty('--ac',ac);
   $('mvBg').innerHTML=(eh?'<div class="mv-emb l">'+eh+'</div>':'')+(ea?'<div class="mv-emb r">'+ea+'</div>':'');
@@ -859,6 +859,50 @@ function showMV(i){
     '</div>'+tm(m.away);
   $('mvBtn').href=detail(S.id,done||lv?m.matchId:'');
   $('mvDots').querySelectorAll('button').forEach(b=>b.setAttribute('aria-current',String(+b.dataset.i===i)));
+}
+/* 背景のエンブレムを、表示するときに切り抜く（外側の白などの背景を透明に。ホームページ管理画面の切り抜きと同じやり方）
+   画像を読める（CORS）ときだけ。読めないときは、そのまま出す。結果は URL ごとに覚えておく */
+const CUT=new Map();
+function cutoutCanvas(img){
+  const max=800,k=Math.min(1,max/Math.max(img.naturalWidth,img.naturalHeight)),W=Math.max(1,Math.round(img.naturalWidth*k)),H=Math.max(1,Math.round(img.naturalHeight*k));
+  const c=document.createElement('canvas');c.width=W;c.height=H;const g=c.getContext('2d');g.drawImage(img,0,0,W,H);
+  const im=g.getImageData(0,0,W,H),d=im.data,at=(x,y)=>(y*W+x)*4;
+  const edge=[];for(let x=0;x<W;x+=Math.max(1,W>>6)){edge.push(at(x,0),at(x,H-1))}for(let y=0;y<H;y+=Math.max(1,H>>6)){edge.push(at(0,y),at(W-1,y))}
+  if(edge.filter(i=>d[i+3]<40).length>edge.length*.6)return 'T'; // もう透明
+  const med=ch=>{const v=edge.map(i=>d[i+ch]).sort((a,b)=>a-b);return v[v.length>>1]};
+  const bg=[med(0),med(1),med(2)],dist=i=>Math.hypot(d[i]-bg[0],d[i+1]-bg[1],d[i+2]-bg[2]);
+  if(edge.filter(i=>dist(i)<48).length<edge.length*.8)return null;
+  const T1=40,T2=80,seen=new Uint8Array(W*H),st=[];
+  for(let x=0;x<W;x++){st.push(x,0,x,H-1)}for(let y=0;y<H;y++){st.push(0,y,W-1,y)}
+  let n=0;
+  while(st.length){const y=st.pop(),x=st.pop(),q=y*W+x;if(seen[q])continue;const i=q*4,dd=dist(i);if(dd>=T2)continue;seen[q]=1;
+    d[i+3]=dd<T1?0:Math.round(d[i+3]*(dd-T1)/(T2-T1));n++;if(dd>=T1)continue;
+    if(x>0)st.push(x-1,y);if(x<W-1)st.push(x+1,y);if(y>0)st.push(x,y-1);if(y<H-1)st.push(x,y+1)}
+  if(n<W*H*.03)return null;
+  g.putImageData(im,0,0);return c.toDataURL('image/png');
+}
+/* 画像は1回だけ読む：まず切り抜ける形（crossorigin）で読み、だめならふつうに読み直す */
+/* 白い版（dk）は、背景が透明か切り抜けたときだけ使う。切り抜けないときは、ふつうのエンブレム（alt）に切りかえる */
+function embImg(u,dk,alt){
+  const v=CUT.get(u);
+  if(v==='T')return '<img'+(dk?' class="dk"':'')+' src="'+esc(u)+'" alt="">';
+  if(v)return '<img'+(dk?' class="dk"':'')+' src="'+esc(v)+'" alt="">';
+  if(dk&&v===null&&alt)return embImg(alt,false);
+  return '<img'+(dk?' class="dk"':'')+(CUT.has(u)?'':' crossorigin="anonymous" data-cut="1"')+' data-u="'+esc(u)+'"'+(dk&&alt?' data-alt="'+esc(alt)+'"':'')+' src="'+esc(u)+'" alt="" onload="embLoaded(this)" onerror="embFailed(this)">';
+}
+function embLoaded(el){
+  if(!el.dataset.cut)return;delete el.dataset.cut;
+  const u=el.dataset.u;let v=null;try{v=cutoutCanvas(el)}catch(e){}
+  CUT.set(u,v);
+  if(v&&v!=='T'){el.src=v;return}
+  if(!v&&el.dataset.alt){const a=el.dataset.alt;delete el.dataset.alt;el.classList.remove('dk');el.dataset.u=a;el.dataset.cut='1';el.src=a}
+}
+function embFailed(el){
+  if(el.dataset.cut){delete el.dataset.cut;el.removeAttribute('crossorigin');
+    if(el.dataset.alt){CUT.set(el.dataset.u,null);const a=el.dataset.alt;delete el.dataset.alt;el.classList.remove('dk');el.dataset.u=a;el.dataset.cut='1';el.setAttribute('crossorigin','anonymous');el.src=a;return}
+    CUT.set(el.dataset.u,null);el.src=el.dataset.u+(el.dataset.u.includes('?')?'&':'?')+'nc=1';return}
+  if(el.dataset.alt){const a=el.dataset.alt;delete el.dataset.alt;el.classList.remove('dk');el.dataset.u=a;el.src=a;return}
+  el.remove();
 }
 function stopMV(){clearInterval(MV.timer);MV.timer=null}
 function startMV(){stopMV();if(matchMedia('(prefers-reduced-motion: reduce)').matches||MV.list.length<2)return;MV.timer=setInterval(()=>{if(!MV.paused&&!document.hidden)showMV(MV.i+1)},6000)}
