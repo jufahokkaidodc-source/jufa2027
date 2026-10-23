@@ -894,7 +894,7 @@ function cutoutCanvas(img){
   const c=document.createElement('canvas');c.width=W;c.height=H;const g=c.getContext('2d');g.drawImage(img,0,0,W,H);
   const im=g.getImageData(0,0,W,H),d=im.data,at=(x,y)=>(y*W+x)*4;
   const edge=[];for(let x=0;x<W;x+=Math.max(1,W>>6)){edge.push(at(x,0),at(x,H-1))}for(let y=0;y<H;y+=Math.max(1,H>>6)){edge.push(at(0,y),at(W-1,y))}
-  if(edge.filter(i=>d[i+3]<40).length>edge.length*.6)return 'T'; // もう透明
+  if(edge.filter(i=>d[i+3]<40).length>edge.length*.6)return embTrim(c,g,im,'T'); // もう透明 → 余白だけ切る
   const med=ch=>{const v=edge.map(i=>d[i+ch]).sort((a,b)=>a-b);return v[v.length>>1]};
   const bg=[med(0),med(1),med(2)],dist=i=>Math.hypot(d[i]-bg[0],d[i+1]-bg[1],d[i+2]-bg[2]);
   if(edge.filter(i=>dist(i)<48).length<edge.length*.8)return null;
@@ -905,7 +905,18 @@ function cutoutCanvas(img){
     d[i+3]=dd<T1?0:Math.round(d[i+3]*(dd-T1)/(T2-T1));n++;if(dd>=T1)continue;
     if(x>0)st.push(x-1,y);if(x<W-1)st.push(x+1,y);if(y>0)st.push(x,y-1);if(y<H-1)st.push(x,y+1)}
   if(n<W*H*.03||n>W*H*.97)return null;
-  g.putImageData(im,0,0);return c.toDataURL('image/png');
+  return embTrim(c,g,im,null);
+}
+/* 見えている部分のまわりの透明な余白を切る（エンブレムの真ん中が、チーム名の真ん中とそろうように） */
+function embTrim(c,g,im,same){
+  const W=c.width,H=c.height,d=im.data;let x0=W,y0=H,x1=-1,y1=-1;
+  for(let y=0;y<H;y++)for(let x=0;x<W;x++)if(d[(y*W+x)*4+3]>16){if(x<x0)x0=x;if(x>x1)x1=x;if(y<y0)y0=y;if(y>y1)y1=y}
+  if(x1<0)return null;
+  const w=x1-x0+1,h=y1-y0+1;
+  if(same&&x0<=2&&y0<=2&&W-1-x1<=2&&H-1-y1<=2)return same; // 余白がない
+  g.putImageData(im,0,0);
+  const o=document.createElement('canvas');o.width=w;o.height=h;o.getContext('2d').drawImage(c,x0,y0,w,h,0,0,w,h);
+  return o.toDataURL('image/png');
 }
 /* エンブレムの読み方（1枚ずつ順に試す）
    ・ドライブの画像は、まず元の画像（lh3。透明がそのまま残る）→ だめなら縮小版（thumbnail。透明が白くぬられることがある）
