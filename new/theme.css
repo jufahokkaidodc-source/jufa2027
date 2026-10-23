@@ -82,13 +82,12 @@ tr.me td{background:#2a1416}
 .sq tr.grp td{background:var(--card2)}
 .sq tbody tr:not(.grp):hover td{background:#222}
 
-/* エンブレム：黒地の上では白い版（暗い背景用）か、白い丸い台。白いヘッダーの上（CLUBS の列）は普通のエンブレム */
-.crest.img.hasdark .el{display:none}
-.crest.img.hasdark .ed{display:block}
-.crest.img:not(.hasdark){background:#fff!important;border-radius:50%!important}
-.crest.img:not(.hasdark) img{position:absolute;inset:15%;width:70%;height:70%}
-.clubbar .crest.img.hasdark .el{display:block}
-.clubbar .crest.img.hasdark .ed{display:none}
+/* エンブレム（対戦カード・順位表・ランキング・参加クラブなど）：いつも白い丸い台に普通のエンブレム。白い版（暗い背景用）は使わない
+   白いヘッダーの上（CLUBS の列）だけは台なし */
+.crest.img .ed{display:none!important}
+.crest.img .el{display:block!important}
+.crest.img{background:#fff!important;border-radius:50%!important}
+.crest.img img{position:absolute;inset:15%;width:70%;height:70%}
 .clubbar .crest.img{background:transparent!important;border-radius:0!important}
 .clubbar .crest.img img{position:static;width:100%;height:100%}
 
