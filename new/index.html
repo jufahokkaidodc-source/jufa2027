@@ -377,12 +377,20 @@ html{scroll-padding-top:0}
 /* マッチビジュアル（トップ）：注目の試合を、両チームの色で左右に分けて大きく。写真はまん中でスライドショー（2026-10・Jリーグのトップを参考に） */
 .mv{position:relative;overflow:hidden;color:#fff;background:#111}
 .mv.hero{border-radius:0;margin:0;padding:0;min-height:0}
-.mv-bg{position:absolute;inset:0;z-index:0;background:linear-gradient(90deg,var(--hc,#3a3a3a) 0 50%,var(--ac,#2a2a2a) 50% 100%);transition:background .6s}
-.mv-bg:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.18),rgba(0,0,0,.05) 40%,rgba(14,14,14,.55) 78%,var(--bg) 100%)}
+.mv-bg{position:absolute;inset:0;z-index:0;transition:background .6s;
+  /* 上から：ななめの細いしま／上のほうを明るく／2チームの色をななめに分ける */
+  background:repeating-linear-gradient(115deg,rgba(255,255,255,.06) 0 2px,transparent 2px 18px),linear-gradient(180deg,rgba(255,255,255,.16),transparent 50%),linear-gradient(105deg,var(--hc,#3a3a3a) 0 50%,var(--ac,#2a2a2a) 50% 100%)}
+.mv-bg:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 0 55%,rgba(14,14,14,.5) 80%,var(--bg) 100%)}
 .mv-in{position:relative;width:min(1200px,100% - 32px);margin:auto;padding:28px 0 24px;display:flex;flex-direction:column;align-items:center}
 .mv-match{width:100%;display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:end;gap:12px;min-height:clamp(300px,34vw,420px);padding-top:clamp(8px,3vw,40px)}
 /* 左右の背景に大きなエンブレム（うすく）。画像がないチームは色だけ */
-.mv-emb{position:absolute;z-index:2;top:38%;width:min(27vw,340px);aspect-ratio:1;transform:translate(-50%,-50%);opacity:.92;pointer-events:none}
+.mv-emb{position:absolute;z-index:2;top:38%;width:min(29vw,370px);aspect-ratio:1;transform:translate(-50%,-50%);opacity:.95;pointer-events:none;animation:mvEmbIn .7s cubic-bezier(.2,.8,.2,1) both}
+/* エンブレムのうしろを、まるく明るく（スポットライト） */
+.mv-emb:before{content:"";position:absolute;inset:-35%;z-index:-1;border-radius:50%;background:radial-gradient(closest-side,rgba(255,255,255,.34),rgba(255,255,255,.12) 55%,transparent)}
+.mv-emb.l{--dx:-60px}.mv-emb.r{--dx:60px}
+@keyframes mvEmbIn{from{opacity:0;transform:translate(calc(-50% + var(--dx,0px)),-50%) scale(.92)}}
+.mv-c{animation:mvCIn .6s ease both}@keyframes mvCIn{from{opacity:0;transform:translateY(10px)}}
+@media(prefers-reduced-motion:reduce){.mv-emb,.mv-c{animation:none}}
 .mv-emb.l{left:25%}.mv-emb.r{left:75%}
 /* エンブレムの影：暗い背景には白っぽい光、明るい背景（.lt）と白い版（.dk）には黒っぽい影 */
 .mv-emb img{width:100%;height:100%;object-fit:contain;display:block;filter:drop-shadow(0 0 3px rgba(255,255,255,.55)) drop-shadow(0 0 22px rgba(255,255,255,.45))}
@@ -429,7 +437,7 @@ html{scroll-padding-top:0}
 .mv-c .bx.live{background:var(--red);color:#fff}
 .mv-btn{position:relative;z-index:3;display:inline-flex;align-items:center;gap:10px;margin-top:24px;min-height:52px;padding:0 32px;border-radius:999px;background:#fff;color:#111;font-weight:900;font-size:16px}
 /* 左右の境目に細い線（同じような色のチームどうしでも分かれて見える） */
-.mv-bg:before{content:"";position:absolute;top:0;bottom:0;left:50%;width:2px;margin-left:-1px;background:rgba(255,255,255,.18);z-index:1}
+.mv-bg:before{content:"";position:absolute;top:0;bottom:0;left:50%;width:4px;margin-left:-2px;background:rgba(255,255,255,.55);transform:skewX(-15deg);z-index:1}
 .mv-btn span{font-family:var(--num);font-size:22px;line-height:1}
 .mv-btn:hover{background:#f0f0f0}
 .mv-dots{display:flex;gap:2px;margin-top:10px;min-height:28px}
