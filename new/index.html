@@ -388,6 +388,8 @@ html{scroll-padding-top:0}
 /* エンブレムのうしろを、まるく明るく（スポットライト） */
 .mv-emb:before{content:"";position:absolute;inset:-35%;z-index:-1;border-radius:50%;background:radial-gradient(closest-side,rgba(255,255,255,.34),rgba(255,255,255,.12) 55%,transparent)}
 .mv-emb.l{--dx:-60px}.mv-emb.r{--dx:60px}
+/* 白い版のうしろは、スポットライトを弱く（白飛びしないように） */
+.mv-emb:has(img.dk):before{opacity:.3}
 @keyframes mvEmbIn{from{opacity:0;transform:translate(calc(-50% + var(--dx,0px)),-50%) scale(.92)}}
 .mv-c{animation:mvCIn .6s ease both}@keyframes mvCIn{from{opacity:0;transform:translateY(10px)}}
 @media(prefers-reduced-motion:reduce){.mv-emb,.mv-c{animation:none}}
@@ -395,8 +397,8 @@ html{scroll-padding-top:0}
 /* エンブレムの影：暗い背景には白っぽい光、明るい背景（.lt）と白い版（.dk）には黒っぽい影 */
 .mv-emb img{width:100%;height:100%;object-fit:contain;display:block;filter:drop-shadow(0 0 3px rgba(255,255,255,.55)) drop-shadow(0 0 22px rgba(255,255,255,.45))}
 .mv-emb.lt img,.mv-emb img.dk{filter:drop-shadow(0 2px 3px rgba(0,0,0,.4)) drop-shadow(0 10px 22px rgba(0,0,0,.6))}
-/* 赤・オレンジの背景（.rd）は、明るさや白い版にかかわらず白い光 */
-.mv-emb.rd img,.mv-emb.rd img.dk{filter:drop-shadow(0 0 3px rgba(255,255,255,.6)) drop-shadow(0 0 22px rgba(255,255,255,.5))}
+/* 赤・オレンジの背景（.rd）は、明るさにかかわらず白い光。ただし白い版は白飛びするので黒っぽい影のまま */
+.mv-emb.rd img:not(.dk){filter:drop-shadow(0 0 3px rgba(255,255,255,.6)) drop-shadow(0 0 22px rgba(255,255,255,.5))}
 /* 白い版（暗い背景用）は縁取りなし */
 /* エンブレムの上でも文字が読めるように */
 .mv-c,.mv-tm b{text-shadow:0 1px 3px rgba(0,0,0,.45)}
