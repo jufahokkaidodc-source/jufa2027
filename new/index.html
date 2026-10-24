@@ -397,11 +397,6 @@ html{scroll-padding-top:0}
 .mv-nm .r span{color:var(--nka,#f3e9dc);font-size:min(calc(86cqw / var(--n,2)),44cqh);margin:4cqh 3cqw 0 0;transform:rotate(4deg);animation-delay:.08s} /* アウェイはホームと左右対称に傾ける */
 /* スマホ：上に横書き。日付の文字が読めるように、少しうすく */
 @media(max-width:680px){.mv-nm>div{align-items:flex-start!important}.mv-nm .l{justify-content:flex-start!important;padding-left:2cqw}.mv-nm .r{justify-content:flex-end!important;padding-right:2cqw}.mv-nm .l span,.mv-nm .r span{writing-mode:vertical-rl;opacity:.95;font-size:var(--nm-fs,min(46cqw,24cqh));margin:var(--nm-top,6px) 0 0;transform:rotate(-3deg);letter-spacing:.02em}.mv-nm .r span{transform:rotate(3deg)}}
-/* チームの区別の札（A・SAT・U-22 など）：筆文字のうしろに小さく。縦書きでも横向きのまま */
-.mv-nm .sx{display:inline-block;writing-mode:horizontal-tb;font:800 .2em/1 var(--num,"Barlow Condensed"),sans-serif;letter-spacing:.02em;color:#111;background:currentColor;padding:.18em .45em .14em;border-radius:.3em;margin:0 0 0 .12em;vertical-align:top;position:relative}
-.mv-nm .sx{background:var(--sxbg,#f3e9dc)}.mv-nm .l .sx{--sxbg:var(--nkh)}.mv-nm .r .sx{--sxbg:var(--nka)}
-/* スマホ（縦書き）：エンブレムや日付に隠れないように、2文字目の内がわ（まん中の側）に */
-@media(max-width:680px){.mv-nm span{position:relative}.mv-nm .sx{position:absolute;bottom:.95em;font-size:.26em;margin:0}.mv-nm .l .sx{left:100%;margin-left:.15em}.mv-nm .r .sx{right:100%;margin-right:.3em}.mv-nm .l .sx,.mv-nm .r .sx{background:rgba(0,0,0,.6);color:var(--nkh)}.mv-nm .r .sx{color:var(--nka)}}
 @keyframes mvNmIn{from{opacity:0;translate:0 -30px;scale:1.08}}
 @media(prefers-reduced-motion:reduce){.mv-nm span{animation:none}}
 .mv-bg:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 0 55%,rgba(14,14,14,.5) 80%,var(--bg) 100%)}
@@ -912,7 +907,7 @@ function mvNmFit(){
   const nmEl=$('mvNm'),mv=$('mv');if(!nmEl||!mv)return;
   if(innerWidth>680){nmEl.style.removeProperty('--nm-top');nmEl.style.removeProperty('--nm-fs');return}
   const R=mv.getBoundingClientRect(),c=mv.querySelector('.mv-c')?.getBoundingClientRect(),e=mv.querySelector('.mv-emb')?.getBoundingClientRect();if(!c||!e)return;
-  const top=8,avail=e.top-R.top+e.height*.35-top,n=Math.max(...[...nmEl.querySelectorAll('span')].map(s=>[...(s.firstChild?.textContent||'')].length+(s.querySelector('.sx')?.6:0)),2);
+  const top=8,avail=e.top-R.top+e.height*.35-top,n=Math.max(...[...nmEl.querySelectorAll('span')].map(s=>[...s.textContent].length),2);
   nmEl.style.setProperty('--nm-top',top+'px');nmEl.style.setProperty('--nm-fs',Math.max(36,Math.min(R.width*.5*.5,avail/n*1.08))+'px');
 }
 addEventListener('resize',()=>requestAnimationFrame(mvNmFit));
@@ -932,7 +927,7 @@ function showMV(i){
   const big=t=>{const p=teamProf(t),w=x=>x.replace(/sz=w\d+/,'sz=w1000'),dk=COLOR_EMBLEM.includes(t.univ||'')?'':w(emblemUrl({emblem:p?.emblemDark})),nm=w(emblemUrl(p)||embFor(t.univ||'',name(t),t.name||''));const u=dk||nm;return u?embImg(u,!!dk,dk?nm:''):''};
   const eh=big(m.home),ea=big(m.away);
   if(MV_BG){
-    // 背景の大学名：大学の略称だけを筆文字にし、チームの区別（A・B・サテライト・セカンド・U-22 など）は小さな札にする
+    // 背景の大学名：大学の略称だけを筆文字にする（A・B・サテライト・U-22 などのチームの区別は出さない。エンブレムの下のチーム名で分かる）
     //   北翔大→北翔　岩教大A→岩教＋A　札大サテライト→札大＋SAT　学園大U-22→学園＋U-22（北大のように1文字になるときは「大」を取らない）
     const SFX={'セカンド':'2nd','second':'2nd','サテライト':'SAT','サード':'3rd','トップ':'TOP'};
     const bn=t=>{let v=String(t.short||t.name||'').normalize('NFKC').trim(),sx='';
@@ -941,7 +936,7 @@ function showMV(i){
       const x=v.replace(/大$/,'');return {v:[...x].length>=2?x:v,sx}};
     // 背景の筆文字だけの呼び方（大学が決めた略称）。「大」を取ったあとの名前 → 出す名前
     const BG_NAME={'札幌':'札大'};
-    const nm=(t,c)=>{const b=bn(t),v=BG_NAME[b.v]||b.v;return '<div class="'+c+'"><span style="--n:'+Math.max(2,[...v].length)+'">'+esc(v)+(b.sx?'<i class="sx">'+esc(b.sx)+'</i>':'')+'</span></div>'};
+    const nm=(t,c)=>{const b=bn(t),v=BG_NAME[b.v]||b.v;return '<div class="'+c+'"><span style="--n:'+Math.max(2,[...v].length)+'">'+esc(v)+'</span></div>'};
     $('mvNm').innerHTML=nm(m.home,'l')+nm(m.away,'r');
     const [h0,a0]=matchColors(m),ink=c=>isRed(c)?'#f3e9dc':'color-mix(in srgb,'+c+' 45%,#fff4e0)';
     $('mvNm').style.setProperty('--nkh',ink(h0));$('mvNm').style.setProperty('--nka',ink(a0));
