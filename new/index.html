@@ -384,13 +384,15 @@ html{scroll-padding-top:0}
 .mv-nm{display:none}
 .mv.bg-name .mv-nm{display:block;position:absolute;inset:0;pointer-events:none}
 .mv-nm>div{position:absolute;top:0;bottom:0;width:50%;overflow:hidden;display:flex;container-type:size}
-/* ホーム：左の上に横書き。アウェイ：右の外側に縦書き。チームの色をほんの少し混ぜた白で、筆のかすれ（#mvInk） */
-.mv-nm .l{left:0;align-items:flex-start;justify-content:flex-start}.mv-nm .r{right:0;align-items:center;justify-content:flex-end}
-.mv-nm span{font-family:"Yuji Boku",serif;line-height:1;white-space:nowrap;letter-spacing:-.08em;opacity:.95;filter:url(#mvInk) drop-shadow(0 6px 18px rgba(0,0,0,.35));animation:mvNmIn .8s cubic-bezier(.2,.8,.2,1) both}
+/* ホームもアウェイも、上に横書き（ホームは左寄せ、アウェイは右寄せ）。チームの色をほんの少し混ぜた白で、筆のかすれ（#mvInk） */
+.mv-nm .l{left:0;align-items:flex-start;justify-content:flex-start}.mv-nm .r{right:0;align-items:flex-start;justify-content:flex-end}
+/* 大学名の書体：ここと <head> の Google Fonts の読み込み（family=Yuji+Boku）の2か所を変えると差しかえられる */
+.mv-nm{--nm-font:"Yuji Boku",serif}
+.mv-nm span{font-family:var(--nm-font);line-height:1;white-space:nowrap;letter-spacing:-.08em;opacity:.95;filter:url(#mvInk) drop-shadow(0 6px 18px rgba(0,0,0,.35));animation:mvNmIn .8s cubic-bezier(.2,.8,.2,1) both}
 .mv-nm .l span{color:var(--nkh,#f3e9dc);-webkit-text-stroke:.04em currentColor;font-size:min(calc(68cqw / var(--n,2)),38cqh);margin:3cqh 0 0 4cqw;transform:rotate(-5deg)}
-.mv-nm .r span{color:var(--nka,#f3e9dc);-webkit-text-stroke:.04em currentColor;writing-mode:vertical-rl;font-size:min(calc(92cqh / var(--n,2)),34cqw);margin:0 3cqw 0 0;transform:rotate(4deg);animation-delay:.08s}
-/* スマホ：エンブレムやチーム名のじゃまをしないように、下のほうに横書きでうすく */
-@media(max-width:680px){.mv-nm>div{align-items:flex-end!important;justify-content:center!important}.mv-nm .l span,.mv-nm .r span{writing-mode:horizontal-tb;opacity:.6;font-size:min(calc(96cqw / var(--n,2)),26cqh);margin:0 0 21cqh;transform:rotate(-8deg)}}
+.mv-nm .r span{color:var(--nka,#f3e9dc);-webkit-text-stroke:.04em currentColor;font-size:min(calc(68cqw / var(--n,2)),38cqh);margin:3cqh 4cqw 0 0;transform:rotate(-5deg);animation-delay:.08s}
+/* スマホ：上に横書き。日付の文字が読めるように、少しうすく */
+@media(max-width:680px){.mv-nm>div{align-items:flex-start!important;justify-content:center!important}.mv-nm .l span,.mv-nm .r span{opacity:.55;font-size:min(calc(92cqw / var(--n,2)),22cqh);margin:2cqh 0 0;transform:rotate(-6deg)}}
 @keyframes mvNmIn{from{opacity:0;translate:0 -30px;scale:1.08}}
 @media(prefers-reduced-motion:reduce){.mv-nm span{animation:none}}
 .mv-bg:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 0 55%,rgba(14,14,14,.5) 80%,var(--bg) 100%)}
