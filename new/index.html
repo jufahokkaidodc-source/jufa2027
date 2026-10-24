@@ -369,6 +369,7 @@ html{scroll-padding-top:0}
 .club>.crest .bdg{min-width:22px;height:20px;line-height:20px;font-size:12px;border-radius:10px}
 @media(max-width:680px){.club>.crest{width:60px;height:60px;margin-top:-32px;font-size:21px}.club>.crest.two{font-size:16px}}
 </style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Yuji+Boku&display=swap">
 <link rel="stylesheet" href="./theme.css">
 <style>
 /* マッチビジュアル（トップ）：注目の試合を、両チームの色で左右に分けて大きく。写真はまん中でスライドショー（2026-10・Jリーグのトップを参考に） */
@@ -379,17 +380,15 @@ html{scroll-padding-top:0}
   background:radial-gradient(42% 70% at 25% 0%,rgba(255,255,255,.22),transparent 70%),radial-gradient(42% 70% at 75% 0%,rgba(255,255,255,.22),transparent 70%),linear-gradient(90deg,var(--hc,#3a3a3a) 0 50%,var(--ac,#2a2a2a) 50% 100%)}
 /* 柄：筆で描いたような背景（白と黒の太い筆あと。かすれ・にじみのある、ななめの筆の流れと、墨のしぶき） */
 .mv-bg .sb{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
-/* 見くらべ用（?bg=name：筆の柄＋大学名、?bg=nameonly：大学名だけ）：背景に、太い筆で書いた大学名（略称）を大きくななめに */
+/* 筆の柄の上に、太い筆の書体（Yuji Boku）で書いた大学名（略称）を大きく */
 .mv-nm{display:none}
-.mv.bg-name .mv-nm,.mv.bg-nameonly .mv-nm{display:block;position:absolute;inset:0;pointer-events:none}
-.mv.bg-nameonly .sb{display:none}
+.mv.bg-name .mv-nm{display:block;position:absolute;inset:0;pointer-events:none}
 .mv-nm>div{position:absolute;top:0;bottom:0;width:50%;overflow:hidden;display:flex;align-items:center;container-type:size}
 .mv-nm .l{left:0;justify-content:flex-start}.mv-nm .r{right:0;justify-content:flex-end}
 /* 縦書きで、左右それぞれの外側に。高さに合わせて、名前の全部が入る大きさ */
 .mv-nm span{font-family:"Yuji Boku",serif;writing-mode:vertical-rl;font-size:min(calc(94cqh / var(--n,3)),30cqw);line-height:1;white-space:nowrap;letter-spacing:-.04em;color:#fff;opacity:.3;
   -webkit-text-stroke:.06em #fff;margin:0 3cqw;transform:rotate(-6deg) skewY(-4deg);animation:mvNmIn .8s cubic-bezier(.2,.8,.2,1) both}
 .mv-nm .r span{transform:rotate(6deg) skewY(4deg)}
-.mv.bg-nameonly .mv-nm span{opacity:.38}
 .mv-nm .r span{animation-delay:.08s}
 /* スマホ：エンブレムに隠れないように、横書きで下のほうに */
 @media(max-width:680px){.mv-nm>div{align-items:flex-end}.mv-nm .l,.mv-nm .r{justify-content:center}.mv-nm span,.mv-nm .r span{writing-mode:horizontal-tb;font-size:min(calc(96cqw / var(--n,3)),26cqh);margin:0 0 21cqh;transform:rotate(-8deg)}}
@@ -895,12 +894,9 @@ function renderMV(ms,compLabel){
   $('mvDots').innerHTML=list.length>1?list.map((_,i)=>'<button type="button" data-i="'+i+'" aria-label="'+(i+1)+'試合目"></button>').join(''):'';
   showMV(0);startMV();
 }
-/* 背景の見くらべ（?bg=name / ?bg=nameonly）。ふつうは筆の柄だけ */
-const MV_BG=(new URLSearchParams(location.search).get('bg')||'').replace(/[^a-z]/g,'');
-if(MV_BG==='name'||MV_BG==='nameonly'){
-  document.getElementById('mv')?.classList.add('bg-'+MV_BG);
-  const l=document.createElement('link');l.rel='stylesheet';l.href='https://fonts.googleapis.com/css2?family=Yuji+Boku&display=swap';document.head.appendChild(l);
-}
+/* 背景：筆の柄＋筆で書いた大学名（2026-10 決定。B案） */
+const MV_BG='name';
+document.getElementById('mv')?.classList.add('bg-name');
 function showMV(i){
   const n=MV.list.length;
   if(!n){$('mvMatch').innerHTML='<div></div><div class="mv-c"><span class="cp">'+esc(MV.label)+'</span><span class="vn">試合の日程が決まると、ここに出ます</span></div><div></div>';$('mvBtn').href=detail(S.id);return}
