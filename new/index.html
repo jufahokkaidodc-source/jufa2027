@@ -393,10 +393,10 @@ html{scroll-padding-top:0}
 @font-face{font-family:"FudeGoshirae";src:url(./fonts/fude-goshirae-sub.woff2) format("woff2");font-display:swap}
 .mv-nm{--nm-font:"FudeGoshirae","Yuji Boku",serif}
 .mv-nm span{font-family:var(--nm-font);line-height:1;white-space:nowrap;letter-spacing:-.08em;opacity:.95;filter:url(#mvInk) drop-shadow(0 6px 18px rgba(0,0,0,.35));animation:mvNmIn .8s cubic-bezier(.2,.8,.2,1) both}
-.mv-nm .l span{color:var(--nkh,#f3e9dc);-webkit-text-stroke:.04em currentColor;font-size:min(calc(68cqw / var(--n,2)),38cqh);margin:3cqh 0 0 4cqw;transform:rotate(-5deg)}
-.mv-nm .r span{color:var(--nka,#f3e9dc);-webkit-text-stroke:.04em currentColor;font-size:min(calc(68cqw / var(--n,2)),38cqh);margin:3cqh 4cqw 0 0;transform:rotate(-5deg);animation-delay:.08s}
+.mv-nm .l span{color:var(--nkh,#f3e9dc);-webkit-text-stroke:.04em currentColor;font-size:min(calc(86cqw / var(--n,2)),44cqh);margin:4cqh 0 0 3cqw;transform:rotate(-4deg)}
+.mv-nm .r span{color:var(--nka,#f3e9dc);-webkit-text-stroke:.04em currentColor;font-size:min(calc(86cqw / var(--n,2)),44cqh);margin:4cqh 3cqw 0 0;transform:rotate(-4deg);animation-delay:.08s}
 /* スマホ：上に横書き。日付の文字が読めるように、少しうすく */
-@media(max-width:680px){.mv-nm>div{align-items:flex-start!important;justify-content:center!important}.mv-nm .l span,.mv-nm .r span{opacity:.8;font-size:min(calc(92cqw / var(--n,2)),22cqh);margin:2cqh 0 0;transform:rotate(-6deg)}}
+@media(max-width:680px){.mv-nm>div{align-items:flex-start!important}.mv-nm .l{justify-content:flex-start!important;padding-left:2cqw}.mv-nm .r{justify-content:flex-end!important;padding-right:2cqw}.mv-nm .l span,.mv-nm .r span{writing-mode:vertical-rl;opacity:.95;font-size:var(--nm-fs,min(46cqw,24cqh));margin:var(--nm-top,6px) 0 0;transform:rotate(-3deg);letter-spacing:-.1em}}
 @keyframes mvNmIn{from{opacity:0;translate:0 -30px;scale:1.08}}
 @media(prefers-reduced-motion:reduce){.mv-nm span{animation:none}}
 .mv-bg:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 0 55%,rgba(14,14,14,.5) 80%,var(--bg) 100%)}
@@ -902,6 +902,15 @@ function renderMV(ms,compLabel){
 /* 背景：筆の柄＋筆で書いた大学名（2026-10 決定。B案） */
 const MV_BG='name';
 document.getElementById('mv')?.classList.add('bg-name');
+/* スマホ：縦書きの大学名を、それぞれの半分の外側に、上からエンブレムの上のほうまでに入る大きさにする（高さは変えない） */
+function mvNmFit(){
+  const nmEl=$('mvNm'),mv=$('mv');if(!nmEl||!mv)return;
+  if(innerWidth>680){nmEl.style.removeProperty('--nm-top');nmEl.style.removeProperty('--nm-fs');return}
+  const R=mv.getBoundingClientRect(),c=mv.querySelector('.mv-c')?.getBoundingClientRect(),e=mv.querySelector('.mv-emb')?.getBoundingClientRect();if(!c||!e)return;
+  const top=8,avail=e.top-R.top+e.height*.35-top,n=Math.max(...[...nmEl.querySelectorAll('span')].map(s=>[...s.textContent].length),2);
+  nmEl.style.setProperty('--nm-top',top+'px');nmEl.style.setProperty('--nm-fs',Math.max(36,Math.min(R.width*.5*.5,avail/n*1.08))+'px');
+}
+addEventListener('resize',()=>requestAnimationFrame(mvNmFit));
 function showMV(i){
   const n=MV.list.length;
   if(!n){$('mvMatch').innerHTML='<div></div><div class="mv-c"><span class="cp">'+esc(MV.label)+'</span><span class="vn">試合の日程が決まると、ここに出ます</span></div><div></div>';$('mvBtn').href=detail(S.id);return}
@@ -923,7 +932,8 @@ function showMV(i){
     const nm=(t,c)=>{const v=bn(t);return '<div class="'+c+'"><span style="--n:'+Math.max(2,[...v].length)+'">'+esc(v)+'</span></div>'};
     $('mvNm').innerHTML=nm(m.home,'l')+nm(m.away,'r');
     const [h0,a0]=matchColors(m),ink=c=>isRed(c)?'#f3e9dc':'color-mix(in srgb,'+c+' 45%,#fff4e0)';
-    $('mvNm').style.setProperty('--nkh',ink(h0));$('mvNm').style.setProperty('--nka',ink(a0));}
+    $('mvNm').style.setProperty('--nkh',ink(h0));$('mvNm').style.setProperty('--nka',ink(a0));
+    requestAnimationFrame(mvNmFit);}
   const [hc,ac]=matchColors(m);$('mvBg').style.setProperty('--hc',hc);$('mvBg').style.setProperty('--ac',ac);
   const lt=(c,t)=>(COLOR_EMBLEM.includes(t.univ||'')?' lp':WHITE_GLOW.includes(t.univ||'')?' wg':'')+(isRed(c)?' rd':lum(c)>.15?' lt':''); // 白い光の大学・赤い背景・明るい背景
   $('mvMatch').innerHTML=tm(m.home,eh,' l'+lt(hc,m.home))+
