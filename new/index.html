@@ -929,7 +929,9 @@ function showMV(i){
   if(MV_BG){
     // 背景の大学名：略称の最後の「大」を取る（北翔大→北翔、岩教大A→岩教A。北大のように1文字になるときは取らない）
     const bn=t=>{const v=String(t.short||t.name||'');const x=v.replace(/大(?=[A-Za-zＡ-Ｚ0-9\-]*$)/,'');return [...x.replace(/[A-Za-z0-9\-]/g,'')].length>=2?x:v};
-    const nm=(t,c)=>{const v=bn(t);return '<div class="'+c+'"><span style="--n:'+Math.max(2,[...v].length)+'">'+esc(v)+'</span></div>'};
+    // 背景の大学名だけの呼び方（大学が決めた略称）。「大」を取ったあとの名前 → 出す名前
+    const BG_NAME={'札幌':'札大'};
+    const nm=(t,c)=>{const v0=bn(t),v=BG_NAME[v0]||v0;return '<div class="'+c+'"><span style="--n:'+Math.max(2,[...v].length)+'">'+esc(v)+'</span></div>'};
     $('mvNm').innerHTML=nm(m.home,'l')+nm(m.away,'r');
     const [h0,a0]=matchColors(m),ink=c=>isRed(c)?'#f3e9dc':'color-mix(in srgb,'+c+' 45%,#fff4e0)';
     $('mvNm').style.setProperty('--nkh',ink(h0));$('mvNm').style.setProperty('--nka',ink(a0));
