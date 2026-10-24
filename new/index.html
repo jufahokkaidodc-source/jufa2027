@@ -392,11 +392,11 @@ html{scroll-padding-top:0}
    書体を変えるときは、この @font-face と --nm-font を変える。新しい大学名の字は、new/fonts/使う字の足し方.md の手順で足す */
 @font-face{font-family:"FudeGoshirae";src:url(./fonts/fude-goshirae-sub.woff2) format("woff2");font-display:swap}
 .mv-nm{--nm-font:"FudeGoshirae","Yuji Boku",serif}
-.mv-nm span{font-family:var(--nm-font);line-height:1;white-space:nowrap;letter-spacing:-.08em;opacity:.95;filter:url(#mvInk) drop-shadow(0 6px 18px rgba(0,0,0,.35));animation:mvNmIn .8s cubic-bezier(.2,.8,.2,1) both}
-.mv-nm .l span{color:var(--nkh,#f3e9dc);-webkit-text-stroke:.04em currentColor;font-size:min(calc(86cqw / var(--n,2)),44cqh);margin:4cqh 0 0 3cqw;transform:rotate(-4deg)}
-.mv-nm .r span{color:var(--nka,#f3e9dc);-webkit-text-stroke:.04em currentColor;font-size:min(calc(86cqw / var(--n,2)),44cqh);margin:4cqh 3cqw 0 0;transform:rotate(-4deg);animation-delay:.08s}
+.mv-nm span{font-family:var(--nm-font);line-height:1;white-space:nowrap;letter-spacing:0;opacity:.95;filter:drop-shadow(0 4px 14px rgba(0,0,0,.4)); /* 字がつぶれないように、ふち取り・かすれの加工はしない（書体のかすれをそのまま） */animation:mvNmIn .8s cubic-bezier(.2,.8,.2,1) both}
+.mv-nm .l span{color:var(--nkh,#f3e9dc);font-size:min(calc(86cqw / var(--n,2)),44cqh);margin:4cqh 0 0 3cqw;transform:rotate(-4deg)}
+.mv-nm .r span{color:var(--nka,#f3e9dc);font-size:min(calc(86cqw / var(--n,2)),44cqh);margin:4cqh 3cqw 0 0;transform:rotate(-4deg);animation-delay:.08s}
 /* スマホ：上に横書き。日付の文字が読めるように、少しうすく */
-@media(max-width:680px){.mv-nm>div{align-items:flex-start!important}.mv-nm .l{justify-content:flex-start!important;padding-left:2cqw}.mv-nm .r{justify-content:flex-end!important;padding-right:2cqw}.mv-nm .l span,.mv-nm .r span{writing-mode:vertical-rl;opacity:.95;font-size:var(--nm-fs,min(46cqw,24cqh));margin:var(--nm-top,6px) 0 0;transform:rotate(-3deg);letter-spacing:-.1em}}
+@media(max-width:680px){.mv-nm>div{align-items:flex-start!important}.mv-nm .l{justify-content:flex-start!important;padding-left:2cqw}.mv-nm .r{justify-content:flex-end!important;padding-right:2cqw}.mv-nm .l span,.mv-nm .r span{writing-mode:vertical-rl;opacity:.95;font-size:var(--nm-fs,min(46cqw,24cqh));margin:var(--nm-top,6px) 0 0;transform:rotate(-3deg);letter-spacing:.02em}}
 @keyframes mvNmIn{from{opacity:0;translate:0 -30px;scale:1.08}}
 @media(prefers-reduced-motion:reduce){.mv-nm span{animation:none}}
 .mv-bg:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 0 55%,rgba(14,14,14,.5) 80%,var(--bg) 100%)}
