@@ -162,6 +162,17 @@ button{font:inherit;color:inherit;cursor:pointer}
 .rule h3:before{content:"";width:4px;height:16px;border-radius:2px;background:var(--red)}
 .rule ul{margin:0;padding-left:1.2em;line-height:1.9;font-size:14.5px}
 .rule li+li{margin-top:4px}
+.faq details{border:1px solid var(--line);border-radius:12px;padding:0 18px}
+.faq details+details{margin-top:8px}
+.faq summary{cursor:pointer;list-style:none;padding:15px 0;font-weight:700;font-size:14.5px;display:flex;gap:10px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary:before{content:"Q";font-family:var(--num);color:var(--red);font-weight:800}
+.faq details[open] summary{border-bottom:1px solid var(--line)}
+.faq p{margin:12px 0 15px;font-size:14px;line-height:1.9}
+.venues{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
+.venue{border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:6px}
+.venue b{font-size:14.5px}.venue small{font-size:12px;color:var(--muted);line-height:1.7}
+.venue a{align-self:flex-start;margin-top:4px;border:1px solid var(--line);border-radius:20px;padding:5px 14px;font-size:12.5px;font-weight:700}
 .lead{font-size:13px;color:var(--muted);line-height:1.8;margin:0 2px 18px}
 .warnbox{border:1px solid var(--line);border-left:4px solid var(--red);border-radius:10px;padding:12px 16px;font-size:13px;line-height:1.8;margin-bottom:14px}
 @media(max-width:680px){.rule{padding:14px 16px}.rule ul{font-size:14px}}
@@ -211,24 +222,41 @@ const rules=list=>'<div class="rules">'+(list||[]).map(r=>'<div class="rule"><h3
 const pdfRow=o=>{const u=safeUrl(o.url);return u
   ?'<a href="'+esc(u)+'" target="_blank" rel="noopener"><span class="ic pdf">PDF</span><span><b>'+esc(o.title)+'</b><small>タップするとPDFが開きます</small></span><span class="go">開く ↗</span></a>'
   :'<div><span class="ic">PDF</span><span><b>'+esc(o.title)+'</b><small>準備中です</small></span><span></span></div>'};
-let INFO=null,CUR='';
+let INFO=null,CUR='',COMPS=[],VENUES=null;
+const pdfsOf=c=>{const fromDash=(c.comps||[]).map(id=>COMPS.find(x=>x.id===id)).filter(x=>x&&x.rulesUrl).map(x=>({title:x.name+' 要項',url:x.rulesUrl}));
+  const uniq=[];fromDash.forEach(o=>{if(!uniq.some(u=>u.url===o.url))uniq.push(o)});return uniq.length?uniq.map((o,i)=>uniq.length===1?{title:(c.pdf?.[0]?.title)||o.title,url:o.url}:o):(c.pdf||[])};
 function draw(){
   const d=INFO,c=d.competitions.find(x=>x.key===CUR)||d.competitions[0];CUR=c.key;
   const tabs='<div class="ctabs" role="tablist">'+d.competitions.map(x=>'<button role="tab" aria-selected="'+(x.key===CUR)+'" data-k="'+esc(x.key)+'">'+esc(x.title.replace(/（.*?）/,'').replace(/^総理大臣杯 /,'総理大臣杯').replace(/全日本大学サッカー|北海道大会|北海道学生サッカー/g,'')||x.title)+'</button>').join('')+'</div>';
   const parts=[
     ['comp','COMPETITION',esc(c.title),
-      '<div class="card docs" style="margin-bottom:16px">'+(c.pdf||[]).map(pdfRow).join('')+'</div>'+
+      '<div class="card docs" style="margin-bottom:16px">'+pdfsOf(c).map(pdfRow).join('')+'</div>'+
       (c.partial?'<div class="warnbox">この大会のレギュレーションは、まだ一部だけです。くわしくは大会要項（PDF）で確かめてください。</div>':'')+
       rules(c.rules)+
       (c.comps?.length?'<p class="note" style="margin-top:14px">日程・結果・順位は <a href="./results.html?comp='+encodeURIComponent(c.comps[0])+'" style="color:var(--red);text-decoration:underline">大会記録</a> で見られます。</p>':'')],
     ['common','COMMON','どの大会でも共通のこと',rules(d.common)]
   ];
-  $('jump').innerHTML='';
+  if(d.registration)parts.push(['registration','REGISTRATION','選手登録の手続き','<p class="lead">'+esc(d.registration.lead)+'</p>'+rules(d.registration.steps)]);
+  if(VENUES&&VENUES.length)parts.push(['venues','VENUES','会場の案内','<p class="lead">'+esc(d.venues?.lead||'')+'</p><div class="venues">'+VENUES.map(v=>{const x=(d.venues?.details||{})[v.name]||{};
+    const map=x.map||('https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(v.name+' 北海道'));
+    return '<div class="venue"><b>'+esc(v.name)+'</b>'+(x.address?'<small>'+esc(x.address)+'</small>':'')+(x.parking?'<small>駐車場：'+esc(x.parking)+'</small>':'')+(x.note?'<small>'+esc(x.note)+'</small>':'')+'<small>今年度 '+v.n+'試合（'+esc(v.comps.join('・'))+'）</small><a href="'+esc(map)+'" target="_blank" rel="noopener">地図を開く ↗</a></div>'}).join('')+'</div>']);
+  if(d.faq?.length)parts.push(['faq','FAQ','よくある質問','<div class="faq">'+d.faq.map(f=>'<details><summary>'+esc(f.q)+'</summary><p>'+esc(f.a)+'</p></details>').join('')+'</div>']);
+  $('jump').innerHTML=parts.slice(1).map(p=>'<a href="#'+p[0]+'">'+p[2]+'</a>').join('');
   $('main').innerHTML='<p class="lead">'+esc(d.note)+'</p>'+tabs+parts.map(p=>sec(...p)).join('');
+  $('jump').querySelectorAll('a').forEach(a=>a.onclick=e=>{e.preventDefault();document.querySelector(a.getAttribute('href'))?.scrollIntoView({behavior:'smooth'})});
   $('main').querySelectorAll('[data-k]').forEach(b=>b.onclick=()=>{CUR=b.dataset.k;history.replaceState(null,'','?c='+CUR);draw()});
 }
-fetch('./data/info.json',{cache:'no-store'}).then(r=>r.ok?r.json():Promise.reject()).then(d=>{
+const J=u=>fetch(u,{cache:'no-store'}).then(r=>r.ok?r.json():null).catch(()=>null);
+/* 会場：今年度のすべての大会の日程から集める */
+async function loadVenues(){
+  const cs=(await J('../results/data/competitions.json'))?.competitions||[];COMPS=cs;
+  const m=new Map(),short=n=>String(n).replace(/^\d{4}年度\s*/,'').replace(/^第\d+回/,'').replace(/北海道学生サッカーリーグ\s*/,'リーグ').replace(/全日本大学サッカー|北海道大会/g,'').trim();
+  await Promise.all(cs.map(c=>J('../results/data/'+encodeURIComponent(c.id)+'.json').then(d=>{for(const x of d?.matches||[]){const v=String(x.venue||'').trim();if(!v||/未定/.test(v))continue;const o=m.get(v)||{name:v,n:0,comps:[]};o.n++;const s=short(c.name);if(!o.comps.includes(s))o.comps.push(s);m.set(v,o)}})));
+  VENUES=[...m.values()].sort((a,b)=>b.n-a.n||a.name.localeCompare(b.name,'ja'));
+}
+J('./data/info.json').then(d=>{if(!d)throw 0;
   INFO=d;CUR=new URLSearchParams(location.search).get('c')||'';draw();
+  loadVenues().then(draw);
 }).catch(()=>{$('main').innerHTML='<p class="empty">大会情報は準備中です。</p>'});
 $('menu')?.addEventListener('click',e=>{const n=$('nav');const o=n.classList.toggle('open');e.currentTarget.setAttribute('aria-expanded',String(o))});
 </script>
