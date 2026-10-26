@@ -173,6 +173,14 @@ button{font:inherit;color:inherit;cursor:pointer}
 .venue{border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:6px}
 .venue b{font-size:14.5px}.venue small{font-size:12px;color:var(--muted);line-height:1.7}
 .venue a{align-self:flex-start;margin-top:4px;border:1px solid var(--line);border-radius:20px;padding:5px 14px;font-size:12.5px;font-weight:700}
+.sum{width:100%;border-collapse:separate;border-spacing:0;border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-bottom:16px;font-size:14px}
+.sum th,.sum td{padding:12px 14px;border-top:1px solid var(--line);text-align:center;vertical-align:middle;line-height:1.6}
+.sum thead th{border-top:0;background:#ffffff0d;font-weight:900;font-size:13px}
+.sum tbody th{text-align:left;font-weight:700;font-size:13px;color:var(--muted);white-space:nowrap}
+.sum td b{font-family:var(--num);font-size:24px;font-weight:800;line-height:1}
+.sum td.u{color:var(--muted);font-size:12.5px}
+.sumwrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+@media(max-width:680px){.sum{font-size:13px}.sum th,.sum td{padding:10px 8px}.sum td b{font-size:20px}.sum tbody th{white-space:normal;min-width:6.5em}}
 .lead{font-size:13px;color:var(--muted);line-height:1.8;margin:0 2px 18px}
 .warnbox{border:1px solid var(--line);border-left:4px solid var(--red);border-radius:10px;padding:12px 16px;font-size:13px;line-height:1.8;margin-bottom:14px}
 @media(max-width:680px){.rule{padding:14px 16px}.rule ul{font-size:14px}}
@@ -194,6 +202,7 @@ button{font:inherit;color:inherit;cursor:pointer}
       <a href="./results.html?tab=standings">順位・ランキング</a>
       <a href="./history.html">歴代成績</a>
       <a href="./info.html" class="on">大会情報</a>
+      <a href="./venues.html">会場案内</a>
       <a href="./about.html">連盟について</a>
     </nav>
   </div>
@@ -208,7 +217,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 <footer class="footer">
   <div class="wrap">
     <div><strong>北海道学生サッカー連盟</strong><p>試合の日程・結果・記録は、連盟の大会運営システムから自動で反映しています。</p><p id="updated"></p></div>
-    <nav><a href="./">トップ</a><a href="./news.html">お知らせ</a><a href="./about.html">連盟について</a><a href="./history.html">歴代成績</a><a href="./info.html">大会情報</a><a href="./results.html">大会記録</a></nav>
+    <nav><a href="./">トップ</a><a href="./news.html">お知らせ</a><a href="./about.html">連盟について</a><a href="./history.html">歴代成績</a><a href="./info.html">大会情報</a><a href="./venues.html">会場案内</a><a href="./results.html">大会記録</a></nav>
   </div>
 </footer>
 <script>
@@ -218,11 +227,14 @@ const $=id=>document.getElementById(id);
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const safeUrl=u=>/^(https?:\/\/|\.\/|\.\.\/)/.test(String(u||''))?String(u):'';
 const sec=(id,en,ja,inner)=>'<section class="section" id="'+id+'"><div class="sechead"><h2><small>'+en+'</small>'+ja+'</h2></div>'+inner+'</section>';
+/* 交代・ベンチ入りの表：数字だけのところは大きく */
+const sumTable=t=>{if(!t)return '';const cell=v=>{const m=String(v).match(/^(\d+)(名|回まで|分)(.*)$/);return v==='要項で確認'?'<td class="u">要項で確認</td>':m?'<td><b>'+m[1]+'</b> '+esc(m[2])+(m[3]?'<br><small>'+esc(m[3])+'</small>':'')+'</td>':'<td>'+esc(v)+'</td>'};
+  return '<div class="sumwrap"><table class="sum"><thead><tr>'+t.cols.map(c=>'<th>'+esc(c)+'</th>').join('')+'</tr></thead><tbody>'+t.rows.map(r=>'<tr><th>'+esc(r[0])+'</th>'+r.slice(1).map(cell).join('')+'</tr>').join('')+'</tbody></table></div>'};
 const rules=list=>'<div class="rules">'+(list||[]).map(r=>'<div class="rule"><h3>'+esc(r.h)+'</h3><ul>'+(r.items||[]).map(i=>'<li>'+esc(i)+'</li>').join('')+'</ul></div>').join('')+'</div>';
 const pdfRow=o=>{const u=safeUrl(o.url);return u
   ?'<a href="'+esc(u)+'" target="_blank" rel="noopener"><span class="ic pdf">PDF</span><span><b>'+esc(o.title)+'</b><small>タップするとPDFが開きます</small></span><span class="go">開く ↗</span></a>'
   :'<div><span class="ic">PDF</span><span><b>'+esc(o.title)+'</b><small>準備中です</small></span><span></span></div>'};
-let INFO=null,CUR='',COMPS=[],VENUES=null;
+let INFO=null,CUR='',COMPS=[];
 const pdfsOf=c=>{const fromDash=(c.comps||[]).map(id=>COMPS.find(x=>x.id===id)).filter(x=>x&&x.rulesUrl).map(x=>({title:x.name+' 要項',url:x.rulesUrl}));
   const uniq=[];fromDash.forEach(o=>{if(!uniq.some(u=>u.url===o.url))uniq.push(o)});return uniq.length?uniq.map((o,i)=>uniq.length===1?{title:(c.pdf?.[0]?.title)||o.title,url:o.url}:o):(c.pdf||[])};
 function draw(){
@@ -232,14 +244,12 @@ function draw(){
     ['comp','COMPETITION',esc(c.title),
       '<div class="card docs" style="margin-bottom:16px">'+pdfsOf(c).map(pdfRow).join('')+'</div>'+
       (c.partial?'<div class="warnbox">この大会のレギュレーションは、まだ一部だけです。くわしくは大会要項（PDF）で確かめてください。</div>':'')+
-      rules(c.rules)+
+      sumTable(c.summary)+rules(c.rules)+
       (c.comps?.length?'<p class="note" style="margin-top:14px">日程・結果・順位は <a href="./results.html?comp='+encodeURIComponent(c.comps[0])+'" style="color:var(--red);text-decoration:underline">大会記録</a> で見られます。</p>':'')],
     ['common','COMMON','どの大会でも共通のこと',rules(d.common)]
   ];
   if(d.registration)parts.push(['registration','REGISTRATION','選手登録の手続き','<p class="lead">'+esc(d.registration.lead)+'</p>'+rules(d.registration.steps)]);
-  if(VENUES&&VENUES.length)parts.push(['venues','VENUES','会場の案内','<p class="lead">'+esc(d.venues?.lead||'')+'</p><div class="venues">'+VENUES.map(v=>{const x=(d.venues?.details||{})[v.name]||{};
-    const map=x.map||('https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(v.name+' 北海道'));
-    return '<div class="venue"><b>'+esc(v.name)+'</b>'+(x.address?'<small>'+esc(x.address)+'</small>':'')+(x.parking?'<small>駐車場：'+esc(x.parking)+'</small>':'')+(x.note?'<small>'+esc(x.note)+'</small>':'')+'<small>今年度 '+v.n+'試合（'+esc(v.comps.join('・'))+'）</small><a href="'+esc(map)+'" target="_blank" rel="noopener">地図を開く ↗</a></div>'}).join('')+'</div>']);
+  parts.push(['venues','VENUES','会場案内','<div class="card docs"><a href="./venues.html"><span class="ic">MAP</span><span><b>会場案内</b><small>北海道の地図と、エリアごとの会場の一覧（アクセス・写真）</small></span><span class="go">開く ›</span></a></div>']);
   if(d.faq?.length)parts.push(['faq','FAQ','よくある質問','<div class="faq">'+d.faq.map(f=>'<details><summary>'+esc(f.q)+'</summary><p>'+esc(f.a)+'</p></details>').join('')+'</div>']);
   $('jump').innerHTML=parts.slice(1).map(p=>'<a href="#'+p[0]+'">'+p[2]+'</a>').join('');
   $('main').innerHTML='<p class="lead">'+esc(d.note)+'</p>'+tabs+parts.map(p=>sec(...p)).join('');
@@ -247,16 +257,11 @@ function draw(){
   $('main').querySelectorAll('[data-k]').forEach(b=>b.onclick=()=>{CUR=b.dataset.k;history.replaceState(null,'','?c='+CUR);draw()});
 }
 const J=u=>fetch(u,{cache:'no-store'}).then(r=>r.ok?r.json():null).catch(()=>null);
-/* 会場：今年度のすべての大会の日程から集める */
-async function loadVenues(){
-  const cs=(await J('../results/data/competitions.json'))?.competitions||[];COMPS=cs;
-  const m=new Map(),short=n=>String(n).replace(/^\d{4}年度\s*/,'').replace(/^第\d+回/,'').replace(/北海道学生サッカーリーグ\s*/,'リーグ').replace(/全日本大学サッカー|北海道大会/g,'').trim();
-  await Promise.all(cs.map(c=>J('../results/data/'+encodeURIComponent(c.id)+'.json').then(d=>{for(const x of d?.matches||[]){const v=String(x.venue||'').trim();if(!v||/未定/.test(v))continue;const o=m.get(v)||{name:v,n:0,comps:[]};o.n++;const s=short(c.name);if(!o.comps.includes(s))o.comps.push(s);m.set(v,o)}})));
-  VENUES=[...m.values()].sort((a,b)=>b.n-a.n||a.name.localeCompare(b.name,'ja'));
-}
+/* 大会要項：ダッシュボードの「大会・規則」の要項リンク（competitions.json の rulesUrl） */
+async function loadCompsForPdf(){COMPS=(await J('../results/data/competitions.json'))?.competitions||[]}
 J('./data/info.json').then(d=>{if(!d)throw 0;
   INFO=d;CUR=new URLSearchParams(location.search).get('c')||'';draw();
-  loadVenues().then(draw);
+  loadCompsForPdf().then(draw);
 }).catch(()=>{$('main').innerHTML='<p class="empty">大会情報は準備中です。</p>'});
 $('menu')?.addEventListener('click',e=>{const n=$('nav');const o=n.classList.toggle('open');e.currentTarget.setAttribute('aria-expanded',String(o))});
 </script>
