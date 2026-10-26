@@ -496,6 +496,10 @@ async function load(){
     if(d.ok===false)throw new Error(d.error||'データがありません');
     DATA=d;PROF.clear();
     for(const t of ro?.teams||[])if(t.profile){PROF.set(tkey(t.team),t.profile);if(t.team.univ&&!PROF.has(t.team.univ))PROF.set(t.team.univ,t.profile)}
+    // 入替戦のように、ほかの大会のチームが出る大会：そのチームの大会の名簿から紹介（エンブレムなど）を読む
+    {const yr=String(S.comp).split('-')[0],own=String(S.comp).slice(yr.length+1),need=new Set();
+     for(const m of d.matches||[])for(const t of [m.home,m.away])if(t&&t.id&&!PROF.has(tkey(t))){const sf=String(t.id).split('-').pop();if(sf&&sf!==own)need.add(yr+'-'+sf)}
+     await Promise.all([...need].map(c=>getJSON(encodeURIComponent(c)+'-roster.json').catch(()=>null).then(r=>{for(const t of r?.teams||[])if(t.profile&&!PROF.has(tkey(t.team))){PROF.set(tkey(t.team),t.profile);if(t.team.univ&&!PROF.has(t.team.univ))PROF.set(t.team.univ,t.profile)}})));}
     const tm=new Map();(d.matches||[]).forEach(m=>[m.home,m.away].forEach(t=>{if(t&&t.id&&!tm.has(t.id))tm.set(t.id,t)}));makeBadges([...tm.values()]);
     const c=d.competition||{};
     $('compTitle').textContent=c.name||'大会記録';

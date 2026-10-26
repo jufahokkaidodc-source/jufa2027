@@ -1092,6 +1092,14 @@ function renderScorers(rows){
     '<span class="who"><b>'+esc(p.name)+'</b><small>'+esc(name(p.team))+'</small></span><span class="g">'+esc(p.count)+'<small>点</small></span></div>').join('');
 }
 
+/* 入替戦のように、ほかの大会のチームが出る大会：チームの紹介（エンブレムなど）を、そのチームの大会の名簿から読む
+   チームID の末尾（GAKUEN-L1 → L1）と年度（2026-PO → 2026）から 2026-L1-roster.json を読む */
+async function profFromOtherComps(id,ms){
+  const yr=String(id).split('-')[0],own=String(id).slice(yr.length+1),need=new Set();
+  for(const m of ms)for(const t of [m.home,m.away])if(t&&typeof t==='object'&&t.id&&!PROF.has(tkey(t))){const sf=String(t.id).split('-').pop();if(sf&&sf!==own)need.add(yr+'-'+sf)}
+  await Promise.all([...need].map(c=>fetch('../results/data/'+encodeURIComponent(c)+'-roster.json',{cache:'no-store'}).then(r=>r.ok?r.json():null).catch(()=>null).then(ro=>{
+    for(const t of ro?.teams||[])if(t.profile&&!PROF.has(tkey(t.team))){PROF.set(tkey(t.team),t.profile);if(t.team.univ&&!PROF.has(t.team.univ))PROF.set(t.team.univ,t.profile)}})));
+}
 /* load */
 async function load(id){
   S.id=id;
@@ -1100,6 +1108,7 @@ async function load(id){
     const [d,ro]=await Promise.all([json(encodeURIComponent(id)+'.json'),DEMO?null:fetch('../results/data/'+encodeURIComponent(id)+'-roster.json',{cache:'no-store'}).then(r=>r.ok?r.json():null).catch(()=>null)]);
     if(!d.ok)throw Error('大会データを取得できません');
     for(const t of ro?.teams||[])if(t.profile){PROF.set(tkey(t.team),t.profile);if(t.team.univ)PROF.set(t.team.univ,t.profile)}
+    if(!DEMO)await profFromOtherComps(id,d.matches||[]);
     document.querySelectorAll('.js-detail').forEach(a=>a.href=detail(id)+(a.dataset.tab?'&tab='+a.dataset.tab:''));
     document.querySelectorAll('.js-sched').forEach(a=>a.href=detail(id));
     document.querySelectorAll('.js-rank').forEach(a=>a.href=detail(id)+'&tab=standings');
