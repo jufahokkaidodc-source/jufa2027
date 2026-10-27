@@ -1,6 +1,6 @@
 {
- "lead": "試合を行う会場の案内です。地図の点を押すと、その会場の案内に移ります。下のタブで地区ごとに見られます。住所・アクセス・写真は、わかったものから書き足していきます。",
- "note": "地図の点はおおよその位置です。くわしい場所は「地図を開く」で確かめてください。",
+ "lead": "試合を行う会場の案内です。地図の点を押すと、その会場の案内に移ります。下のタブで地区ごとに見られます。",
+ "note": "地図の点はおおよその位置です。くわしい場所は「地図を開く」で確かめてください。アクセスは各施設などの案内による目安です（2026年10月調べ）。バスの時刻・駐車場の使い方は、大会ごとの案内で確かめてください。",
  "areas": [
   "札幌",
   "道央",
@@ -17,12 +17,17 @@
    "aliases": [
     "札幌大学"
    ],
-   "address": "",
-   "access": "",
-   "parking": "",
-   "note": "",
+   "address": "札幌市豊平区西岡3条7丁目3番1号",
+   "access": "地下鉄澄川駅・南平岸駅からバス「西岡中央公園」下車、西門から徒歩1分。地下鉄月寒中央駅からバス「札大正門前」も使えます。",
+   "parking": "大会の指示にしたがってください",
+   "note": "大学のサッカーグラウンドです。",
    "photo": "",
-   "map": ""
+   "map": "https://www.google.com/maps/search/?api=1&query=%E5%8C%97%E6%B5%B7%E9%81%93%20%E6%9C%AD%E5%B9%8C%E5%A4%A7%E5%AD%A6%20%E6%9C%AD%E5%B9%8C%E5%B8%82%E8%B1%8A%E5%B9%B3%E5%8C%BA%E8%A5%BF%E5%B2%A13%E6%9D%A17%E4%B8%81%E7%9B%AE3%E7%95%AA1%E5%8F%B7",
+   "photoPage": "https://www.norddea.jp/access",
+   "sources": [
+    "https://www.norddea.jp/access"
+   ],
+   "route": "https://www.google.com/maps/dir/?api=1&destination=%E5%8C%97%E6%B5%B7%E9%81%93%20%E6%9C%AD%E5%B9%8C%E5%A4%A7%E5%AD%A6%20%E6%9C%AD%E5%B9%8C%E5%B8%82%E8%B1%8A%E5%B9%B3%E5%8C%BA%E8%A5%BF%E5%B2%A13%E6%9D%A17%E4%B8%81%E7%9B%AE3%E7%95%AA1%E5%8F%B7"
   },
   {
    "name": "札幌国際大学",
@@ -32,12 +37,17 @@
    "aliases": [
     "札幌国際大学"
    ],
-   "address": "",
-   "access": "",
-   "parking": "",
-   "note": "",
+   "address": "札幌市清田区清田4条1丁目4番1号",
+   "access": "地下鉄福住駅か南郷18丁目駅から中央バス「札幌国際大学前」下車 徒歩5分。",
+   "parking": "大会の指示にしたがってください",
+   "note": "大学のグラウンドです。",
    "photo": "",
-   "map": ""
+   "map": "https://www.google.com/maps/search/?api=1&query=%E5%8C%97%E6%B5%B7%E9%81%93%20%E6%9C%AD%E5%B9%8C%E5%9B%BD%E9%9A%9B%E5%A4%A7%E5%AD%A6%20%E6%9C%AD%E5%B9%8C%E5%B8%82%E6%B8%85%E7%94%B0%E5%8C%BA%E6%B8%85%E7%94%B04%E6%9D%A11%E4%B8%81%E7%9B%AE4%E7%95%AA1%E5%8F%B7",
+   "photoPage": "https://www.siu.ac.jp/club/football/",
+   "sources": [
+    "https://siu.ac.jp/about/detail.html?content=187"
+   ],
+   "route": "https://www.google.com/maps/dir/?api=1&destination=%E5%8C%97%E6%B5%B7%E9%81%93%20%E6%9C%AD%E5%B9%8C%E5%9B%BD%E9%9A%9B%E5%A4%A7%E5%AD%A6%20%E6%9C%AD%E5%B9%8C%E5%B8%82%E6%B8%85%E7%94%B0%E5%8C%BA%E6%B8%85%E7%94%B04%E6%9D%A11%E4%B8%81%E7%9B%AE4%E7%95%AA1%E5%8F%B7"
   },
   {
    "name": "札幌大谷学園丘珠グラウンド",
@@ -47,12 +57,17 @@
    "aliases": [
     "札幌大谷学園丘珠グラウンド"
    ],
-   "address": "",
-   "access": "",
-   "parking": "",
-   "note": "",
+   "address": "札幌市東区丘珠町721番地",
+   "access": "車・タクシーで来てください（バスの案内はありません）。",
+   "parking": "駐車場あり（大型バスも可）",
+   "note": "学校（東区北16条）とは別の場所です。人工芝と天然芝があります。",
    "photo": "",
-   "map": ""
+   "map": "https://www.google.com/maps/search/?api=1&query=%E5%8C%97%E6%B5%B7%E9%81%93%20%E6%9C%AD%E5%B9%8C%E5%A4%A7%E8%B0%B7%E5%AD%A6%E5%9C%92%E4%B8%98%E7%8F%A0%E3%82%B0%E3%83%A9%E3%82%A6%E3%83%B3%E3%83%89%20%E6%9C%AD%E5%B9%8C%E5%B8%82%E6%9D%B1%E5%8C%BA%E4%B8%98%E7%8F%A0%E7%94%BA721%E7%95%AA%E5%9C%B0",
+   "photoPage": "https://hasetai.com/work/sapporo-otani-gakuen-okadama-ground-soccer-field",
+   "sources": [
+    "https://www.sapporo-otani.com/access/"
+   ],
+   "route": "https://www.google.com/maps/dir/?api=1&destination=%E5%8C%97%E6%B5%B7%E9%81%93%20%E6%9C%AD%E5%B9%8C%E5%A4%A7%E8%B0%B7%E5%AD%A6%E5%9C%92%E4%B8%98%E7%8F%A0%E3%82%B0%E3%83%A9%E3%82%A6%E3%83%B3%E3%83%89%20%E6%9C%AD%E5%B9%8C%E5%B8%82%E6%9D%B1%E5%8C%BA%E4%B8%98%E7%8F%A0%E7%94%BA721%E7%95%AA%E5%9C%B0"
   },
   {
    "name": "東雁来公園サッカー場",
@@ -62,12 +77,17 @@
    "aliases": [
     "東雁来公園サッカー場"
    ],
-   "address": "",
-   "access": "",
-   "parking": "",
-   "note": "",
+   "address": "札幌市東区東雁来12条4丁目",
+   "access": "中央バス「東雁来」下車 徒歩10分。",
+   "parking": "30台",
+   "note": "人工芝2面。札幌サッカーアミューズメントパークとは道路を挟んだ別の施設です。",
    "photo": "",
-   "map": ""
+   "map": "https://www.google.com/maps/search/?api=1&query=%E5%8C%97%E6%B5%B7%E9%81%93%20%E6%9D%B1%E9%9B%81%E6%9D%A5%E5%85%AC%E5%9C%92%E3%82%B5%E3%83%83%E3%82%AB%E3%83%BC%E5%A0%B4%20%E6%9C%AD%E5%B9%8C%E5%B8%82%E6%9D%B1%E5%8C%BA%E6%9D%B1%E9%9B%81%E6%9D%A512%E6%9D%A14%E4%B8%81%E7%9B%AE",
+   "photoPage": "https://www.city.sapporo.jp/sports/sisetsu/institution/stadium/higashikariki.html",
+   "sources": [
+    "https://www.city.sapporo.jp/sports/sisetsu/institution/stadium/higashikariki.html"
+   ],
+   "route": "https://www.google.com/maps/dir/?api=1&destination=%E5%8C%97%E6%B5%B7%E9%81%93%20%E6%9D%B1%E9%9B%81%E6%9D%A5%E5%85%AC%E5%9C%92%E3%82%B5%E3%83%83%E3%82%AB%E3%83%BC%E5%A0%B4%20%E6%9C%AD%E5%B9%8C%E5%B8%82%E6%9D%B1%E5%8C%BA%E6%9D%B1%E9%9B%81%E6%9D%A512%E6%9D%A14%E4%B8%81%E7%9B%AE"
   },
   {
    "name": "札幌サッカーアミューズメントパーク",
@@ -78,12 +98,17 @@
     "札幌サッカーアミューズメントパーク（天然芝）",
     "札幌サッカーアミューズメントパーク（人工芝）"
    ],
-   "address": "",
-   "access": "",
+   "address": "札幌市東区東雁来12条3丁目1-1",
+   "access": "中央バス「東雁来」下車 徒歩10分、または「豊畑神社」下車 徒歩8分。車は雁来ICから約5分。",
    "parking": "",
-   "note": "",
+   "note": "人工芝・天然芝の2面。道路を挟んだ東雁来公園サッカー場とは別の施設です。",
    "photo": "",
-   "map": ""
+   "map": "https://www.google.com/maps/search/?api=1&query=%E5%8C%97%E6%B5%B7%E9%81%93%20%E6%9C%AD%E5%B9%8C%E3%82%B5%E3%83%83%E3%82%AB%E3%83%BC%E3%82%A2%E3%83%9F%E3%83%A5%E3%83%BC%E3%82%BA%E3%83%A1%E3%83%B3%E3%83%88%E3%83%91%E3%83%BC%E3%82%AF%20%E6%9C%AD%E5%B9%8C%E5%B8%82%E6%9D%B1%E5%8C%BA%E6%9D%B1%E9%9B%81%E6%9D%A512%E6%9D%A13%E4%B8%81%E7%9B%AE1-1",
+   "photoPage": "https://www.norddea.jp/access",
+   "sources": [
+    "https://www.norddea.jp/access"
+   ],
+   "route": "https://www.google.com/maps/dir/?api=1&destination=%E5%8C%97%E6%B5%B7%E9%81%93%20%E6%9C%AD%E5%B9%8C%E3%82%B5%E3%83%83%E3%82%AB%E3%83%BC%E3%82%A2%E3%83%9F%E3%83%A5%E3%83%BC%E3%82%BA%E3%83%A1%E3%83%B3%E3%83%88%E3%83%91%E3%83%BC%E3%82%AF%20%E6%9C%AD%E5%B9%8C%E5%B8%82%E6%9D%B1%E5%8C%BA%E6%9D%B1%E9%9B%81%E6%9D%A512%E6%9D%A13%E4%B8%81%E7%9B%AE1-1"
   },
   {
    "name": "大和ハウス プレミストドーム（屋外サッカー練習場）",
@@ -93,12 +118,18 @@
    "aliases": [
     "大和ハウス プレミストドーム（屋外サッカー練習場・人工芝）"
    ],
-   "address": "",
-   "access": "",
+   "address": "札幌市豊平区羊ケ丘1番地",
+   "access": "地下鉄福住駅からドームまで徒歩約10分。そこから敷地の中を歩いて屋外の人工芝練習場へ（さらに数分かかります）。",
    "parking": "",
    "note": "",
    "photo": "",
-   "map": ""
+   "map": "https://www.google.com/maps/search/?api=1&query=%E5%8C%97%E6%B5%B7%E9%81%93%20%E5%A4%A7%E5%92%8C%E3%83%8F%E3%82%A6%E3%82%B9%20%E3%83%97%E3%83%AC%E3%83%9F%E3%82%B9%E3%83%88%E3%83%89%E3%83%BC%E3%83%A0%EF%BC%88%E5%B1%8B%E5%A4%96%E3%82%B5%E3%83%83%E3%82%AB%E3%83%BC%E7%B7%B4%E7%BF%92%E5%A0%B4%EF%BC%89%20%E6%9C%AD%E5%B9%8C%E5%B8%82%E8%B1%8A%E5%B9%B3%E5%8C%BA%E7%BE%8A%E3%82%B1%E4%B8%981%E7%95%AA%E5%9C%B0",
+   "photoPage": "https://www.sapporo-dome.co.jp/facility/enjoy/soccer/",
+   "sources": [
+    "https://www.sapporo-dome.co.jp/access/",
+    "https://www.sapporo-dome.co.jp/facility/enjoy/soccer/"
+   ],
+   "route": "https://www.google.com/maps/dir/?api=1&destination=%E5%8C%97%E6%B5%B7%E9%81%93%20%E5%A4%A7%E5%92%8C%E3%83%8F%E3%82%A6%E3%82%B9%20%E3%83%97%E3%83%AC%E3%83%9F%E3%82%B9%E3%83%88%E3%83%89%E3%83%BC%E3%83%A0%EF%BC%88%E5%B1%8B%E5%A4%96%E3%82%B5%E3%83%83%E3%82%AB%E3%83%BC%E7%B7%B4%E7%BF%92%E5%A0%B4%EF%BC%89%20%E6%9C%AD%E5%B9%8C%E5%B8%82%E8%B1%8A%E5%B9%B3%E5%8C%BA%E7%BE%8A%E3%82%B1%E4%B8%981%E7%95%AA%E5%9C%B0"
   },
   {
    "name": "札幌厚別公園陸上競技場",
@@ -110,12 +141,17 @@
     "札幌厚別公園陸上競技場（補助競技場）",
     "厚別公園陸上競技場（補助）"
    ],
-   "address": "",
-   "access": "",
-   "parking": "",
-   "note": "",
+   "address": "札幌市厚別区上野幌3条1丁目2-1",
+   "access": "地下鉄大谷地駅から徒歩約20分。バス「平岡9条3丁目」「厚別公園入口」から徒歩約5分。",
+   "parking": "大会ごとに条件がちがいます",
+   "note": "補助競技場も同じ公園の中にあります。",
    "photo": "",
-   "map": ""
+   "map": "https://www.google.com/maps/search/?api=1&query=%E5%8C%97%E6%B5%B7%E9%81%93%20%E6%9C%AD%E5%B9%8C%E5%8E%9A%E5%88%A5%E5%85%AC%E5%9C%92%E9%99%B8%E4%B8%8A%E7%AB%B6%E6%8A%80%E5%A0%B4%20%E6%9C%AD%E5%B9%8C%E5%B8%82%E5%8E%9A%E5%88%A5%E5%8C%BA%E4%B8%8A%E9%87%8E%E5%B9%8C3%E6%9D%A11%E4%B8%81%E7%9B%AE2-1",
+   "photoPage": "https://anto.sports.coocan.jp/s1/sapporo/atubetu/atubetu.html",
+   "sources": [
+    "https://www.city.sapporo.jp/sports/sisetsu/institution/stadium/atsubetsu.html"
+   ],
+   "route": "https://www.google.com/maps/dir/?api=1&destination=%E5%8C%97%E6%B5%B7%E9%81%93%20%E6%9C%AD%E5%B9%8C%E5%8E%9A%E5%88%A5%E5%85%AC%E5%9C%92%E9%99%B8%E4%B8%8A%E7%AB%B6%E6%8A%80%E5%A0%B4%20%E6%9C%AD%E5%B9%8C%E5%B8%82%E5%8E%9A%E5%88%A5%E5%8C%BA%E4%B8%8A%E9%87%8E%E5%B9%8C3%E6%9D%A11%E4%B8%81%E7%9B%AE2-1"
   },
   {
    "name": "白旗山競技場",
@@ -126,12 +162,17 @@
     "白旗山競技場A",
     "白旗山競技場B"
    ],
-   "address": "",
-   "access": "",
-   "parking": "",
+   "address": "札幌市清田区真栄502番地1",
+   "access": "地下鉄福住駅から中央バス（福87）「白旗山競技場入口」下車 徒歩30分。",
+   "parking": "約100台",
    "note": "",
    "photo": "",
-   "map": ""
+   "map": "https://www.google.com/maps/search/?api=1&query=%E5%8C%97%E6%B5%B7%E9%81%93%20%E7%99%BD%E6%97%97%E5%B1%B1%E7%AB%B6%E6%8A%80%E5%A0%B4%20%E6%9C%AD%E5%B9%8C%E5%B8%82%E6%B8%85%E7%94%B0%E5%8C%BA%E7%9C%9F%E6%A0%84502%E7%95%AA%E5%9C%B01",
+   "photoPage": "https://kiyota-shinnei.kiyotamin.net/archives/3057",
+   "sources": [
+    "https://www.sapporo-sport.jp/shirahata/"
+   ],
+   "route": "https://www.google.com/maps/dir/?api=1&destination=%E5%8C%97%E6%B5%B7%E9%81%93%20%E7%99%BD%E6%97%97%E5%B1%B1%E7%AB%B6%E6%8A%80%E5%A0%B4%20%E6%9C%AD%E5%B9%8C%E5%B8%82%E6%B8%85%E7%94%B0%E5%8C%BA%E7%9C%9F%E6%A0%84502%E7%95%AA%E5%9C%B01"
   },
   {
    "name": "駒岡第二サッカー場",
@@ -146,7 +187,10 @@
    "parking": "",
    "note": "",
    "photo": "",
-   "map": ""
+   "map": "",
+   "photoPage": "",
+   "sources": [],
+   "route": ""
   },
   {
    "name": "北海道教育大学岩見沢校",
@@ -156,12 +200,17 @@
    "aliases": [
     "北海道教育大学岩見沢校"
    ],
-   "address": "",
-   "access": "",
+   "address": "岩見沢市緑が丘2丁目34番地1",
+   "access": "岩見沢駅から中央バス（約10〜15分）「教育大前」下車 徒歩2分。",
    "parking": "",
-   "note": "",
+   "note": "大学の人工芝グラウンドです。",
    "photo": "",
-   "map": ""
+   "map": "https://www.google.com/maps/search/?api=1&query=%E5%8C%97%E6%B5%B7%E9%81%93%20%E5%8C%97%E6%B5%B7%E9%81%93%E6%95%99%E8%82%B2%E5%A4%A7%E5%AD%A6%E5%B2%A9%E8%A6%8B%E6%B2%A2%E6%A0%A1%20%E5%B2%A9%E8%A6%8B%E6%B2%A2%E5%B8%82%E7%B7%91%E3%81%8C%E4%B8%982%E4%B8%81%E7%9B%AE34%E7%95%AA%E5%9C%B01",
+   "photoPage": "https://gankyosoccer.com/team/",
+   "sources": [
+    "https://www.hokkyodai.ac.jp/iwa/general/yakanriyo.html"
+   ],
+   "route": "https://www.google.com/maps/dir/?api=1&destination=%E5%8C%97%E6%B5%B7%E9%81%93%20%E5%8C%97%E6%B5%B7%E9%81%93%E6%95%99%E8%82%B2%E5%A4%A7%E5%AD%A6%E5%B2%A9%E8%A6%8B%E6%B2%A2%E6%A0%A1%20%E5%B2%A9%E8%A6%8B%E6%B2%A2%E5%B8%82%E7%B7%91%E3%81%8C%E4%B8%982%E4%B8%81%E7%9B%AE34%E7%95%AA%E5%9C%B01"
   },
   {
    "name": "小樽市望洋サッカー場",
@@ -171,12 +220,17 @@
    "aliases": [
     "小樽市望洋サッカー場"
    ],
-   "address": "",
-   "access": "",
+   "address": "小樽市朝里川温泉1丁目143番地",
+   "access": "小樽駅から中央バス望洋台線「望洋台」下車 徒歩約10分。車は朝里ICから約5分。",
    "parking": "",
-   "note": "",
+   "note": "正式な名前は「小樽市望洋サッカー・ラグビー場」。A・Bの2面があります。",
    "photo": "",
-   "map": ""
+   "map": "https://www.google.com/maps/search/?api=1&query=%E5%8C%97%E6%B5%B7%E9%81%93%20%E5%B0%8F%E6%A8%BD%E5%B8%82%E6%9C%9B%E6%B4%8B%E3%82%B5%E3%83%83%E3%82%AB%E3%83%BC%E5%A0%B4%20%E5%B0%8F%E6%A8%BD%E5%B8%82%E6%9C%9D%E9%87%8C%E5%B7%9D%E6%B8%A9%E6%B3%891%E4%B8%81%E7%9B%AE143%E7%95%AA%E5%9C%B0",
+   "photoPage": "https://anto.sports.coocan.jp/s1/doou/otaruboyo/otaruboyo.html",
+   "sources": [
+    "https://www.city.otaru.lg.jp/docs/2020111300248/"
+   ],
+   "route": "https://www.google.com/maps/dir/?api=1&destination=%E5%8C%97%E6%B5%B7%E9%81%93%20%E5%B0%8F%E6%A8%BD%E5%B8%82%E6%9C%9B%E6%B4%8B%E3%82%B5%E3%83%83%E3%82%AB%E3%83%BC%E5%A0%B4%20%E5%B0%8F%E6%A8%BD%E5%B8%82%E6%9C%9D%E9%87%8C%E5%B7%9D%E6%B8%A9%E6%B3%891%E4%B8%81%E7%9B%AE143%E7%95%AA%E5%9C%B0"
   },
   {
    "name": "芦別市陸上競技場",
@@ -186,12 +240,17 @@
    "aliases": [
     "芦別市陸上競技場"
    ],
-   "address": "",
-   "access": "",
-   "parking": "",
-   "note": "",
+   "address": "芦別市上芦別町6番地",
+   "access": "JR芦別駅から車で約8分（約3km）。",
+   "parking": "駐車場あり",
+   "note": "なまこ山総合運動公園の中にあります。",
    "photo": "",
-   "map": ""
+   "map": "https://www.google.com/maps/search/?api=1&query=%E5%8C%97%E6%B5%B7%E9%81%93%20%E8%8A%A6%E5%88%A5%E5%B8%82%E9%99%B8%E4%B8%8A%E7%AB%B6%E6%8A%80%E5%A0%B4%20%E8%8A%A6%E5%88%A5%E5%B8%82%E4%B8%8A%E8%8A%A6%E5%88%A5%E7%94%BA6%E7%95%AA%E5%9C%B0",
+   "photoPage": "https://yoyacool.e-harp.jp/ashibetsu/FacilityGuides/Index/012165/1001",
+   "sources": [
+    "https://yoyacool.e-harp.jp/ashibetsu/FacilityGuides/Index/012165/1001"
+   ],
+   "route": "https://www.google.com/maps/dir/?api=1&destination=%E5%8C%97%E6%B5%B7%E9%81%93%20%E8%8A%A6%E5%88%A5%E5%B8%82%E9%99%B8%E4%B8%8A%E7%AB%B6%E6%8A%80%E5%A0%B4%20%E8%8A%A6%E5%88%A5%E5%B8%82%E4%B8%8A%E8%8A%A6%E5%88%A5%E7%94%BA6%E7%95%AA%E5%9C%B0"
   },
   {
    "name": "浜厚真野原公園サッカー場",
@@ -201,12 +260,17 @@
    "aliases": [
     "浜厚真野原公園サッカー場"
    ],
-   "address": "",
-   "access": "",
-   "parking": "",
-   "note": "",
+   "address": "勇払郡厚真町字浜厚真300番地8",
+   "access": "JR浜厚真駅から徒歩約7分。国道235号沿い。",
+   "parking": "200台",
+   "note": "2025年度の改修のあとは、天然芝2面・人工芝1面です。",
    "photo": "",
-   "map": ""
+   "map": "https://www.google.com/maps/search/?api=1&query=%E5%8C%97%E6%B5%B7%E9%81%93%20%E6%B5%9C%E5%8E%9A%E7%9C%9F%E9%87%8E%E5%8E%9F%E5%85%AC%E5%9C%92%E3%82%B5%E3%83%83%E3%82%AB%E3%83%BC%E5%A0%B4%20%E5%8B%87%E6%89%95%E9%83%A1%E5%8E%9A%E7%9C%9F%E7%94%BA%E5%AD%97%E6%B5%9C%E5%8E%9A%E7%9C%9F300%E7%95%AA%E5%9C%B08",
+   "photoPage": "https://www.town.atsuma.lg.jp/page/1038.html",
+   "sources": [
+    "https://www.town.atsuma.lg.jp/page/1038.html"
+   ],
+   "route": "https://www.google.com/maps/dir/?api=1&destination=%E5%8C%97%E6%B5%B7%E9%81%93%20%E6%B5%9C%E5%8E%9A%E7%9C%9F%E9%87%8E%E5%8E%9F%E5%85%AC%E5%9C%92%E3%82%B5%E3%83%83%E3%82%AB%E3%83%BC%E5%A0%B4%20%E5%8B%87%E6%89%95%E9%83%A1%E5%8E%9A%E7%9C%9F%E7%94%BA%E5%AD%97%E6%B5%9C%E5%8E%9A%E7%9C%9F300%E7%95%AA%E5%9C%B08"
   },
   {
    "name": "洞爺湖町月浦運動公園ポロモイスタジアム",
@@ -216,12 +280,98 @@
    "aliases": [
     "洞爺湖町月浦運動公園ポロモイスタジアム"
    ],
-   "address": "",
-   "access": "",
+   "address": "虻田郡洞爺湖町月浦44番42",
+   "access": "車かタクシーで来てください。",
    "parking": "",
-   "note": "",
+   "note": "人工芝のピッチです。",
    "photo": "",
-   "map": ""
+   "map": "https://www.google.com/maps/search/?api=1&query=%E5%8C%97%E6%B5%B7%E9%81%93%20%E6%B4%9E%E7%88%BA%E6%B9%96%E7%94%BA%E6%9C%88%E6%B5%A6%E9%81%8B%E5%8B%95%E5%85%AC%E5%9C%92%E3%83%9D%E3%83%AD%E3%83%A2%E3%82%A4%E3%82%B9%E3%82%BF%E3%82%B8%E3%82%A2%E3%83%A0%20%E8%99%BB%E7%94%B0%E9%83%A1%E6%B4%9E%E7%88%BA%E6%B9%96%E7%94%BA%E6%9C%88%E6%B5%A644%E7%95%AA42",
+   "photoPage": "https://hasetai.com/work/tsukiura-sports-park-poromoi-stadium",
+   "sources": [
+    "https://toya-colors.com/spot/月浦運動公園ポロモイスタジアム"
+   ],
+   "route": "https://www.google.com/maps/dir/?api=1&destination=%E5%8C%97%E6%B5%B7%E9%81%93%20%E6%B4%9E%E7%88%BA%E6%B9%96%E7%94%BA%E6%9C%88%E6%B5%A6%E9%81%8B%E5%8B%95%E5%85%AC%E5%9C%92%E3%83%9D%E3%83%AD%E3%83%A2%E3%82%A4%E3%82%B9%E3%82%BF%E3%82%B8%E3%82%A2%E3%83%A0%20%E8%99%BB%E7%94%B0%E9%83%A1%E6%B4%9E%E7%88%BA%E6%B9%96%E7%94%BA%E6%9C%88%E6%B5%A644%E7%95%AA42"
+  },
+  {
+   "name": "千歳青葉公園サッカー場",
+   "area": "道央",
+   "lat": 42.81,
+   "lng": 141.665,
+   "aliases": [
+    "千歳青葉公園サッカー場"
+   ],
+   "address": "千歳市泉沢（青葉公園の中）",
+   "access": "車は千歳ICを降りて最初の信号を左へ、「サッカー場」の看板で左へ。",
+   "parking": "中央広場の駐車場（163台・ほかの施設と共用）",
+   "note": "公園の入口から離れているので、地図はサッカー場を目的地にしてください。",
+   "photo": "",
+   "photoPage": "https://www.chitose-sportscamp.jp/facilities/facility-07",
+   "sources": [
+    "https://www.chitose-sportscamp.jp/facilities/facility-07"
+   ],
+   "map": "https://www.google.com/maps/search/?api=1&query=%E5%8C%97%E6%B5%B7%E9%81%93%20%E5%8D%83%E6%AD%B3%E9%9D%92%E8%91%89%E5%85%AC%E5%9C%92%E3%82%B5%E3%83%83%E3%82%AB%E3%83%BC%E5%A0%B4%20%E5%8D%83%E6%AD%B3%E5%B8%82%E6%B3%89%E6%B2%A2%EF%BC%88%E9%9D%92%E8%91%89%E5%85%AC%E5%9C%92%E3%81%AE%E4%B8%AD%EF%BC%89",
+   "route": "https://www.google.com/maps/dir/?api=1&destination=%E5%8C%97%E6%B5%B7%E9%81%93%20%E5%8D%83%E6%AD%B3%E9%9D%92%E8%91%89%E5%85%AC%E5%9C%92%E3%82%B5%E3%83%83%E3%82%AB%E3%83%BC%E5%A0%B4%20%E5%8D%83%E6%AD%B3%E5%B8%82%E6%B3%89%E6%B2%A2%EF%BC%88%E9%9D%92%E8%91%89%E5%85%AC%E5%9C%92%E3%81%AE%E4%B8%AD%EF%BC%89"
+  },
+  {
+   "name": "千歳臨空公園サッカー場",
+   "area": "道央",
+   "lat": 42.77,
+   "lng": 141.695,
+   "aliases": [
+    "千歳臨空公園サッカー場"
+   ],
+   "address": "千歳市泉沢1007番地の112",
+   "access": "車・タクシーでサッカー場の入口へ。",
+   "parking": "60台（共用）",
+   "note": "日本庭園の側ではなく、運動施設の側です。",
+   "photo": "",
+   "photoPage": "https://www.chitose-sportscamp.jp/facilities/facility-09",
+   "sources": [
+    "https://yoyacool.e-harp.jp/chitose/FacilityGuides/Index/012246/1062"
+   ],
+   "map": "https://www.google.com/maps/search/?api=1&query=%E5%8C%97%E6%B5%B7%E9%81%93%20%E5%8D%83%E6%AD%B3%E8%87%A8%E7%A9%BA%E5%85%AC%E5%9C%92%E3%82%B5%E3%83%83%E3%82%AB%E3%83%BC%E5%A0%B4%20%E5%8D%83%E6%AD%B3%E5%B8%82%E6%B3%89%E6%B2%A21007%E7%95%AA%E5%9C%B0%E3%81%AE112",
+   "route": "https://www.google.com/maps/dir/?api=1&destination=%E5%8C%97%E6%B5%B7%E9%81%93%20%E5%8D%83%E6%AD%B3%E8%87%A8%E7%A9%BA%E5%85%AC%E5%9C%92%E3%82%B5%E3%83%83%E3%82%AB%E3%83%BC%E5%A0%B4%20%E5%8D%83%E6%AD%B3%E5%B8%82%E6%B3%89%E6%B2%A21007%E7%95%AA%E5%9C%B0%E3%81%AE112"
+  },
+  {
+   "name": "TOMASEIフットボールフィールド",
+   "area": "道央",
+   "lat": 42.645,
+   "lng": 141.59,
+   "aliases": [
+    "TOMASEIフットボールフィールド",
+    "苫小牧市緑ヶ丘公園サッカー場"
+   ],
+   "address": "苫小牧市清水町3丁目3-26",
+   "access": "JR苫小牧駅から徒歩約20分。車は苫小牧中央ICから約3分。",
+   "parking": "",
+   "note": "苫小牧市緑ヶ丘公園サッカー場。人工芝・天然芝があります。",
+   "photo": "",
+   "photoPage": "https://www.city.tomakomai.hokkaido.jp/kyoiku/sportsshisetsu/shisetsu/midorigaoka_football.html",
+   "sources": [
+    "https://fd-cup.com/venue/"
+   ],
+   "map": "https://www.google.com/maps/search/?api=1&query=%E5%8C%97%E6%B5%B7%E9%81%93%20TOMASEI%E3%83%95%E3%83%83%E3%83%88%E3%83%9C%E3%83%BC%E3%83%AB%E3%83%95%E3%82%A3%E3%83%BC%E3%83%AB%E3%83%89%20%E8%8B%AB%E5%B0%8F%E7%89%A7%E5%B8%82%E6%B8%85%E6%B0%B4%E7%94%BA3%E4%B8%81%E7%9B%AE3-26",
+   "route": "https://www.google.com/maps/dir/?api=1&destination=%E5%8C%97%E6%B5%B7%E9%81%93%20TOMASEI%E3%83%95%E3%83%83%E3%83%88%E3%83%9C%E3%83%BC%E3%83%AB%E3%83%95%E3%82%A3%E3%83%BC%E3%83%AB%E3%83%89%20%E8%8B%AB%E5%B0%8F%E7%89%A7%E5%B8%82%E6%B8%85%E6%B0%B4%E7%94%BA3%E4%B8%81%E7%9B%AE3-26"
+  },
+  {
+   "name": "夕張市平和運動公園",
+   "area": "道央",
+   "lat": 43.04,
+   "lng": 141.97,
+   "aliases": [
+    "夕張市平和運動公園"
+   ],
+   "address": "夕張市平和",
+   "access": "JR新夕張駅から市内方面のバス「平和運動公園」下車 徒歩約2分。車は夕張ICから約20分。",
+   "parking": "",
+   "note": "愛称は「サングリンスポーツヴィレッジ」。球技場・多目的広場・陸上競技場で入口がちがいます。",
+   "photo": "",
+   "photoPage": "https://anto.sports.coocan.jp/s1/doou/yuubari/yuubari.html",
+   "sources": [
+    "https://yubari-sports.wixsite.com/yubari-sports/blank-1"
+   ],
+   "map": "https://www.google.com/maps/search/?api=1&query=%E5%8C%97%E6%B5%B7%E9%81%93%20%E5%A4%95%E5%BC%B5%E5%B8%82%E5%B9%B3%E5%92%8C%E9%81%8B%E5%8B%95%E5%85%AC%E5%9C%92%20%E5%A4%95%E5%BC%B5%E5%B8%82%E5%B9%B3%E5%92%8C",
+   "route": "https://www.google.com/maps/dir/?api=1&destination=%E5%8C%97%E6%B5%B7%E9%81%93%20%E5%A4%95%E5%BC%B5%E5%B8%82%E5%B9%B3%E5%92%8C%E9%81%8B%E5%8B%95%E5%85%AC%E5%9C%92%20%E5%A4%95%E5%BC%B5%E5%B8%82%E5%B9%B3%E5%92%8C"
   },
   {
    "name": "リアルター夢りんご東光スポーツ公園球技場",
@@ -231,12 +381,17 @@
    "aliases": [
     "リアルター夢りんご東光スポーツ公園球技場"
    ],
-   "address": "",
-   "access": "",
-   "parking": "",
+   "address": "旭川市東光23条8丁目",
+   "access": "旭川電気軌道バス「東光16条7丁目」「東光20条8丁目」下車 徒歩約5分。",
+   "parking": "公園の駐車場あり",
    "note": "",
    "photo": "",
-   "map": ""
+   "map": "https://www.google.com/maps/search/?api=1&query=%E5%8C%97%E6%B5%B7%E9%81%93%20%E3%83%AA%E3%82%A2%E3%83%AB%E3%82%BF%E3%83%BC%E5%A4%A2%E3%82%8A%E3%82%93%E3%81%94%E6%9D%B1%E5%85%89%E3%82%B9%E3%83%9D%E3%83%BC%E3%83%84%E5%85%AC%E5%9C%92%E7%90%83%E6%8A%80%E5%A0%B4%20%E6%97%AD%E5%B7%9D%E5%B8%82%E6%9D%B1%E5%85%8923%E6%9D%A18%E4%B8%81%E7%9B%AE",
+   "photoPage": "https://www.asahikawa-park.or.jp/webpage/park/toko-kyugi.html",
+   "sources": [
+    "https://www.asahikawa-park.or.jp/webpage/park/toko-kyugi.html"
+   ],
+   "route": "https://www.google.com/maps/dir/?api=1&destination=%E5%8C%97%E6%B5%B7%E9%81%93%20%E3%83%AA%E3%82%A2%E3%83%AB%E3%82%BF%E3%83%BC%E5%A4%A2%E3%82%8A%E3%82%93%E3%81%94%E6%9D%B1%E5%85%89%E3%82%B9%E3%83%9D%E3%83%BC%E3%83%84%E5%85%AC%E5%9C%92%E7%90%83%E6%8A%80%E5%A0%B4%20%E6%97%AD%E5%B7%9D%E5%B8%82%E6%9D%B1%E5%85%8923%E6%9D%A18%E4%B8%81%E7%9B%AE"
   },
   {
    "name": "カムイの杜公園",
@@ -246,12 +401,18 @@
    "aliases": [
     "カムイの杜公園"
    ],
-   "address": "",
-   "access": "",
-   "parking": "",
-   "note": "",
+   "address": "旭川市神居町富沢及び台場",
+   "access": "バス・電車では行けません。車かタクシーで来てください。",
+   "parking": "無料駐車場あり",
+   "note": "会場は公園の中の多目的運動広場です。",
    "photo": "",
-   "map": ""
+   "map": "https://www.google.com/maps/search/?api=1&query=%E5%8C%97%E6%B5%B7%E9%81%93%20%E3%82%AB%E3%83%A0%E3%82%A4%E3%81%AE%E6%9D%9C%E5%85%AC%E5%9C%92%20%E6%97%AD%E5%B7%9D%E5%B8%82%E7%A5%9E%E5%B1%85%E7%94%BA%E5%AF%8C%E6%B2%A2%E5%8F%8A%E3%81%B3%E5%8F%B0%E5%A0%B4",
+   "photoPage": "https://asahikawa-park.or.jp/park/afforestation/kamui.html",
+   "sources": [
+    "https://asahikawa-park.or.jp/park/afforestation/kamui.html",
+    "https://afa11.com/?page_id=190"
+   ],
+   "route": "https://www.google.com/maps/dir/?api=1&destination=%E5%8C%97%E6%B5%B7%E9%81%93%20%E3%82%AB%E3%83%A0%E3%82%A4%E3%81%AE%E6%9D%9C%E5%85%AC%E5%9C%92%20%E6%97%AD%E5%B7%9D%E5%B8%82%E7%A5%9E%E5%B1%85%E7%94%BA%E5%AF%8C%E6%B2%A2%E5%8F%8A%E3%81%B3%E5%8F%B0%E5%A0%B4"
   },
   {
    "name": "忠和公園",
@@ -261,12 +422,39 @@
    "aliases": [
     "忠和公園"
    ],
-   "address": "",
-   "access": "",
-   "parking": "",
-   "note": "",
+   "address": "旭川市神居町忠和",
+   "access": "道北バス「忠和5条2丁目」下車 徒歩約7分（約600m）。",
+   "parking": "無料駐車場あり",
+   "note": "会場は公園の中の多目的広場です。",
    "photo": "",
-   "map": ""
+   "map": "https://www.google.com/maps/search/?api=1&query=%E5%8C%97%E6%B5%B7%E9%81%93%20%E5%BF%A0%E5%92%8C%E5%85%AC%E5%9C%92%20%E6%97%AD%E5%B7%9D%E5%B8%82%E7%A5%9E%E5%B1%85%E7%94%BA%E5%BF%A0%E5%92%8C",
+   "photoPage": "https://www.asahikawa-park.or.jp/park/synthesis/tyuwa.html",
+   "sources": [
+    "https://asahikawa.manabi365.net/G0000073/aboutus.html",
+    "https://afa11.com/?page_id=190"
+   ],
+   "route": "https://www.google.com/maps/dir/?api=1&destination=%E5%8C%97%E6%B5%B7%E9%81%93%20%E5%BF%A0%E5%92%8C%E5%85%AC%E5%9C%92%20%E6%97%AD%E5%B7%9D%E5%B8%82%E7%A5%9E%E5%B1%85%E7%94%BA%E5%BF%A0%E5%92%8C"
+  },
+  {
+   "name": "花咲スポーツ公園",
+   "area": "道北",
+   "lat": 43.79,
+   "lng": 142.355,
+   "aliases": [
+    "花咲スポーツ公園",
+    "花咲スポーツ公園球技場"
+   ],
+   "address": "旭川市花咲町3丁目",
+   "access": "道北バス・旭川電気軌道バス「北高前」下車。",
+   "parking": "無料駐車場あり",
+   "note": "会場は公園の中の球技場です。",
+   "photo": "",
+   "photoPage": "https://asahikawa-park.or.jp/park/sports/hanasaki.html",
+   "sources": [
+    "https://www.city.asahikawa.hokkaido.jp/facility00/facility03/d60888.html"
+   ],
+   "map": "https://www.google.com/maps/search/?api=1&query=%E5%8C%97%E6%B5%B7%E9%81%93%20%E8%8A%B1%E5%92%B2%E3%82%B9%E3%83%9D%E3%83%BC%E3%83%84%E5%85%AC%E5%9C%92%20%E6%97%AD%E5%B7%9D%E5%B8%82%E8%8A%B1%E5%92%B2%E7%94%BA3%E4%B8%81%E7%9B%AE",
+   "route": "https://www.google.com/maps/dir/?api=1&destination=%E5%8C%97%E6%B5%B7%E9%81%93%20%E8%8A%B1%E5%92%B2%E3%82%B9%E3%83%9D%E3%83%BC%E3%83%84%E5%85%AC%E5%9C%92%20%E6%97%AD%E5%B7%9D%E5%B8%82%E8%8A%B1%E5%92%B2%E7%94%BA3%E4%B8%81%E7%9B%AE"
   },
   {
    "name": "サホロリバーサイド運動広場",
@@ -276,12 +464,17 @@
    "aliases": [
     "サホロリバーサイド運動広場"
    ],
-   "address": "",
-   "access": "",
+   "address": "上川郡新得町上佐幌西3線16",
+   "access": "JR新得駅から徒歩約25分（目安）。車は国道38号から。",
    "parking": "",
-   "note": "",
+   "note": "天然芝の広場です。人工芝の陸上競技場（ピラサ）とは別です。",
    "photo": "",
-   "map": ""
+   "map": "https://www.google.com/maps/search/?api=1&query=%E5%8C%97%E6%B5%B7%E9%81%93%20%E3%82%B5%E3%83%9B%E3%83%AD%E3%83%AA%E3%83%90%E3%83%BC%E3%82%B5%E3%82%A4%E3%83%89%E9%81%8B%E5%8B%95%E5%BA%83%E5%A0%B4%20%E4%B8%8A%E5%B7%9D%E9%83%A1%E6%96%B0%E5%BE%97%E7%94%BA%E4%B8%8A%E4%BD%90%E5%B9%8C%E8%A5%BF3%E7%B7%9A16",
+   "photoPage": "https://www.shintoku-town.jp/bunka-sports/sports/sports_shisetsu/Sahoro_Riverside/",
+   "sources": [
+    "https://www.shintoku-town.jp/bunka-sports/sports/sports_shisetsu/Sahoro_Riverside/"
+   ],
+   "route": "https://www.google.com/maps/dir/?api=1&destination=%E5%8C%97%E6%B5%B7%E9%81%93%20%E3%82%B5%E3%83%9B%E3%83%AD%E3%83%AA%E3%83%90%E3%83%BC%E3%82%B5%E3%82%A4%E3%83%89%E9%81%8B%E5%8B%95%E5%BA%83%E5%A0%B4%20%E4%B8%8A%E5%B7%9D%E9%83%A1%E6%96%B0%E5%BE%97%E7%94%BA%E4%B8%8A%E4%BD%90%E5%B9%8C%E8%A5%BF3%E7%B7%9A16"
   },
   {
    "name": "鶴居村多目的運動広場",
@@ -291,12 +484,17 @@
    "aliases": [
     "鶴居村多目的運動広場"
    ],
-   "address": "",
-   "access": "",
+   "address": "阿寒郡鶴居村鶴居東6丁目25番地",
+   "access": "釧路市方面から車で約30分（目安）。",
    "parking": "",
-   "note": "",
+   "note": "鶴居北1丁目の「鶴居運動広場」（遊具の広場）とは別の場所です。",
    "photo": "",
-   "map": ""
+   "map": "https://www.google.com/maps/search/?api=1&query=%E5%8C%97%E6%B5%B7%E9%81%93%20%E9%B6%B4%E5%B1%85%E6%9D%91%E5%A4%9A%E7%9B%AE%E7%9A%84%E9%81%8B%E5%8B%95%E5%BA%83%E5%A0%B4%20%E9%98%BF%E5%AF%92%E9%83%A1%E9%B6%B4%E5%B1%85%E6%9D%91%E9%B6%B4%E5%B1%85%E6%9D%B16%E4%B8%81%E7%9B%AE25%E7%95%AA%E5%9C%B0",
+   "photoPage": "https://anto.sports.coocan.jp/s1/doto/turui/turui.html",
+   "sources": [
+    "https://www.vill.tsurui.lg.jp/soshikikarasagasu/kyoikuiinkai/kyoikuiinkai_shakaikyoikuka/shakaikyoikugakari/1/1192.html"
+   ],
+   "route": "https://www.google.com/maps/dir/?api=1&destination=%E5%8C%97%E6%B5%B7%E9%81%93%20%E9%B6%B4%E5%B1%85%E6%9D%91%E5%A4%9A%E7%9B%AE%E7%9A%84%E9%81%8B%E5%8B%95%E5%BA%83%E5%A0%B4%20%E9%98%BF%E5%AF%92%E9%83%A1%E9%B6%B4%E5%B1%85%E6%9D%91%E9%B6%B4%E5%B1%85%E6%9D%B16%E4%B8%81%E7%9B%AE25%E7%95%AA%E5%9C%B0"
   },
   {
    "name": "阿寒町多目的広場",
@@ -306,12 +504,38 @@
    "aliases": [
     "阿寒町多目的広場"
    ],
-   "address": "",
-   "access": "",
+   "address": "釧路市阿寒町中央1-28",
+   "access": "釧路駅・釧路空港から阿寒町方面へ、車か阿寒バスで。",
    "parking": "",
-   "note": "",
+   "note": "阿寒町総合運動公園の中にあります。",
    "photo": "",
-   "map": ""
+   "map": "https://www.google.com/maps/search/?api=1&query=%E5%8C%97%E6%B5%B7%E9%81%93%20%E9%98%BF%E5%AF%92%E7%94%BA%E5%A4%9A%E7%9B%AE%E7%9A%84%E5%BA%83%E5%A0%B4%20%E9%87%A7%E8%B7%AF%E5%B8%82%E9%98%BF%E5%AF%92%E7%94%BA%E4%B8%AD%E5%A4%AE1-28",
+   "photoPage": "https://www.city.kushiro.lg.jp/shisei/shisetsu/1007750/1007909/1007174.html",
+   "sources": [
+    "https://www.city.kushiro.lg.jp/shisei/shisetsu/1007750/1007909/1007174.html",
+    "https://www.city.kushiro.lg.jp/bunkasports/sports/1005783/1007176.html"
+   ],
+   "route": "https://www.google.com/maps/dir/?api=1&destination=%E5%8C%97%E6%B5%B7%E9%81%93%20%E9%98%BF%E5%AF%92%E7%94%BA%E5%A4%9A%E7%9B%AE%E7%9A%84%E5%BA%83%E5%A0%B4%20%E9%87%A7%E8%B7%AF%E5%B8%82%E9%98%BF%E5%AF%92%E7%94%BA%E4%B8%AD%E5%A4%AE1-28"
+  },
+  {
+   "name": "網走スポーツ・トレーニングフィールド",
+   "area": "道東",
+   "lat": 43.96,
+   "lng": 144.215,
+   "aliases": [
+    "網走スポーツ・トレーニングフィールド"
+   ],
+   "address": "網走市字呼人705-2",
+   "access": "JR呼人駅（バス「呼人駅前」）から徒歩約20分。車は網走市内から約10分、女満別空港から約20分。",
+   "parking": "",
+   "note": "サッカー場がいくつかある施設です。使うピッチは大会の案内で確かめてください。",
+   "photo": "",
+   "photoPage": "https://www.city.abashiri.hokkaido.jp/soshiki/28/1265.html",
+   "sources": [
+    "https://www.city.abashiri.hokkaido.jp/soshiki/28/1265.html"
+   ],
+   "map": "https://www.google.com/maps/search/?api=1&query=%E5%8C%97%E6%B5%B7%E9%81%93%20%E7%B6%B2%E8%B5%B0%E3%82%B9%E3%83%9D%E3%83%BC%E3%83%84%E3%83%BB%E3%83%88%E3%83%AC%E3%83%BC%E3%83%8B%E3%83%B3%E3%82%B0%E3%83%95%E3%82%A3%E3%83%BC%E3%83%AB%E3%83%89%20%E7%B6%B2%E8%B5%B0%E5%B8%82%E5%AD%97%E5%91%BC%E4%BA%BA705-2",
+   "route": "https://www.google.com/maps/dir/?api=1&destination=%E5%8C%97%E6%B5%B7%E9%81%93%20%E7%B6%B2%E8%B5%B0%E3%82%B9%E3%83%9D%E3%83%BC%E3%83%84%E3%83%BB%E3%83%88%E3%83%AC%E3%83%BC%E3%83%8B%E3%83%B3%E3%82%B0%E3%83%95%E3%82%A3%E3%83%BC%E3%83%AB%E3%83%89%20%E7%B6%B2%E8%B5%B0%E5%B8%82%E5%AD%97%E5%91%BC%E4%BA%BA705-2"
   },
   {
    "name": "函館フットボールパーク",
@@ -321,43 +545,41 @@
    "aliases": [
     "函館フットボールパーク"
    ],
-   "address": "",
-   "access": "",
+   "address": "函館市日吉4丁目19番1号",
+   "access": "バス「函館フットボールパーク前」下車すぐ、または「日吉4丁目団地」下車 徒歩約5分。函館駅から車で約20分。",
    "parking": "",
-   "note": "",
+   "note": "今の愛称は「うみしんフットボールパーク」です。",
    "photo": "",
-   "map": ""
+   "map": "https://www.google.com/maps/search/?api=1&query=%E5%8C%97%E6%B5%B7%E9%81%93%20%E5%87%BD%E9%A4%A8%E3%83%95%E3%83%83%E3%83%88%E3%83%9C%E3%83%BC%E3%83%AB%E3%83%91%E3%83%BC%E3%82%AF%20%E5%87%BD%E9%A4%A8%E5%B8%82%E6%97%A5%E5%90%894%E4%B8%81%E7%9B%AE19%E7%95%AA1%E5%8F%B7",
+   "photoPage": "https://www.city.hakodate.hokkaido.jp/docs/2014012000093/",
+   "sources": [
+    "https://www.city.hakodate.hokkaido.jp/docs/2014012000093/",
+    "https://hokkaido-football-camp.jp/ground/"
+   ],
+   "route": "https://www.google.com/maps/dir/?api=1&destination=%E5%8C%97%E6%B5%B7%E9%81%93%20%E5%87%BD%E9%A4%A8%E3%83%95%E3%83%83%E3%83%88%E3%83%9C%E3%83%BC%E3%83%AB%E3%83%91%E3%83%BC%E3%82%AF%20%E5%87%BD%E9%A4%A8%E5%B8%82%E6%97%A5%E5%90%894%E4%B8%81%E7%9B%AE19%E7%95%AA1%E5%8F%B7"
   },
   {
-   "name": "北斗市運動公園",
+   "name": "北斗市運動公園（フットボール場）",
    "area": "道南",
    "lat": 41.85,
    "lng": 140.65,
    "aliases": [
+    "北斗市フットボール 場",
+    "北斗市フットボール場",
     "北斗市運動公園"
    ],
-   "address": "",
-   "access": "",
+   "address": "北斗市添山458番地",
+   "access": "JR上磯駅から徒歩約10分。車は新函館北斗駅から約20分、函館空港から約30分。",
    "parking": "",
-   "note": "",
+   "note": "会場は公園の中のフットボール場です（住所はフットボール場・クラブハウス）。",
    "photo": "",
-   "map": ""
-  },
-  {
-   "name": "北斗市フットボール場",
-   "area": "道南",
-   "lat": 41.87,
-   "lng": 140.64,
-   "aliases": [
-    "北斗市フットボール 場",
-    "北斗市フットボール場"
+   "map": "https://www.google.com/maps/search/?api=1&query=%E5%8C%97%E6%B5%B7%E9%81%93%20%E5%8C%97%E6%96%97%E5%B8%82%E9%81%8B%E5%8B%95%E5%85%AC%E5%9C%92%20%E5%8C%97%E6%96%97%E5%B8%82%E6%B7%BB%E5%B1%B1458%E7%95%AA%E5%9C%B0",
+   "photoPage": "https://www.city.hokuto.hokkaido.jp/docs/football.html",
+   "sources": [
+    "https://www.city.hokuto.hokkaido.jp/institution/shisetsu/hootball/",
+    "https://hokkaido-football-camp.jp/ground/"
    ],
-   "address": "",
-   "access": "",
-   "parking": "",
-   "note": "",
-   "photo": "",
-   "map": ""
+   "route": "https://www.google.com/maps/dir/?api=1&destination=%E5%8C%97%E6%B5%B7%E9%81%93%20%E5%8C%97%E6%96%97%E5%B8%82%E9%81%8B%E5%8B%95%E5%85%AC%E5%9C%92%20%E5%8C%97%E6%96%97%E5%B8%82%E6%B7%BB%E5%B1%B1458%E7%95%AA%E5%9C%B0"
   }
  ]
 }

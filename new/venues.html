@@ -57,6 +57,10 @@ button{font:inherit;color:inherit;cursor:pointer}
 .card{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden}
 .empty{padding:22px;color:var(--muted);font-size:13px;margin:0;line-height:1.8}
 .note{font-size:12px;color:var(--muted);margin:9px 2px 0;line-height:1.7}
+.vph .phlink{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;width:100%;height:100%;color:#fff;font-weight:900;text-decoration:none}
+.vph .phlink small{font-weight:500;font-size:11px;opacity:.8}.vph .phlink:hover{background:#ffffff10}
+.vbtns{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto;padding-top:10px}.vbody .vbtns a.mapbtn{margin-top:0}
+.vsrc{margin-top:8px;font-size:11px;color:var(--muted)}.vsrc a{color:inherit}
 .chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin-bottom:12px}
 .chips::-webkit-scrollbar{display:none}
 .chips button,.chips a{flex:none;border:1px solid var(--line);background:#fff;padding:7px 14px;border-radius:30px;font-size:12.5px;font-weight:700;color:var(--muted);white-space:nowrap}
@@ -290,9 +294,15 @@ function mapSvg(vs){
 function card(v){
   const ph=photoUrl(v.photo),map=v.map||('https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(v.name+' 北海道'));
   const rows=[['住所',v.address],['アクセス',v.access],['駐車場',v.parking],['メモ',v.note]].filter(r=>String(r[1]||'').trim());
-  return '<article class="vcard" id="'+slug(v)+'"><div class="vph">'+(ph?'<img src="'+esc(ph)+'" alt="'+esc(v.name)+'の写真" loading="lazy" onerror="this.remove()">':'写真は準備中です')+'</div>'+
+  const ext=u=>/^https:\/\//.test(String(u||''));
+  const pp=ext(v.photoPage)?v.photoPage:'',src=(v.sources||[]).filter(ext);
+  // 写真：連盟の写真があれば載せる。なければ、写真の載っている施設などのページへのリンク（ほかのサイトの写真は、このページには載せない）
+  const vph=ph?'<img src="'+esc(ph)+'" alt="'+esc(v.name)+'の写真" loading="lazy" onerror="this.remove()">':
+    (pp?'<a class="phlink" href="'+esc(pp)+'" target="_blank" rel="noopener">写真を見る<small>（掲載元のページ）↗</small></a>':'写真は準備中です');
+  return '<article class="vcard" id="'+slug(v)+'"><div class="vph">'+vph+'</div>'+
     '<div class="vbody"><h3>'+esc(v.name)+'</h3>'+(rows.length?'<dl>'+rows.map(r=>'<dt>'+r[0]+'</dt><dd>'+esc(r[1])+'</dd>').join('')+'</dl>':'<div class="pend">住所・アクセスは準備中です</div>')+
-    '<a class="mapbtn" href="'+esc(map)+'" target="_blank" rel="noopener">地図を開く ↗</a></div></article>';
+    '<div class="vbtns"><a class="mapbtn" href="'+esc(map)+'" target="_blank" rel="noopener">地図を開く ↗</a>'+(ext(v.route)?'<a class="mapbtn" href="'+esc(v.route)+'" target="_blank" rel="noopener">行き方を調べる ↗</a>':'')+'</div>'+
+    (src.length?'<div class="vsrc">出典：'+src.map((u,i)=>'<a href="'+esc(u)+'" target="_blank" rel="noopener">資料'+(i+1)+'</a>').join('　')+'</div>':'')+'</div></article>';
 }
 let VD=null,TAB='all';
 /* 会場一覧：タブ（すべて・札幌・道央・道北・道東・道南）で地区を分けて見る */
