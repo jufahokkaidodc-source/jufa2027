@@ -667,7 +667,7 @@ function rCards(){
   const body=tables.filter(t=>!S.cteam||t.team.id===S.cteam).map(t=>{
     const cols=t.matches;
     return '<div class="sh"><h2 style="display:flex;align-items:center;gap:8px">'+crest(t.team,'xs')+esc(t.team.name||t.team.short)+'</h2></div><div class="card scroll"><table class="ct">'+
-      '<tr><th class="l">No.</th><th class="l" style="left:auto;position:static">選手</th><th>警告</th><th>退場</th>'+cols.map(c=>'<th><span class="rd">'+esc(rdShort(c.round))+'</span>'+esc(md(c.date))+'<span class="opp">'+(c.home?'':'@')+esc(c.opp)+'</span></th>').join('')+'</tr>'+
+      '<tr><th class="l">No.</th><th class="l" style="left:auto;position:static">選手</th><th>警告</th><th>退場</th>'+cols.map(c=>'<th><span class="rd">'+esc(rdShort(c.round))+'</span>'+esc(md(c.date))+'<span class="opp">'+esc(c.opp)+'</span></th>').join('')+'</tr>'+
       t.players.map(p=>'<tr><td class="l">'+esc(p.no)+'</td><td style="text-align:left">'+playerLink(t.team,p.name)+'</td><td>'+(p.c||'')+'</td><td>'+(p.s||'')+'</td>'+cols.map(c=>{
         const v=p.cells[c.matchId]||[];
         if(v.includes('停止')){const done=(p.suspended||[]).some(x=>x.matchId===c.matchId&&x.done);return '<td class="stop'+(done?' done':'')+'">停止</td>';}
