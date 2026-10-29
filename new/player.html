@@ -275,9 +275,12 @@ table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums}
 .pt span{display:block;font-size:12px;color:var(--muted)}.pt b{font-family:var(--num);font-size:28px}
 .plog .ev{white-space:nowrap}
 .pst td,.pst th{white-space:nowrap}
-.pst td.l:first-child{white-space:normal;min-width:120px}
-@media(max-width:560px){.pst .tn .tx{display:none}.pst td,.pst th{padding-left:6px;padding-right:6px}}
+.pst td.l:first-child{white-space:normal;min-width:96px}
+@media(max-width:560px){.pst .tn .tx{display:none}.pst td,.pst th{padding-left:5px;padding-right:5px}.pst td.l:first-child{min-width:0;white-space:nowrap;font-size:13px}.pst td.b{font-size:14px}.pst .pc,.pst .tm{display:none}}
 .pst td.b{font-weight:700;font-size:15px}
+.pst .gs{border-left:1px solid var(--line)}
+.pst tr.gh th{text-align:center;font-size:11px;letter-spacing:.1em;padding-top:8px;padding-bottom:2px;border-bottom:0}
+.pst tr.gh th.l{vertical-align:bottom;text-align:left}
 .pst tr.sum td{background:var(--card2);font-weight:900;border-top:2px solid var(--red)}
 .pst .tn{display:inline-flex;align-items:center;gap:6px}
 .plog .yc,.plog .rc{display:inline-block;width:9px;height:12px;border-radius:2px;vertical-align:-1px;background:#f5c400}.plog .rc{background:#e60012}
@@ -363,6 +366,7 @@ const has=v=>v!=null&&String(v).trim()!=='';
 const name=t=>typeof t==='string'?t:(t?.short||t?.name||'未定');
 const tkey=t=>typeof t==='string'?t:(t?.id||t?.name||t?.short||'');
 const shortComp=n=>String(n||'').replace(/^\d{4}年度\s*/,'').replace(/第\d+回\s*/,'').replace(/^北海道学生サッカー/,'').replace(/^北海道/,'').trim()||n;
+const tightComp=n=>{const s=shortComp(n),a=s.split(/[\s　]+/);return s.length>10&&a[0].length>=3?a[0]:s}; // 表の中では「総理大臣杯」のように短く
 const W='日月火水木金土';
 const jd=ymd=>{const m=String(ymd||'').match(/(\d{4})-(\d{2})-(\d{2})/);if(!m)return ymd||'日程未定';const d=new Date(+m[1],+m[2]-1,+m[3]);return `${+m[2]}月${+m[3]}日（${W[d.getDay()]}）`;};
 const sd=ymd=>{const m=String(ymd||'').match(/(\d{4})-(\d{2})-(\d{2})/);if(!m)return '';const d=new Date(+m[1],+m[2]-1,+m[3]);return `${+m[2]}/${+m[3]}(${W[d.getDay()]})`;};
@@ -495,11 +499,13 @@ function render(me,rows,prof){
     '<div class="pmeta">'+[prof&&prof.no?'背番号 '+esc(prof.no):'',prof&&prof.pos?esc(prof.pos):'',prof&&prof.grade?esc(prof.grade)+'年':'',prof&&prof.school?esc(prof.school):''].filter(Boolean).map(x=>'<span>'+x+'</span>').join('')+'</div></div></div>';
   // 大会ごとの成績＋全公式戦の合計（Jリーグの選手ページと同じ形）
   const hasMin=rows.some(r=>r.p.min);
-  const cols=[['出場','apps'],['得点','goals']].concat(hasApps&&(tot('starts')||hasMin)?[['先発','starts']]:[],hasMin?[['時間','min']]:[],[['アシスト','assists'],['警告','yc'],['退場','rc']]);
+  // 3つのまとまり：出場（試合・先発・時間）／ゴール（得点・アシスト）／カード（警告・退場）
+  const grp=[['出場',[['試合','apps']].concat(hasMin?[['時間','min']]:[])],['ゴール',[['得点','goals'],['アシスト','assists']]],['カード',[['警告','yc'],['退場','rc']]]];
+  const cols=[];grp.forEach(g=>g[1].forEach((c,i)=>cols.push([c[0],c[1],i===0?' gs':''])));
   const cell=(r,k)=>{const v=r.p[k];if(k==='min')return v?v+'分':'–';if((k==='apps'||k==='starts')&&v==null)return '–';return v||0;};
-  const byComp=rows.length?'<div class="sh"><h2>今シーズンの成績</h2></div><div class="card scroll"><table class="tbl pst"><tr><th class="l">大会</th><th class="l">チーム</th>'+cols.map(c=>'<th>'+c[0]+'</th>').join('')+'</tr>'+
-    rows.map(r=>'<tr><td class="l"><a href="./results.html?comp='+encodeURIComponent(r.comp.id)+'">'+esc(shortComp(r.comp.name))+'</a></td><td class="l"><span class="tn">'+crest(r.team,'xs')+'<span class="tx">'+esc(r.team.short||r.team.name)+'</span></span></td>'+cols.map(c=>'<td'+(c[1]==='apps'||c[1]==='goals'?' class="b"':'')+'>'+cell(r,c[1])+'</td>').join('')+'</tr>').join('')+
-    '<tr class="sum"><td class="l" colspan="2">全公式戦 合計</td>'+cols.map(c=>'<td class="b">'+(c[1]==='min'?tot('min')+'分':tot(c[1]))+'</td>').join('')+'</tr></table></div>':'';
+  const byComp=rows.length?'<div class="sh"><h2>今シーズンの成績</h2></div><div class="card scroll"><table class="tbl pst"><tr class="gh"><th class="l" rowspan="2">大会</th><th class="l tm" rowspan="2">チーム</th>'+grp.map(g=>'<th class="gs" colspan="'+g[1].length+'">'+g[0]+'</th>').join('')+'</tr><tr>'+cols.map(c=>'<th class="'+c[2]+'">'+c[0]+'</th>').join('')+'</tr>'+
+    rows.map(r=>'<tr><td class="l"><a href="./results.html?comp='+encodeURIComponent(r.comp.id)+'" title="'+esc(r.comp.name)+'">'+esc(tightComp(r.comp.name))+'</a></td><td class="l tm"><span class="tn">'+crest(r.team,'xs')+'<span class="tx">'+esc(r.team.short||r.team.name)+'</span></span></td>'+cols.map(c=>'<td class="'+(c[1]==='apps'||c[1]==='goals'?'b':'')+c[2]+'">'+cell(r,c[1])+'</td>').join('')+'</tr>').join('')+
+    '<tr class="sum"><td class="l"><span class="pc">全公式戦 </span>合計</td><td class="tm"></td>'+cols.map(c=>'<td class="b'+c[2]+'">'+(c[1]==='min'?tot('min')+'分':tot(c[1]))+'</td>').join('')+'</tr></table></div>':'';
   const logs=rows.filter(r=>r.p.log&&Object.keys(r.p.log).length).map(r=>{
     const g=new Map(r.games.map(x=>[x.id,x]));
     const ids=Object.keys(r.p.log).sort((a,b)=>String((g.get(a)||{}).date||'').localeCompare(String((g.get(b)||{}).date||'')));
