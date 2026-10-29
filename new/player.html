@@ -518,7 +518,7 @@ function render(me,rows,prof){
         const side=d.match&&d.match.home&&(d.match.home.univ||d.match.home.name)===(r.team.univ||r.team.name)?'home':'away';
         const ev=[];
         (d.goals||[]).filter(x=>x.side===side&&nrm(x.scorer)===nrm(P.name)).forEach(x=>ev.push('⚽'+(x.minute?' '+x.minute+"'":'')));
-        (d.goals||[]).filter(x=>x.side===side&&nrm(x.assist)===nrm(P.name)).forEach(x=>ev.push('A'+(x.minute?' '+x.minute+"'":'')));
+        (d.goals||[]).filter(x=>x.side===side&&nrm(x.assist)===nrm(P.name)).forEach(x=>ev.push('👟'+(x.minute?' '+x.minute+"'":'')));
         (d.cards||[]).filter(x=>x.side===side&&nrm(x.name)===nrm(P.name)).forEach(x=>ev.push('<span class="'+(x.kind==='C'?'yc':'rc')+'"></span>'+(x.minute?' '+x.minute+"'":'')));
         tr.querySelector('.ev').innerHTML=ev.join('　');
       });

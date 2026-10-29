@@ -772,7 +772,7 @@ function rMatch(){
     halves+(lv?'<div><span class="lvtag">'+esc(JUFA_LIVE.label(lv))+'</span></div>':'')+'<div class="meta">'+esc(jd(m.date))+(m.kickoff?' '+esc(m.kickoff):'')+'　'+esc((d.info&&d.info.venue)||m.venue||'')+'</div></div>';
   const lvGoals=lv&&!(d.goals||[]).length?lv.goals.map((g,i)=>({s:i,side:g.side,min:g.minute,html:'<span class="goal">⚽ '+esc(g.name)+'</span>'+(g.pk?' <small class="note">PK</small>':'')})):[];
   const evs=[].concat(lvGoals,
-    (d.goals||[]).map(g=>({s:g.sort,side:g.side,min:g.minute,html:'<span class="goal">⚽ '+esc(g.scorer)+'</span>'+(g.type&&!/^(シュート|通常)$/.test(g.type)&&!g.og?' <small class="note">'+esc(g.type)+'</small>':'')+(g.assist?'<br><small style="color:var(--muted)">アシスト '+esc(g.assist)+'</small>':'')})),
+    (d.goals||[]).map(g=>({s:g.sort,side:g.side,min:g.minute,html:'<span class="goal">⚽ '+esc(g.scorer)+'</span>'+(g.type&&!/^(シュート|通常)$/.test(g.type)&&!g.og?' <small class="note">'+esc(g.type)+'</small>':'')+(g.assist?'<br><small style="color:var(--muted)">👟 '+esc(g.assist)+'</small>':'')})),
     (d.cards||[]).map(c=>({s:c.sort,side:c.side,min:c.minute,html:'<span class="ico '+(c.kind==='C'?'c':'s')+'"></span>'+esc(c.name)+' <small style="color:var(--muted)">'+esc(c.mark)+'</small>'})),
     (d.subs||[]).map(x=>({s:x.sort,side:x.side,min:x.minute,html:'<span style="color:#4caf50">▲ '+esc(x.in)+'</span><br><span style="color:var(--muted)">▼ '+esc(x.out)+'</span>'}))
   ).sort((a,b)=>a.s-b.s);
@@ -788,8 +788,9 @@ function rMatch(){
     return rows.length?'<div class="sh"><h2>スタッツ</h2></div><div class="card mst"><div class="hd"><span>'+crest(H,'xs')+esc(H.short)+'</span><span>'+esc(A.short)+crest(A,'xs')+'</span></div>'+rows.join('')+'</div>':'';
   })():'';
   const lu=d.lineups?'<div class="sh"><h2>メンバー</h2></div><div class="lu">'+['home','away'].map(sdn=>{
-    const L=d.lineups[sdn],T=sdn==='home'?H:A;
-    const row=p=>'<tr><td class="no">'+esc(p.no)+'</td><td class="ps">'+esc(p.pos)+'</td><td>'+playerLink(T,p.name)+(p.goals?' <span class="ev">⚽'+(p.goals>1?'×'+p.goals:'')+'</span>':'')+(p.cards||[]).map(c=>'<span class="ico '+(c==='C'?'c':'s')+'"></span>').join('')+(p.out?' <span class="ev">▼'+esc(p.out)+"'</span>":'')+(p.in?' <span class="ev" style="color:#4caf50">▲'+esc(p.in)+"'</span>":'')+'</td></tr>';
+    const L=d.lineups[sdn],T=sdn==='home'?H:A,nm=s=>String(s||'').replace(/[\s　]/g,'');
+    const ast=n=>(d.goals||[]).filter(g=>g.side===sdn&&g.assist&&nm(g.assist)===nm(n)).length; // ゴール⚽・アシスト👟
+    const row=p=>'<tr><td class="no">'+esc(p.no)+'</td><td class="ps">'+esc(p.pos)+'</td><td>'+playerLink(T,p.name)+(p.goals?' <span class="ev">⚽'+(p.goals>1?'×'+p.goals:'')+'</span>':'')+(ast(p.name)?' <span class="ev">👟'+(ast(p.name)>1?'×'+ast(p.name):'')+'</span>':'')+(p.cards||[]).map(c=>'<span class="ico '+(c==='C'?'c':'s')+'"></span>').join('')+(p.out?' <span class="ev">▼'+esc(p.out)+"'</span>":'')+(p.in?' <span class="ev" style="color:#4caf50">▲'+esc(p.in)+"'</span>":'')+'</td></tr>';
     return '<div class="card"><h3>'+crest(T,'xs')+esc(T.short)+'</h3><h4>先発</h4><table>'+L.starters.map(row).join('')+'</table>'+(L.bench.length?'<h4>控え</h4><table>'+L.bench.map(row).join('')+'</table>':'')+'</div>';
   }).join('')+'</div>':'';
   const pk=d.pk&&d.pk.length?'<div class="sh"><h2>PK戦</h2></div><div class="lu">'+['home','away'].map(sdn=>'<div class="card"><h3>'+esc((sdn==='home'?H:A).short)+'</h3><table>'+d.pk.filter(k=>k.side===sdn).map(k=>'<tr><td class="no">'+k.order+'</td><td>'+esc(k.name)+'</td><td>'+(/成功|○/.test(k.result)?'○':'×')+'</td></tr>').join('')+'</table></div>').join('')+'</div>':'';
