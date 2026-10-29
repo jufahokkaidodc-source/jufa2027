@@ -385,7 +385,8 @@ function emblemUrl(e){
   if(/^[^\/\\?#]+\.(png|jpe?g|webp|svg|gif)$/i.test(e))return './emblems/'+encodeURIComponent(e);
   return '';
 }
-const profOf=t=>t&&(PROF.get(tkey(t))||PROF.get(t.univ||''))||null;
+const MAT=new Map(); // 試合ID → 試合（対戦相手のエンブレム用）
+const profOf=t=>{if(!t)return null;const a=PROF.get(tkey(t));if(a&&a.emblem)return a;const b=PROF.get(t.univ||'');return b&&b.emblem?Object.assign({},a||{},{emblem:b.emblem,emblemDark:b.emblemDark}):(a||b||null)};
 function teamColor(t){const p=profOf(t);if(p&&/^#[0-9a-f]{3,8}$/i.test(p.color||''))return p.color;let h=0;for(const ch of String(tkey(t)))h=(h*31+ch.charCodeAt(0))>>>0;return PALETTE[h%PALETTE.length]}
 function crestInk(c){const m=/^#?([0-9a-f]{6})$/i.exec(String(c||''));if(!m)return '#fff';const n=parseInt(m[1],16),L=[n>>16&255,n>>8&255,n&255].map(v=>{v/=255;return v<=.03928?v/12.92:Math.pow((v+.055)/1.055,2.4)});return .2126*L[0]+.7152*L[1]+.0722*L[2]>.45?'#222':'#fff'}
 function crestBase(t,size){
@@ -416,6 +417,11 @@ function makeBadges(teams){
     if(out.some(x=>!x)||new Set(out).size<out.length)out=ts.map((_,i)=>String.fromCharCode(65+i));
     ts.forEach((t,i)=>BADGE.set(tkey(t),out[i]));
   }
+}
+/* 試合ごとの相手：エンブレム＋名前（アウェイは@） */
+function oppCell(id,x,me){
+  const m=MAT.get(id),o=m?(m.home&&m.home.id===me.id?m.away:m.home):null;
+  return '<span class="tn">'+(o?crest(o,'xs'):'')+'<span class="tx">'+(x.h?'':'@')+esc(x.opp||(o&&(o.short||o.name))||'')+'</span></span>';
 }
 function crest(t,size){const h=crestBase(t,size),b=t&&BADGE.get(tkey(t));return b?h.replace(/<\/span>$/,'<i class="bdg">'+esc(b)+'</i></span>'):h}
 const teamUrl=t=>'./team.html?comp='+encodeURIComponent(S.comp)+'&team='+encodeURIComponent(tkey(t));
@@ -459,14 +465,20 @@ async function init(){
       }
     }
     // 名鑑（掲載してよい選手だけ。写真は本人の同意があるものだけが入っている）
-    let prof=null;
+    // エンブレム・色は全チームの分を読む（対戦相手にも出す。エンブレムがない大会のチームは、同じ大学のエンブレムを使う）
+    let prof=null;const seenC=new Set();
     for(const r of rows.concat(P.comp?[{comp:{id:P.comp}}]:[])){
+      if(seenC.has(r.comp.id))continue;seenC.add(r.comp.id);
       try{const ro=await getJSON(encodeURIComponent(r.comp.id)+'-roster.json');
-        for(const t of ro.teams||[]){if(!sameU(t.team))continue;if(t.profile&&!PROF.has(tkey(t.team)))PROF.set(tkey(t.team),t.profile);
+        for(const t of ro.teams||[]){
+          if(t.profile&&!PROF.has(tkey(t.team)))PROF.set(tkey(t.team),t.profile);
+          const u=t.team&&(t.team.univ||t.team.name);
+          if(u&&t.profile&&t.profile.emblem&&!(PROF.get(u)||{}).emblem)PROF.set(u,t.profile);
+          if(!sameU(t.team))continue;
           const f=(t.players||[]).find(p=>nrm(p.name)===nrm(P.name));if(f&&!prof)prof=f;}
       }catch(e){}
-      if(prof)break;
     }
+    for(const x of all.filter(Boolean))for(const m of x.d.matches||[])MAT.set(m.matchId,m);
     render(me,rows,prof);
   }catch(e){showErr(e)}
 }
@@ -493,7 +505,7 @@ function render(me,rows,prof){
     const ids=Object.keys(r.p.log).sort((a,b)=>String((g.get(a)||{}).date||'').localeCompare(String((g.get(b)||{}).date||'')));
     return '<div class="sh"><h2>試合ごと<small>'+esc(shortComp(r.comp.name))+'</small></h2></div><div class="card scroll"><table class="tbl plog" data-comp="'+esc(r.comp.id)+'"><tr><th class="l">日付</th><th class="l">節</th><th class="l">相手</th><th>結果</th><th>出場</th><th>時間</th><th class="l">記録</th></tr>'+
       ids.map(id=>{const x=g.get(id)||{},l=r.p.log[id];const res=x.gf!=null?(x.gf>x.ga?'○':x.gf<x.ga?'●':'△')+' '+x.gf+'-'+x.ga:'';
-        return '<tr data-mid="'+esc(id)+'"><td class="l">'+esc(sd(x.date))+'</td><td class="l">'+esc(x.round||'')+'</td><td class="l">'+(x.h?'':'@')+esc(x.opp||'')+'</td><td><a href="./results.html?comp='+encodeURIComponent(r.comp.id)+'&match='+encodeURIComponent(id)+'">'+esc(res||'詳細')+'</a></td><td>'+(l.st?'先発':(l.min!=null?'途中':'出場'))+'</td><td>'+(l.min!=null?l.min+'分':'')+'</td><td class="l ev"></td></tr>';}).join('')+'</table></div>';
+        return '<tr data-mid="'+esc(id)+'"><td class="l">'+esc(sd(x.date))+'</td><td class="l">'+esc(x.round||'')+'</td><td class="l">'+oppCell(id,x,r.team)+'</td><td><a href="./results.html?comp='+encodeURIComponent(r.comp.id)+'&match='+encodeURIComponent(id)+'">'+esc(res||'詳細')+'</a></td><td>'+(l.st?'先発':(l.min!=null?'途中':'出場'))+'</td><td>'+(l.min!=null?l.min+'分':'')+'</td><td class="l ev"></td></tr>';}).join('')+'</table></div>';
   }).join('');
   $('main').innerHTML='<a class="back" href="'+teamUrlP(me)+'">‹ '+esc(me.univ||me.name)+'のページへ</a>'+head+byComp+logs+
     (rows.length?'':'<div class="card empty">今シーズンの公式記録はまだありません</div>')+
