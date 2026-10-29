@@ -421,7 +421,7 @@ function makeBadges(teams){
 /* 試合ごとの相手：エンブレム＋名前（アウェイは@） */
 function oppCell(id,x,me){
   const m=MAT.get(id),o=m?(m.home&&m.home.id===me.id?m.away:m.home):null;
-  return '<span class="tn">'+(o?crest(o,'xs'):'')+'<span class="tx">'+(x.h?'':'@')+esc(x.opp||(o&&(o.short||o.name))||'')+'</span></span>';
+  return '<span class="tn">'+(o?crest(o,'xs'):'')+'<span class="tx">'+esc(x.opp||(o&&(o.short||o.name))||'')+'</span></span>';
 }
 function crest(t,size){const h=crestBase(t,size),b=t&&BADGE.get(tkey(t));return b?h.replace(/<\/span>$/,'<i class="bdg">'+esc(b)+'</i></span>'):h}
 const teamUrl=t=>'./team.html?comp='+encodeURIComponent(S.comp)+'&team='+encodeURIComponent(tkey(t));
