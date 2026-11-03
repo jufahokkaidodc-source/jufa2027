@@ -234,6 +234,16 @@ const rules=list=>'<div class="rules">'+(list||[]).map(r=>'<div class="rule"><h3
 const pdfRow=o=>{const u=safeUrl(o.url);return u
   ?'<a href="'+esc(u)+'" target="_blank" rel="noopener"><span class="ic pdf">PDF</span><span><b>'+esc(o.title)+'</b><small>タップするとPDFが開きます</small></span><span class="go">開く ↗</span></a>'
   :'<div><span class="ic">PDF</span><span><b>'+esc(o.title)+'</b><small>準備中です</small></span><span></span></div>'};
+const FORMS=[
+  ['duty-manual.pdf','当番校マニュアル','当番校の仕事とシステムの使い方（スタメンの確認・公式記録の入力・主審との確認・電波が悪いとき）'],
+  ['record-memo.pdf','公式記録 手書き控え','電波が悪い・システムが使えないときの控え（シュート・GK/CK・得点・交代・警告退場）。2枚'],
+  ['match-meeting.pdf','マッチミーティング進行表','当番校の司会が、これを読み上げて進めます'],
+  ['concussion-sub.pdf','脳震盪による選手交代票','1枚に4枚分。切って使います'],
+  ['sub-form-il.pdf','選手交代用紙（インディペンデンスリーグ）','1枚に4枚分。切って使います'],
+  ['expense-report.pdf','実施経費報告書','審判謝金・会場使用料・消耗品費を試合ごとに書きます'],
+  ['kessan4-rent.pdf','決算様式4（賃借料）','会場使用料のレシート・領収書を貼ります'],
+  ['kessan4-supplies.pdf','決算様式4（消耗品費）','石灰代・ペイント代のレシート・領収書を貼ります']
+];
 let INFO=null,CUR='',COMPS=[];
 const pdfsOf=c=>{const fromDash=(c.comps||[]).map(id=>COMPS.find(x=>x.id===id)).filter(x=>x&&x.rulesUrl).map(x=>({title:x.name+' 要項',url:x.rulesUrl}));
   const uniq=[];fromDash.forEach(o=>{if(!uniq.some(u=>u.url===o.url))uniq.push(o)});return uniq.length?uniq.map((o,i)=>uniq.length===1?{title:(c.pdf?.[0]?.title)||o.title,url:o.url}:o):(c.pdf||[])};
@@ -249,6 +259,8 @@ function draw(){
     ['common','COMMON','どの大会でも共通のこと',rules(d.common)]
   ];
   if(d.registration)parts.push(['registration','REGISTRATION','選手登録の手続き','<p class="lead">'+esc(d.registration.lead)+'</p>'+rules(d.registration.steps)]);
+  // 当番校の書類：試合の日に使う用紙・様式（new/docs/forms/）。担当者の連絡先が入った「当番校の運営について」は載せない（チームページの「書類」にある）
+  parts.push(['forms','FORMS','当番校の書類','<p class="lead">当番校が試合の日に使う用紙・様式です。タップするとPDFが開き、ダウンロード・印刷できます（A4）。</p><div class="card docs">'+FORMS.map(f=>'<a href="./docs/forms/'+f[0]+'" target="_blank" rel="noopener"><span class="ic pdf">PDF</span><span><b>'+esc(f[1])+'</b><small>'+esc(f[2])+'</small></span><span class="go">開く ↗</span></a>').join('')+'</div>']);
   parts.push(['venues','VENUES','会場案内','<div class="card docs"><a href="./venues.html"><span class="ic">MAP</span><span><b>会場案内</b><small>北海道の地図と、エリアごとの会場の一覧（アクセス・写真）</small></span><span class="go">開く ›</span></a></div>']);
   if(d.faq?.length)parts.push(['faq','FAQ','よくある質問','<div class="faq">'+d.faq.map(f=>'<details><summary>'+esc(f.q)+'</summary><p>'+esc(f.a)+'</p></details>').join('')+'</div>']);
   $('jump').innerHTML=parts.slice(1).map(p=>'<a href="#'+p[0]+'">'+p[2]+'</a>').join('');
