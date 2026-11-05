@@ -55,7 +55,7 @@ body{background:#0e0e0e;color:#f2f2f2;font-family:'Noto Sans JP',sans-serif}
 .mno{display:grid;grid-template-columns:auto 1fr;border-radius:1.5mm;overflow:hidden;outline:1.4pt solid var(--k);outline-offset:-.7pt}
 .mno .cp{grid-column:1/3;background:var(--k);color:#fff;font-size:6pt;font-weight:500;text-align:center;letter-spacing:.02em;height:3.6mm;line-height:3.6mm;white-space:nowrap;overflow:hidden;padding:0 2mm}
 .mno .rd{background:var(--b);color:#fff;display:flex;align-items:center;justify-content:center;padding:0 4mm;font-weight:900;font-size:12pt;letter-spacing:.08em;white-space:nowrap}
-.mno .no2{display:flex;align-items:center;justify-content:center;gap:2mm;padding:0 3mm;background:#fff}
+.mno .no2{display:flex;align-items:center;justify-content:center;gap:2mm;padding:0 3mm;background:#fff;min-width:27mm;white-space:nowrap}
 .mno .no2 small{white-space:nowrap;font-family:'Barlow Condensed';font-size:6.5pt;letter-spacing:.2em;color:var(--g);line-height:1}
 .mno .no2 b{font-family:'Barlow Condensed';font-size:18pt;font-weight:800;line-height:1}
 .sign{outline:1.4pt solid var(--k);outline-offset:-.7pt;border-radius:1.5mm}
@@ -238,7 +238,7 @@ function render(det,comp,color){
 
   const html='<div class="paper'+(pkh?' cmp':'')+'" style="--H:'+color(H)+';--A:'+color(A)+'">'+
   '<div class="top"><div class="brand"><img src="./img/jufa-hokkaido.png" alt="JUFA Hokkaido"><h1>公式記録</h1></div>'+
-  '<div class="mno"><span class="cp">'+esc(comp.name||'')+'</span><span class="rd">'+esc(m.round||'')+'</span><span class="no2"><small>MATCH No.</small><b>'+esc(m.no||'')+'</b></span></div>'+
+  '<div class="mno"><span class="cp">'+esc(comp.name||'')+'</span><span class="rd" style="font-size:'+((m.round||'').length>6?8:(m.round||'').length>4?9.5:12)+'pt">'+esc(m.round||'')+'</span><span class="no2"><small>MATCH No.</small><b>'+esc(m.no||'')+'</b></span></div>'+
   '<table class="sign"><tr><th>主審</th><th colspan="2">チーム代表者サイン</th></tr><tr><td>'+esc(inf.referee)+'</td><td class="ok">✓ 承認済み</td><td class="ok">✓ 承認済み</td></tr></table></div>'+
   '<div class="sheet"><table class="info"><colgroup><col style="width:17mm"><col><col style="width:17mm"><col><col style="width:17mm"><col><col style="width:17mm"><col></colgroup>'+
   '<tr><th>日時</th><td colspan="3">'+dateTxt+'</td><th>会場名</th><td colspan="3">'+esc(inf.venue||m.venue)+'</td></tr>'+
