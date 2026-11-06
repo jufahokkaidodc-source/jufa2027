@@ -350,6 +350,32 @@ dl.facts dd{margin:0;font-weight:700;overflow-wrap:anywhere}
 
 .plink{color:inherit;text-decoration:none;border-bottom:1px dotted var(--muted)}
 .plink:hover{color:var(--red);border-bottom-color:var(--red)}
+/* 公式サイト・SNS：各サービスの色とアイコン */
+.hsns{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+.hsns:empty{display:none}
+.sn{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;color:#fff;background:#333;box-shadow:0 2px 8px #0006;transition:transform .15s}
+.sn:hover{transform:translateY(-2px)}
+.sn svg,.sl svg{width:22px;height:22px;display:block}
+.sn-web{background:#E60012}
+.sn-x{background:#000;border:1px solid #fff5}
+.sn-instagram{background:radial-gradient(circle at 30% 107%,#fdf497 0,#fdf497 5%,#fd5949 45%,#d6249f 60%,#285AEB 90%)}
+.sn-facebook{background:#1877F2}
+.sn-youtube{background:#fff;color:#FF0000}
+.sn-tiktok{background:#000;border:1px solid #fff5;color:#fff;text-shadow:none;filter:drop-shadow(1px 0 0 #25F4EE) drop-shadow(-1px 0 0 #FE2C55)}
+.sn-note{background:#fff;color:#000}
+.links a.sl{display:inline-flex;align-items:center;gap:8px;font-size:14px;padding:8px 14px 8px 8px;border:0;color:#fff;background:#333}
+.links a.sl i{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:#ffffff26}
+.links a.sl svg{width:18px;height:18px}
+.links a.sl:hover{filter:brightness(1.1);color:#fff}
+.links a.sl.sn-web{background:#E60012}
+.links a.sl.sn-x,.links a.sl.sn-tiktok{background:#000;border:1px solid #fff5;filter:none}
+.links a.sl.sn-tiktok i{filter:drop-shadow(1px 0 0 #25F4EE) drop-shadow(-1px 0 0 #FE2C55)}
+.links a.sl.sn-instagram{background:radial-gradient(circle at 30% 107%,#fdf497 0,#fdf497 5%,#fd5949 45%,#d6249f 60%,#285AEB 90%)}
+.links a.sl.sn-facebook{background:#1877F2}
+.links a.sl.sn-youtube,.links a.sl.sn-note{background:#fff;color:#222}
+.links a.sl.sn-youtube i{color:#FF0000}
+.links a.sl.sn-youtube i{background:#FF00001a}
+.links a.sl.sn-youtube:hover{color:#222}
 </style>
 <link rel="stylesheet" href="./theme.css">
 <script src="./site.js"></script>
@@ -389,6 +415,7 @@ dl.facts dd{margin:0;font-weight:700;overflow-wrap:anywhere}
         <div class="eyebrow">CLUB PROFILE</div>
         <h1 id="teamTitle">読み込み中…</h1>
         <p id="teamSub"></p>
+        <div class="hsns" id="heroSns"></div>
       </div>
     </div>
     <div class="hstats">
@@ -688,6 +715,22 @@ function renderRecord(row,ms){
     (home.length||away.length?'<p class="note" style="margin:-6px 16px 14px">ホーム '+cnt(home,'W')+'勝'+cnt(home,'D')+'分'+cnt(home,'L')+'敗　／　アウェイ '+cnt(away,'W')+'勝'+cnt(away,'D')+'分'+cnt(away,'L')+'敗</p>':'');
 }
 const SNS={instagram:'Instagram',x:'X',twitter:'X',facebook:'Facebook',youtube:'YouTube',tiktok:'TikTok',note:'note'};
+/* SNSのアイコン（24×24）。色は各サービスの色 */
+const SNSI={
+  web:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9.5"/><path d="M2.5 12h19M12 2.5c2.6 2.8 3.9 6 3.9 9.5S14.6 18.7 12 21.5M12 2.5C9.4 5.3 8.1 8.5 8.1 12s1.3 6.7 3.9 9.5"/></svg>',
+  x:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2H22l-7.5 8.6L23.3 22h-6.8l-5.3-6.9L5.1 22H2l8-9.2L1.7 2h7l4.8 6.3L18.9 2zm-1.2 18h1.7L7.4 3.9H5.6L17.7 20z"/></svg>',
+  instagram:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="5.2"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg>',
+  facebook:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 22v-8.2h2.8l.4-3.3h-3.2V8.4c0-.9.3-1.6 1.6-1.6h1.7V3.9c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3v2.4H7.3v3.3h2.8V22h3.4z"/></svg>',
+  youtube:'<svg viewBox="0 0 24 24"><rect x="1.5" y="5" width="21" height="14" rx="4" fill="currentColor"/><path d="M10 9l5.2 3-5.2 3z" fill="#fff"/></svg>',
+  tiktok:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.7 2c.3 2.3 1.6 3.9 3.8 4.1v3.1c-1.4.1-2.6-.3-3.8-1.1v6.4c0 3.9-3 6.1-6.2 5.9-3.6-.2-5.7-3.5-4.9-6.7.7-2.6 3.1-4.2 5.9-3.9v3.2c-.4-.1-.7-.2-1.1-.1-1.5.1-2.5 1.4-2.2 2.8.2 1.2 1.3 2 2.5 1.9 1.3-.1 2.2-1.1 2.2-2.6V2h3.8z"/></svg>',
+  note:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 19V8.5C5 6.5 6.5 5 8.5 5H14c2.8 0 5 2.2 5 5v9"/></svg>'
+};
+const SNSK=k=>k==='twitter'?'x':k;
+/* 公式サイト・SNSの一覧：[{k, label, url}] */
+function teamLinks(p){
+  if(!p)return [];
+  return [{k:'web',label:'公式サイト',url:p.website},...Object.entries(p.sns||{}).map(([k,v])=>({k:SNSK(k),label:SNS[k]||k,url:v}))].filter(x=>safeUrl(x.url));
+}
 function safeUrl(u){return /^https?:\/\//i.test(String(u||''))?u:''}
 /* チームの独自ホームページ（clubs.json に出ている大学だけ。ホームページ管理画面の「独自ホームページ」で公開） */
 let CLUBS=null;
@@ -696,12 +739,22 @@ function clubFor(t){
   const u=typeof t==='object'?String(t.univ||'').trim():'';
   return u?CLUBS.find(c=>c.published&&c.slug&&c.univ===u)||null:null; // 公開前（プレビューだけ）の大学はボタンを出さない
 }
+/* 公式サイト・SNSの補い（new/data/sns.json。旧HPの加盟チーム一覧から）。チーム紹介に入っているものが先 */
+let SNSX=null;
+function snsExtra(t){
+  if(SNSX===null){SNSX={};fetch('./data/sns.json',{cache:'no-store'}).then(r=>r.ok?r.json():null).then(j=>{SNSX=(j&&j.teams)||{};if(S.team)renderAbout()}).catch(()=>{});return null}
+  if(!t||typeof t!=='object')return null;
+  return SNSX[String(t.name||'').trim()]||SNSX[String(t.univ||'').trim()]||null;
+}
 function renderAbout(){
-  const p=profileOf(S.team);
+  const p0=profileOf(S.team),ex=snsExtra(S.team);
+  const p=p0||ex?Object.assign({},ex||{},p0||{},{website:(p0&&safeUrl(p0.website))?p0.website:(ex&&ex.website)||'',sns:Object.assign({},(ex&&ex.sns)||{},Object.fromEntries(Object.entries((p0&&p0.sns)||{}).filter(([,v])=>safeUrl(v))))}):null;
   const club=clubFor(S.team);
   const staff=squad().staff.map(s=>[s.role||'スタッフ',s.name]);
   const facts=[...staff,...(p?[[staff.some(s=>/監督/.test(s[0]))?'':'監督',p.coach],['主将',p.captain],['創部',p.founded],['部員数',p.members],['練習場',p.ground]]:[])].filter(([k,v])=>has(k)&&has(v));
-  const links=p?[[ '公式サイト',p.website],...Object.entries(p.sns||{}).map(([k,v])=>[SNS[k]||k,v])].filter(([,u])=>safeUrl(u)):[];
+  const links=teamLinks(p);
+  // ページの上（チーム名の下）にも、丸いアイコンで並べる
+  $('heroSns').innerHTML=links.map(x=>'<a class="sn sn-'+x.k+'" href="'+esc(safeUrl(x.url))+'" target="_blank" rel="noopener" aria-label="'+esc(x.label)+'" title="'+esc(x.label)+'">'+(SNSI[x.k]||SNSI.web)+'</a>').join('');
   $('profUpdated').textContent=p&&has(p.updated)?'更新 '+p.updated:'';
   const clubLink=club?'<a class="clubsite" href="../clubs/?u='+encodeURIComponent(club.slug)+'">'+esc(club.name)+' のホームページ →</a>':'';
   if(!has(p?.intro)&&!facts.length&&!links.length&&!clubLink){
@@ -710,7 +763,7 @@ function renderAbout(){
   $('aboutBox').innerHTML='<div class="about">'+
     '<div class="card">'+(has(p?.intro)?'<div class="intro">'+esc(p.intro)+'</div>':'<p class="empty">チーム紹介文は準備中です。</p>')+'</div>'+
     '<div class="card">'+(facts.length?'<dl class="facts">'+facts.map(([k,v])=>'<div><dt>'+esc(k)+'</dt><dd>'+esc(v)+'</dd></div>').join('')+'</dl>':'')+
-      (links.length||clubLink?'<div class="links">'+clubLink+links.map(([k,u])=>'<a href="'+esc(safeUrl(u))+'" target="_blank" rel="noopener">'+esc(k)+' ↗</a>').join('')+'</div>':'')+'</div></div>';
+      (links.length||clubLink?'<div class="links">'+clubLink+links.map(x=>'<a class="sl sn-'+x.k+'" href="'+esc(safeUrl(x.url))+'" target="_blank" rel="noopener"><i>'+(SNSI[x.k]||SNSI.web)+'</i>'+esc(x.label)+'</a>').join('')+'</div>':'')+'</div></div>';
 }
 const POS=[['GK','ゴールキーパー'],['DF','ディフェンダー'],['MF','ミッドフィルダー'],['FW','フォワード']];
 const norm=v=>String(v||'').replace(/[\s　]/g,'');
