@@ -1,0 +1,108 @@
+{
+ "_note": "チームページ（team.html）の公式サイト・SNS。各大学がホームページ管理画面の「チーム紹介」に入れたものが先で、ないものだけこれで補う（2026-11 旧HPの加盟チーム一覧から）。キーは大学名（チーム名）",
+ "teams": {
+  "札幌大学": {
+   "website": "http://sapporounivfc.jp/",
+   "sns": {
+    "x": "https://x.com/susoccer1967",
+    "instagram": "https://www.instagram.com/susoccer.official",
+    "facebook": "https://www.facebook.com/share/16cVA8bMQd/"
+   }
+  },
+  "東海大学札幌校舎": {
+   "website": "https://www.footballnavi.jp/tokaisoccer_sp/",
+   "sns": {
+    "x": "https://x.com/tokai_sapporofc",
+    "instagram": "https://www.instagram.com/tokai_sapporo_fc/"
+   }
+  },
+  "北海道教育大学岩見沢校": {
+   "website": "https://gankyosoccer.com",
+   "sns": {
+    "x": "https://x.com/iwamizawasoccer",
+    "instagram": "https://www.instagram.com/iwami_soccer",
+    "tiktok": "https://www.tiktok.com/@gankyo_soccer_official",
+    "youtube": "https://youtube.com/channel/UCgzVohjo_GoDmnw--YfVU0w"
+   }
+  },
+  "北海道大学": {
+   "sns": {
+    "x": "https://x.com/hokudai_soccer",
+    "instagram": "https://www.instagram.com/hokkaidouniv_football_official"
+   }
+  },
+  "北翔大学": {
+   "sns": {
+    "instagram": "https://www.instagram.com/hokushosoccer"
+   }
+  },
+  "札幌大谷大学": {
+   "sns": {
+    "x": "https://x.com/otani_u_soccer",
+    "instagram": "https://www.instagram.com/otanisoccer"
+   }
+  },
+  "星槎道都大学": {
+   "sns": {
+    "instagram": "https://www.instagram.com/seisadohtouniv"
+   }
+  },
+  "北海学園大学": {
+   "sns": {
+    "instagram": "https://www.instagram.com/hgu_soccer"
+   }
+  },
+  "北星学園大学": {
+   "sns": {
+    "instagram": "https://www.instagram.com/hokusei.soccer"
+   }
+  },
+  "札幌医科大学": {
+   "website": "https://sapmedfc.jimdofree.com/",
+   "sns": {
+    "instagram": "https://www.instagram.com/sapmedfc2025/"
+   }
+  },
+  "釧路公立大学": {
+   "sns": {
+    "instagram": "https://www.instagram.com/kushiro_soccer/"
+   }
+  },
+  "札幌国際大学": {
+   "sns": {
+    "instagram": "https://www.instagram.com/siu.soccer"
+   }
+  },
+  "室蘭工業大学": {
+   "sns": {
+    "instagram": "https://www.instagram.com/murokoudai_soccer/"
+   }
+  },
+  "小樽商科大学": {
+   "sns": {
+    "instagram": "https://www.instagram.com/ouc_soccerclub"
+   }
+  },
+  "北海道教育大学札幌校": {
+   "sns": {
+    "instagram": "https://www.instagram.com/huessoccer"
+   }
+  },
+  "北海道大学医学部": {
+   "sns": {
+    "x": "https://x.com/hokuisoccer2017",
+    "instagram": "https://www.instagram.com/hokuisoccer2025"
+   }
+  },
+  "北海道教育大学釧路校": {
+   "sns": {
+    "instagram": "https://www.instagram.com/h.u.e.k.soccer"
+   }
+  },
+  "旭川医科大学": {
+   "sns": {
+    "instagram": "https://www.instagram.com/amu_soccer"
+   }
+  }
+ }
+}

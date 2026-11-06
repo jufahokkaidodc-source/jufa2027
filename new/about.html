@@ -152,6 +152,28 @@ button{font:inherit;color:inherit;cursor:pointer}
 .club>.crest.two{font-size:21px}
 .club>.crest .bdg{min-width:22px;height:20px;line-height:20px;font-size:12px;border-radius:10px}
 @media(max-width:680px){.club>.crest{width:60px;height:60px;margin-top:-32px;font-size:21px}.club>.crest.two{font-size:16px}}
+.decl{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 18px 14px;line-height:1.85}
+.decl .dh{font-weight:900;font-size:1.15rem;text-align:center;padding:10px;margin:-18px -18px 14px;border-radius:14px 14px 0 0;background:var(--navy);color:#fff;letter-spacing:.06em}
+.decl h3{font-size:1rem;margin:16px 0 6px;color:var(--blue)}
+.decl p{margin:0 0 6px}.decl ul,.decl ol{margin:0;padding-left:1.4em}.decl li{margin:3px 0}
+.decl .src{text-align:right;color:var(--muted);font-size:max(12px,.85em);margin-top:12px}
+.offg{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:12px}
+.offg h3{margin:0 0 8px;font-size:1rem;color:var(--blue)}
+.off{width:100%;border-collapse:collapse;table-layout:fixed}
+.off th,.off td{text-align:left;vertical-align:top;padding:7px 4px;border-top:1px solid var(--line);line-height:1.6}
+.off tr:first-child th,.off tr:first-child td{border-top:0}
+.off th{width:7em;color:var(--muted);font-weight:700;background:none;word-break:keep-all;overflow-wrap:anywhere;padding-right:10px}
+.off td small{display:block;color:var(--muted);font-size:max(12px,.85em)}
+@media (max-width:480px){.off th{width:6em;font-size:max(12px,.85em)}}
+.kj{display:flex;flex-wrap:wrap;gap:6px}.kj span{background:var(--card2);border:1px solid var(--line);border-radius:999px;padding:3px 10px;font-size:max(12px,.9em)}
+/* 加盟団体一覧のカード：エンブレム × 大学名（写真なし） */
+.club.club2{flex-direction:row;align-items:center;text-align:left;gap:10px;padding:10px 12px}
+.club.club2>.crest{margin:0;width:46px;height:46px;font-size:16px;border:0;flex:none}
+.club.club2>.crest.two{font-size:13px}
+.club.club2 div{padding:0}
+.club.club2 strong{font-size:14px;line-height:1.4}
+.clubs:has(.club2){grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
+@media(max-width:680px){.club.club2>.crest{width:42px;height:42px;margin:0;font-size:15px}.clubs:has(.club2){grid-template-columns:1fr}}
 </style>
 <link rel="stylesheet" href="./theme.css">
 <script src="./site.js"></script>
@@ -284,15 +306,40 @@ function crestBase(t){
   return '<span class="crest'+(two?' two':'')+'" style="--c:'+c+';color:'+crestInk(c)+'">'+esc(ch)+'</span>';
 }
 const sec=(id,en,ja,inner)=>'<section class="section" id="'+id+'"><div class="sechead"><h2><small>'+en+'</small>'+ja+'</h2></div>'+inner+'</section>';
+/* 加盟団体一覧の名前：大学名（チーム名が「大学名＋校舎・校・学部」のときはチーム名。例：東海大学札幌校舎） */
+function univLabel(t){const u=t.univ||'',n=t.name||'';return u&&n.indexOf(u)===0&&/(校舎|校|学部)$/.test(n)?n:(u||n||t.short||'')}
+/* 全日本大学サッカー連盟宣言・役員名簿（new/data/federation.json。役員名簿は年度ごとに書き換える） */
+const fedReady=fetch('./data/federation.json',{cache:'no-store'}).then(r=>r.ok?r.json():null).catch(()=>null);
+function fedDeclaration(x){
+  if(!x)return '';
+  return '<div class="decl"><div class="dh">'+esc(x.title)+'</div>'+
+    '<h3>'+esc(x.wish.h)+'</h3>'+x.wish.body.split('\n').map(t=>'<p>'+esc(t)+'</p>').join('')+
+    '<h3>'+esc(x.principles.h)+'</h3><ul>'+x.principles.items.map(t=>'<li>'+esc(t)+'</li>').join('')+'</ul>'+
+    '<h3>'+esc(x.goals.h)+'</h3><ol>'+x.goals.items.map(t=>'<li>'+esc(t)+'</li>').join('')+'</ol>'+
+    '<p class="src">'+esc(x.source)+'</p></div>';
+}
+function fedOfficers(x){
+  if(!x)return '';
+  return '<p class="note" style="margin:-4px 2px 14px">'+esc(x.title)+'（'+esc(x.asof)+'）</p>'+
+    x.groups.map(g=>'<div class="offg"><h3>'+esc(g.h)+'</h3><table class="off">'+g.rows.map(r=>'<tr><th>'+esc(r[0])+'</th><td>'+esc(r[1])+(r[2]?'<small>'+esc(r[2])+'</small>':'')+'</td></tr>').join('')+'</table></div>').join('')+
+    (x.kanji?'<div class="offg"><h3>'+esc(x.kanji.h)+'</h3><div class="kj">'+x.kanji.items.map(t=>'<span>'+esc(t)+'</span>').join('')+'</div></div>':'');
+}
 boot('about.json',async(d)=>{
   await embReady;
-  if(!d){$('main').innerHTML='<p class="empty">連盟の情報を読み込めませんでした。</p>';return}
+  const fed=await fedReady;
+  if(!d&&!fed){$('main').innerHTML='<p class="empty">連盟の情報を読み込めませんでした。</p>';return}
+  d=d||{};
   const parts=[];
   if(d.overview?.length)parts.push(['overview','OVERVIEW','連盟概要','<div class="ov">'+d.overview.map(o=>{const u=safeUrl(o.url);return '<article><h3>'+esc(o.title)+'</h3>'+(has(o.body)?'<p>'+richText(o.body)+'</p>':'')+(u?'<a class="lk" href="'+esc(u)+'" target="_blank" rel="noopener">詳しく見る ↗</a>':'')+'</article>'}).join('')+'</div>']);
-  if(d.members?.length){
+  if(fed?.declaration)parts.push(['declaration','DECLARATION','全日本大学サッカー連盟宣言',fedDeclaration(fed.declaration)]);
+  if(fed?.officers)parts.push(['officers','OFFICERS','役員名簿',fedOfficers(fed.officers)]);
+  // 加盟団体一覧：学生リーグ（1部・2部・3部）のチームだけ（Iリーグなどは入れない）
+  const leagues=(d.members||[]).filter(l=>/-L\d+$/.test(l.comp));
+  if(leagues.length){
+    d.members=leagues;
     const total=new Set(d.members.flatMap(l=>l.teams.map(t=>t.univ||t.name))).size;
-    parts.push(['members','MEMBERS','加盟チーム','<p class="note" style="margin:-4px 2px 14px">'+total+'大学（今年度のリーグ戦の登録チーム）</p>'+d.members.map(l=>(makeBadges(l.teams,t=>t.id,t=>t.short||t.name),'')+'<div class="league"><h3>'+esc(shortComp(l.name))+'<span>'+l.teams.length+'チーム</span></h3><div class="clubs">'+
-      l.teams.map(t=>'<a class="club" href="./team.html?comp='+encodeURIComponent(l.comp)+'&team='+encodeURIComponent(t.id)+'">'+cover(t)+crest(t)+'<div><strong>'+esc(t.name||t.short)+'</strong></div></a>').join('')+'</div></div>').join('')]);
+    parts.push(['members','MEMBERS','加盟団体一覧','<p class="note" style="margin:-4px 2px 14px">'+total+'大学（今年度の北海道学生サッカーリーグ 1部・2部・3部）</p>'+d.members.map(l=>(makeBadges(l.teams,t=>t.id,t=>t.short||t.name),'')+'<div class="league"><h3>'+esc(shortComp(l.name))+'<span>'+l.teams.length+'チーム</span></h3><div class="clubs">'+
+      l.teams.map(t=>'<a class="club club2" href="./team.html?comp='+encodeURIComponent(l.comp)+'&team='+encodeURIComponent(t.id)+'">'+crest(t)+'<div><strong>'+esc(univLabel(t))+'</strong></div></a>').join('')+'</div></div>').join('')]);
   }
   const fileRow=o=>{const u=safeUrl(o.url),pdf=/\.pdf(\?|$)/i.test(u),tag=u?'a':'div';
     return '<'+tag+(u?' href="'+esc(u)+'" target="_blank" rel="noopener"':'')+'><span class="ic'+(pdf?' pdf':'')+'">'+(pdf?'PDF':u?'LINK':'INFO')+'</span><span><b>'+esc(o.title)+'</b>'+(has(o.body)?'<small>'+richText(o.body)+'</small>':'')+'</span>'+(u?'<span class="go">開く ↗</span>':'')+'</'+tag+'>'};
