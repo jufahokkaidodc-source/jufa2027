@@ -376,6 +376,8 @@ dl.facts dd{margin:0;font-weight:700;overflow-wrap:anywhere}
 .links a.sl.sn-youtube i{color:#FF0000}
 .links a.sl.sn-youtube i{background:#FF00001a}
 .links a.sl.sn-youtube:hover{color:#222}
+.favbtn{margin-top:12px;font:inherit;font-size:14px;font-weight:700;color:#fff;background:#ffffff1a;border:1px solid #ffffff55;border-radius:999px;padding:8px 16px;cursor:pointer}
+.favbtn.on{background:#FFC400;border-color:#FFC400;color:#222}
 </style>
 <link rel="stylesheet" href="./theme.css">
 <script src="./site.js"></script>
@@ -416,6 +418,7 @@ dl.facts dd{margin:0;font-weight:700;overflow-wrap:anywhere}
         <h1 id="teamTitle">読み込み中…</h1>
         <p id="teamSub"></p>
         <div class="hsns" id="heroSns"></div>
+        <button type="button" class="favbtn" id="favBtn" aria-pressed="false" hidden>☆ お気に入りにする</button>
       </div>
     </div>
     <div class="hstats">
@@ -622,6 +625,7 @@ function renderHero(row,ms){
   $('crumbName').textContent=name(t);
   if(typeof t==='object'&&t.id)calBox($('calBox'),[{file:'t-'+t.id+'.ics',label:fullName(t)+'の試合'},{file:String(t.id).replace(/-[^-]*$/,'')+'.ics',label:(t.univ||name(t))+'の全チームの試合（リーグ・Iリーグなど）'}],'日程をカレンダーに入れる');
   $('heroCrest').innerHTML=crest(t,'xl');
+  favInit(t);
   // エンブレムは白い丸にのせず、見出しの右側の背景に大きく（暗い背景用があればそれ）。画像がないチームは色の丸に略称
   const eu=emblemUrl({emblem:p?.emblemDark})||emblemUrl(p)||embFor(typeof t==='object'?t.univ:'',name(t),typeof t==='object'?t.name:'');
   const big=String(eu).replace(/sz=w\d+/,'sz=w1000');
@@ -745,6 +749,17 @@ function snsExtra(t){
   if(SNSX===null){SNSX={};fetch('./data/sns.json',{cache:'no-store'}).then(r=>r.ok?r.json():null).then(j=>{SNSX=(j&&j.teams)||{};if(S.team)renderAbout()}).catch(()=>{});return null}
   if(!t||typeof t!=='object')return null;
   return SNSX[String(t.name||'').trim()]||SNSX[String(t.univ||'').trim()]||null;
+}
+/* お気に入りのチーム（このスマホ・パソコンにだけ覚える。トップページの上に、次の試合・前の結果・順位が出る） */
+const FAV_KEY='jufa:fav';
+function favGet(){try{return JSON.parse(localStorage.getItem(FAV_KEY)||'null')}catch(_){return null}}
+function favInit(t){
+  const b=$('favBtn');if(!b||typeof t!=='object'||!t.id)return;
+  const draw=()=>{const f=favGet(),on=!!(f&&f.id===t.id);b.textContent=on?'★ お気に入り（トップページに表示中）':'☆ お気に入りにする';b.setAttribute('aria-pressed',String(on));b.classList.toggle('on',on);};
+  b.hidden=false;draw();
+  b.onclick=()=>{const f=favGet();
+    try{if(f&&f.id===t.id)localStorage.removeItem(FAV_KEY);else localStorage.setItem(FAV_KEY,JSON.stringify({comp:S.comp,id:t.id,name:t.name||'',short:t.short||'',univ:t.univ||''}));}catch(_){}
+    draw();};
 }
 function renderAbout(){
   const p0=profileOf(S.team),ex=snsExtra(S.team);

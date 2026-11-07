@@ -184,6 +184,18 @@ button{font:inherit;color:inherit;cursor:pointer}
 .lead{font-size:13px;color:var(--muted);line-height:1.8;margin:0 2px 18px}
 .warnbox{border:1px solid var(--line);border-left:4px solid var(--red);border-radius:10px;padding:12px 16px;font-size:13px;line-height:1.8;margin-bottom:14px}
 @media(max-width:680px){.rule{padding:14px 16px}.rule ul{font-size:14px}}
+.tlbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 12px}
+.tlbar label{display:flex;align-items:center;gap:6px;font-weight:700}
+.tlbar input,.tlbar select{font:inherit;font-size:16px;background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:6px 10px;max-width:100%}
+.tl{list-style:none;margin:0;padding:0;border-left:3px solid var(--line);margin-left:6px}
+.tl>li{display:grid;grid-template-columns:5.6em 1fr;gap:10px;padding:0 0 14px 14px;position:relative}
+.tl>li:before{content:"";position:absolute;left:-8px;top:4px;width:13px;height:13px;border-radius:50%;background:var(--card2);border:2px solid var(--line)}
+.tl>li.key:before{background:var(--red);border-color:var(--red)}
+.tl .tt{font-weight:900;font-size:16px;line-height:1.3}
+.tl .tt small{display:block;font-size:12px;font-weight:500;color:var(--muted)}
+.tl .tb b{display:block;margin-bottom:2px}
+.tl .tb ul{margin:0;padding-left:1.2em;color:var(--muted);font-size:14px;line-height:1.7}
+@media(max-width:480px){.tl>li{grid-template-columns:1fr;gap:2px}}
 </style>
 <link rel="stylesheet" href="./theme.css">
 <script src="./site.js"></script>
@@ -247,6 +259,33 @@ const FORMS=[
 let INFO=null,CUR='',COMPS=[];
 const pdfsOf=c=>{const fromDash=(c.comps||[]).map(id=>COMPS.find(x=>x.id===id)).filter(x=>x&&x.rulesUrl).map(x=>({title:x.name+' 要項',url:x.rulesUrl}));
   const uniq=[];fromDash.forEach(o=>{if(!uniq.some(u=>u.url===o.url))uniq.push(o)});return uniq.length?uniq.map((o,i)=>uniq.length===1?{title:(c.pdf?.[0]?.title)||o.title,url:o.url}:o):(c.pdf||[])};
+/* 当番校の試合の日のタイムライン（当番校マニュアルより）。m：キックオフからの分（マイナスは前）。meet：代表者会議の時刻に合わせる */
+const TL_KINDS=[
+  {k:'normal',label:'ふつうの試合（代表者会議 60分前）',meet:60},
+  {k:'pmsf',label:'総理大臣杯の準決勝・決勝（70分前）',meet:70}
+];
+const TL_STEPS=meet=>[
+  {t:'前日まで',h:'担当の試合と書類を準備',d:['チームページの「当番校」タブで、担当の試合（日時・会場・対戦）と審判の割り当てを確かめる','「公式記録 手書き控え」を試合の数だけ、交代用紙・脳震盪による選手交代票・マッチミーティング進行表を印刷する','当番校ページの「第4の審判のメンバー表（手書き）」を印刷しておく']},
+  {m:-(meet+30),h:'会場に着いて本部を準備',d:['本部・ベンチ・用具を準備する（時刻は目安）'],soft:true},
+  {m:-(meet+10),h:'スタメンの「提出」ボタンが押せるようになる',d:['両チームは、代表者会議の10分前から提出できる']},
+  {m:-meet,h:'代表者会議（マッチミーティング）',d:['進行表を読み上げて進める','両チームにスタメンの「提出」を押してもらう','選手証・メンバー表・正と副のユニフォームを確かめる','審判員4人のメールアドレスを聞いて入力し「保存」'].concat(meet===70?['マッチコミッショナーも出席する']:[]),key:true},
+  {m:-meet+10,h:'スタメンを確認して「出場可能（OK）」',d:['両チームの提出がそろったら、JFA登録を1人ずつ確かめてチェック','両チームをOKにすると、メンバーリストが両チームと審判団へ届く','OKにした内容を手書きのメンバー表に書き写し、第4の審判へ渡す'],soft:true},
+  {m:0,h:'キックオフ',d:['公式記録をスマホで入力しながら、「手書き控え」にも書く（毎試合）','分からない警告の理由・時間は空けたままでよい（試合後に主審に聞く）'],key:true},
+  {m:105,h:'試合が終わったらすぐ（本部で）',d:['「主審との確認」で、得点・警告退場・交代を1つずつ読み上げて直す','手書き控えに主審の署名をもらい、写真を撮って出す','公式記録を「提出」し、承認者2人と主審にその場でスマホから承認してもらう','「確定」になったのを確かめてから解散'],soft:true,key:true},
+  {t:'その日のうち',h:'問題があったとき・書類',d:['問題事項（帯同副審が来ない・遅刻・忘れ物など）があれば、問題事項報告書を出す','実施経費報告書・レシートなどは「当番校の運営について」に従う']}
+];
+function tlTime(ko,m){const r=/^(\d{1,2}):(\d{2})$/.exec(ko||'');if(!r)return '';let x=+r[1]*60+(+r[2])+m;x=(x%1440+1440)%1440;return Math.floor(x/60)+':'+String(x%60).padStart(2,'0')}
+function tlHtml(){
+  let ko='13:00',kind='normal';try{ko=localStorage.getItem('jufa:tlko')||ko;kind=localStorage.getItem('jufa:tlkind')||kind}catch(_){}
+  const K=TL_KINDS.find(x=>x.k===kind)||TL_KINDS[0];
+  return '<p class="lead">キックオフの時刻を入れると、それぞれの時刻が出ます。くわしい操作は「当番校マニュアル」（下の当番校の書類）にあります。</p>'+
+    '<div class="tlbar"><label>キックオフ <input type="time" id="tlKo" value="'+esc(ko)+'"></label><select id="tlKind">'+TL_KINDS.map(x=>'<option value="'+x.k+'"'+(x.k===K.k?' selected':'')+'>'+esc(x.label)+'</option>').join('')+'</select></div>'+
+    '<ol class="tl">'+TL_STEPS(K.meet).map(st=>{
+      const tm=st.t||((st.soft?'〜':'')+tlTime(ko,st.m)+(st.m<0?'<small>（'+(-st.m)+'分前）</small>':st.m===0?'':'<small>（試合後）</small>'));
+      return '<li class="'+(st.key?'key':'')+'"><div class="tt">'+tm+'</div><div class="tb"><b>'+esc(st.h)+'</b><ul>'+st.d.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></div></li>';
+    }).join('')+'</ol>'+
+    '<p class="note">「試合が終わったらすぐ」の時刻は、90分の試合とハーフタイム15分を足した目安です。</p>';
+}
 function draw(){
   const d=INFO,c=d.competitions.find(x=>x.key===CUR)||d.competitions[0];CUR=c.key;
   const tabs='<div class="ctabs" role="tablist">'+d.competitions.map(x=>'<button role="tab" aria-selected="'+(x.key===CUR)+'" data-k="'+esc(x.key)+'">'+esc(x.title.replace(/（.*?）/,'').replace(/^総理大臣杯 /,'総理大臣杯').replace(/全日本大学サッカー|北海道大会|北海道学生サッカー/g,'')||x.title)+'</button>').join('')+'</div>';
@@ -259,6 +298,8 @@ function draw(){
     ['common','COMMON','どの大会でも共通のこと',rules(d.common)]
   ];
   if(d.registration)parts.push(['registration','REGISTRATION','選手登録の手続き','<p class="lead">'+esc(d.registration.lead)+'</p>'+rules(d.registration.steps)]);
+  // 当番校の試合の日のタイムライン（キックオフの時刻を入れると、それぞれの時刻が出る）
+  parts.push(['timeline','TIMELINE','当番校の試合の日の流れ',tlHtml()]);
   // 当番校の書類：試合の日に使う用紙・様式（new/docs/forms/）。担当者の連絡先が入った「当番校の運営について」は載せない（チームページの「書類」にある）
   parts.push(['forms','FORMS','当番校の書類','<p class="lead">当番校が試合の日に使う用紙・様式です。タップするとPDFが開き、ダウンロード・印刷できます（A4）。</p><div class="card docs">'+FORMS.map(f=>'<a href="./docs/forms/'+f[0]+'" target="_blank" rel="noopener"><span class="ic pdf">PDF</span><span><b>'+esc(f[1])+'</b><small>'+esc(f[2])+'</small></span><span class="go">開く ↗</span></a>').join('')+'</div>']);
   parts.push(['venues','VENUES','会場案内','<div class="card docs"><a href="./venues.html"><span class="ic">MAP</span><span><b>会場案内</b><small>北海道の地図と、エリアごとの会場の一覧（アクセス・写真）</small></span><span class="go">開く ›</span></a></div>']);
@@ -267,6 +308,8 @@ function draw(){
   $('main').innerHTML='<p class="lead">'+esc(d.note)+'</p>'+tabs+parts.map(p=>sec(...p)).join('');
   $('jump').querySelectorAll('a').forEach(a=>a.onclick=e=>{e.preventDefault();document.querySelector(a.getAttribute('href'))?.scrollIntoView({behavior:'smooth'})});
   $('main').querySelectorAll('[data-k]').forEach(b=>b.onclick=()=>{CUR=b.dataset.k;history.replaceState(null,'','?c='+CUR);draw()});
+  const tlRe=()=>{try{localStorage.setItem('jufa:tlko',$('tlKo').value);localStorage.setItem('jufa:tlkind',$('tlKind').value)}catch(_){}const y=window.scrollY;draw();window.scrollTo(0,y)};
+  $('tlKo')?.addEventListener('change',tlRe);$('tlKind')?.addEventListener('change',tlRe);
 }
 const J=u=>fetch(u,{cache:'no-store'}).then(r=>r.ok?r.json():null).catch(()=>null);
 /* 大会要項：ダッシュボードの「大会・規則」の要項リンク（competitions.json の rulesUrl） */
