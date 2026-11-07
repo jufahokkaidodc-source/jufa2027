@@ -743,10 +743,11 @@ function clubFor(t){
   const u=typeof t==='object'?String(t.univ||'').trim():'';
   return u?CLUBS.find(c=>c.published&&c.slug&&c.univ===u)||null:null; // 公開前（プレビューだけ）の大学はボタンを出さない
 }
-/* 公式サイト・SNSの補い（new/data/sns.json。旧HPの加盟チーム一覧から）。チーム紹介に入っているものが先 */
+/* 公式サイト・SNSの補い（ホームページ管理画面の「大学の公式サイト・SNS」＝results/data/sns.json が先、なければ new/data/sns.json）。チーム紹介に入っているものが先 */
 let SNSX=null;
 function snsExtra(t){
-  if(SNSX===null){SNSX={};fetch('./data/sns.json',{cache:'no-store'}).then(r=>r.ok?r.json():null).then(j=>{SNSX=(j&&j.teams)||{};if(S.team)renderAbout()}).catch(()=>{});return null}
+  if(SNSX===null){SNSX={};const g=u=>fetch(u,{cache:'no-store'}).then(r=>r.ok?r.json():null).catch(()=>null);
+    Promise.all([g('./data/sns.json'),DEMO?null:g('../results/data/sns.json')]).then(([l,r])=>{SNSX=Object.assign({},(l&&l.teams)||{},(r&&r.teams)||{});if(S.team)renderAbout()});return null}
   if(!t||typeof t!=='object')return null;
   return SNSX[String(t.name||'').trim()]||SNSX[String(t.univ||'').trim()]||null;
 }
