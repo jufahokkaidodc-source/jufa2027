@@ -111,6 +111,8 @@ button{font:inherit;color:inherit;cursor:pointer}
 .docs a:hover{background:#f6f9fc}
 .docs .ic{width:40px;height:40px;border-radius:9px;background:#eef3f7;display:grid;place-items:center;font-family:var(--num);font-weight:800;font-size:12px;color:var(--muted)}
 .docs .ic.pdf{background:#fdecea;color:var(--red)}
+.docs .ic.set{background:var(--red);color:#fff}
+.fgh{font-size:15px;margin:22px 2px 8px}
 .docs b{font-size:14.5px}
 .docs small{display:block;font-size:12px;color:var(--muted);margin-top:2px;line-height:1.6}
 .docs .go{color:var(--muted);font-size:13px}
@@ -246,16 +248,72 @@ const rules=list=>'<div class="rules">'+(list||[]).map(r=>'<div class="rule"><h3
 const pdfRow=o=>{const u=safeUrl(o.url);return u
   ?'<a href="'+esc(u)+'" target="_blank" rel="noopener"><span class="ic pdf">PDF</span><span><b>'+esc(o.title)+'</b><small>タップするとPDFが開きます</small></span><span class="go">開く ↗</span></a>'
   :'<div><span class="ic">PDF</span><span><b>'+esc(o.title)+'</b><small>準備中です</small></span><span></span></div>'};
-const FORMS=[
-  ['duty-manual.pdf','当番校マニュアル','当番校の仕事とシステムの使い方（スタメンの確認・公式記録の入力・主審との確認・電波が悪いとき）'],
-  ['record-memo.pdf','公式記録 手書き控え','毎試合、記録担当が書きながら入力する控え（シュート・GK/CK・得点・交代・警告退場・主審の署名）。A4・1枚'],
-  ['match-meeting.pdf','マッチミーティング進行表','当番校の司会が、これを読み上げて進めます'],
-  ['concussion-sub.pdf','脳震盪による選手交代票','1枚に4枚分。切って使います'],
-  ['sub-form-il.pdf','選手交代用紙（インディペンデンスリーグ）','1枚に4枚分。切って使います'],
-  ['expense-report.pdf','実施経費報告書','審判謝金・会場使用料・消耗品費を試合ごとに書きます'],
-  ['kessan4-rent.pdf','決算様式4（賃借料）','会場使用料のレシート・領収書を貼ります'],
-  ['kessan4-supplies.pdf','決算様式4（消耗品費）','石灰代・ペイント代のレシート・領収書を貼ります']
+/* 当番校の書類（new/docs/forms/）。[ファイル, 名前, 説明, 印（任意）] */
+const FORM_GROUPS=[
+  ['まとめて印刷（1試合分）','試合の日に使う用紙を1つのPDFにまとめました。1試合につき1部ずつ印刷してください。',[
+    ['matchday-set.pdf','試合の日の用紙セット','手書き控え・第4の審判のメンバー表・マッチミーティング進行表・脳震盪による選手交代票（5ページ）','SET'],
+    ['matchday-set-il.pdf','試合の日の用紙セット（インディペンデンスリーグ）','上のセットに、選手交代用紙（インディペンデンスリーグ）を足したもの（6ページ）','SET'],
+    ['after-set.pdf','試合のあとの精算・報告セット','実施経費報告書・旅費謝金精算書（白紙）・決算様式4（賃借料・消耗品費）（4ページ）','SET']]],
+  ['試合の日に使う','',[
+    ['record-memo.pdf','公式記録 手書き控え','毎試合、記録担当が書きながら入力する控え（シュート・GK/CK・得点・交代・警告退場・主審の署名）。A4・1枚'],
+    ['fourth-official.pdf','第4の審判のメンバー表（記入用）','試合中は電子機器を使えないため、両チームのスタメン・控えを書き写して、キックオフ前に第4の審判へ渡します。A4 横・1枚'],
+    ['match-meeting.pdf','マッチミーティング進行表','当番校の司会が、これを読み上げて進めます'],
+    ['concussion-sub.pdf','脳震盪による選手交代票','1枚に4枚分。切って使います'],
+    ['sub-form-il.pdf','選手交代用紙（インディペンデンスリーグ）','1枚に4枚分。切って使います']]],
+  ['試合のあと（精算・報告）','',[
+    ['expense-report.pdf','実施経費報告書','審判謝金・会場使用料・消耗品費を試合ごとに書きます'],
+    ['SEISAN','',''],
+    ['kessan4-rent.pdf','決算様式4（賃借料）','会場使用料のレシート・領収書を貼ります'],
+    ['kessan4-supplies.pdf','決算様式4（消耗品費）','石灰代・ペイント代のレシート・領収書を貼ります']]],
+  ['読んでおく','',[
+    ['duty-manual.pdf','当番校マニュアル','当番校の仕事とシステムの使い方（スタメンの確認・公式記録の入力・主審との確認・電波が悪いとき）']]]
 ];
+const KICKOFF_URL='https://kickoff.jfa.jp/';
+let SEISAN=null; // ../results/data/seisan.json（大会ごとの事業名・開催期間。システムが書き出す）
+const formRow=f=>'<a href="./docs/forms/'+f[0]+'" target="_blank" rel="noopener"><span class="ic'+(f[3]?' set':' pdf')+'">'+(f[3]||'PDF')+'</span><span><b>'+esc(f[1])+'</b><small>'+esc(f[2])+'</small></span><span class="go">開く ↗</span></a>';
+const seisanRows=()=>'<a href="./docs/forms/seisan-blank.pdf" target="_blank" rel="noopener"><span class="ic pdf">PDF</span><span><b>旅費・謝金精算書（北海道サッカー協会の書式・白紙）</b><small>審判の謝金の精算に使います。事業名と開催期間も手で書きます</small></span><span class="go">開く ↗</span></a>'+
+  (SEISAN||[]).map((x,i)=>'<a href="#" data-seisan="'+i+'"><span class="ic pdf">PDF</span><span><b>旅費・謝金精算書（'+esc(x.name)+'）</b><small>事業名と開催期間（'+esc(x.period||'未定')+'）が入っています。ほかの欄は手で書きます</small></span><span class="go">作る ↓</span></a>').join('');
+function formsHtml(){
+  return '<p class="lead">当番校が試合の日・試合のあとに使う用紙・様式です。だれでも開いて、ダウンロード・印刷できます（A4）。iPhone は、開いた画面の共有ボタン →「プリント」。</p>'+
+    FORM_GROUPS.map(g=>'<h3 class="fgh">'+esc(g[0])+'</h3>'+(g[1]?'<p class="note" style="margin:0 2px 8px">'+esc(g[1])+'</p>':'')+'<div class="card docs">'+g[2].map(f=>f[0]==='SEISAN'?seisanRows():formRow(f)).join('')+'</div>').join('')+
+    '<h3 class="fgh">チームページで印刷するもの</h3><div class="card docs">'+
+    '<div><span class="ic">TEAM</span><span><b>名前入りの手書き控え・メンバー表</b><small>両チームの背番号・名前が入った「公式記録 手書き控え」と、メンバー表・公式記録は、スタメンがそろってから、チームページの「当番校」で印刷します（ログインが必要）</small></span><span></span></div>'+
+    '<a href="'+KICKOFF_URL+'" target="_blank" rel="noopener"><span class="ic">JFA</span><span><b>JFAの選手証（登録選手一覧）</b><small>代表者会議で、メンバー表と一緒に見せます。KICKOFF から印刷するか、スマホの画面で見せられるようにしておきます</small></span><span class="go">開く ↗</span></a></div>';
+}
+/* 精算書：白紙の書式の画像に、事業名と開催期間を重ねて A4 の PDF にする（この端末の中で作る） */
+function seisanMake(x){
+  return (document.fonts&&document.fonts.load?document.fonts.load('20px "Noto Sans JP"','事業名開催期間年月日').catch(()=>{}):Promise.resolve()).then(()=>new Promise((ok,ng)=>{
+    const im=new Image();
+    im.onload=()=>{
+      const W=im.naturalWidth,H=im.naturalHeight,k=W/595.32,cv=document.createElement('canvas');cv.width=W;cv.height=H;
+      const g=cv.getContext('2d');g.fillStyle='#fff';g.fillRect(0,0,W,H);g.drawImage(im,0,0);g.fillStyle='#000';g.textBaseline='alphabetic';
+      const put=(t,X,Y,maxW)=>{if(!t)return;let fs=9.5;do{g.font=fs*k+'px "Noto Sans JP","Hiragino Sans","Yu Gothic","Meiryo",sans-serif';fs-=0.25}while(g.measureText(t).width>maxW*k&&fs>5);g.fillText(t,X*k,Y*k)};
+      put(x.name,97,120,206);put(x.period,97,141.3,206);
+      ok(jpegPdf(atob(cv.toDataURL('image/jpeg',0.9).split(',')[1]),W,H));
+    };
+    im.onerror=()=>ng(new Error('書式の画像を読み込めませんでした'));
+    im.src='./docs/forms/seisan-form.png';
+  }));
+}
+function jpegPdf(jpg,W,H){
+  const enc=s=>{const u=new Uint8Array(s.length);for(let i=0;i<s.length;i++)u[i]=s.charCodeAt(i)&255;return u};
+  const parts=[],offs=[];let len=0;const add=s=>{const u=typeof s==='string'?enc(s):s;parts.push(u);len+=u.length};
+  const obj=(n,body)=>{offs[n]=len;add(n+' 0 obj\n'+body+'\nendobj\n')};
+  add('%PDF-1.4\n%\xE2\xE3\xCF\xD3\n');obj(1,'<< /Type /Catalog /Pages 2 0 R >>');obj(2,'<< /Type /Pages /Kids [3 0 R] /Count 1 >>');
+  obj(3,'<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595.28 841.89] /Resources << /XObject << /Im0 4 0 R >> >> /Contents 5 0 R >>');
+  offs[4]=len;add('4 0 obj\n<< /Type /XObject /Subtype /Image /Width '+W+' /Height '+H+' /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length '+jpg.length+' >>\nstream\n');add(enc(jpg));add('\nendstream\nendobj\n');
+  const cs='q 595.28 0 0 841.89 0 0 cm /Im0 Do Q';obj(5,'<< /Length '+cs.length+' >>\nstream\n'+cs+'\nendstream');
+  const X=len;let t='xref\n0 6\n0000000000 65535 f \n';for(let i=1;i<=5;i++)t+=String(offs[i]).padStart(10,'0')+' 00000 n \n';
+  add(t+'trailer\n<< /Size 6 /Root 1 0 R >>\nstartxref\n'+X+'\n%%EOF');
+  return new Blob(parts,{type:'application/pdf'});
+}
+document.addEventListener('click',e=>{
+  const a=e.target.closest('[data-seisan]');if(!a)return;e.preventDefault();
+  const x=(SEISAN||[])[+a.dataset.seisan];if(!x)return;
+  const w=window.open('','_blank');const go=a.querySelector('.go'),t=go.textContent;go.textContent='作っています…';
+  seisanMake(x).then(b=>{const u=URL.createObjectURL(b);if(w)w.location.href=u;else{const l=document.createElement('a');l.href=u;l.download='旅費謝金精算書.pdf';document.body.appendChild(l);l.click();l.remove()}})
+    .catch(err=>{if(w)w.close();alert(err.message)}).finally(()=>{go.textContent=t});
+});
 let INFO=null,CUR='',COMPS=[];
 const pdfsOf=c=>{const fromDash=(c.comps||[]).map(id=>COMPS.find(x=>x.id===id)).filter(x=>x&&x.rulesUrl).map(x=>({title:x.name+' 要項',url:x.rulesUrl}));
   const uniq=[];fromDash.forEach(o=>{if(!uniq.some(u=>u.url===o.url))uniq.push(o)});return uniq.length?uniq.map((o,i)=>uniq.length===1?{title:(c.pdf?.[0]?.title)||o.title,url:o.url}:o):(c.pdf||[])};
@@ -300,8 +358,8 @@ function draw(){
   if(d.registration)parts.push(['registration','REGISTRATION','選手登録の手続き','<p class="lead">'+esc(d.registration.lead)+'</p>'+rules(d.registration.steps)]);
   // 当番校の試合の日のタイムライン（キックオフの時刻を入れると、それぞれの時刻が出る）
   parts.push(['timeline','TIMELINE','当番校の試合の日の流れ',tlHtml()]);
-  // 当番校の書類：試合の日に使う用紙・様式（new/docs/forms/）。担当者の連絡先が入った「当番校の運営について」は載せない（チームページの「書類」にある）
-  parts.push(['forms','FORMS','当番校の書類','<p class="lead">当番校が試合の日に使う用紙・様式です。タップするとPDFが開き、ダウンロード・印刷できます（A4）。</p><div class="card docs">'+FORMS.map(f=>'<a href="./docs/forms/'+f[0]+'" target="_blank" rel="noopener"><span class="ic pdf">PDF</span><span><b>'+esc(f[1])+'</b><small>'+esc(f[2])+'</small></span><span class="go">開く ↗</span></a>').join('')+'</div>']);
+  // 当番校の書類（new/docs/forms/）。担当者の連絡先が入った「当番校の運営について」は載せない（チームページの「書類」にある）
+  parts.push(['forms','FORMS','当番校の書類',formsHtml()]);
   parts.push(['venues','VENUES','会場案内','<div class="card docs"><a href="./venues.html"><span class="ic">MAP</span><span><b>会場案内</b><small>北海道の地図と、エリアごとの会場の一覧（アクセス・写真）</small></span><span class="go">開く ›</span></a></div>']);
   if(d.faq?.length)parts.push(['faq','FAQ','よくある質問','<div class="faq">'+d.faq.map(f=>'<details><summary>'+esc(f.q)+'</summary><p>'+esc(f.a)+'</p></details>').join('')+'</div>']);
   $('jump').innerHTML=parts.slice(1).map(p=>'<a href="#'+p[0]+'">'+p[2]+'</a>').join('');
@@ -313,7 +371,7 @@ function draw(){
 }
 const J=u=>fetch(u,{cache:'no-store'}).then(r=>r.ok?r.json():null).catch(()=>null);
 /* 大会要項：ダッシュボードの「大会・規則」の要項リンク（competitions.json の rulesUrl） */
-async function loadCompsForPdf(){COMPS=(await J('../results/data/competitions.json'))?.competitions||[]}
+async function loadCompsForPdf(){const [c,se]=await Promise.all([J('../results/data/competitions.json'),J('../results/data/seisan.json')]);COMPS=c?.competitions||[];SEISAN=se?.list||null}
 J('./data/info.json').then(d=>{if(!d)throw 0;
   INFO=d;CUR=new URLSearchParams(location.search).get('c')||'';draw();
   loadCompsForPdf().then(draw);
