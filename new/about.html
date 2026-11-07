@@ -308,8 +308,10 @@ function crestBase(t){
 const sec=(id,en,ja,inner)=>'<section class="section" id="'+id+'"><div class="sechead"><h2><small>'+en+'</small>'+ja+'</h2></div>'+inner+'</section>';
 /* 加盟団体一覧の名前：大学名（チーム名が「大学名＋校舎・校・学部」のときはチーム名。例：東海大学札幌校舎） */
 function univLabel(t){const u=t.univ||'',n=t.name||'';return u&&n.indexOf(u)===0&&/(校舎|校|学部)$/.test(n)?n:(u||n||t.short||'')}
-/* 全日本大学サッカー連盟宣言・役員名簿（new/data/federation.json。役員名簿は年度ごとに書き換える） */
-const fedReady=fetch('./data/federation.json',{cache:'no-store'}).then(r=>r.ok?r.json():null).catch(()=>null);
+/* 全日本大学サッカー連盟宣言・役員名簿（new/data/federation.json）。役員名簿は、ホームページ管理画面の「役員名簿」で直したもの（results/data/federation.json）が先 */
+const fedGet=u=>fetch(u,{cache:'no-store'}).then(r=>r.ok?r.json():null).catch(()=>null);
+const fedReady=Promise.all([fedGet('./data/federation.json'),DEMO?null:fedGet('../results/data/federation.json')])
+  .then(([l,r])=>l||r?Object.assign({},l||{},r&&r.officers&&r.officers.groups&&r.officers.groups.length?{officers:r.officers}:{}):null);
 function fedDeclaration(x){
   if(!x)return '';
   return '<div class="decl"><div class="dh">'+esc(x.title)+'</div>'+
