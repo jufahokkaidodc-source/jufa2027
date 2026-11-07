@@ -295,6 +295,21 @@ table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums}
 .recbtn{display:flex;flex-direction:column;align-items:center;gap:2px;margin:12px 0 4px;padding:12px 14px;background:var(--card);border:1px solid var(--line);border-radius:12px;color:var(--ink);text-decoration:none;text-align:center}
 .recbtn b{font-size:15px}.recbtn small{color:var(--muted)}
 .recbtn:hover{border-color:var(--red)}
+.hall{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);white-space:nowrap}
+.hall input{width:auto}
+.hnext{background:var(--card);border:1px solid var(--red);border-radius:12px;padding:10px 14px;margin:0 0 10px;font-size:14px}
+.vlink{color:inherit;text-decoration:underline;text-underline-offset:3px}
+.vlink small{font-size:max(12px,.8em);color:var(--muted);text-decoration:none;margin-left:2px}
+.h2h{padding:12px 14px}
+.h2s{display:flex;align-items:center;justify-content:space-between;gap:8px;font-weight:700}
+.h2s span{display:flex;align-items:center;gap:6px;min-width:0}
+.h2s b{font-size:18px;white-space:nowrap}
+.h2g{text-align:center;color:var(--muted);font-size:13px;margin:2px 0 8px}
+.h2r{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 2px;border-top:1px solid var(--line);color:inherit;text-decoration:none}
+.h2r .d{display:flex;flex-direction:column;font-size:13px;color:var(--muted)}
+.h2r .d small{font-size:12px}
+.h2r .sc{text-align:right;font-size:14px}.h2r .sc b{white-space:nowrap}
+a.h2r:hover .sc b{color:var(--red)}
 </style>
 <link rel="stylesheet" href="./theme.css">
 <script src="./site.js"></script>
@@ -470,7 +485,7 @@ const TABS=[
   ['analysis','分析',d=>(d.playerStats||[]).some(t=>(t.games||[]).some(g=>g.rec))]
 ];
 let COMPS=[],DATA=null,DETAIL=null,SCROLL_Y=0;
-const S={comp:QS.get('comp')||'',tab:QS.get('tab')||'schedule',match:QS.get('match')||'',round:'',team:'',cteam:''};
+const S={comp:QS.get('comp')||'',tab:QS.get('tab')||'schedule',match:QS.get('match')||'',round:'',team:'',cteam:'',host:QS.get('host')||'',hostAll:false};
 /* 大会のテーマカラー（2026-10 事務局決定）：1部 赤・2部 青・3部 緑・Iリーグ 紫・総理大臣杯 金。ほかの大会は赤（SNSの画像も同じ色） */
 const COMP_COLORS=[[/総理大臣杯|-PM$/,'#D4AF37','#111','#E8C65A'],[/インディペンデンス|Iリーグ|-IL$/,'#9C27B0','#fff','#CE6BE0'],
   [/3部|-L3$/,'#1E9E48','#fff','#3DC56A'],[/2部|-L2$/,'#1976D2','#fff','#5AA9F0'],[/1部|-L1$/,'#E60012','#fff','#ff3b47']];
@@ -535,7 +550,8 @@ function render(){
   const f={schedule:rSchedule,standings:rStandings,grid:rGrid,tournament:rTournament,scorers:()=>rRanking(DATA.scorers,'得点'),assists:()=>rRanking(DATA.assists,'アシスト'),cards:rCards,awards:rAwards,analysis:rAnalysis}[S.tab]||rSchedule;
   $('main').innerHTML=f();
   const on=(id,k)=>{const el=$(id);if(el)el.addEventListener('change',e=>{S[k]=e.target.value;render();});};
-  on('roundSel','round');on('teamSel','team');on('cteamSel','cteam');
+  on('roundSel','round');on('teamSel','team');on('cteamSel','cteam');on('hostSel','host');
+  const ha=$('hostAll');if(ha)ha.addEventListener('change',e=>{S.hostAll=e.target.checked;if(S.hostAll&&!ALLM)loadAllMatches().then(render);else render();});
 }
 
 /* ---------- 日程・結果 ---------- */
@@ -543,9 +559,14 @@ function teamsOf(){const m={};(DATA.matches||[]).forEach(x=>[x.home,x.away].forE
 function rSchedule(){
   const rounds=[...new Set((DATA.matches||[]).map(m=>m.round).filter(Boolean))];
   if(S.round&&!rounds.includes(S.round))S.round='';
-  const list=(DATA.matches||[]).filter(m=>(!S.team||(m.home&&m.home.id===S.team)||(m.away&&m.away.id===S.team))&&(!S.round||m.round===S.round));
+  // 当番校で絞る（すべての大会でも見られる：自分の大学がいつ当番かが一目で分かる）
+  const hosts=[...new Set([...(DATA.matches||[]),...(S.hostAll&&ALLM?ALLM:[])].map(m=>m.host).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'ja'));
+  if(S.host&&!hosts.includes(S.host)&&!(S.hostAll&&!ALLM))S.host='';
+  if(S.host&&S.hostAll)return hostAllView(hosts);
+  const list=(DATA.matches||[]).filter(m=>(!S.team||(m.home&&m.home.id===S.team)||(m.away&&m.away.id===S.team))&&(!S.round||m.round===S.round)&&(!S.host||m.host===S.host));
   const bar='<div class="bar"><select id="roundSel" aria-label="節"><option value="">すべての節</option>'+rounds.map(r=>'<option'+(r===S.round?' selected':'')+'>'+esc(r)+'</option>').join('')+'</select>'+
     '<select id="teamSel" aria-label="チーム"><option value="">すべてのチーム</option>'+teamsOf().map(t=>'<option value="'+esc(t.id)+'"'+(t.id===S.team?' selected':'')+'>'+esc(t.short)+'</option>').join('')+'</select>'+
+    hostBar(hosts)+
     '<span class="note">'+list.filter(m=>m.status==='finished').length+' / '+list.length+' 試合終了</span></div>';
   if(!list.length)return bar+'<div class="card empty">試合はありません</div>';
   const groups=[];list.forEach(m=>{let g=groups.find(x=>x.k===m.round);if(!g){g={k:m.round,items:[]};groups.push(g);}g.items.push(m);});
@@ -555,6 +576,60 @@ function rSchedule(){
     return '<div class="sh"><h2>'+esc(g.k||'日程')+'</h2><small>'+dates.map(sd).join('・')+'</small></div><div class="card">'+body+'</div>';
   }).join('');
 }
+/* 当番校の絞り込み */
+function hostBar(hosts){
+  if(!hosts.length)return '';
+  return '<select id="hostSel" aria-label="当番校"><option value="">当番校：すべて</option>'+hosts.map(h=>'<option'+(h===S.host?' selected':'')+'>'+esc(h)+'</option>').join('')+'</select>'+
+    (S.host?'<label class="hall"><input type="checkbox" id="hostAll"'+(S.hostAll?' checked':'')+'> すべての大会で見る</label>':'');
+}
+function hostAllView(hosts){
+  const list=(ALLM||[]).filter(m=>m.host===S.host).sort((a,b)=>(a.date+a.kickoff).localeCompare(b.date+b.kickoff));
+  const bar='<div class="bar">'+hostBar(hosts)+'<span class="note">'+esc(S.host)+' が当番校の試合：'+list.length+'試合（すべての大会）</span></div>';
+  if(!list.length)return bar+'<div class="card empty">試合はありません</div>';
+  const today=new Date(Date.now()+9*36e5).toISOString().slice(0,10);
+  const next=list.find(m=>m.date>=today&&m.status!=='finished');
+  return bar+(next?'<div class="hnext">次の当番：<b>'+esc(jd(next.date))+(next.kickoff?' '+esc(next.kickoff):'')+'</b>　'+esc(next.compShort||'')+' '+esc(next.round||'')+'　'+esc(next.venue||'')+'</div>':'')+
+    '<div class="card">'+list.map(m=>'<div class="dayhead">'+esc(jd(m.date))+'　<small>'+esc(m.compShort||'')+' '+esc(m.round||'')+'</small></div>'+mRow(m)).join('')+'</div>';
+}
+/* この年度のすべての大会の試合（当番校の一覧・対戦成績で使う）。前の年度のサイトがあれば、それも読む（PAST_DATA） */
+const PAST_DATA=['../../jufa/results/data/']; // 2026年度（jufa）の試合も対戦成績に入れる
+let ALLM=null,ALLM_P=null;
+function loadAllMatches(){
+  if(ALLM_P)return ALLM_P;
+  const one=(base,c)=>fetch(base+encodeURIComponent(c.id)+'.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null)
+    .then(d=>((d&&d.matches)||[]).map(m=>Object.assign({},m,{comp:c.id,compShort:compLabel(c.name||c.id),compName:c.name||c.id,ext:base!=='../results/data/'?base:''})));
+  const fromSite=base=>fetch(base+'competitions.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null)
+    .then(r=>Promise.all(((r&&r.competitions)||[]).map(c=>one(base,c))));
+  ALLM_P=Promise.all([Promise.all(COMPS.map(c=>one('../results/data/',c))),...PAST_DATA.map(fromSite)])
+    .then(([cur,...past])=>{ALLM=[].concat(...cur,...past.map(p=>[].concat(...p)));return ALLM;});
+  return ALLM_P;
+}
+/* 大会の短い呼び方（対戦成績・当番校の一覧で使う） */
+function compLabel(n){n=String(n||'');return /インディペンデンス/.test(n)?'Iリーグ':/新人戦/.test(n)?'新人戦':/総理大臣杯/.test(n)?'総理大臣杯':/入替/.test(n)?'入替戦':shortComp(n)}
+/* 対戦成績（同じ2大学の、この年度と前の年度の試合） */
+function univOf(t){return t?String(t.univ||t.name||'').trim():''}
+async function drawH2H(m){
+  const box=$('h2h');if(!box)return;
+  const uh=univOf(m.home),ua=univOf(m.away);if(!uh||!ua)return;
+  const all=await loadAllMatches();
+  const list=all.filter(x=>x.matchId!==m.matchId&&x.score&&x.status==='finished'&&x.home&&x.away&&
+    ((univOf(x.home)===uh&&univOf(x.away)===ua)||(univOf(x.home)===ua&&univOf(x.away)===uh))).sort((a,b)=>b.date.localeCompare(a.date));
+  if(!$('h2h'))return;
+  if(!list.length){box.innerHTML='<div class="sh"><h2>対戦成績</h2></div><div class="card empty">この年度の、ほかの対戦はまだありません</div>';return}
+  let w=0,d=0,l=0,gf=0,ga=0;
+  list.forEach(x=>{const hs=univOf(x.home)===uh;const a=hs?x.score.home:x.score.away,b=hs?x.score.away:x.score.home;gf+=a;ga+=b;
+    const pw=x.score.pk?(hs?x.score.pk.home>x.score.pk.away:x.score.pk.away>x.score.pk.home):null;
+    if(a>b||(a===b&&pw===true))w++;else if(a<b||(a===b&&pw===false))l++;else d++;});
+  const H=m.home,A=m.away;
+  box.innerHTML='<div class="sh"><h2>対戦成績</h2><small>'+(PAST_DATA.length?'この年度と前の年度':'この年度')+'のすべての大会</small></div><div class="card h2h">'+
+    '<div class="h2s"><span>'+crest(H,'xs')+esc(H.short)+'</span><b>'+w+'勝 '+d+'分 '+l+'敗</b><span>'+esc(A.short)+crest(A,'xs')+'</span></div>'+
+    '<div class="h2g">得点 '+gf+' - '+ga+' 失点</div>'+
+    list.map(x=>{const pk=x.score.pk?' <small>(PK '+x.score.pk.home+'-'+x.score.pk.away+')</small>':'';
+      const href=x.ext?'':'?comp='+encodeURIComponent(x.comp)+'&match='+encodeURIComponent(x.matchId);
+      return '<'+(href?'a href="'+href+'"':'div')+' class="h2r"><span class="d">'+esc(jd(x.date))+'<small>'+esc(x.compShort)+' '+esc(x.round||'')+'</small></span><span class="sc">'+esc(x.home.short)+' <b>'+x.score.home+' - '+x.score.away+'</b> '+esc(x.away.short)+pk+'</span></'+(href?'a':'div')+'>';}).join('')+'</div>';
+}
+/* 会場名 → 会場案内（venues.html） */
+const venueLink=v=>v?'<a class="vlink" href="./venues.html?v='+encodeURIComponent(v)+'">'+esc(v)+' <small>会場案内</small></a>':'';
 /* 速報（確定前の試合だけ） */
 const liveOf=m=>!m.score&&window.JUFA_LIVE?JUFA_LIVE.of(m.matchId):null;
 function mRow(m){
@@ -772,7 +847,7 @@ function rMatch(){
   const halves=d.halves?'<div class="half">前半 '+d.halves.first[0]+'-'+d.halves.first[1]+'　後半 '+d.halves.second[0]+'-'+d.halves.second[1]+(d.halves.extra?'　延長 '+(d.halves.extra[0]??0)+'-'+(d.halves.extra[1]??0):'')+(sc.pk?'　PK '+sc.pk.home+'-'+sc.pk.away:'')+'</div>':(sc.pk?'<div class="half">PK '+sc.pk.home+'-'+sc.pk.away+'</div>':'');
   const head='<div class="mh"><div class="meta">'+esc(DATA.competition.name)+'　'+esc(m.round)+(m.no?'　No.'+esc(m.no):'')+'</div>'+
     '<div class="row"><span class="t">'+crest(H,'lg')+teamLink(H,H.name||H.short)+'</span><span class="big">'+(sc.home!=null?sc.home+' - '+sc.away:'VS')+'</span><span class="t">'+crest(A,'lg')+teamLink(A,A.name||A.short)+'</span></div>'+
-    halves+(lv?'<div><span class="lvtag">'+esc(JUFA_LIVE.label(lv))+'</span></div>':'')+'<div class="meta">'+esc(jd(m.date))+(m.kickoff?' '+esc(m.kickoff):'')+'　'+esc((d.info&&d.info.venue)||m.venue||'')+'</div></div>';
+    halves+(lv?'<div><span class="lvtag">'+esc(JUFA_LIVE.label(lv))+'</span></div>':'')+'<div class="meta">'+esc(jd(m.date))+(m.kickoff?' '+esc(m.kickoff):'')+'　'+venueLink((d.info&&d.info.venue)||m.venue||'')+'</div></div>';
   const lvGoals=lv&&!(d.goals||[]).length?lv.goals.map((g,i)=>({s:i,side:g.side,min:g.minute,html:'<span class="goal">⚽ '+esc(g.name)+'</span>'+(g.pk?' <small class="note">PK</small>':'')})):[];
   const evs=[].concat(lvGoals,
     (d.goals||[]).map(g=>({s:g.sort,side:g.side,min:g.minute,html:'<span class="goal">⚽ '+esc(g.scorer)+'</span>'+(g.type&&!/^(シュート|通常)$/.test(g.type)&&!g.og?' <small class="note">'+esc(g.type)+'</small>':'')+(g.assist?'<br><small style="color:var(--muted)">👟 '+esc(g.assist)+'</small>':'')})),
@@ -807,7 +882,8 @@ function rMatch(){
   const ph=phs.length?'<div class="sh"><h2>写真</h2></div><div class="mphotos">'+phs.map(p=>'<figure><a href="'+esc(dimg(p.url,1600))+'" target="_blank" rel="noopener"><img src="'+esc(dimg(p.url,800))+'" alt="'+esc(p.caption||'試合の写真')+'" loading="lazy" decoding="async" onerror="this.closest(\'figure\').remove()"></a>'+(p.caption||p.credit?'<figcaption>'+esc(p.caption||'')+(p.credit?'<span>撮影：'+esc(p.credit)+'</span>':'')+'</figcaption>':'')+'</figure>').join('')+'</div>':'';
   // 公式記録を用紙の形で見る（record.html）。確定した公式記録がある試合だけ
   const rec=d.source==='official'&&d.lineups?'<a class="recbtn" href="./record.html?comp='+encodeURIComponent(S.comp)+'&match='+encodeURIComponent(m.matchId)+'"><b>📄 公式記録を見る</b><small>用紙の形・印刷やPDF保存もできます</small></a>':'';
-  $('main').innerHTML='<a class="back" href="'+pageUrl(S.comp,S.tab)+'">‹ '+back+'に戻る</a>'+head+rec+tl+stx+ph+lu+pk+off+note+'<div class="foot">'+esc(DATA.competition.name)+'　'+esc(m.matchId)+'</div>';
+  $('main').innerHTML='<a class="back" href="'+pageUrl(S.comp,S.tab)+'">‹ '+back+'に戻る</a>'+head+rec+'<div id="h2h"></div>'+tl+stx+ph+lu+pk+off+note+'<div class="foot">'+esc(DATA.competition.name)+'　'+esc(m.matchId)+'</div>';
+  drawH2H(m);
 }
 
 if(window.JUFA_LIVE)JUFA_LIVE.on(()=>{

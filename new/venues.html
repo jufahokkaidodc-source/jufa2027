@@ -318,6 +318,18 @@ fetch('./data/venues.json',{cache:'no-store'}).then(r=>r.ok?r.json():Promise.rej
   $('jump').innerHTML='';
   $('main').innerHTML='<p class="lead">'+esc(d.lead||'')+'</p>'+sec('map','MAP','地図',mapSvg(vs)+'<p class="note">'+esc(d.note||'')+'</p>')+sec('list','VENUES','会場一覧','<div id="vlist"></div>');
   drawList();
+  // 試合の詳細から来たとき（?v=会場名）：その会場を光らせて、そこまで動く
+  const want=new URLSearchParams(location.search).get('v');
+  if(want){
+    const nz=x=>String(x||'').normalize('NFKC').replace(/[\s　()（）・]/g,'');
+    const w=nz(want);
+    const v=vs.find(v=>[v.name,...(v.aliases||[])].some(n=>nz(n)===w))||vs.find(v=>[v.name,...(v.aliases||[])].some(n=>{const k=nz(n);return k&&(w.includes(k)||k.includes(w))}));
+    if(v){
+      if(TAB!=='all'&&TAB!==v.area){TAB='all';drawList()}
+      const el=$(slug(v));
+      if(el){el.classList.add('hl');setTimeout(()=>el.scrollIntoView({behavior:'smooth',block:'center'}),200)}
+    }
+  }
   $('main').addEventListener('click',e=>{
     const t=e.target.closest('[data-tab]');
     if(t){TAB=t.dataset.tab;history.replaceState(null,'',TAB==='all'?location.pathname:'?area='+encodeURIComponent(TAB));drawList();return}
