@@ -310,6 +310,8 @@ table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums}
 .h2r .d small{font-size:12px}
 .h2r .sc{text-align:right;font-size:14px}.h2r .sc b{white-space:nowrap}
 .card.pre{padding:4px 16px 14px}
+.mtabs{display:flex;gap:6px;margin:14px 0 2px}.mtabs button{flex:1;font:inherit;font-size:14px;font-weight:700;padding:10px 8px;border-radius:999px;border:1px solid var(--line);background:transparent;color:inherit;cursor:pointer}
+.mtabs button.on{background:#E60012;border-color:#E60012;color:#fff}
 .pv{padding-top:12px}.pv+.pv{border-top:1px solid var(--line);margin-top:12px}
 .pv h4{margin:0 0 8px;font-size:13.5px}.pv h4 small{font-weight:400;color:var(--muted);font-size:11.5px;margin-left:4px}
 .pvt{width:100%;border-collapse:collapse;font-size:13px}.pvt th{font-weight:400;color:var(--muted);font-size:11px;text-align:center;padding:2px 4px}
@@ -650,7 +652,7 @@ async function drawPreview(m){
   const st=rs[0]||rs[1]?'<div class="pv"><h4>順位'+(rs[0]&&rs[0].g?' <small>'+esc(rs[0].g)+'</small>':'')+'</h4><table class="pvt"><tr><th></th><th>順位</th><th>勝点</th><th>勝-分-敗</th><th>得失点</th></tr>'+
     [H,A].map((T,i)=>{const x=rs[i]&&rs[i].r;return '<tr><td class="ptn">'+crest(T,'xs')+esc(T.short)+'</td>'+(x?'<td><b>'+esc(x.rank)+'</b>位</td><td>'+esc(x.points)+'</td><td>'+x.won+'-'+x.drawn+'-'+x.lost+'</td><td>'+(x.goalDiff>0?'+':'')+esc(x.goalDiff)+'</td>':'<td colspan="4">—</td>')+'</tr>'}).join('')+'</table></div>':'';
   // この大会の最近の試合（5試合まで）
-  const form=T=>(DATA.matches||[]).filter(x=>x.score&&x.status==='finished'&&x.home&&x.away&&(x.home.id===T.id||x.away.id===T.id)).sort((a,b)=>b.date.localeCompare(a.date)).slice(0,5).map(x=>{
+  const form=T=>(DATA.matches||[]).filter(x=>x.matchId!==m.matchId&&x.score&&x.status==='finished'&&x.home&&x.away&&(x.home.id===T.id||x.away.id===T.id)).sort((a,b)=>b.date.localeCompare(a.date)).slice(0,5).map(x=>{
     const hs=x.home.id===T.id,a=hs?x.score.home:x.score.away,b=hs?x.score.away:x.score.home,op=hs?x.away:x.home;
     const pw=x.score.pk?(hs?x.score.pk.home>x.score.pk.away:x.score.pk.away>x.score.pk.home):null;
     const k=a>b||(a===b&&pw===true)?'w':a<b||(a===b&&pw===false)?'l':'d';
@@ -662,7 +664,7 @@ async function drawPreview(m){
   const sh=sc(H),sa=sc(A);
   const top=sh.length||sa.length?'<div class="pv"><h4>チームの得点ランキング <small>この大会</small></h4><div class="pvs">'+[[H,sh],[A,sa]].map(([T,l])=>'<div><span class="ptn">'+crest(T,'xs')+esc(T.short)+'</span>'+(l.length?l.map(x=>'<div class="pvp"><span>'+playerLink(T,x.name)+'</span><b>'+x.count+'</b></div>').join(''):'<small class="note">まだ得点がありません</small>')+'</div>').join('')+'</div></div>':'';
   const html=st+fmh+top;
-  box.innerHTML=html?'<div class="sh"><h2>試合の前に</h2><small>この大会の成績</small></div><div class="card pre">'+html+'</div>':'';
+  box.innerHTML=html?'<div class="sh"><h2>'+(m.score||liveOf(m)?'両チームのデータ':'試合の前に')+'</h2><small>この大会の成績</small></div><div class="card pre">'+html+'</div>':'';
 }
 /* 会場名 → 会場案内（venues.html） */
 const venueLink=v=>v?'<a class="vlink" href="./venues.html?v='+encodeURIComponent(v)+'">'+esc(v)+' <small>会場案内</small></a>':'';
@@ -924,10 +926,19 @@ function rMatch(){
   const ph=phs.length?'<div class="sh"><h2>写真</h2></div><div class="mphotos">'+phs.map(p=>'<figure><a href="'+esc(dimg(p.url,1600))+'" target="_blank" rel="noopener"><img src="'+esc(dimg(p.url,800))+'" alt="'+esc(p.caption||'試合の写真')+'" loading="lazy" decoding="async" onerror="this.closest(\'figure\').remove()"></a>'+(p.caption||p.credit?'<figcaption>'+esc(p.caption||'')+(p.credit?'<span>撮影：'+esc(p.credit)+'</span>':'')+'</figcaption>':'')+'</figure>').join('')+'</div>':'';
   // 公式記録を用紙の形で見る（record.html）。確定した公式記録がある試合だけ
   const rec=d.source==='official'&&d.lineups?'<a class="recbtn" href="./record.html?comp='+encodeURIComponent(S.comp)+'&match='+encodeURIComponent(m.matchId)+'"><b>📄 公式記録を見る</b><small>用紙の形・印刷やPDF保存もできます</small></a>':'';
-  $('main').innerHTML='<a class="back" href="'+pageUrl(S.comp,S.tab)+'">‹ '+back+'に戻る</a>'+head+rec+(!m.score&&!lv&&m.home&&m.away?'<div id="pre"></div>':'')+'<div id="h2h"></div>'+tl+stx+ph+lu+pk+off+note+'<div class="foot">'+esc(DATA.competition.name)+'　'+esc(m.matchId)+'</div>';
-  drawH2H(m);
+  // 試合が始まったら（速報・結果あり）、対戦成績・両チームのデータは「対戦成績・データ」タブへ
+  const started=!!(m.score||lv),both=m.home&&m.away;
+  if(MTAB.id!==m.matchId)MTAB={id:m.matchId,t:'game'};
+  const data='<div id="pre"></div><div id="h2h"></div>';
+  const game=tl+stx+ph+lu+pk+off+note;
+  const tabs=started&&both?'<div class="mtabs" role="tablist">'+[['game','試合'],['data','対戦成績・データ']].map(([k,l])=>'<button type="button" role="tab" data-mt="'+k+'" aria-selected="'+(MTAB.t===k)+'" class="'+(MTAB.t===k?'on':'')+'">'+l+'</button>').join('')+'</div>':'';
+  const body=!started?(both?data:'')+game:MTAB.t==='data'?data:(game||'<p class="note" style="margin-top:16px">まだ試合の記録はありません。</p>');
+  $('main').innerHTML='<a class="back" href="'+pageUrl(S.comp,S.tab)+'">‹ '+back+'に戻る</a>'+head+rec+tabs+body+'<div class="foot">'+esc(DATA.competition.name)+'　'+esc(m.matchId)+'</div>';
+  $('main').querySelectorAll('[data-mt]').forEach(b=>b.onclick=()=>{MTAB.t=b.dataset.mt;rMatch()});
+  if($('h2h'))drawH2H(m);
   if($('pre'))drawPreview(m);
 }
+let MTAB={id:'',t:'game'};
 
 if(window.JUFA_LIVE)JUFA_LIVE.on(()=>{
   if(!DATA)return;
