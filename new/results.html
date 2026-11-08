@@ -309,6 +309,18 @@ table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums}
 .h2r .d{display:flex;flex-direction:column;font-size:13px;color:var(--muted)}
 .h2r .d small{font-size:12px}
 .h2r .sc{text-align:right;font-size:14px}.h2r .sc b{white-space:nowrap}
+.card.pre{padding:4px 16px 14px}
+.pv{padding-top:12px}.pv+.pv{border-top:1px solid var(--line);margin-top:12px}
+.pv h4{margin:0 0 8px;font-size:13.5px}.pv h4 small{font-weight:400;color:var(--muted);font-size:11.5px;margin-left:4px}
+.pvt{width:100%;border-collapse:collapse;font-size:13px}.pvt th{font-weight:400;color:var(--muted);font-size:11px;text-align:center;padding:2px 4px}
+.pvt td{text-align:center;padding:6px 4px;border-top:1px solid var(--line);white-space:nowrap}.pvt td b{font-size:16px}
+.ptn{display:inline-flex;align-items:center;gap:6px;font-weight:700;white-space:nowrap}.pvt td.ptn{text-align:left}
+.fmr{display:flex;align-items:center;gap:8px;padding:5px 0}.fmr .ptn{width:74px;flex:none;overflow:hidden}
+.fms{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;flex:1;min-width:0}
+.fm{display:flex;flex-direction:column;align-items:center;min-width:0;padding:4px 3px;border-radius:7px;line-height:1.25;text-decoration:none;color:inherit;background:rgba(127,127,127,.12)}
+.fm b{font-size:13px}.fm small{font-size:10px;color:var(--muted);max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fm.w b{color:#E60012}.fm.l b{color:var(--muted)}
+.pvs{display:grid;grid-template-columns:1fr 1fr;gap:14px}.pvp{display:flex;justify-content:space-between;gap:6px;padding:5px 0;border-top:1px solid var(--line);font-size:13px}.pvs .ptn{margin-bottom:4px}
 a.h2r:hover .sc b{color:var(--red)}
 </style>
 <link rel="stylesheet" href="./theme.css">
@@ -628,6 +640,30 @@ async function drawH2H(m){
       const href=x.ext?'':'?comp='+encodeURIComponent(x.comp)+'&match='+encodeURIComponent(x.matchId);
       return '<'+(href?'a href="'+href+'"':'div')+' class="h2r"><span class="d">'+esc(jd(x.date))+'<small>'+esc(x.compShort)+' '+esc(x.round||'')+'</small></span><span class="sc">'+esc(x.home.short)+' <b>'+x.score.home+' - '+x.score.away+'</b> '+esc(x.away.short)+pk+'</span></'+(href?'a':'div')+'>';}).join('')+'</div>';
 }
+/* 試合の前：両チームの順位・この大会の最近の試合・得点ランキング（試合が始まる前の試合詳細） */
+async function drawPreview(m){
+  const box=$('pre');if(!box)return;
+  const H=m.home,A=m.away,ids=[H.id,A.id];
+  // 順位（リーグ・予選グループ）
+  const rowOf=id=>{for(const g of (DATA.groups||[])){const r=(g.table||[]).find(x=>x.team&&x.team.id===id);if(r)return {g:g.group||'',r}}return null};
+  const rs=ids.map(rowOf);
+  const st=rs[0]||rs[1]?'<div class="pv"><h4>順位'+(rs[0]&&rs[0].g?' <small>'+esc(rs[0].g)+'</small>':'')+'</h4><table class="pvt"><tr><th></th><th>順位</th><th>勝点</th><th>勝-分-敗</th><th>得失点</th></tr>'+
+    [H,A].map((T,i)=>{const x=rs[i]&&rs[i].r;return '<tr><td class="ptn">'+crest(T,'xs')+esc(T.short)+'</td>'+(x?'<td><b>'+esc(x.rank)+'</b>位</td><td>'+esc(x.points)+'</td><td>'+x.won+'-'+x.drawn+'-'+x.lost+'</td><td>'+(x.goalDiff>0?'+':'')+esc(x.goalDiff)+'</td>':'<td colspan="4">—</td>')+'</tr>'}).join('')+'</table></div>':'';
+  // この大会の最近の試合（5試合まで）
+  const form=T=>(DATA.matches||[]).filter(x=>x.score&&x.status==='finished'&&x.home&&x.away&&(x.home.id===T.id||x.away.id===T.id)).sort((a,b)=>b.date.localeCompare(a.date)).slice(0,5).map(x=>{
+    const hs=x.home.id===T.id,a=hs?x.score.home:x.score.away,b=hs?x.score.away:x.score.home,op=hs?x.away:x.home;
+    const pw=x.score.pk?(hs?x.score.pk.home>x.score.pk.away:x.score.pk.away>x.score.pk.home):null;
+    const k=a>b||(a===b&&pw===true)?'w':a<b||(a===b&&pw===false)?'l':'d';
+    return '<a class="fm '+k+'" href="?comp='+encodeURIComponent(S.comp)+'&match='+encodeURIComponent(x.matchId)+'" title="'+esc(jd(x.date)+' vs '+op.short)+'"><b>'+({w:'勝',d:'分',l:'敗'}[k])+'</b><small>'+a+'-'+b+'</small><small>'+esc(op.short)+'</small></a>'}).join('');
+  const fh=form(H),fa=form(A);
+  const fmh=fh||fa?'<div class="pv"><h4>この大会の最近の試合 <small>新しい順</small></h4>'+[[H,fh],[A,fa]].map(([T,f])=>'<div class="fmr"><span class="ptn">'+crest(T,'xs')+esc(T.short)+'</span><div class="fms">'+(f||'<small class="note">まだ試合がありません</small>')+'</div></div>').join('')+'</div>':'';
+  // 得点ランキング（チームの上位3人）
+  const sc=T=>(DATA.scorers||[]).filter(x=>x.team&&x.team.id===T.id).slice(0,3);
+  const sh=sc(H),sa=sc(A);
+  const top=sh.length||sa.length?'<div class="pv"><h4>チームの得点ランキング <small>この大会</small></h4><div class="pvs">'+[[H,sh],[A,sa]].map(([T,l])=>'<div><span class="ptn">'+crest(T,'xs')+esc(T.short)+'</span>'+(l.length?l.map(x=>'<div class="pvp"><span>'+playerLink(T,x.name)+'</span><b>'+x.count+'</b></div>').join(''):'<small class="note">まだ得点がありません</small>')+'</div>').join('')+'</div></div>':'';
+  const html=st+fmh+top;
+  box.innerHTML=html?'<div class="sh"><h2>試合の前に</h2><small>この大会の成績</small></div><div class="card pre">'+html+'</div>':'';
+}
 /* 会場名 → 会場案内（venues.html） */
 const venueLink=v=>v?'<a class="vlink" href="./venues.html?v='+encodeURIComponent(v)+'">'+esc(v)+' <small>会場案内</small></a>':'';
 /* 速報（確定前の試合だけ） */
@@ -850,6 +886,7 @@ function rMatch(){
     halves+(lv?'<div><span class="lvtag">'+esc(JUFA_LIVE.label(lv))+'</span></div>':'')+'<div class="meta">'+esc(jd(m.date))+(m.kickoff?' '+esc(m.kickoff):'')+'　'+venueLink((d.info&&d.info.venue)||m.venue||'')+'</div></div>';
   // 速報：公式記録の入力中の内容から、スタメン・交代も出す（確定した記録があればそちら）
   if(lv&&!d.lineups&&lv.lineups)d=Object.assign({},d,{lineups:lv.lineups});
+  if(lv&&!(d.pk&&d.pk.length)&&(lv.pkKicks||[]).length)d=Object.assign({},d,{pk:lv.pkKicks});
   const lvSubs=lv&&!(d.subs||[]).length?(lv.subs||[]).map((x,i)=>({s:500+i,side:x.side,min:x.minute,html:'<span style="color:#4caf50">▲ '+esc(x.in)+'</span><br><span style="color:var(--muted)">▼ '+esc(x.out)+'</span>'})):[];
   const lvCards=lv&&!(d.cards||[]).length?(lv.cards||[]).map((c,i)=>({s:700+i,side:c.side,min:c.minute,html:'<span class="ico '+(c.kind==='C'?'c':'s')+'"></span>'+esc(c.name)+' <small style="color:var(--muted)">'+esc(c.mark)+'</small>'})):[];
   const lvGoals=lv&&!(d.goals||[]).length?lv.goals.map((g,i)=>({s:i,side:g.side,min:g.minute,html:'<span class="goal">⚽ '+esc(g.name)+'</span>'+(g.pk?' <small class="note">PK</small>':'')})):[];
@@ -887,8 +924,9 @@ function rMatch(){
   const ph=phs.length?'<div class="sh"><h2>写真</h2></div><div class="mphotos">'+phs.map(p=>'<figure><a href="'+esc(dimg(p.url,1600))+'" target="_blank" rel="noopener"><img src="'+esc(dimg(p.url,800))+'" alt="'+esc(p.caption||'試合の写真')+'" loading="lazy" decoding="async" onerror="this.closest(\'figure\').remove()"></a>'+(p.caption||p.credit?'<figcaption>'+esc(p.caption||'')+(p.credit?'<span>撮影：'+esc(p.credit)+'</span>':'')+'</figcaption>':'')+'</figure>').join('')+'</div>':'';
   // 公式記録を用紙の形で見る（record.html）。確定した公式記録がある試合だけ
   const rec=d.source==='official'&&d.lineups?'<a class="recbtn" href="./record.html?comp='+encodeURIComponent(S.comp)+'&match='+encodeURIComponent(m.matchId)+'"><b>📄 公式記録を見る</b><small>用紙の形・印刷やPDF保存もできます</small></a>':'';
-  $('main').innerHTML='<a class="back" href="'+pageUrl(S.comp,S.tab)+'">‹ '+back+'に戻る</a>'+head+rec+'<div id="h2h"></div>'+tl+stx+ph+lu+pk+off+note+'<div class="foot">'+esc(DATA.competition.name)+'　'+esc(m.matchId)+'</div>';
+  $('main').innerHTML='<a class="back" href="'+pageUrl(S.comp,S.tab)+'">‹ '+back+'に戻る</a>'+head+rec+(!m.score&&!lv&&m.home&&m.away?'<div id="pre"></div>':'')+'<div id="h2h"></div>'+tl+stx+ph+lu+pk+off+note+'<div class="foot">'+esc(DATA.competition.name)+'　'+esc(m.matchId)+'</div>';
   drawH2H(m);
+  if($('pre'))drawPreview(m);
 }
 
 if(window.JUFA_LIVE)JUFA_LIVE.on(()=>{
