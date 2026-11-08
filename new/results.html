@@ -851,13 +851,14 @@ function rMatch(){
   // 速報：公式記録の入力中の内容から、スタメン・交代も出す（確定した記録があればそちら）
   if(lv&&!d.lineups&&lv.lineups)d=Object.assign({},d,{lineups:lv.lineups});
   const lvSubs=lv&&!(d.subs||[]).length?(lv.subs||[]).map((x,i)=>({s:500+i,side:x.side,min:x.minute,html:'<span style="color:#4caf50">▲ '+esc(x.in)+'</span><br><span style="color:var(--muted)">▼ '+esc(x.out)+'</span>'})):[];
+  const lvCards=lv&&!(d.cards||[]).length?(lv.cards||[]).map((c,i)=>({s:700+i,side:c.side,min:c.minute,html:'<span class="ico '+(c.kind==='C'?'c':'s')+'"></span>'+esc(c.name)+' <small style="color:var(--muted)">'+esc(c.mark)+'</small>'})):[];
   const lvGoals=lv&&!(d.goals||[]).length?lv.goals.map((g,i)=>({s:i,side:g.side,min:g.minute,html:'<span class="goal">⚽ '+esc(g.name)+'</span>'+(g.pk?' <small class="note">PK</small>':'')})):[];
-  const evs=[].concat(lvGoals,lvSubs,
+  const evs=[].concat(lvGoals,lvSubs,lvCards,
     (d.goals||[]).map(g=>({s:g.sort,side:g.side,min:g.minute,html:'<span class="goal">⚽ '+esc(g.scorer)+'</span>'+(g.type&&!/^(シュート|通常)$/.test(g.type)&&!g.og?' <small class="note">'+esc(g.type)+'</small>':'')+(g.assist?'<br><small style="color:var(--muted)">👟 '+esc(g.assist)+'</small>':'')})),
     (d.cards||[]).map(c=>({s:c.sort,side:c.side,min:c.minute,html:'<span class="ico '+(c.kind==='C'?'c':'s')+'"></span>'+esc(c.name)+' <small style="color:var(--muted)">'+esc(c.mark)+'</small>'})),
     (d.subs||[]).map(x=>({s:x.sort,side:x.side,min:x.minute,html:'<span style="color:#4caf50">▲ '+esc(x.in)+'</span><br><span style="color:var(--muted)">▼ '+esc(x.out)+'</span>'}))
   ).sort((a,b)=>a.s-b.s);
-  if(lvGoals.length||lvSubs.length){const k=v=>{const t=String(v.min||'');if(t==='HT')return 45.5;const m=t.match(/^(\d+)(?:\+(\d+))?/);return m?Number(m[1])+(m[2]?Number(m[2])/100:0):999};evs.sort((a,b)=>k(a)-k(b));}
+  if(lvGoals.length||lvSubs.length||lvCards.length){const k=v=>{const t=String(v.min||'');if(t==='HT')return 45.5;const m=t.match(/^(\d+)(?:\+(\d+))?/);return m?Number(m[1])+(m[2]?Number(m[2])/100:0):999};evs.sort((a,b)=>k(a)-k(b));}
   const tl=evs.length?'<div class="sh"><h2>試合経過</h2></div><div class="card"><ul class="tl">'+evs.map(e=>'<li><span class="h">'+(e.side==='home'?e.html:'')+'</span><span class="min">'+esc(e.min)+(e.min&&e.min!=='HT'?"'":'')+'</span><span>'+(e.side==='away'?e.html:'')+'</span></li>').join('')+'</ul></div>':'';
   const STL=[['shots','シュート'],['gk','ゴールキック'],['ck','コーナーキック'],['dfk','直接FK'],['ifk','間接FK'],['off','オフサイド'],['pk','PK']];
   const stx=d.stats?(()=>{
@@ -878,7 +879,7 @@ function rMatch(){
   const pk=d.pk&&d.pk.length?'<div class="sh"><h2>PK戦</h2></div><div class="lu">'+['home','away'].map(sdn=>'<div class="card"><h3>'+esc((sdn==='home'?H:A).short)+'</h3><table>'+d.pk.filter(k=>k.side===sdn).map(k=>'<tr><td class="no">'+k.order+'</td><td>'+esc(k.name)+'</td><td>'+(/成功|○/.test(k.result)?'○':'×')+'</td></tr>').join('')+'</table></div>').join('')+'</div>':'';
   const inf=d.info;
   const off=inf&&(inf.referee||inf.ar1)?'<div class="sh"><h2>審判員・コンディション</h2></div><div class="card off">'+[['主審',inf.referee],['副審',[inf.ar1,inf.ar2].filter(Boolean).join('・')],['第4審',inf.fourth],['天候',inf.weather],['ピッチ',[inf.pitch,inf.pitchCondition].filter(Boolean).join('・')]].filter(x=>x[1]).map(x=>'<div><span>'+x[0]+'</span>'+esc(x[1])+'</div>').join('')+'</div>':'';
-  const note=lv?'<p class="note">速報です（公式記録の確定前）。スコア・得点者・メンバー・交代・時間は、確定のときに変わることがあります。</p>':d.source==='report'?'<p class="note">この試合は試合報告から取り込んだ記録です（先発・交代の記録はありません）。</p>':'';
+  const note=lv?'<p class="note">速報です（公式記録の確定前）。スコア・得点者・メンバー・交代・警告・退場・時間は、確定のときに変わることがあります。</p>':d.source==='report'?'<p class="note">この試合は試合報告から取り込んだ記録です（先発・交代の記録はありません）。</p>':'';
   const back={tournament:'トーナメント',cards:'警告・退場'}[S.tab]||'日程・結果';
   // 試合の写真（全体システムの「発信」→「試合の写真」。写っている人の同意があるものだけ）
   const dimg=(u,w)=>{const m=String(u||'').match(/drive\.google\.com\/(?:file\/d\/|open\?id=|uc\?(?:export=\w+&)?id=)([\w-]{20,})/);return m?'https://drive.google.com/thumbnail?id='+m[1]+'&sz=w'+w:(/^https:\/\//.test(u)?u:'');};
